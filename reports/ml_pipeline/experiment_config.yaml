@@ -1,0 +1,18 @@
+experiment_id: EXP-20261106-005
+question: Establish production-safe baseline ladder and evaluate across explicit PM-history gaps.
+data_dir: data/raw/challenge
+primary_metric: full_target_rmse
+diagnostic_metric: rmse_on_y_lt_500
+models: [last, mean72, median72, ewm72, diurnal7, hour_week4, mean72_clip300, mean72_exclude_gt1000, year_ago]
+target_horizon_hours: 48
+nominal_pm_cutoff_to_target_gaps_hours: [48, 72, 96, 120]
+primary_fold_step_days: 7
+non_overlapping_targets: true
+history_availability_proxy: target interval end (timestamp_ist); available_at not used
+extreme_target_policy: retain all labels and validation rows unchanged
+feature_clipping: false
+weather: disabled_pending_permission
+seed: 42
+code_version: 0.1.0
+selected_inference_control: median72
+selection_note: No model consistently beats controls by more than fold variation; median72 retained as robust simple control.

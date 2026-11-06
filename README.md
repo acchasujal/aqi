@@ -81,6 +81,8 @@ This repository is a reproducible forecasting project, not a leaderboard-hacking
 
 The main workstream evaluates leakage-safe station forecasts for the Zindi RMSE task. Model code and validation belong under `src/mumbai_pm25/`, experiments under `experiments/` and `reports/experiments/`, and immutable challenge inputs under `data/raw/challenge/`. Start with `docs/FORECASTING_ARCHITECTURE.md` and `docs/VALIDATION_PROTOCOL.md`.
 
+The initial reproducible baseline pipeline, rolling validation and audit commands are described in [`reports/ml_pipeline/PIPELINE_RESEARCH_AND_PLAN.md`](reports/ml_pipeline/PIPELINE_RESEARCH_AND_PLAN.md). It currently retains a station-specific 72-hour median as a simple inference control; this is not a claimed winning model.
+
 ### AirWindow Mumbai (creative product)
 
 The separate creative workstream is establishing a forecast-to-action planning product for school/sports coordinators and outdoor-event organisers. See [`apps/airwindow/README.md`](apps/airwindow/README.md), the product and safety docs below, and [`docs/CREATIVE_TRACK_REPO_PLAN.md`](docs/CREATIVE_TRACK_REPO_PLAN.md).

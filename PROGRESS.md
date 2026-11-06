@@ -71,3 +71,55 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
 - **Decisions added or superseded:** App/ML separation and versioned artifact consumer recorded as `DEC-20261106-07`.
 - **Known limitations / blockers:** Schema is a draft pending owner approval. No inference/export script, committed row-level OOF predictions, station metrics or calibrated uncertainty exist. Zindi has not specifically confirmed Firebase acceptance. Generic and competition-specific rules text still conflict on submission counts/splits.
 - **Next action:** Owner reviews/approves schema 1.0.0; then implement the real ML artifact exporter before beginning the React/Vite frontend.
+
+### 2026-11-06 — TASK 003 baseline pipeline and audit
+- **Task / issue:** Research, design, build, validate, and prepare the Mumbai PM2.5 history-only baseline pipeline.
+- **Agent / owner:** Codex
+- **Branch / commit:** `feature/ml-pipeline-v1` / based on `origin/main` `bfc3a7a5f4ea799bf766676b7f9517613aadce93`; implementation commit pending.
+- **Files changed:** Added reusable ingestion/grid, time-safe inference and rolling validation modules under `src/mumbai_pm25/`; added audit, validation, and inference CLIs; added pipeline research plan, audit and evaluation reports/OOF outputs, feature registry, tests; updated pandas dependency bound, `README.md`, `EXPERIMENT_LOG.csv`, this log, and `DECISIONS.md`.
+- **Work completed:** Recomputed challenge-file SHA-256s; audited train/test schemas, ranges, station distributions, missing-hour runs, 19 >1,000 labels, zipped history member schemas/row counts/nulls/hashes; reviewed starter notebook and legacy validation code; implemented station-specific 72-hour median inference and a 9-candidate baseline ladder including last/mean/median/EWM, profiles, prior-year same-hour, and two history-only extreme-value ablations; evaluated identical eligible rows in non-overlapping 48-hour targets for nominal 48/72/96/120-hour PM cutoffs; recorded actual station PM-to-target gaps (48–286h); created ordered 2,592-row prediction output and reproducibility manifest. No validation target filtering/clipping, weather, or test score was used.
+- **Commands run:** `git fetch origin`; `.venv\Scripts\python.exe -m pip install -e '.[dev]'`; `.venv\Scripts\python.exe -m pytest -q`; `.venv\Scripts\python.exe -m ruff check src/mumbai_pm25 scripts/audit_data.py scripts/train_predict.py scripts/validate_baselines.py tests/test_ml_pipeline.py`; `.venv\Scripts\python.exe scripts\audit_data.py`; `.venv\Scripts\python.exe scripts\validate_baselines.py`; `.venv\Scripts\python.exe scripts\train_predict.py --issue-time 2026-11-06T12:00:00+05:30`; fresh temporary Python 3.12 ARM64 environment install, tests, and inference smoke command; `git diff --check`; ARM64 wheel check for optional LightGBM.
+- **Tests and exact results:** 23 tests passed in the project environment and in a fresh temporary Python 3.12.10 ARM64 environment. Scoped Ruff passed in both. Audit and inference produced outputs; submission contains all 2,592 IDs in exact sample order and is finite/non-negative. `git diff --check` passed. Full-repository `ruff check .` reports 24 findings in untouched creative/legacy/notebook files; scoped pipeline lint is clean. No LightGBM wheel exists for the project's optional version range on Windows ARM64 (`pip download --only-binary=:all: --no-deps 'lightgbm>=4,<5'` found no distributions).
+- **Experiment IDs / metrics:** `EXP-20261106-005`, 85 folds at gap 48 and 87 at each other gap. Median72 full-target RMSE 43.98/490.97/2348.57/2331.27 at 48/72/96/120; last-value 49.73/491.59/2343.94/2325.63. Fold SDs are far larger than differences; no robust winner claim. Per-fold/station/horizon and compressed OOF tables are in `reports/ml_pipeline/evaluation/`.
+- **Decisions added or superseded:** `DEC-20261106-08` retains median72 only as a provisional, simple inference control.
+- **Known limitations / blockers:** The advertised later Train refresh has not occurred in this snapshot; rerun before competition use. Weather permission and API terms remain unresolved. LightGBM has no Windows ARM64 binary wheel; no supervised model was tested. Full-repository Ruff findings are outside this task's files. GitHub PR/merge remains pending.
+- **Next action:** Review final diff and raw hashes, commit and push the feature branch, open a focused PR, and merge only if remote checks allow. Rerun against the final Train refresh before submitting to the competition.
+
+### 2026-11-07 — TASK 003 supervised candidate check
+- **Task / issue:** Evaluate one compatible supervised candidate against the baseline controls after establishing the history-only folds.
+- **Agent / owner:** Codex
+- **Branch / commit:** `feature/ml-pipeline-v1` / pending implementation commit.
+- **Files changed:** Added an optional ExtraTrees calendar candidate and matched rolling evaluation; added `scripts/validate_extra_trees.py`, `reports/ml_pipeline/supervised_evaluation/`, experiment config/log row, and appended `DEC-20261107-09`.
+- **Work completed:** Verified scikit-learn 1.9.1 has a Windows ARM64 wheel; fit only labels available by PM-history cutoff; used one-hot station identity and cyclic time features; evaluated on 22 non-overlapping 48-hour folds per gap at 48/72/96/120 hours. Candidate is rejected for production inference.
+- **Commands run:** `.venv\Scripts\python.exe -m pip install --only-binary=:all: 'scikit-learn>=1.4,<2'`; `.venv\Scripts\python.exe scripts\validate_extra_trees.py`; `.venv\Scripts\python.exe -m pytest -q`; scoped Ruff checks.
+- **Tests and exact results:** ExtraTrees candidate passed deterministic prediction, station-category, cutoff and matched-row tests. Full-target RMSE 44.98/84.34/4467.34/4547.22 versus best history control 18.19/20.96/4451.58/4529.99. Scoped Ruff passed after resolving two set-comprehension style findings. Full 26-test and fresh-environment verification is being rerun with scikit-learn included.
+- **Experiment IDs / metrics:** `EXP-20261107-006`; 22 matched folds per PM gap; detailed per-fold/station/horizon scores and OOF in `reports/ml_pipeline/supervised_evaluation/`.
+- **Decisions added or superseded:** `DEC-20261107-09` rejects calendar-only ExtraTrees for inference; `DEC-20261106-08` median72 remains the provisional control.
+- **Known limitations / blockers:** No PM-history supervised residual model tested; LightGBM has no configured Windows ARM64 wheel. Final advertised Train refresh and GitHub publication remain pending.
+- **Next action:** Rerun tests in a clean environment after the dev dependency change, inspect final diff/raw hashes, then commit, push and create the PR when GitHub authentication is available.
+
+### 2026-11-07 — TASK 003 final environment verification
+- **Task / issue:** Complete post-ExtraTrees verification for TASK 003.
+- **Agent / owner:** Codex
+- **Branch / commit:** `feature/ml-pipeline-v1` / based on `origin/main` `bfc3a7a5f4ea799bf766676b7f9517613aadce93`; implementation commit pending.
+- **Files changed:** Test and environment records only; model and evaluation outputs are in the preceding TASK 003 entries and `reports/ml_pipeline/`.
+- **Work completed:** Installed the `.[dev]` extra into a fresh temporary Python 3.12.10 ARM64 environment, including scikit-learn 1.9.1; reran tests and inference; confirmed the final CLI exposes only the median72 control.
+- **Commands run:** Fresh-env `.venv` creation previously recorded; `pip install -e '.[dev]'`; fresh-env `.venv` Python `-m pytest -q`; fresh-env Python `scripts\train_predict.py --issue-time 2026-11-07T12:00:00+05:30`; project `.venv\Scripts\python.exe -m pytest -q`; project scoped Ruff; `scripts\audit_data.py`; baseline inference CLI; `git diff --check`.
+- **Tests and exact results:** 26 tests passed in both project and fresh environments. Scoped Ruff passed. Both inference commands wrote all 2,592 predictions. Audit passed; raw SHA-256 checks are unchanged from the recorded audit. `git diff --check` passed.
+- **Experiment IDs / metrics:** `EXP-20261106-005` and `EXP-20261107-006`; see their evaluation summaries.
+- **Decisions added or superseded:** No change beyond DEC-20261106-08 and DEC-20261107-09.
+- **Known limitations / blockers:** GitHub CLI has no authenticated host; the GitHub integration is not connected. PR and merge remain pending. The final Train refresh remains pending.
+- **Next action:** Commit the reviewed files, attempt branch push, and create the PR if authentication is available. Do not merge if the authorized repository checks are unavailable or fail.
+
+### 2026-11-07 — TASK 003 commit and manifest
+- **Task / issue:** Commit the reviewed baseline pipeline and capture its reproducibility manifest.
+- **Agent / owner:** Codex
+- **Branch / commit:** `feature/ml-pipeline-v1` / `f7214e4c67685470ed6056d514a76ebb0458cfde`.
+- **Files changed:** Implementation, tests, audit/evaluation artifacts, plan, and task records were committed. Added `reports/ml_pipeline/ENVIRONMENT_AND_DATA_MANIFEST.txt` after a fresh inference run and populated the experiment Git SHA fields.
+- **Work completed:** Committed the feature branch implementation. Regenerated the local 2,592-row median72 output at explicit issue time `2026-11-07T12:00:00+05:30`; copied its compact environment/data manifest into the ML report folder. The manifest records the code commit, Python/pandas/NumPy versions, per-station PM cutoffs, and five core input hashes.
+- **Commands run:** `git commit -m "Build leakage-safe Mumbai PM2.5 baseline pipeline"`; `.venv\Scripts\python.exe scripts\train_predict.py --issue-time 2026-11-07T12:00:00+05:30`; `git diff --check`.
+- **Tests and exact results:** 26 project tests and 26 fresh-environment tests passed; scoped Ruff passed. The inference command wrote 2,592 rows. Raw hashes remain unchanged.
+- **Experiment IDs / metrics:** EXP-005 and EXP-006 now point to commit `f7214e4c67685470ed6056d514a76ebb0458cfde`.
+- **Decisions added or superseded:** None.
+- **Known limitations / blockers:** Push, PR and merge remain pending GitHub authentication. The installed GitHub CLI reports no authenticated host; the GitHub integration is not connected. The advertised final Train refresh remains pending.
+- **Next action:** Attempt a push with the configured Git credential helper. If it fails, request the user to connect GitHub; do not claim a PR or merge.
