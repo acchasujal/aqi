@@ -1,0 +1,31 @@
+name: Experiment proposal
+description: Register a controlled model/data experiment
+title: "[EXP] "
+labels: ["experiment"]
+body:
+  - type: textarea
+    id: hypothesis
+    attributes:
+      label: Hypothesis
+      description: What measurable question will this experiment answer?
+    validations:
+      required: true
+  - type: textarea
+    id: information_set
+    attributes:
+      label: Information set and leakage controls
+      description: PM cutoff, weather issue time, target period, allowed sources.
+    validations:
+      required: true
+  - type: textarea
+    id: folds
+    attributes:
+      label: Validation folds and metrics
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+    validations:
+      required: true

@@ -1,0 +1,1 @@
+Downloaded weather data belongs here, organised by provider/model/run date. Keep run initialisation, forecast availability/issue time, valid time, timezone, coordinates, variables, licence and file hash in a manifest. This directory is ignored by Git by default. Commit only small permitted reproducibility fixtures after explicit review.

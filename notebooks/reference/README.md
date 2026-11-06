@@ -1,0 +1,1 @@
+Store the official starter notebook and exploratory notebooks here. Notebooks are for exploration/documentation, not canonical production logic. Move stable functions into `src/mumbai_pm25/` and cover them with tests. Clear outputs before committing if they include unnecessary large data or private information.

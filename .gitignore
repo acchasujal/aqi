@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+.env
+.env.*
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated data and artifacts
+/data/processed/**
+!/data/processed/README.md
+/data/external/weather/**
+!/data/external/weather/README.md
+/artifacts/submissions/**
+!/artifacts/submissions/README.md
+/reports/experiments/**
+!/reports/README.md
+*.pkl
+*.joblib
+*.model
+*.cbm
+*.parquet
+*.feather
+
+# Keep raw challenge files tracked; do not add a blanket data/ ignore.

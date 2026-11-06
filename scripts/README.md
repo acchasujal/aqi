@@ -1,0 +1,1 @@
+CLI entry points only. Scripts should call reusable functions from `src/mumbai_pm25/`, accept config/path arguments, validate inputs and emit deterministic outputs/manifests. Avoid copying modelling code into scripts.

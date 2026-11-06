@@ -1,0 +1,1 @@
+Generated submission CSVs and run manifests are ignored by Git by default. Keep them locally or attach release artifacts when needed. Never overwrite a submitted file. Record the exact CSV hash, model config, raw input hashes, git commit and Zindi submission ID/response.

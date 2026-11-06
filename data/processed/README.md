@@ -1,0 +1,1 @@
+Generated timelines and feature matrices belong here. Never hand-edit generated files. Include the source hashes, feature config, code commit and generation time in a manifest. This directory is ignored by Git by default.

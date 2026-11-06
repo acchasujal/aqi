@@ -1,0 +1,1 @@
+Reusable modelling package. Keep ingestion, time alignment, availability checks, features, baselines, models, validation, forecast orchestration and submission validation separated. See `docs/FORECASTING_ARCHITECTURE.md`. All feature functions must be explicit about PM cutoff and weather issue time.

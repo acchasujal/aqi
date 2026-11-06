@@ -1,0 +1,83 @@
+# Architecture and Experiment Decisions
+
+This is an append-only decision log. Do not rewrite old decisions. If a decision is reversed, add a new entry that references the old ID.
+
+## Decision record format
+
+- **ID:** DEC-YYYYMMDD-NN
+- **Date / owner:**
+- **Status:** Proposed | Accepted | Rejected | Superseded
+- **Context:**
+- **Decision:**
+- **Evidence:** file, experiment ID, source URL or exact finding
+- **Confidence:** High | Medium | Low
+- **Alternatives considered:**
+- **Consequences / revisit trigger:**
+
+---
+
+## DEC-20261106-01 — Repository structure and raw-data immutability
+
+- **Date / owner:** 2026-11-06 / project owner + AI assistant
+- **Status:** Accepted
+- **Context:** Multiple AI agents may work in parallel and must share a stable source of truth.
+- **Decision:** Keep raw challenge inputs under `data/raw/challenge/`; generated data under `data/processed/`; external downloaded weather under `data/external/weather/`; reusable Python code in `src/mumbai_pm25/`; scripts in `scripts/`; tests in `tests/`; experiments and reports separate. Raw challenge files are immutable.
+- **Evidence:** Uploaded challenge files and DataDictionary; see `docs/DATA_AUDIT.md`.
+- **Confidence:** High
+- **Alternatives considered:** Keeping data and code mixed at repository root; rejected because it complicates reproducibility and agent work.
+- **Consequences / revisit trigger:** If the existing repository layout already has a different stable convention, update the path config once rather than duplicating raw files.
+
+## DEC-20261106-02 — Forecasting architecture is baseline-first, not deep-learning-first
+
+- **Date / owner:** 2026-11-06 / project owner + AI assistant
+- **Status:** Accepted as initial plan; final model selection remains open
+- **Context:** Claude's initial rolling tests found simple recent station profiles competitive with a small LightGBM model; the final evaluation is short and time-dependent.
+- **Decision:** Establish recent station level/diurnal baselines first; test a compact LightGBM ratio-to-recent-level model and a simple blend only if matched rolling-origin full-target RMSE supports it. Do not begin with TFT, LSTM, complex stacking or broad static GIS features.
+- **Evidence:** `PLAN_Zindi_Mumbai_PM25.md` supplied by Claude; validation scripts in `validation_code.zip`; see `docs/VALIDATION_PROTOCOL.md`. The reported model comparisons remain provisional because primary full-target results and exact reproducibility need review.
+- **Confidence:** Medium
+- **Alternatives considered:** Immediate neural forecasting or large model zoo; rejected until evidence justifies complexity.
+- **Consequences / revisit trigger:** Add model complexity only when multiple identical folds show repeatable incremental benefit.
+
+## DEC-20261106-03 — Full-target RMSE is the primary selection metric
+
+- **Date / owner:** 2026-11-06 / project owner + AI assistant
+- **Status:** Accepted
+- **Context:** Extremely high recorded PM2.5 values exist; Claude's report uses `y < 500` for some diagnostics.
+- **Decision:** Report RMSE on every labelled validation row as the primary metric. `y < 500` RMSE may be reported only as a separate diagnostic. Never select a model solely from filtered RMSE.
+- **Evidence:** Competition evaluation uses RMSE; train file includes large values. See `docs/DATA_AUDIT.md` and `docs/VALIDATION_PROTOCOL.md`.
+- **Confidence:** High
+- **Alternatives considered:** Excluding spikes from the reported primary metric; rejected because it does not match the competition objective.
+- **Consequences / revisit trigger:** If organisers confirm an explicit target-cleaning/evaluation rule, update with a new decision.
+
+## DEC-20261106-04 — Weather is a priority experiment, subject to time-valid runs and permission
+
+- **Date / owner:** 2026-11-06 / project owner + AI assistant
+- **Status:** Proposed pending data terms and organiser confirmation
+- **Context:** Final PM2.5 history may be stale, while a forecast made close to submission can provide a fresh forward-looking signal.
+- **Decision:** Test archived individual forecast runs (initially ECMWF IFS HRES) against no-weather baselines. Do not use a stitched historical forecast series as if it were a full multi-day forecast vintage. Include only model runs available by the pseudo-issue time.
+- **Evidence:** Open-Meteo Single Runs documentation: https://open-meteo.com/en/docs/single-runs-api ; Historical Forecast documentation: https://open-meteo.com/en/docs/historical-forecast-api . Competition-specific ClimateVerse permission and Open-Meteo API terms require confirmation; see `docs/EXTERNAL_DATA_POLICY.md`.
+- **Confidence:** Medium on methodology; Low on expected score benefit and legal/terms clearance.
+- **Alternatives considered:** Reanalysis or stitched history as the only weather training signal; rejected as insufficiently representative of actual forecast vintage/availability.
+- **Consequences / revisit trigger:** Do not integrate weather into final model until legal/organiser permission and rolling validation support it.
+
+## DEC-20261106-05 — Year-over-year features remain experiments, not assumptions
+
+- **Date / owner:** 2026-11-06 / project owner + AI assistant
+- **Status:** Proposed
+- **Context:** The same 11–12 November 2025 period contains high Shivaji Nagar observations; a one-year seasonal hint may be informative but one prior year is weak evidence.
+- **Decision:** Test previous-year same-hour PM2.5, robust local aggregates and missingness indicators in rolling validation. Do not hardcode a spike or upward offset.
+- **Evidence:** Supplied Train.csv and Claude's `spikes.py`/plan; validate from actual row-level labels.
+- **Confidence:** Low–Medium
+- **Alternatives considered:** Always repeat the previous-year spike; rejected as unjustified.
+- **Consequences / revisit trigger:** Keep only if it improves multiple full-target folds without leakage.
+
+## DEC-20261106-06 — Conservative compliance posture while rules conflict
+
+- **Date / owner:** 2026-11-06 / project owner + AI assistant
+- **Status:** Accepted pending organiser clarification
+- **Context:** Competition info page generic terms and organiser-specific discussion contain conflicting limits and selection language.
+- **Decision:** Respect the stricter 10 submissions/day and 140 total limit until confirmed otherwise. Use only challenge files and datasets listed in the named ClimateVerse catalogue, subject to licence and prediction-time checks. Keep the intended final submission clearly recorded; if the interface requires selecting two, select two deliberately, while retaining the latest-valid approach described in the organiser evaluation announcement.
+- **Evidence:** Official info page https://zindi.world/competitions/google-mumbai-data-challenge ; organiser discussion https://zindi.world/competitions/google-mumbai-data-challenge/discussions/35761 and https://zindi.world/competitions/google-mumbai-data-challenge/discussions/35663 . See `docs/EVALUATION_AND_RULES.md`.
+- **Confidence:** Medium pending direct confirmation.
+- **Alternatives considered:** Following the generic 300-submission limit; rejected until the organiser clarifies the stricter competition-specific statement.
+- **Consequences / revisit trigger:** Record organiser response verbatim and issue a new decision.

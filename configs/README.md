@@ -1,0 +1,1 @@
+Versioned configuration for paths, folds, features, models and submissions. Do not put secrets here. Every experiment config must be saved with its results. Avoid hidden defaults that change behaviour between runs.

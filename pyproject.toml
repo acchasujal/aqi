@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mumbai-pm25-forecast"
+version = "0.1.0"
+description = "Leakage-safe hourly PM2.5 forecasting experiments for the Zindi Mumbai challenge"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "numpy>=1.26,<3",
+  "pandas>=2.1,<3",
+  "scipy>=1.11,<2",
+  "PyYAML>=6,<7",
+  "requests>=2.31,<3",
+]
+
+[project.optional-dependencies]
+models = [
+  "scikit-learn>=1.4,<2",
+  "lightgbm>=4.0,<5",
+]
+validation = [
+  "scikit-learn>=1.4,<2",
+  "lightgbm>=4.0,<5",
+]
+dev = [
+  "pytest>=8,<9",
+  "ruff>=0.6,<1",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

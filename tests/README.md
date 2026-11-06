@@ -1,0 +1,1 @@
+Tests must cover schema, time alignment, hourly reindexing, missingness, feature cutoffs, weather run availability, no-future leakage, deterministic feature generation, fold construction and final submission validity. Add regression tests for every bug fixed.

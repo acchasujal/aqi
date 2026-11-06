@@ -1,0 +1,48 @@
+# Paths are repository-relative. Do not store secrets here.
+paths:
+  train: data/raw/challenge/Train.csv
+  test: data/raw/challenge/Test.csv
+  sample_submission: data/raw/challenge/SampleSubmission.csv
+  stations: data/raw/challenge/Stations.csv
+  data_dictionary: data/raw/challenge/DataDictionary.txt
+  additional_history: data/raw/challenge/AdditionalHistory.zip
+  processed_dir: data/processed
+  reports_dir: reports
+  submissions_dir: artifacts/submissions
+
+time:
+  timezone: Asia/Kolkata
+  train_timestamp_semantics: interval_end
+  test_timestamp_semantics: interval_start
+  train_to_target_start_offset_hours: -1
+
+validation:
+  target_horizon_hours: 48
+  pm_history_gaps_hours: [48, 72, 96, 120]
+  primary_metric: rmse_full
+  diagnostic_clean_target_threshold: 500
+  min_station_rows_per_fold: 1
+  prefer_non_overlapping_target_windows: true
+  use_available_at_as_publication_time: false
+
+features:
+  station_category: true
+  calendar: true
+  recent_pm_history: true
+  diurnal_profile_days: 7
+  previous_year_features: false
+  weather_features: false
+  cross_station_features: false
+
+models:
+  baseline_candidates: [last_value, recent_mean, recent_median, recent_ewm, diurnal_7d]
+  supervised_candidates: [lightgbm_ratio]
+  blend_weights_to_test: [0.25, 0.5, 0.75]
+  random_seed: 42
+
+external_data:
+  weather_enabled: false
+  provider: open-meteo
+  model: ecmwf_ifs
+  run_availability_delay_hours: 6
+  permission_confirmed: false
