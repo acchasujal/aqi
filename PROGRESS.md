@@ -45,3 +45,16 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
 - **Decisions added or superseded:** None.
 - **Known limitations / blockers:** The existing project's baseline pipeline depends on pandas; find a compatible interpreter/wheel or a supported build environment before reproducing it.
 - **Next action:** Reproduce `EXP-20261106-001` on an environment supported by `pyproject.toml`, saving row-level predictions and full-target metrics.
+
+### 2026-11-06 — Reproduce history-only baselines
+- **Task / issue:** Complete `EXP-20261106-001` after resolving the dataframe environment blocker.
+- **Agent / owner:** Codex
+- **Branch / commit:** `codex/initialize-organize-aqi` / pending
+- **Files changed:** `experiments/EXPERIMENT_LOG.csv`; `reports/experiments/EXP-20261106-001/config.yaml`; `metrics.csv`; `summary.md`; this log.
+- **Work completed:** Ran the legacy history-only baseline over 48-hour target windows, daily origins from 2025-03-20 through 2026-10-30, and history gaps 48, 72, 96 and 120 hours. Preserved row-level OOF outputs locally as ignored `base_gap*.pkl` files.
+- **Commands run:** `.venv\Scripts\python.exe -m pip install --only-binary=:all: "numpy>=1.26,<3" "pandas==3.1.1"`; `$env:ZINDI_DATA_DIR=(Resolve-Path 'data/raw/challenge').Path; .venv\Scripts\python.exe scripts\legacy_validation\base.py`; same `base.run` call for gaps 72 and 120; aggregate metric extraction; `git diff --check`.
+- **Tests and exact results:** Baseline run completed. At gap 48, `mean72` full-target RMSE 1464.605918, clean-range RMSE 20.146107, 38,344 rows over 237 folds; `diur7` 1465.299099 / 20.353887; `last` 1464.821354 / 26.505841. See the experiment metrics file for all gaps.
+- **Experiment IDs / metrics:** `EXP-20261106-001` completed. Full-target RMSE is primary; clean-range RMSE is diagnostic. Rare extreme labels dominate the primary score.
+- **Decisions added or superseded:** None.
+- **Known limitations / blockers:** pandas 3.1.1 is outside the repository's current `<3` dependency bound but was required because it is the available ARM64 binary wheel. The legacy script clips history features and filters training history; this is not accepted as production policy.
+- **Next action:** Port the baseline logic into tested repository-relative modules with complete-grid timestamp alignment, then run the previous-year feature ablation on identical folds.

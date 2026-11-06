@@ -1,0 +1,19 @@
+experiment_id: EXP-20261106-001
+question: Reproduce history-only baselines with repository-relative raw-data paths.
+raw_data_dir: data/raw/challenge
+python: 3.12.10-arm64
+packages:
+  numpy: 2.5.4
+  pandas: 3.1.1
+source_script: scripts/legacy_validation/base.py
+models: [last, mean24, mean72, mean168, med24, med72, med168, diur3, diur7, diur14, dmed7, pool3, pool7, pool14]
+folds:
+  target_horizon_hours: 48
+  history_gaps_hours: [48, 72, 96, 120]
+  origin_start: 2025-03-20
+  origin_end: 2026-10-30
+  origin_step_days: 1
+history_policy: legacy clean values y < 1000 and clip historical features at 300; validation labels unchanged
+primary_metric: full_target_rmse
+diagnostic_metric: rmse_on_y_lt_500
+availability_assumption: station labels through the simulated cutoff are eligible; available_at is not used
