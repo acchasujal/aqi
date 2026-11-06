@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/acchasujal/aqi/blob/main/apps/airwindow/contracts/forecast.schema.json",
+  "title": "AirWindow Mumbai forecast artifact",
+  "description": "Versioned station forecast data for the AirWindow static client. Does not contain hidden targets or fabricated predictions.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "artifact_id",
+    "generated_at_ist",
+    "model_issue_time_ist",
+    "pm_history_cutoff_ist",
+    "model",
+    "weather",
+    "uncertainty",
+    "stations"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "artifact_id": {"type": "string", "minLength": 1},
+    "generated_at_ist": {"$ref": "#/$defs/istDateTime"},
+    "model_issue_time_ist": {"$ref": "#/$defs/istDateTime"},
+    "pm_history_cutoff_ist": {"$ref": "#/$defs/istDateTime"},
+    "model": {"$ref": "#/$defs/model"},
+    "weather": {"$ref": "#/$defs/weather"},
+    "uncertainty": {"$ref": "#/$defs/uncertainty"},
+    "stations": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {"$ref": "#/$defs/station"},
+      "allOf": [
+        {
+          "contains": {"properties": {"station_id": {"const": "11606"}}, "required": ["station_id"]},
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {"properties": {"station_id": {"const": "11611"}}, "required": ["station_id"]},
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {"properties": {"station_id": {"const": "3409510"}}, "required": ["station_id"]},
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {"properties": {"station_id": {"const": "3409511"}}, "required": ["station_id"]},
+          "minContains": 1,
+          "maxContains": 1
+        }
+      ],
+      "uniqueItems": true
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"weather": {"properties": {"used": {"const": true}}, "required": ["used"]}}, "required": ["weather"]},
+      "then": {
+        "properties": {
+          "weather": {
+            "properties": {
+              "provider": {"type": "string", "minLength": 1},
+              "model": {"type": "string", "minLength": 1},
+              "issue_time_ist": {"$ref": "#/$defs/istDateTime"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"weather": {"properties": {"used": {"const": false}}, "required": ["used"]}}, "required": ["weather"]},
+      "then": {
+        "properties": {
+          "weather": {
+            "properties": {
+              "provider": {"type": "null"},
+              "model": {"type": "null"},
+              "issue_time_ist": {"type": "null"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"uncertainty": {"properties": {"status": {"const": "calibrated"}}, "required": ["status"]}}, "required": ["uncertainty"]},
+      "then": {
+        "properties": {
+          "uncertainty": {
+            "properties": {
+              "method": {"type": "string", "minLength": 1},
+              "calibration_folds": {"type": "integer", "minimum": 2},
+              "nominal_coverage": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+              "empirical_coverage": {"type": "number", "minimum": 0, "maximum": 1}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"uncertainty": {"properties": {"status": {"enum": ["not_calibrated", "not_available"]}}, "required": ["status"]}}, "required": ["uncertainty"]},
+      "then": {
+        "properties": {
+          "uncertainty": {"properties": {"method": {"type": "null"}, "calibration_folds": {"type": "null"}, "nominal_coverage": {"type": "null"}, "empirical_coverage": {"type": "null"}}},
+          "stations": {"items": {"properties": {"forecasts": {"items": {"properties": {"prediction_interval": {"type": "null"}}}}}}}
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "istDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?\\+05:30$",
+      "description": "RFC 3339 timestamp with the explicit Asia/Kolkata UTC+05:30 offset."
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "git_commit", "training_data_sha256"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "git_commit": {"type": ["string", "null"], "pattern": "^[0-9a-f]{7,40}$"},
+        "training_data_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "weather": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["used", "provider", "model", "issue_time_ist"],
+      "properties": {
+        "used": {"type": "boolean"},
+        "provider": {"type": ["string", "null"]},
+        "model": {"type": ["string", "null"]},
+        "issue_time_ist": {"anyOf": [{"$ref": "#/$defs/istDateTime"}, {"type": "null"}]}
+      }
+    },
+    "uncertainty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "method", "calibration_folds", "nominal_coverage", "empirical_coverage"],
+      "properties": {
+        "status": {"enum": ["calibrated", "not_calibrated", "not_available"]},
+        "method": {"type": ["string", "null"]},
+        "calibration_folds": {"type": ["integer", "null"], "minimum": 2},
+        "nominal_coverage": {"type": ["number", "null"], "exclusiveMinimum": 0, "maximum": 1},
+        "empirical_coverage": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "observation_age_hours", "stale_after_hours", "note"],
+      "properties": {
+        "status": {"enum": ["fresh", "stale", "unknown", "missing_observation"]},
+        "observation_age_hours": {"type": ["number", "null"], "minimum": 0},
+        "stale_after_hours": {"type": ["number", "null"], "exclusiveMinimum": 0},
+        "note": {"type": "string"}
+      }
+    },
+    "validationMetric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["horizon_hours", "status", "primary_metric", "rmse", "n_targets", "folds", "fold_rmse_std"],
+      "properties": {
+        "horizon_hours": {"type": "integer", "minimum": 1},
+        "status": {"enum": ["measured", "not_available"]},
+        "primary_metric": {"const": "full_target_rmse"},
+        "rmse": {"type": ["number", "null"], "minimum": 0},
+        "n_targets": {"type": ["integer", "null"], "minimum": 1},
+        "folds": {"type": ["integer", "null"], "minimum": 1},
+        "fold_rmse_std": {"type": ["number", "null"], "minimum": 0}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"const": "measured"}}, "required": ["status"]},
+          "then": {"properties": {"rmse": {"type": "number"}, "n_targets": {"type": "integer", "minimum": 1}, "folds": {"type": "integer", "minimum": 1}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "not_available"}}, "required": ["status"]},
+          "then": {"properties": {"rmse": {"type": "null"}, "n_targets": {"type": "null"}, "folds": {"type": "null"}, "fold_rmse_std": {"type": "null"}}}
+        }
+      ]
+    },
+    "forecast": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_start_ist", "target_end_ist", "pm25_prediction", "unit", "forecast_horizon_hours", "status", "prediction_interval"],
+      "properties": {
+        "target_start_ist": {"$ref": "#/$defs/istDateTime"},
+        "target_end_ist": {"$ref": "#/$defs/istDateTime"},
+        "pm25_prediction": {"type": ["number", "null"], "minimum": 0},
+        "unit": {"const": "µg/m³"},
+        "forecast_horizon_hours": {"type": "integer", "minimum": 1},
+        "status": {"enum": ["available", "missing"]},
+        "prediction_interval": {
+          "anyOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["lower", "upper"],
+              "properties": {"lower": {"type": "number", "minimum": 0}, "upper": {"type": "number", "minimum": 0}}
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {"if": {"properties": {"status": {"const": "available"}}, "required": ["status"]}, "then": {"properties": {"pm25_prediction": {"type": "number"}}}},
+        {"if": {"properties": {"status": {"const": "missing"}}, "required": ["status"]}, "then": {"properties": {"pm25_prediction": {"type": "null"}, "prediction_interval": {"type": "null"}}}}
+      ]
+    },
+    "station": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["station_id", "station_name", "latitude", "longitude", "last_observation_ist", "freshness", "data_status", "validation", "forecasts"],
+      "properties": {
+        "station_id": {"type": "string", "pattern": "^[0-9]+$"},
+        "station_name": {"type": "string", "minLength": 1},
+        "latitude": {"type": "number", "minimum": -90, "maximum": 90},
+        "longitude": {"type": "number", "minimum": -180, "maximum": 180},
+        "last_observation_ist": {"anyOf": [{"$ref": "#/$defs/istDateTime"}, {"type": "null"}]},
+        "freshness": {"$ref": "#/$defs/freshness"},
+        "data_status": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "expected_forecast_hours", "available_forecast_hours", "missing_target_starts_ist", "note"],
+          "properties": {
+            "status": {"enum": ["complete", "partial", "unavailable"]},
+            "expected_forecast_hours": {"type": "integer", "minimum": 1},
+            "available_forecast_hours": {"type": "integer", "minimum": 0},
+            "missing_target_starts_ist": {"type": "array", "items": {"$ref": "#/$defs/istDateTime"}, "uniqueItems": true},
+            "note": {"type": "string"}
+          }
+        },
+        "validation": {"type": "array", "items": {"$ref": "#/$defs/validationMetric"}},
+        "forecasts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/forecast"}}
+      }
+    }
+  }
+}
