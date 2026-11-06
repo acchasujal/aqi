@@ -26,6 +26,7 @@ validation = [
 ]
 dev = [
   "pytest>=8,<9",
+  "jsonschema>=4.22,<5",
   "ruff>=0.6,<1",
 ]
 

@@ -55,6 +55,14 @@ Then inspect the relevant code, config, tests and current Git diff. Never rely s
 - Keep model count small. Prefer reproducible blends over complex stacking unless out-of-fold evidence supports stacking.
 - Every model must report full-target RMSE, clean-range diagnostic RMSE, bias, station-level RMSE, fold variability and evaluated row counts.
 
+## 4a. Creative product isolation
+
+- Keep creative application code under `apps/airwindow/` and creative product documentation under `docs/` and `reports/creative_submission/`.
+- Creative-app changes must not destabilise ML code or modify model behavior, training data, validation logic or submission generation without a separate ML task and matched evidence.
+- The app consumes a versioned forecast artifact produced by the ML pipeline; do not duplicate model training or fabricate forecast data in the frontend.
+- Preserve honest station coverage, explicit data freshness and validation metadata, and the user-safety rules in `docs/CLAIMS_AND_USER_SAFETY.md`.
+- Do not show uncertainty intervals unless they have been empirically calibrated on appropriate rolling-origin residuals.
+
 ## 5. Code quality requirements
 
 - Use small, single-purpose modules and typed function signatures where practical.

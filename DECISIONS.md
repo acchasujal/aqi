@@ -81,3 +81,14 @@ This is an append-only decision log. Do not rewrite old decisions. If a decision
 - **Confidence:** Medium pending direct confirmation.
 - **Alternatives considered:** Following the generic 300-submission limit; rejected until the organiser clarifies the stricter competition-specific statement.
 - **Consequences / revisit trigger:** Record organiser response verbatim and issue a new decision.
+
+## DEC-20261106-07 — AirWindow consumes a versioned ML artifact
+
+- **Date / owner:** 2026-11-06 / Codex
+- **Status:** Accepted for the creative foundation; contract is awaiting owner approval.
+- **Context:** The repository has no reusable PM2.5 inference/export command, no committed forecast artifact, no station-level validation table and no interval calibration. The only saved prediction rows are ignored legacy OOF pickles.
+- **Decision:** Keep AirWindow as a separate static client that consumes a versioned ML forecast artifact. It will not train an independent model in the browser or publish fabricated forecast values. The artifact contract carries independent model issue time, PM-history cutoff and weather issue time; unavailable freshness/validation values remain explicitly unknown/null; prediction intervals remain null until calibrated.
+- **Evidence:** Repository audit in `reports/creative_submission/INTEGRATION_AUDIT.md`; contract in `docs/FORECAST_ARTIFACT_CONTRACT.md`; product constraints in `docs/CREATIVE_PRODUCT_SPEC_AIRWINDOW.md` and `docs/CLAIMS_AND_USER_SAFETY.md`.
+- **Confidence:** High on separation and provenance requirements; medium on contract field names pending owner review.
+- **Alternatives considered:** Train a second model in the client; rejected because it would duplicate the ML pipeline and lack reproducible validation evidence. Embed sample predictions; rejected because they could be mistaken for real forecasts.
+- **Consequences / revisit trigger:** Do not build the full frontend or add a public forecast artifact until the owner approves schema version 1.0.0 and the ML pipeline can generate and validate real artifacts.
