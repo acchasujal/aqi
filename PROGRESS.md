@@ -110,3 +110,16 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
 - **Decisions added or superseded:** No change beyond DEC-20261106-08 and DEC-20261107-09.
 - **Known limitations / blockers:** GitHub CLI has no authenticated host; the GitHub integration is not connected. PR and merge remain pending. The final Train refresh remains pending.
 - **Next action:** Commit the reviewed files, attempt branch push, and create the PR if authentication is available. Do not merge if the authorized repository checks are unavailable or fail.
+
+### 2026-11-07 — TASK 003 commit and manifest
+- **Task / issue:** Commit the reviewed baseline pipeline and capture its reproducibility manifest.
+- **Agent / owner:** Codex
+- **Branch / commit:** `feature/ml-pipeline-v1` / `f7214e4c67685470ed6056d514a76ebb0458cfde`.
+- **Files changed:** Implementation, tests, audit/evaluation artifacts, plan, and task records were committed. Added `reports/ml_pipeline/ENVIRONMENT_AND_DATA_MANIFEST.txt` after a fresh inference run and populated the experiment Git SHA fields.
+- **Work completed:** Committed the feature branch implementation. Regenerated the local 2,592-row median72 output at explicit issue time `2026-11-07T12:00:00+05:30`; copied its compact environment/data manifest into the ML report folder. The manifest records the code commit, Python/pandas/NumPy versions, per-station PM cutoffs, and five core input hashes.
+- **Commands run:** `git commit -m "Build leakage-safe Mumbai PM2.5 baseline pipeline"`; `.venv\Scripts\python.exe scripts\train_predict.py --issue-time 2026-11-07T12:00:00+05:30`; `git diff --check`.
+- **Tests and exact results:** 26 project tests and 26 fresh-environment tests passed; scoped Ruff passed. The inference command wrote 2,592 rows. Raw hashes remain unchanged.
+- **Experiment IDs / metrics:** EXP-005 and EXP-006 now point to commit `f7214e4c67685470ed6056d514a76ebb0458cfde`.
+- **Decisions added or superseded:** None.
+- **Known limitations / blockers:** Push, PR and merge remain pending GitHub authentication. The installed GitHub CLI reports no authenticated host; the GitHub integration is not connected. The advertised final Train refresh remains pending.
+- **Next action:** Attempt a push with the configured Git credential helper. If it fails, request the user to connect GitHub; do not claim a PR or merge.
