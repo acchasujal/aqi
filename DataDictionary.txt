@@ -1,0 +1,72 @@
+Data dictionary
+
+The prediction target is hourly PM2.5 concentration in µg/m³. All target
+intervals use IST (UTC+05:30). Train timestamps mark the end of the hour.
+
+Train.csv
+timestamp_ist: end of the hourly observation interval.
+pm25: observed hourly PM2.5 concentration; the training target.
+mean: the same concentration as pm25, retained from the source aggregation.
+count: number of valid unique quarter-hour readings used; at least three.
+available_at: retained source-file modification time for the original history;
+for newly added API observations, the actual retrieval time of this snapshot.
+This is not a verified first publication time or a guaranteed source delay.
+location_id, sensor_id: OpenAQ station and PM2.5 sensor identifiers.
+station_name: monitoring station name.
+series_id: source-specific observation series identifier.
+flag_high_1000: diagnostic flag for concentrations above 1,000 µg/m³;
+these observations have not been removed automatically.
+
+Test.csv
+ID: unique station-hour identifier; its meaning and order remain fixed.
+location_id, sensor_id: identifiers matching Train.csv and Stations.csv.
+target_start_ist, target_end_ist: start and end of the one-hour target interval.
+scoring_block: public, private or unscored allocation. Public allocation
+records the original public allocation; only the active two-day
+window contributes to the leaderboard at each update. It is not a
+training feature describing future pollution.
+unit: unit of the target concentration. No observed targets are included.
+
+SampleSubmission.csv
+ID: exactly the same 2,592 IDs and row order as Test.csv.
+Target: fill every row with a finite, non-negative PM2.5 prediction.
+The sample contains numeric example predictions (0.0). Replace them with your
+model predictions; they are not observed targets or organizer answers.
+
+Stations.csv
+location_id: target station identifier.
+station_name: station name.
+selected_sensor: PM2.5 sensor_id used in Train.csv and Test.csv.
+latitude, longitude: station coordinates in decimal degrees.
+timezone: station time zone, Asia/Kolkata.
+
+AdditionalHistory.zip
+Optional Mumbai station history, with source identifiers preserved.
+HistoryNotes.txt inside the archive explains the different schemas.
+Historical source station IDs must not be assumed to match current
+OpenAQ location IDs. No cross-source station mapping is supplied.
+
+Evaluation periods
+26 October launch: 22–23 October observations.
+31 October update: 27–28 October observations.
+5 November update: 3–4 November observations (revised to a fresher window).
+9 November update: 5–6 November observations.
+Each update replaces the previous public scoring window.
+Private evaluation: 11–12 November observations only.
+All dates are in 2026, using IST. The test grid also contains rows outside
+these periods; these rows do not contribute to the announced scores.
+The full 2,592-row submission remains required throughout.
+
+Initial public: 22–23 October, active from launch on 26 October until the
+31 October update. These observations are excluded from the launch Train.csv.
+All 2,592 IDs remain required throughout the competition.
+
+5 November 2026 release
+Train contains 47,849 observed station-hours. Observations for earlier
+public windows and 1–2 November are now available as historical training data.
+Current public 3–4 November, next public 5–6 November, and final private
+11–12 November remain excluded. Missing targets are not imputed.
+Test.csv and SampleSubmission.csv remain byte-for-byte unchanged.
+The launch scoring_block column is retained unchanged. For this update,
+3–4 November IDs marked unscored at launch are selected by the organizer's
+active public reference. It contains 92 valid observed targets out of 192.
