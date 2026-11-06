@@ -36,10 +36,10 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
 ### 2026-11-06 — Initialize and organize repository
 - **Task / issue:** Move the bootstrap project into the existing Git repository and verify the challenge files before baseline reproduction.
 - **Agent / owner:** Codex
-- **Branch / commit:** `codex/initialize-organize-aqi` / pending
+- **Branch / commit:** `codex/initialize-organize-aqi` / `f11e1021164e5eb45b9d0e9414f7256948b65a11` (initial repository-organization commit)
 - **Files changed:** Project files moved from `mumbai_pm25_repo_bootstrap/` to the repository root; six challenge inputs moved to `data/raw/challenge/`; starter notebook moved to `notebooks/reference/`; added `reports/initial_research/REPOSITORY_AUDIT_2026-11-06.md`; updated `experiments/EXPERIMENT_LOG.csv` and this log.
 - **Work completed:** Verified 47,849 Train rows, 2,592 Test and SampleSubmission rows, exact ordered ID match, no blank or duplicate station/timestamp keys, audited `mean` duplication, extrema, station counts and scoring-block counts. All six raw input SHA-256 values match before and after moving.
-- **Commands run:** `git switch -c codex/initialize-organize-aqi`; PowerShell `Move-Item` operations; `Get-FileHash ... -Algorithm SHA256`; Python 3.15.1 and Python 3.12.10 runtime checks; Python standard-library CSV audit; `.venv\Scripts\python.exe -m pip install "numpy>=1.26,<3" "pandas>=2.1,<3"` (failed on pandas source build: Visual Studio Build Tools unavailable); `git diff --check`.
+- **Commands run:** `git switch -c codex/initialize-organize-aqi`; PowerShell `Move-Item` operations; `Get-FileHash ... -Algorithm SHA256`; Python 3.15.1 and Python 3.12.10 runtime checks; Python standard-library CSV audit; `.venv\Scripts\python.exe -m pip install "numpy>=1.26,<3" "pandas>=2.1,<3"` (failed on pandas source build: Visual Studio Build Tools unavailable); `git diff --cached --check`; `git commit -m "Initialize and organize Mumbai PM2.5 project"` (`f11e1021164e5eb45b9d0e9414f7256948b65a11`).
 - **Tests and exact results:** Data-integrity audit passed. `git diff --check` passed before staging. Project tests not run; no modeling code changed. Baseline metrics not produced.
 - **Experiment IDs / metrics:** `EXP-20261106-001` not run; blocked by unavailable pandas Windows ARM64 wheel/build toolchain. Audit details and fingerprints in `reports/initial_research/REPOSITORY_AUDIT_2026-11-06.md`.
 - **Decisions added or superseded:** None.
