@@ -1,0 +1,684 @@
+{
+  "created_at_utc": "2026-11-06T18:34:04.451107+00:00",
+  "files": {
+    "Train.csv": {
+      "bytes": 6707667,
+      "sha256": "fcee20ebf7bd9c4a4e2487bab0a4f81339d6c820a53862b14443031db1f18ad6"
+    },
+    "Test.csv": {
+      "bytes": 293836,
+      "sha256": "cdb2b6c3035f6331848c565b4d3dd89ac5281efab07fa62bfabc2e7ff172db0a"
+    },
+    "SampleSubmission.csv": {
+      "bytes": 77770,
+      "sha256": "5806d6109f381043e59fffb48a5d0af5d9de56fd4e0e956e4c5e7f2e6ae5dcd9"
+    },
+    "Stations.csv": {
+      "bytes": 369,
+      "sha256": "383269fa04abf8f2eb49e5ec0bb5a77c2df11acb6aca996b7edf269a109ee9cf"
+    },
+    "DataDictionary.txt": {
+      "bytes": 3757,
+      "sha256": "0d10dcbb6d31232d29558ecd50e7a08272a393048d1e62e3ac460c5863522a55"
+    },
+    "AdditionalHistory.zip": {
+      "bytes": 4817970,
+      "sha256": "3233061ca4ac2af39e9f6e80e21d9261b1b8d2fd3b037e5d034bcec059a7e80e"
+    }
+  },
+  "train": {
+    "rows": 47849,
+    "columns": [
+      "timestamp_ist",
+      "mean",
+      "count",
+      "available_at",
+      "pm25",
+      "location_id",
+      "sensor_id",
+      "station_name",
+      "series_id",
+      "flag_high_1000",
+      "target_start"
+    ],
+    "nulls": {
+      "timestamp_ist": 0,
+      "mean": 0,
+      "count": 0,
+      "available_at": 0,
+      "pm25": 0,
+      "location_id": 0,
+      "sensor_id": 0,
+      "station_name": 0,
+      "series_id": 0,
+      "flag_high_1000": 0,
+      "target_start": 0
+    },
+    "duplicates_station_hour": 0,
+    "target_min": 0.0,
+    "target_max": 241587.56333333335,
+    "target_quantiles": {
+      "0.5": 21.83666666666667,
+      "0.9": 62.31900000000003,
+      "0.99": 114.52859999999983,
+      "0.999": 573.2817200000002
+    },
+    "counts_over_threshold": {
+      "100": 797,
+      "300": 98,
+      "500": 57,
+      "1000": 19
+    },
+    "mean_equals_pm25": true,
+    "station_distributions": {
+      "11606": {
+        "station_name": "Borivali East, Mumbai - IITM",
+        "rows": 12101,
+        "median": 26.48,
+        "p90": 63.892500000000005,
+        "p99": 106.9275,
+        "maximum": 75203.525,
+        "counts_over_threshold": {
+          "100": 158,
+          "300": 4,
+          "500": 4,
+          "1000": 4
+        }
+      },
+      "11611": {
+        "station_name": "Malad West, Mumbai - IITM",
+        "rows": 12203,
+        "median": 16.3175,
+        "p90": 61.58200000000001,
+        "p99": 106.25935,
+        "maximum": 718.2325,
+        "counts_over_threshold": {
+          "100": 159,
+          "300": 9,
+          "500": 3,
+          "1000": 0
+        }
+      },
+      "3409510": {
+        "station_name": "Byculla, Mumbai - BMC",
+        "rows": 11552,
+        "median": 17.85,
+        "p90": 59.301249999999996,
+        "p99": 94.65077499999998,
+        "maximum": 3320.633333333333,
+        "counts_over_threshold": {
+          "100": 78,
+          "300": 6,
+          "500": 4,
+          "1000": 3
+        }
+      },
+      "3409511": {
+        "station_name": "Shivaji Nagar, Mumbai - BMC",
+        "rows": 11993,
+        "median": 24.5925,
+        "p90": 64.25800000000002,
+        "p99": 181.85629999999998,
+        "maximum": 241587.56333333335,
+        "counts_over_threshold": {
+          "100": 402,
+          "300": 79,
+          "500": 46,
+          "1000": 12
+        }
+      }
+    },
+    "extreme_rows_over_1000": [
+      {
+        "timestamp_ist": "2025-08-09T14:00:00+05:30",
+        "station_name": "Borivali East, Mumbai - IITM",
+        "location_id": 11606,
+        "pm25": 75203.525,
+        "count": 4.0
+      },
+      {
+        "timestamp_ist": "2025-08-09T15:00:00+05:30",
+        "station_name": "Borivali East, Mumbai - IITM",
+        "location_id": 11606,
+        "pm25": 25007.455,
+        "count": 4.0
+      },
+      {
+        "timestamp_ist": "2025-08-26T06:00:00+05:30",
+        "station_name": "Borivali East, Mumbai - IITM",
+        "location_id": 11606,
+        "pm25": 25006.705,
+        "count": 4.0
+      },
+      {
+        "timestamp_ist": "2025-08-26T07:00:00+05:30",
+        "station_name": "Borivali East, Mumbai - IITM",
+        "location_id": 11606,
+        "pm25": 50013.704999999994,
+        "count": 4.0
+      },
+      {
+        "timestamp_ist": "2026-05-09T08:00:00+05:30",
+        "station_name": "Byculla, Mumbai - BMC",
+        "location_id": 3409510,
+        "pm25": 1762.91,
+        "count": 4.0
+      },
+      {
+        "timestamp_ist": "2026-05-09T09:00:00+05:30",
+        "station_name": "Byculla, Mumbai - BMC",
+        "location_id": 3409510,
+        "pm25": 3320.633333333333,
+        "count": 3.0
+      },
+      {
+        "timestamp_ist": "2026-05-09T12:00:00+05:30",
+        "station_name": "Byculla, Mumbai - BMC",
+        "location_id": 3409510,
+        "pm25": 1643.1374999999998,
+        "count": 4.0
+      },
+      {
+        "timestamp_ist": "2025-10-18T21:00:00+05:30",
+        "station_name": "Shivaji Nagar, Mumbai - BMC",
+        "location_id": 3409511,
+        "pm25": 1156.9175,
+        "count": 4.0
+      },
+      {
+        "timestamp_ist": "2025-10-19T19:00:00+05:30",
+        "station_name": "Shivaji Nagar, Mumbai - BMC",
+        "location_id": 3409511,
+        "pm25": 1702.0500000000002,
+        "count": 4.0
+      },
+      {
+        "timestamp_ist": "2025-10-20T00:00:00+05:30",
+        "station_name": "Shivaji Nagar, Mumbai - BMC",
+        "location_id": 3409511,
+        "pm25": 3694.2933333333335,
+        "count": 3.0
+      },
+      {
+        "timestamp_ist": "2025-11-21T02:00:00+05:30",
+        "station_name": "Shivaji Nagar, Mumbai - BMC",
+        "location_id": 3409511,
+        "pm25": 1915.4125,
+        "count": 4.0
+      },
+      {
+        "timestamp_ist": "2025-12-03T13:00:00+05:30",
+        "station_name": "Shivaji Nagar, Mumbai - BMC",
+        "location_id": 3409511,
+        "pm25": 25269.22,
+        "count": 4.0
+      },
+      {
+        "timestamp_ist": "2025-12-03T14:00:00+05:30",
+        "station_name": "Shivaji Nagar, Mumbai - BMC",
+        "location_id": 3409511,
+        "pm25": 241587.56333333335,
+        "count": 3.0
+      },
+      {
+        "timestamp_ist": "2025-12-03T15:00:00+05:30",
+        "station_name": "Shivaji Nagar, Mumbai - BMC",
+        "location_id": 3409511,
+        "pm25": 99999.01,
+        "count": 4.0
+      },
+      {
+        "timestamp_ist": "2025-12-03T16:00:00+05:30",
+        "station_name": "Shivaji Nagar, Mumbai - BMC",
+        "location_id": 3409511,
+        "pm25": 24999.7525,
+        "count": 4.0
+      },
+      {
+        "timestamp_ist": "2025-12-04T04:00:00+05:30",
+        "station_name": "Shivaji Nagar, Mumbai - BMC",
+        "location_id": 3409511,
+        "pm25": 2324.49,
+        "count": 4.0
+      },
+      {
+        "timestamp_ist": "2025-12-04T05:00:00+05:30",
+        "station_name": "Shivaji Nagar, Mumbai - BMC",
+        "location_id": 3409511,
+        "pm25": 1224.88,
+        "count": 4.0
+      },
+      {
+        "timestamp_ist": "2025-12-04T06:00:00+05:30",
+        "station_name": "Shivaji Nagar, Mumbai - BMC",
+        "location_id": 3409511,
+        "pm25": 42206.7725,
+        "count": 4.0
+      },
+      {
+        "timestamp_ist": "2025-12-04T07:00:00+05:30",
+        "station_name": "Shivaji Nagar, Mumbai - BMC",
+        "location_id": 3409511,
+        "pm25": 38372.04,
+        "count": 4.0
+      }
+    ],
+    "station_coverage": {
+      "11606": {
+        "observed_hours": 12101,
+        "max_missing_run_hours": 243,
+        "start": "2025-02-19T02:00:00+05:30",
+        "end": "2026-11-02T22:00:00+05:30"
+      },
+      "11611": {
+        "observed_hours": 12203,
+        "max_missing_run_hours": 243,
+        "start": "2025-02-19T02:00:00+05:30",
+        "end": "2026-11-02T22:00:00+05:30"
+      },
+      "3409510": {
+        "observed_hours": 11552,
+        "max_missing_run_hours": 243,
+        "start": "2025-02-19T02:00:00+05:30",
+        "end": "2026-11-02T22:00:00+05:30"
+      },
+      "3409511": {
+        "observed_hours": 11993,
+        "max_missing_run_hours": 243,
+        "start": "2025-02-19T02:00:00+05:30",
+        "end": "2026-11-02T22:00:00+05:30"
+      }
+    },
+    "last_target_start_by_station": {
+      "11606": "2026-11-02T22:00:00+05:30",
+      "11611": "2026-11-02T22:00:00+05:30",
+      "3409510": "2026-11-02T22:00:00+05:30",
+      "3409511": "2026-11-02T22:00:00+05:30"
+    }
+  },
+  "test": {
+    "rows": 2592,
+    "columns": [
+      "ID",
+      "location_id",
+      "sensor_id",
+      "target_start_ist",
+      "target_end_ist",
+      "scoring_block",
+      "unit",
+      "target_start",
+      "target_end"
+    ],
+    "nulls": {
+      "ID": 0,
+      "location_id": 0,
+      "sensor_id": 0,
+      "target_start_ist": 0,
+      "target_end_ist": 0,
+      "scoring_block": 0,
+      "unit": 0,
+      "target_start": 0,
+      "target_end": 0
+    },
+    "period_start": "2026-10-22T00:00:00+05:30",
+    "period_end": "2026-11-21T00:00:00+05:30",
+    "scoring_block_counts": {
+      "unscored": 1632,
+      "public": 768,
+      "private": 192
+    },
+    "station_rows": {
+      "11606": 648,
+      "11611": 648,
+      "3409510": 648,
+      "3409511": 648
+    }
+  },
+  "submission_ids_match_test_order": true,
+  "station_metadata_rows": 4,
+  "csv_schemas": {
+    "SampleSubmission.csv": {
+      "rows": 2592,
+      "columns": [
+        "ID",
+        "Target"
+      ],
+      "dtypes": {
+        "ID": "str",
+        "Target": "float64"
+      },
+      "nulls": {
+        "ID": 0,
+        "Target": 2592
+      }
+    },
+    "Stations.csv": {
+      "rows": 4,
+      "columns": [
+        "location_id",
+        "station_name",
+        "selected_sensor",
+        "latitude",
+        "longitude",
+        "timezone"
+      ],
+      "dtypes": {
+        "location_id": "int64",
+        "station_name": "str",
+        "selected_sensor": "int64",
+        "latitude": "float64",
+        "longitude": "float64",
+        "timezone": "str"
+      },
+      "nulls": {
+        "location_id": 0,
+        "station_name": 0,
+        "selected_sensor": 0,
+        "latitude": 0,
+        "longitude": 0,
+        "timezone": 0
+      }
+    }
+  },
+  "data_dictionary": {
+    "bytes": 3757,
+    "lines": 72,
+    "section_headings": []
+  },
+  "additional_history_members": [
+    {
+      "name": "History_Mumbai_2018_2020.csv.gz",
+      "rows": 87717,
+      "columns": [
+        "StationId",
+        "Datetime",
+        "PM2.5",
+        "PM10",
+        "NO",
+        "NO2",
+        "NOx",
+        "NH3",
+        "CO",
+        "SO2",
+        "O3",
+        "Benzene",
+        "Toluene",
+        "Xylene",
+        "AQI",
+        "AQI_Bucket",
+        "StationName",
+        "City",
+        "State",
+        "Status",
+        "series_id",
+        "flag_high_1000"
+      ],
+      "dtypes": {
+        "StationId": "str",
+        "Datetime": "str",
+        "PM2.5": "float64",
+        "PM10": "float64",
+        "NO": "float64",
+        "NO2": "float64",
+        "NOx": "float64",
+        "NH3": "float64",
+        "CO": "float64",
+        "SO2": "float64",
+        "O3": "float64",
+        "Benzene": "float64",
+        "Toluene": "float64",
+        "Xylene": "float64",
+        "AQI": "float64",
+        "AQI_Bucket": "str",
+        "StationName": "str",
+        "City": "str",
+        "State": "str",
+        "Status": "str",
+        "series_id": "str",
+        "flag_high_1000": "bool"
+      },
+      "null_counts": {
+        "StationId": 0,
+        "Datetime": 0,
+        "PM2.5": 0,
+        "PM10": 4525,
+        "NO": 2884,
+        "NO2": 4313,
+        "NOx": 2239,
+        "NH3": 17970,
+        "CO": 2429,
+        "SO2": 5119,
+        "O3": 5546,
+        "Benzene": 7021,
+        "Toluene": 87712,
+        "Xylene": 87712,
+        "AQI": 2562,
+        "AQI_Bucket": 2562,
+        "StationName": 0,
+        "City": 0,
+        "State": 0,
+        "Status": 0,
+        "series_id": 0,
+        "flag_high_1000": 0
+      },
+      "sha256_member_bytes": "fd6e875c54a1ec987028accbca55439d7059441f088de12ca3047ea10fb4252a"
+    },
+    {
+      "name": "History_Mumbai_2024.csv.gz",
+      "rows": 216472,
+      "columns": [
+        "station_id",
+        "station_name",
+        "state_name",
+        "city_name",
+        "parameter_name",
+        "unit",
+        "collected_at",
+        "value",
+        "source",
+        "pm25_nonnegative",
+        "flag_negative",
+        "flag_high_500",
+        "series_id",
+        "timestamp_ist",
+        "flag_high_1000"
+      ],
+      "dtypes": {
+        "station_id": "str",
+        "station_name": "str",
+        "state_name": "str",
+        "city_name": "str",
+        "parameter_name": "str",
+        "unit": "str",
+        "collected_at": "str",
+        "value": "float64",
+        "source": "str",
+        "pm25_nonnegative": "float64",
+        "flag_negative": "bool",
+        "flag_high_500": "bool",
+        "series_id": "str",
+        "timestamp_ist": "str",
+        "flag_high_1000": "bool"
+      },
+      "null_counts": {
+        "station_id": 0,
+        "station_name": 0,
+        "state_name": 0,
+        "city_name": 0,
+        "parameter_name": 0,
+        "unit": 0,
+        "collected_at": 0,
+        "value": 0,
+        "source": 0,
+        "pm25_nonnegative": 0,
+        "flag_negative": 0,
+        "flag_high_500": 0,
+        "series_id": 0,
+        "timestamp_ist": 0,
+        "flag_high_1000": 0
+      },
+      "sha256_member_bytes": "ca6311096cbcf543cdf87172542fc8e80488e4e023b894e8677d289f4bd0abd0"
+    },
+    {
+      "name": "Legacy_Observations_2020_2022.csv.gz",
+      "rows": 12452,
+      "columns": [
+        "location_id",
+        "sensors_id",
+        "location",
+        "datetime",
+        "lat",
+        "lon",
+        "parameter",
+        "units",
+        "value",
+        "source_file",
+        "series_id",
+        "flag_high_1000"
+      ],
+      "dtypes": {
+        "location_id": "int64",
+        "sensors_id": "int64",
+        "location": "str",
+        "datetime": "str",
+        "lat": "float64",
+        "lon": "float64",
+        "parameter": "str",
+        "units": "str",
+        "value": "float64",
+        "source_file": "str",
+        "series_id": "str",
+        "flag_high_1000": "bool"
+      },
+      "null_counts": {
+        "location_id": 0,
+        "sensors_id": 0,
+        "location": 0,
+        "datetime": 0,
+        "lat": 0,
+        "lon": 0,
+        "parameter": 0,
+        "units": 0,
+        "value": 0,
+        "source_file": 0,
+        "series_id": 0,
+        "flag_high_1000": 0
+      },
+      "sha256_member_bytes": "5d7fe049e876df81a1108b9f0f589fb9fe1f7cf40e019e3cb9ec651f8d0f41f6"
+    },
+    {
+      "name": "Other_Mumbai_Stations_2025_2026.csv.gz",
+      "rows": 9125,
+      "columns": [
+        "sensor_id",
+        "timestamp_ist",
+        "mean",
+        "count",
+        "available_at",
+        "location_id",
+        "station_name",
+        "series_id",
+        "flag_high_1000"
+      ],
+      "dtypes": {
+        "sensor_id": "int64",
+        "timestamp_ist": "str",
+        "mean": "float64",
+        "count": "int64",
+        "available_at": "str",
+        "location_id": "int64",
+        "station_name": "str",
+        "series_id": "str",
+        "flag_high_1000": "bool"
+      },
+      "null_counts": {
+        "sensor_id": 0,
+        "timestamp_ist": 0,
+        "mean": 0,
+        "count": 0,
+        "available_at": 0,
+        "location_id": 0,
+        "station_name": 0,
+        "series_id": 0,
+        "flag_high_1000": 0
+      },
+      "sha256_member_bytes": "441fe1f27e34d9a1a02dcca938712582ca28b7b1595ccbc55567a8831b911576"
+    },
+    {
+      "name": "XKDR_All_Stations.csv",
+      "rows": 558,
+      "columns": [
+        "station_id",
+        "station_name",
+        "state_name",
+        "city_name",
+        "source",
+        "latitude",
+        "longitude",
+        "first_seen",
+        "last_seen",
+        "n_rows",
+        "parameters"
+      ],
+      "dtypes": {
+        "station_id": "str",
+        "station_name": "str",
+        "state_name": "str",
+        "city_name": "str",
+        "source": "str",
+        "latitude": "float64",
+        "longitude": "float64",
+        "first_seen": "str",
+        "last_seen": "str",
+        "n_rows": "int64",
+        "parameters": "str"
+      },
+      "null_counts": {
+        "station_id": 0,
+        "station_name": 0,
+        "state_name": 62,
+        "city_name": 62,
+        "source": 0,
+        "latitude": 62,
+        "longitude": 62,
+        "first_seen": 0,
+        "last_seen": 0,
+        "n_rows": 0,
+        "parameters": 0
+      },
+      "sha256_member_bytes": "dd921eec1c9a564e6330a2f5f9aa0e4420b290e41167709eb5c51427a316dd3d"
+    },
+    {
+      "name": "Kaggle_All_Stations.csv",
+      "rows": 230,
+      "columns": [
+        "StationId",
+        "StationName",
+        "City",
+        "State",
+        "Status"
+      ],
+      "dtypes": {
+        "StationId": "str",
+        "StationName": "str",
+        "City": "str",
+        "State": "str",
+        "Status": "str"
+      },
+      "null_counts": {
+        "StationId": 0,
+        "StationName": 0,
+        "City": 0,
+        "State": 0,
+        "Status": 97
+      },
+      "sha256_member_bytes": "ce2b7081c3e3c89145613eb724d7d2149ef79c6e16f36bb8a835747a673ed410"
+    },
+    {
+      "name": "HistoryNotes.txt",
+      "bytes": 1765,
+      "sha256_member_bytes": "97d6fa6a9c5761fa6c8a214697a8a7e99cf232ded4950879d3383feca4e0d2f4",
+      "text_preview": "Additional Mumbai history\n\nHistory_Mumbai_2018_2020.csv.gz: 87,717 rows. CPCB-derived historical\nstation data (Rohan Rao dataset). Datetime, StationId, StationName and\nPM2.5 identify the observations. Other pollutant and AQI columns are\nretained. AQI fields are not known future inputs.\n\nHistory_Mumbai_2024.csv.gz: 216,472 rows. XKDR archive with CPCB/AirNow\nseries identifiers. collected_at/timestamp_ist are source timestamps\nin IST; value is PM2.5 concentration. Averaging intervals have not been"
+    }
+  ]
+}

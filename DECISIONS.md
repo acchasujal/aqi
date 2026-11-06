@@ -92,3 +92,25 @@ This is an append-only decision log. Do not rewrite old decisions. If a decision
 - **Confidence:** High on separation and provenance requirements; medium on contract field names pending owner review.
 - **Alternatives considered:** Train a second model in the client; rejected because it would duplicate the ML pipeline and lack reproducible validation evidence. Embed sample predictions; rejected because they could be mistaken for real forecasts.
 - **Consequences / revisit trigger:** Do not build the full frontend or add a public forecast artifact until the owner approves schema version 1.0.0 and the ML pipeline can generate and validate real artifacts.
+
+## DEC-20261106-08 — Keep a 72-hour station median as the inference control
+
+- **Date / owner:** 2026-11-06 / Codex
+- **Status:** Accepted as a simple control; not a final winner
+- **Context:** TASK 003 established a leakage-safe baseline ladder on the current four-station release. Rare extreme targets dominate full-target RMSE, while fold-level variability is much larger than the small differences between baselines.
+- **Decision:** Use the station-specific median of eligible PM observations in the preceding 72 elapsed hours as the reproducible inference control, with fallback to all eligible station history if that window is empty. Keep last observation and the profile baselines as permanent matched controls. Do not introduce clipping or outlier deletion.
+- **Evidence:** `reports/ml_pipeline/evaluation/summary.md`, `EXP-20261106-005`: median72 full-target RMSE was 43.98/490.97/2348.57/2331.27 at nominal gaps 48/72/96/120; last-value was 49.73/491.59/2343.94/2325.63. Fold RMSE standard deviations were 41.97/462.99/2501.12/2564.66 for median72, and extreme targets accounted for 61–100% of its squared error.
+- **Confidence:** Medium that this is a robust simple control; low that it is superior for the final unseen window.
+- **Alternatives considered:** Last-value; wins at longer gaps but has higher clean-range error. Diurnal and hour-of-week profiles; no reliable full-target advantage. Supervised LightGBM; no compatible binary wheel on the validated Windows ARM64 runtime. Weather; external permission/terms remain unresolved.
+- **Consequences / revisit trigger:** Keep the selection provisional. Rerun all baselines on the final advertised Train refresh and retain median72 only if matched full-target OOF evidence remains credible. Never represent this result as private/test performance.
+
+## DEC-20261107-09 — Reject calendar-only ExtraTrees for inference
+
+- **Date / owner:** 2026-11-07 / Codex
+- **Status:** Rejected
+- **Context:** After the baseline ladder was established, one Windows ARM64-compatible supervised candidate was tested to determine whether station and calendar structure alone could improve the history controls.
+- **Decision:** Do not expose the calendar-only ExtraTrees candidate in the production inference command. Keep its code and OOF outputs for reproducibility; the default submission pipeline remains median72.
+- **Evidence:** `reports/ml_pipeline/supervised_evaluation/summary.md`, `EXP-20261107-006`: 22 matched folds per gap. ExtraTrees full-target RMSE was 44.98/84.34/4467.34/4547.22 at gaps 48/72/96/120, worse than the best history control at every gap (18.19/20.96/4451.58/4529.99). Clean-range error was also much worse.
+- **Confidence:** Medium for rejecting this calendar-only model; low for broader conclusions about supervised residual models that include PM history.
+- **Alternatives considered:** Median72/last/EWM controls, which performed better; supervised residual-to-level models, not tested due time and no compatible LightGBM wheel; weather, excluded pending permission.
+- **Consequences / revisit trigger:** Keep the inference CLI limited to the validated baseline. Revisit a supervised model only with a specific PM-history residual hypothesis, a compatible environment, and matched full-target OOF evidence.

@@ -1,0 +1,18 @@
+experiment_id: EXP-20261107-006
+question: Does a regularized station/calendar ExtraTrees model improve history baselines?
+model: ExtraTreesRegressor
+features: station one-hot, cyclic hour, cyclic weekday, cyclic day of year
+target: original pm25 labels, unchanged
+training_availability: interval_end <= fold PM-history cutoff
+seed: 42
+n_estimators: 64
+min_samples_leaf: 40
+max_features: 0.8
+n_jobs: 2
+target_horizon_hours: 48
+pm_history_gaps_hours: [48, 72, 96, 120]
+fold_step_days: 28
+folds_per_gap: 22
+primary_metric: full_target_rmse
+results_dir: reports/ml_pipeline/supervised_evaluation
+decision: rejected_for_inference

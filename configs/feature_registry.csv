@@ -1,0 +1,13 @@
+feature_name,family,source,definition,units,timestamp_key,availability_rule,missing_rule,status,experiment_id,notes
+station_id,station,Stations.csv,categorical location_id,category,target_start,Known for every target row,Not missing,allowed,EXP-20261106-005,No numeric ID magnitude
+hour,calendar,target_start_ist,Local hour of target interval start,hour,target_start,Known at forecast issue,Not missing,candidate,EXP-20261106-005,IST calendar
+day_of_week,calendar,target_start_ist,Local day of week,hour,target_start,Known at forecast issue,Not missing,candidate,EXP-20261106-005,IST calendar
+last_value,PM history,Train.csv,Latest eligible station label,ug/m3,pm_history_cutoff,Interval end <= PM cutoff,No history means no prediction,baseline,EXP-20261106-005,Matched control
+recent_mean_72h,PM history,Train.csv,Mean eligible PM labels in preceding 72 elapsed hours,ug/m3,pm_history_cutoff,Interval end <= PM cutoff,Last value if empty,baseline,EXP-20261106-005,Unmodified history feature
+recent_median_72h,PM history,Train.csv,Median eligible PM labels in preceding 72 elapsed hours,ug/m3,pm_history_cutoff,Interval end <= PM cutoff,All eligible station median if empty,current_control,EXP-20261106-005,Selected only as a provisional inference control
+recent_ewm_72h,PM history,Train.csv,Elapsed-hour weighted mean with 24-hour half-life over 72h,ug/m3,pm_history_cutoff,Interval end <= PM cutoff,Last value if empty,candidate,EXP-20261106-005,Weights decay by elapsed age
+hour_profile_168h,PM history,Train.csv,Mean eligible PM labels for the target local hour in preceding 168 elapsed hours,ug/m3,target_start hour,Interval end <= PM cutoff,Recent window mean fallback,candidate,EXP-20261106-005,Temporal profile
+hour_week_profile_672h,PM history,Train.csv,Mean eligible PM labels for target weekday/hour in preceding 672 elapsed hours,ug/m3,target weekday/hour,Interval end <= PM cutoff,Recent window mean fallback,candidate,EXP-20261106-005,Temporal profile
+mean_72h_clip_300,PM history ablation,Train.csv,Mean of preceding 72h history after upper cap at 300,ug/m3,pm_history_cutoff,Historical features only; validation labels unchanged,Last value if empty,ablation,EXP-20261106-005,Not used by inference
+mean_72h_exclude_gt_1000,PM history ablation,Train.csv,Mean of preceding 72h after excluding values > 1000,ug/m3,pm_history_cutoff,Historical features only; validation labels unchanged,Last value if empty,ablation,EXP-20261106-005,Not used by inference
+previous_calendar_year,seasonal,Train.csv,Same local calendar hour one year before target,ug/m3,target_start,Past observation only; must precede PM cutoff,Median72 fallback,ablation,EXP-20261106-005,No hardcoded seasonal spike
