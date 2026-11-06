@@ -1,4 +1,15 @@
-"""Past-only baseline forecasting and submission checks."""
+"""Past-only baseline forecasting and submission checks.
+
+This module explicitly separates three information clocks:
+  - model_run_time: wall-clock time when the prediction file is generated.
+  - pm_history_cutoff: the latest eligible PM observation timestamp (interval END).
+    Derived from actual Train snapshot contents, not the wall clock.
+  - target interval: specific target_start and target_end for each Test row.
+
+The pm_history_cutoff defaults to the latest available interval-end in the
+Train snapshot, but can be overridden explicitly for reproducibility and for
+simulating specific competition submission snapshots.
+"""
 from __future__ import annotations
 
 import hashlib
@@ -16,43 +27,195 @@ def station_history_cutoffs(train: pd.DataFrame) -> pd.Series:
     return train.groupby("location_id")["target_start"].max()
 
 
-def history_features(grid: pd.DataFrame, *, pm_history_cutoff: pd.Timestamp, station_id: int) -> dict[str, float]:
-    """Create deterministic recent-level features from observations strictly before cutoff."""
+def derive_pm_history_cutoff(train: pd.DataFrame) -> pd.Timestamp:
+    """Derive the PM-history cutoff from the actual Train snapshot.
+
+    The cutoff is the latest interval END across all stations (target_start + 1h).
+    This reflects what is available in the released Train file, NOT the wall clock.
+
+    Returns
+    -------
+    A timezone-aware timestamp (Asia/Kolkata).
+    """
+    latest_start = train["target_start"].max()
+    return latest_start + pd.Timedelta(hours=1)
+
+
+def history_features(
+    grid: pd.DataFrame,
+    *,
+    pm_history_cutoff: pd.Timestamp,
+    station_id: int,
+) -> dict[str, float]:
+    """Create deterministic recent-level features from observations strictly before cutoff.
+
+    Parameters
+    ----------
+    grid:
+        Station-hour indexed DataFrame with pm25 column.
+        Index levels: (location_id, target_start).
+    pm_history_cutoff:
+        The cutoff timestamp (interval END, i.e., target_start + 1h of latest eligible row).
+        Only observations whose target_start + 1h <= pm_history_cutoff are eligible.
+    station_id:
+        Competition location_id.
+    """
     if pm_history_cutoff.tz is None:
         raise ValueError("pm_history_cutoff must be timezone-aware")
     station = grid.xs(station_id, level="location_id").sort_index()
+    # target_start < pm_history_cutoff means the interval [start, start+1h) has ended
+    # before the cutoff (interval end = start+1h <= cutoff => start < cutoff)
     history = station.loc[station.index < pm_history_cutoff]
     if history.empty or history.pm25.notna().sum() == 0:
-        raise ValueError(f"No eligible PM history for station {station_id} before {pm_history_cutoff}")
-    # Train timestamps mark interval starts here. Include intervals whose end
-    # falls in the 72 hours preceding cutoff, including fractional-hour issues.
-    recent = history.loc[history.index > pm_history_cutoff - pd.Timedelta(hours=73), "pm25"]
+        raise ValueError(
+            f"No eligible PM history for station {station_id} before {pm_history_cutoff}"
+        )
+    # 72-hour window: include observations whose interval-end falls within 72h of cutoff.
+    # target_start > cutoff - 73h gives the 72h before cutoff (with 1h buffer for
+    # interval-end vs interval-start semantics).
+    recent = history.loc[
+        history.index > pm_history_cutoff - pd.Timedelta(hours=73), "pm25"
+    ]
     observed = recent.dropna()
-    level = float(observed.median()) if not observed.empty else float(history.pm25.median())
+    level = float(observed.median()) if not observed.empty else float(history.pm25.dropna().median())
     if not np.isfinite(level):
         raise ValueError(f"No finite PM history for station {station_id}")
     return {"median72": level}
 
 
-def predict_test(train: pd.DataFrame, test: pd.DataFrame, *, issue_time: pd.Timestamp) -> pd.DataFrame:
-    """Forecast all rows using the station-specific recent 72-hour median."""
+def predict_test(
+    train: pd.DataFrame,
+    test: pd.DataFrame,
+    *,
+    issue_time: pd.Timestamp,
+    pm_history_cutoff: pd.Timestamp | None = None,
+) -> pd.DataFrame:
+    """Forecast all test rows using the station-specific recent 72-hour median.
+
+    Parameters
+    ----------
+    train:
+        Full training data (from load_data).
+    test:
+        Test data (from load_data).
+    issue_time:
+        Model run time — the wall-clock time when predictions are generated.
+        Must be timezone-aware. Used to filter eligible training labels:
+        a label is eligible if its interval has ended by issue_time
+        (target_start + 1h <= issue_time).
+    pm_history_cutoff:
+        Optional explicit PM-history cutoff (interval END of latest eligible row).
+        When None, defaults to issue_time (the original behaviour).
+        Separating this from issue_time is important when the released Train
+        snapshot is delayed relative to actual model run time.
+    """
     if issue_time.tz is None:
         raise ValueError("issue_time must be timezone-aware")
-    # The hourly label is available only after its interval ends (start + 1h).
+    if pm_history_cutoff is not None and pm_history_cutoff.tz is None:
+        raise ValueError("pm_history_cutoff must be timezone-aware if provided")
+
+    # Labels are available only after their interval ends (target_start + 1h <= issue_time)
     eligible = train.loc[train.target_start + pd.Timedelta(hours=1) <= issue_time]
     if eligible.empty:
         raise ValueError("No PM labels were available by issue_time")
+
+    # Use pm_history_cutoff to gate feature computation; default to issue_time
+    effective_cutoff = pm_history_cutoff if pm_history_cutoff is not None else issue_time
+
     grid = eligible.set_index(["location_id", "target_start"])[["pm25"]]
     out = test[["ID", "location_id", "target_start"]].copy()
     predictions: list[float] = []
     cutoffs = station_history_cutoffs(eligible)
-    features = {int(s): history_features(grid, pm_history_cutoff=issue_time, station_id=int(s)) for s in cutoffs.index}
+    features = {
+        int(s): history_features(grid, pm_history_cutoff=effective_cutoff, station_id=int(s))
+        for s in cutoffs.index
+    }
     missing_stations = {int(s) for s in test.location_id.unique()} - set(features)
     if missing_stations:
-        raise ValueError(f"No eligible PM history by issue_time for test stations: {sorted(missing_stations)}")
+        raise ValueError(
+            f"No eligible PM history by pm_history_cutoff for test stations: "
+            f"{sorted(missing_stations)}"
+        )
     for row in out.itertuples(index=False):
         feat = features[int(row.location_id)]
         predictions.append(max(0.0, float(feat["median72"])))
+    out["Target"] = predictions
+    validate_submission(out[["ID", "Target"]], test)
+    return out[["ID", "Target"]]
+
+
+def predict_test_with_hist24_blend(
+    train: pd.DataFrame,
+    test: pd.DataFrame,
+    history_2024: pd.DataFrame,
+    *,
+    issue_time: pd.Timestamp,
+    pm_history_cutoff: pd.Timestamp | None = None,
+    blend_weight_hist24: float = 0.5,
+) -> pd.DataFrame:
+    """Forecast using a 50:50 blend of median72 and 2024 seasonal same-hour feature.
+
+    Falls back to median72 if hist24 is unavailable for a station.
+
+    Parameters
+    ----------
+    history_2024:
+        Output of historical_archive.load_2024_history().
+    blend_weight_hist24:
+        Weight given to hist24_same_hour (1 - weight goes to median72).
+    """
+    from mumbai_pm25.historical_archive import STATION_NAME_MAP, build_seasonal_features
+
+    if issue_time.tz is None:
+        raise ValueError("issue_time must be timezone-aware")
+
+    effective_cutoff = pm_history_cutoff if pm_history_cutoff is not None else issue_time
+
+    eligible = train.loc[train.target_start + pd.Timedelta(hours=1) <= issue_time]
+    if eligible.empty:
+        raise ValueError("No PM labels were available by issue_time")
+
+    grid = eligible.set_index(["location_id", "target_start"])[["pm25"]]
+    cutoffs = station_history_cutoffs(eligible)
+    median72_feat = {
+        int(s): history_features(grid, pm_history_cutoff=effective_cutoff, station_id=int(s))
+        for s in cutoffs.index
+    }
+    missing_stations = {int(s) for s in test.location_id.unique()} - set(median72_feat)
+    if missing_stations:
+        raise ValueError(
+            f"No eligible PM history for test stations: {sorted(missing_stations)}"
+        )
+
+    # Compute seasonal features for all test rows
+    target_df = test[["location_id", "target_start"]].copy()
+    seasonal = build_seasonal_features(
+        history_2024,
+        target_df,
+        station_map=STATION_NAME_MAP,
+        window_days=14,
+        min_obs=3,
+    )
+
+    out = test[["ID", "location_id", "target_start"]].copy()
+    predictions: list[float] = []
+    for i, row in enumerate(out.itertuples(index=False)):
+        loc_id = int(row.location_id)
+        m72 = max(0.0, float(median72_feat[loc_id]["median72"]))
+
+        # seasonal feature index aligns with test DataFrame index
+        idx = test.index[i]
+        sh = seasonal.loc[idx, "hist24_same_hour_mean"] if idx in seasonal.index else np.nan
+
+        if np.isfinite(sh):
+            sh_val = max(0.0, float(sh))
+            blended = (1 - blend_weight_hist24) * m72 + blend_weight_hist24 * sh_val
+        else:
+            # No seasonal data: fall back to median72
+            blended = m72
+
+        predictions.append(max(0.0, blended))
+
     out["Target"] = predictions
     validate_submission(out[["ID", "Target"]], test)
     return out[["ID", "Target"]]
@@ -68,8 +231,18 @@ def validate_submission(prediction: pd.DataFrame, test: pd.DataFrame) -> None:
         raise ValueError("Predictions must be finite, non-negative, and complete")
 
 
-def write_manifest(path: Path, *, train_path: Path, test_path: Path, issue_time: pd.Timestamp,
-                   train: pd.DataFrame, stations: pd.DataFrame, model: str = "median72") -> None:
+def write_manifest(
+    path: Path,
+    *,
+    train_path: Path,
+    test_path: Path,
+    issue_time: pd.Timestamp,
+    pm_history_cutoff: pd.Timestamp | None,
+    train: pd.DataFrame,
+    stations: pd.DataFrame,
+    model: str = "median72",
+    extra_sources: list[Path] | None = None,
+) -> None:
     """Write a compact reproducibility manifest beside generated predictions."""
     def sha256(p: Path) -> str:
         digest = hashlib.sha256()
@@ -77,22 +250,52 @@ def write_manifest(path: Path, *, train_path: Path, test_path: Path, issue_time:
             for chunk in iter(lambda: stream.read(1024 * 1024), b""):
                 digest.update(chunk)
         return digest.hexdigest()
+
     eligible = train.loc[train.target_start + pd.Timedelta(hours=1) <= issue_time]
     cutoffs = eligible.groupby("location_id").target_start.max() + pd.Timedelta(hours=1)
+    effective_cutoff = pm_history_cutoff if pm_history_cutoff is not None else issue_time
+
     git_root = Path(__file__).resolve().parents[2]
-    git_commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=git_root, check=True,
-                                capture_output=True, text=True).stdout.strip()
-    inputs = [train_path, test_path, train_path.with_name("SampleSubmission.csv"),
-              train_path.with_name("Stations.csv"), train_path.with_name("DataDictionary.txt")]
-    lines = [f"model: {model}", f"issue_time: {issue_time.isoformat()}",
-             f"git_commit: {git_commit}", f"python: {sys.version.split()[0]}",
-             f"platform: {platform.platform()}", f"pandas: {pd.__version__}",
-             f"numpy: {np.__version__}", "weather: disabled", "history_window_hours: 72",
-             "station_pm_history_cutoffs:"]
-    lines.extend(f"  {int(sid)}: {cutoff.isoformat()}" for sid, cutoff in cutoffs.items())
+    try:
+        git_commit = subprocess.run(
+            ["git", "rev-parse", "HEAD"], cwd=git_root, check=True,
+            capture_output=True, text=True,
+        ).stdout.strip()
+    except (subprocess.SubprocessError, FileNotFoundError, OSError):
+        git_commit = "unavailable"
+
+    inputs = [
+        train_path, test_path,
+        train_path.with_name("SampleSubmission.csv"),
+        train_path.with_name("Stations.csv"),
+        train_path.with_name("DataDictionary.txt"),
+        train_path.with_name("AdditionalHistory.zip"),
+    ]
+    if extra_sources:
+        inputs.extend(extra_sources)
+
+    lines = [
+        f"model: {model}",
+        f"model_run_time: {issue_time.isoformat()}",
+        f"pm_history_cutoff_global: {effective_cutoff.isoformat()}",
+        f"git_commit: {git_commit}",
+        f"python: {sys.version.split()[0]}",
+        f"platform: {platform.platform()}",
+        f"pandas: {pd.__version__}",
+        f"numpy: {np.__version__}",
+        "weather: disabled",
+        "history_window_hours: 72",
+        "seasonal_archive: History_Mumbai_2024.csv.gz (cpcb_caaqm, name-matched only)",
+        "station_pm_history_cutoffs:",
+    ]
+    lines.extend(
+        f"  {int(sid)}: {cutoff.isoformat()}" for sid, cutoff in cutoffs.items()
+    )
     station_names = stations.set_index("location_id").station_name
     lines.append("station_names:")
-    lines.extend(f"  {int(sid)}: {station_names.loc[sid]}" for sid in cutoffs.index)
+    lines.extend(
+        f"  {int(sid)}: {station_names.loc[sid]}" for sid in cutoffs.index
+    )
     lines.append("input_sha256:")
-    lines.extend(f"  {p.name}: {sha256(p)}" for p in inputs)
+    lines.extend(f"  {p.name}: {sha256(p)}" for p in inputs if p.is_file())
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")

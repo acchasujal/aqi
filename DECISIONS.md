@@ -114,3 +114,20 @@ This is an append-only decision log. Do not rewrite old decisions. If a decision
 - **Confidence:** Medium for rejecting this calendar-only model; low for broader conclusions about supervised residual models that include PM history.
 - **Alternatives considered:** Median72/last/EWM controls, which performed better; supervised residual-to-level models, not tested due time and no compatible LightGBM wheel; weather, excluded pending permission.
 - **Consequences / revisit trigger:** Keep the inference CLI limited to the validated baseline. Revisit a supervised model only with a specific PM-history residual hypothesis, a compatible environment, and matched full-target OOF evidence.
+
+## DEC-20261107-10 — Adopt 2024 seasonal history blend (hist24_blend50_median72) as production model
+
+- **Date / owner:** 2026-11-07 / Lead ML Researcher & Forecasting Engineer
+- **Status:** Accepted (supersedes DEC-20261106-08 median72 as default submission model)
+- **Context:** TASK 004 audited `AdditionalHistory.zip` and tested whether 2024 same-station climatology improves forecasts under stale PM history conditions.
+- **Decision:** Use a 50:50 blend of the station-specific recent 72-hour median and 2024 same-station, same-hour-of-day seasonal climatology (`hist24_blend50_median72`) as the production forecasting model. Filter `History_Mumbai_2024.csv.gz` to `source == 'cpcb_caaqm'` only. If seasonal data is unavailable, fall back transparently to `median72`. Reject all other archive members from target-station feature generation.
+- **Evidence:** `reports/ml_pipeline/seasonal_history/REPORT_EXP_20261107_007.md`, `EXP-20261107-007`:
+  - Full-target RMSE at gap 48h improved from 43.98 (median72) to 43.12 (blend).
+  - Full-target RMSE at gap 72h improved from 490.97 (median72) to 490.90 (blend).
+  - At gap 96h and 120h, full RMSE is virtually tied (2348.74 vs 2348.57, diff 0.17 relative to fold SD >2500).
+  - Clean-range RMSE (<500) improved across ALL gaps: 20.94 vs 22.66 (gap 48h), 20.39 vs 22.23 (gap 72h), 21.00 vs 22.74 (gap 96h), 20.29 vs 21.93 (gap 120h).
+  - MAE improved across ALL gaps: 12.86 vs 13.79 (gap 48h), 18.48 vs 19.50 (gap 72h), 48.54 vs 49.64 (gap 96h), 48.67 vs 49.90 (gap 120h).
+  - At gap 48h, the blend beats median72 across **all 4 stations individually** and across **all 4 forecast horizon buckets**.
+- **Confidence:** High for gap 48h and 72h regimes; Medium for longer horizons where rare extreme targets dominate RMSE.
+- **Alternatives considered:** Pure `hist24_same_hour` without blend (poorer level tracking at gap 72h: 494.29 vs 490.90); standalone `median72` (fails to exploit diurnal cycle; higher MAE and clean RMSE); calendar-only ExtraTrees (already rejected in DEC-20261107-09).
+- **Consequences / revisit trigger:** Update `train_predict.py` to support `hist24_blend50_median72` and explicit PM-history cutoffs. Re-evaluate on final 10 November Train refresh.
