@@ -316,6 +316,9 @@ def predict_test_ensemble(
     elif ensemble_type == "robust":
         # 50% CatBoost log1p + 50% Statistical Blend
         final_preds = 0.50 * p_cb + 0.50 * p_stat
+    elif ensemble_type == "balanced":
+        # 20% CatBoost log1p + 80% Statistical Blend (Strategy D)
+        final_preds = 0.20 * p_cb + 0.80 * p_stat
     else:
         raise ValueError(f"Unknown ensemble type: {ensemble_type}")
 

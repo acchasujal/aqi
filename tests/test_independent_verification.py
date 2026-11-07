@@ -191,10 +191,14 @@ def test_training_origins_support_conservative_reporting_delay(challenge_data):
 
 def test_candidate_submissions_compliance():
     sample = pd.read_csv(DATA_DIR / "SampleSubmission.csv")
-    sub_a_path = ROOT / "artifacts" / "submissions" / "submission_A_accuracy_ensemble.csv"
-    sub_b_path = ROOT / "artifacts" / "submissions" / "submission_B_robust_ensemble.csv"
+    sub_paths = [
+        ROOT / "artifacts" / "submissions" / "submission_A_accuracy_ensemble.csv",
+        ROOT / "artifacts" / "submissions" / "submission_B_robust_ensemble.csv",
+        ROOT / "artifacts" / "submissions" / "submission_C_statistical_seasonal.csv",
+        ROOT / "artifacts" / "submissions" / "submission_D_balanced_ensemble.csv",
+    ]
 
-    for path in [sub_a_path, sub_b_path]:
+    for path in sub_paths:
         assert path.is_file(), f"Submission file {path} missing"
         sub = pd.read_csv(path)
         assert len(sub) == 2592, f"Expected 2592 rows in {path}, got {len(sub)}"
