@@ -136,6 +136,37 @@ def test_missing_targets_are_excluded_not_imputed(challenge_data):
     assert not (df_valid["y"] == 0.0).all()
 
 
+def test_supervised_training_examples_strictly_precede_cutoff_and_validation(challenge_data):
+    """Enforce Task 6 availability rule:
+    For every training example, target_end <= pm_history_cutoff < target_start.
+    """
+    train, _, _, _, _, _ = challenge_data
+    folds = generate_fixed_target_folds(
+        train, gap_hours=48, horizon_hours=48, step_days=21, holdout_hours=48
+    )
+    for fold in folds:
+        hist_origins = pd.date_range(
+            train.target_start.min() + pd.Timedelta(days=21),
+            fold.pm_history_cutoff - pd.Timedelta(hours=48),
+            freq="72h",
+            tz="Asia/Kolkata",
+        )
+        clean_origins = [
+            orig for orig in hist_origins
+            if orig + pd.Timedelta(hours=48) < fold.target_start or orig > fold.target_end
+        ]
+        for orig in clean_origins:
+            for h in range(1, 49):
+                target_end = orig + pd.Timedelta(hours=h)
+                # Strict check: target_end <= fold.pm_history_cutoff
+                assert target_end <= fold.pm_history_cutoff, (
+                    f"Training target end {target_end} exceeds simulated cutoff {fold.pm_history_cutoff}"
+                )
+                assert target_end < fold.target_start, (
+                    f"Training target end {target_end} enters validation target window {fold.target_start}"
+                )
+
+
 def test_candidate_submissions_compliance():
     sample = pd.read_csv(DATA_DIR / "SampleSubmission.csv")
     sub_a_path = ROOT / "artifacts" / "submissions" / "submission_A_accuracy_ensemble.csv"
