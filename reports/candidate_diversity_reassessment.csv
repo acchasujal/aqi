@@ -1,0 +1,161 @@
+section,group,model,corr_with_catboost_res,corr_with_stat_blend_res,rmse,mae,bias,paired_delta_vs_cb,paired_delta_vs_cand_a
+residual_correlation,all_folds (n=1371),CatBoost_log1p,1.0,0.914,,,,,
+residual_correlation,all_folds (n=1371),LightGBM_log1p,0.9693,0.8958,,,,,
+residual_correlation,all_folds (n=1371),XGBoost_log1p,0.9661,0.9024,,,,,
+residual_correlation,all_folds (n=1371),Statistical_Blend50,0.914,1.0,,,,,
+residual_correlation,all_folds (n=1371),Candidate_A (83% CB + 17% Stat),0.9979,0.9382,,,,,
+residual_correlation,all_folds (n=1371),Candidate_B (50% CB + 50% Stat),0.9804,0.976,,,,,
+residual_correlation,all_folds (n=1371),Tree_Blend (50% CB + 50% LGB),0.9922,0.9119,,,,,
+residual_correlation,all_folds (n=1371),Multi_Ensemble (40% CB + 40% LGB + 20% Stat),0.991,0.9407,,,,,
+regime_performance,Monsoon_Autumn (5 folds) (n=690),CatBoost_log1p,,,15.1414,11.06,-2.9923,0.0,0.2514
+regime_performance,Monsoon_Autumn (5 folds) (n=690),LightGBM_log1p,,,17.9675,12.8704,-6.5637,2.8261,3.0775
+regime_performance,Monsoon_Autumn (5 folds) (n=690),XGBoost_log1p,,,16.3857,11.7833,-4.8117,1.2443,1.4957
+regime_performance,Monsoon_Autumn (5 folds) (n=690),Statistical_Blend50,,,15.4128,11.7837,1.2804,0.2714,0.5228
+regime_performance,Monsoon_Autumn (5 folds) (n=690),Candidate_A (83% CB + 17% Stat),,,14.89,10.9419,-2.266,-0.2514,0.0
+regime_performance,Monsoon_Autumn (5 folds) (n=690),Candidate_B (50% CB + 50% Stat),,,14.749,10.9655,-0.8559,-0.3924,-0.141
+regime_performance,Monsoon_Autumn (5 folds) (n=690),Tree_Blend (50% CB + 50% LGB),,,16.3124,11.8292,-4.778,1.1709,1.4223
+regime_performance,Monsoon_Autumn (5 folds) (n=690),Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,15.7027,11.5304,-3.5663,0.5612,0.8126
+regime_performance,Winter_Transition (4 folds) (n=626),CatBoost_log1p,,,46.6678,22.8794,-18.6277,0.0,1.9509
+regime_performance,Winter_Transition (4 folds) (n=626),LightGBM_log1p,,,47.3689,23.5465,-19.8025,0.7011,2.6521
+regime_performance,Winter_Transition (4 folds) (n=626),XGBoost_log1p,,,47.0443,23.8537,-18.6837,0.3765,2.3274
+regime_performance,Winter_Transition (4 folds) (n=626),Statistical_Blend50,,,39.2766,16.7751,-2.5509,-7.3912,-5.4403
+regime_performance,Winter_Transition (4 folds) (n=626),Candidate_A (83% CB + 17% Stat),,,44.7169,20.7951,-15.8946,-1.9509,0.0
+regime_performance,Winter_Transition (4 folds) (n=626),Candidate_B (50% CB + 50% Stat),,,41.662,17.7944,-10.5893,-5.0058,-3.0549
+regime_performance,Winter_Transition (4 folds) (n=626),Tree_Blend (50% CB + 50% LGB),,,46.7376,22.7701,-19.2151,0.0699,2.0208
+regime_performance,Winter_Transition (4 folds) (n=626),Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,44.3925,20.2454,-15.8823,-2.2752,-0.3243
+regime_performance,All_Regimes_Pooled (9 folds) (n=1316),CatBoost_log1p,,,34.0028,16.6823,-10.4298,0.0,1.3313
+regime_performance,All_Regimes_Pooled (9 folds) (n=1316),LightGBM_log1p,,,35.1655,17.9489,-12.8612,1.1627,2.494
+regime_performance,All_Regimes_Pooled (9 folds) (n=1316),XGBoost_log1p,,,34.5477,17.525,-11.4104,0.5449,1.8762
+regime_performance,All_Regimes_Pooled (9 folds) (n=1316),Statistical_Blend50,,,29.2979,14.158,-0.5421,-4.7049,-3.3736
+regime_performance,All_Regimes_Pooled (9 folds) (n=1316),Candidate_A (83% CB + 17% Stat),,,32.6715,15.6289,-8.7489,-1.3313,0.0
+regime_performance,All_Regimes_Pooled (9 folds) (n=1316),Candidate_B (50% CB + 50% Stat),,,30.6547,14.2139,-5.486,-3.3481,-2.0168
+regime_performance,All_Regimes_Pooled (9 folds) (n=1316),Tree_Blend (50% CB + 50% LGB),,,34.3308,17.0336,-11.6455,0.328,1.6593
+regime_performance,All_Regimes_Pooled (9 folds) (n=1316),Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,32.6605,15.676,-9.4248,-1.3422,-0.0109
+per_fold_paired,fold_24_20260806,CatBoost_log1p,,,4.9279,3.733,0.8505,0.0,-0.1573
+per_fold_paired,fold_24_20260806,LightGBM_log1p,,,5.726,4.5097,0.6087,0.7981,0.6409
+per_fold_paired,fold_24_20260806,XGBoost_log1p,,,5.6918,4.4643,1.0689,0.7639,0.6067
+per_fold_paired,fold_24_20260806,Statistical_Blend50,,,6.6424,4.9999,-0.2691,1.7145,1.5572
+per_fold_paired,fold_24_20260806,Candidate_A (83% CB + 17% Stat),,,5.0852,3.8104,0.6601,0.1573,0.0
+per_fold_paired,fold_24_20260806,Candidate_B (50% CB + 50% Stat),,,5.5694,4.1224,0.2907,0.6415,0.4842
+per_fold_paired,fold_24_20260806,Tree_Blend (50% CB + 50% LGB),,,5.2411,4.0516,0.7296,0.3132,0.1559
+per_fold_paired,fold_24_20260806,Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,5.3998,4.1137,0.5298,0.4719,0.3147
+per_fold_paired,fold_25_20260827,CatBoost_log1p,,,7.8947,7.0917,7.0917,0.0,0.0944
+per_fold_paired,fold_25_20260827,LightGBM_log1p,,,7.1543,5.9931,5.7727,-0.7404,-0.6459
+per_fold_paired,fold_25_20260827,XGBoost_log1p,,,6.8174,5.7828,5.6207,-1.0773,-0.9828
+per_fold_paired,fold_25_20260827,Statistical_Blend50,,,8.4727,7.0283,6.7433,0.5779,0.6724
+per_fold_paired,fold_25_20260827,Candidate_A (83% CB + 17% Stat),,,7.8003,7.0789,7.0325,-0.0944,0.0
+per_fold_paired,fold_25_20260827,Candidate_B (50% CB + 50% Stat),,,7.8473,7.0588,6.9175,-0.0474,0.0471
+per_fold_paired,fold_25_20260827,Tree_Blend (50% CB + 50% LGB),,,7.4682,6.5412,6.4322,-0.4265,-0.332
+per_fold_paired,fold_25_20260827,Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,7.4545,6.6386,6.4944,-0.4402,-0.3457
+per_fold_paired,fold_26_20260917,CatBoost_log1p,,,6.3916,5.1858,2.1879,0.0,-0.2222
+per_fold_paired,fold_26_20260917,LightGBM_log1p,,,7.7419,6.1831,3.5872,1.3503,1.128
+per_fold_paired,fold_26_20260917,XGBoost_log1p,,,7.1092,5.747,3.2473,0.7175,0.4953
+per_fold_paired,fold_26_20260917,Statistical_Blend50,,,9.4866,7.9546,6.1697,3.095,2.8727
+per_fold_paired,fold_26_20260917,Candidate_A (83% CB + 17% Stat),,,6.6139,5.4476,2.8648,0.2222,0.0
+per_fold_paired,fold_26_20260917,Candidate_B (50% CB + 50% Stat),,,7.4662,6.2053,4.1788,1.0745,0.8523
+per_fold_paired,fold_26_20260917,Tree_Blend (50% CB + 50% LGB),,,6.9665,5.6326,2.8875,0.5749,0.3527
+per_fold_paired,fold_26_20260917,Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,7.1896,5.8626,3.544,0.798,0.5758
+per_fold_paired,fold_27_20261008,CatBoost_log1p,,,23.9145,21.1466,-21.1466,0.0,0.9218
+per_fold_paired,fold_27_20261008,LightGBM_log1p,,,31.1323,28.6517,-28.6517,7.2177,8.1396
+per_fold_paired,fold_27_20261008,XGBoost_log1p,,,28.0769,25.5073,-25.5073,4.1624,5.0842
+per_fold_paired,fold_27_20261008,Statistical_Blend50,,,19.3695,16.3178,-15.8162,-4.545,-3.6232
+per_fold_paired,fold_27_20261008,Candidate_A (83% CB + 17% Stat),,,22.9927,20.2405,-20.2405,-0.9218,0.0
+per_fold_paired,fold_27_20261008,Candidate_B (50% CB + 50% Stat),,,21.3585,18.4854,-18.4814,-2.5561,-1.6342
+per_fold_paired,fold_27_20261008,Tree_Blend (50% CB + 50% LGB),,,27.4709,24.8992,-24.8992,3.5564,4.4782
+per_fold_paired,fold_27_20261008,Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,25.669,23.0826,-23.0826,1.7545,2.6763
+per_fold_paired,fold_28_20261029,CatBoost_log1p,,,14.6657,11.7094,7.2301,0.0,-0.4503
+per_fold_paired,fold_28_20261029,LightGBM_log1p,,,11.3705,9.3336,0.2588,-3.2952,-3.7455
+per_fold_paired,fold_28_20261029,XGBoost_log1p,,,11.0444,8.967,3.8051,-3.6213,-4.0716
+per_fold_paired,fold_28_20261029,Statistical_Blend50,,,19.9133,16.1464,15.0859,5.2476,4.7973
+per_fold_paired,fold_28_20261029,Candidate_A (83% CB + 17% Stat),,,15.116,11.9119,8.5656,0.4503,0.0
+per_fold_paired,fold_28_20261029,Candidate_B (50% CB + 50% Stat),,,16.5806,12.9333,11.158,1.9149,1.4646
+per_fold_paired,fold_28_20261029,Tree_Blend (50% CB + 50% LGB),,,12.3688,10.0857,3.7444,-2.2969,-2.7472
+per_fold_paired,fold_28_20261029,Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,13.2538,10.589,6.0127,-1.4119,-1.8622
+per_fold_paired,fold_nov_2025_calendar_match,CatBoost_log1p,,,90.6711,40.7507,-39.8901,0.0,3.4573
+per_fold_paired,fold_nov_2025_calendar_match,LightGBM_log1p,,,92.8488,44.3993,-43.4306,2.1778,5.6351
+per_fold_paired,fold_nov_2025_calendar_match,XGBoost_log1p,,,90.8948,40.7243,-37.0483,0.2237,3.6811
+per_fold_paired,fold_nov_2025_calendar_match,Statistical_Blend50,,,77.8632,28.1623,-2.5123,-12.8079,-9.3506
+per_fold_paired,fold_nov_2025_calendar_match,Candidate_A (83% CB + 17% Stat),,,87.2137,35.2454,-33.5359,-3.4573,0.0
+per_fold_paired,fold_nov_2025_calendar_match,Candidate_B (50% CB + 50% Stat),,,81.8686,27.8578,-21.2012,-8.8025,-5.3452
+per_fold_paired,fold_nov_2025_calendar_match,Tree_Blend (50% CB + 50% LGB),,,91.7072,42.575,-41.6603,1.0361,4.4934
+per_fold_paired,fold_nov_2025_calendar_match,Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,87.4151,35.8256,-33.8307,-3.256,0.2014
+per_fold_paired,fold_dec_2025_winter,CatBoost_log1p,,,16.8276,12.9644,0.5073,0.0,-0.1
+per_fold_paired,fold_dec_2025_winter,LightGBM_log1p,,,24.1688,20.6218,-13.0651,7.3412,7.2412
+per_fold_paired,fold_dec_2025_winter,XGBoost_log1p,,,26.2878,23.719,-9.9481,9.4602,9.3602
+per_fold_paired,fold_dec_2025_winter,Statistical_Blend50,,,18.3322,14.4307,4.7266,1.5046,1.4046
+per_fold_paired,fold_dec_2025_winter,Candidate_A (83% CB + 17% Stat),,,16.9276,13.0506,1.2246,0.1,0.0
+per_fold_paired,fold_dec_2025_winter,Candidate_B (50% CB + 50% Stat),,,17.3109,13.4541,2.6169,0.4833,0.3833
+per_fold_paired,fold_dec_2025_winter,Tree_Blend (50% CB + 50% LGB),,,18.5201,14.9043,-6.2789,1.6924,1.5924
+per_fold_paired,fold_dec_2025_winter,Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,17.5505,14.0227,-4.0778,0.7228,0.6228
+per_fold_paired,fold_jan_2026_early,CatBoost_log1p,,,27.6044,25.103,-23.7538,0.0,2.2244
+per_fold_paired,fold_jan_2026_early,LightGBM_log1p,,,23.1709,20.6664,-18.6414,-4.4335,-2.2092
+per_fold_paired,fold_jan_2026_early,XGBoost_log1p,,,24.583,22.3012,-21.5037,-3.0215,-0.7971
+per_fold_paired,fold_jan_2026_early,Statistical_Blend50,,,16.3182,14.5552,-8.972,-11.2863,-9.0619
+per_fold_paired,fold_jan_2026_early,Candidate_A (83% CB + 17% Stat),,,25.3801,22.9855,-21.2409,-2.2244,0.0
+per_fold_paired,fold_jan_2026_early,Candidate_B (50% CB + 50% Stat),,,21.3223,19.1357,-16.3629,-6.2822,-4.0578
+per_fold_paired,fold_jan_2026_early,Tree_Blend (50% CB + 50% LGB),,,25.2516,22.8779,-21.1976,-2.3529,-0.1285
+per_fold_paired,fold_jan_2026_early,Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,23.1591,20.8656,-18.7525,-4.4453,-2.2209
+per_fold_paired,fold_jan_2026_late,CatBoost_log1p,,,17.6832,14.1207,-10.8871,0.0,0.9829
+per_fold_paired,fold_jan_2026_late,LightGBM_log1p,,,15.7147,12.6525,-7.7897,-1.9685,-0.9856
+per_fold_paired,fold_jan_2026_late,XGBoost_log1p,,,16.5245,12.7352,-8.1544,-1.1587,-0.1758
+per_fold_paired,fold_jan_2026_late,Statistical_Blend50,,,14.593,11.9742,-1.3851,-3.0901,-2.1073
+per_fold_paired,fold_jan_2026_late,Candidate_A (83% CB + 17% Stat),,,16.7003,13.1421,-9.2718,-0.9829,0.0
+per_fold_paired,fold_jan_2026_late,Candidate_B (50% CB + 50% Stat),,,15.264,11.9131,-6.1361,-2.4191,-1.4363
+per_fold_paired,fold_jan_2026_late,Tree_Blend (50% CB + 50% LGB),,,16.4915,13.1892,-9.3384,-1.1916,-0.2088
+per_fold_paired,fold_jan_2026_late,Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,15.6036,12.2118,-7.7477,-2.0795,-1.0967
+per_station,station_11606 (n=332),CatBoost_log1p,,,16.6803,13.1636,-7.8969,0.0,0.811
+per_station,station_11606 (n=332),LightGBM_log1p,,,16.8302,13.6009,-8.8005,0.1499,0.9609
+per_station,station_11606 (n=332),XGBoost_log1p,,,17.376,14.2001,-6.7968,0.6957,1.5068
+per_station,station_11606 (n=332),Statistical_Blend50,,,13.2652,10.9121,-4.5467,-3.4152,-2.6041
+per_station,station_11606 (n=332),Candidate_A (83% CB + 17% Stat),,,15.8693,12.6639,-7.3274,-0.811,0.0
+per_station,station_11606 (n=332),Candidate_B (50% CB + 50% Stat),,,14.5303,11.8088,-6.2218,-2.15,-1.339
+per_station,station_11606 (n=332),Tree_Blend (50% CB + 50% LGB),,,16.2772,13.21,-8.3487,-0.4031,0.4079
+per_station,station_11606 (n=332),Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,15.3779,12.5869,-7.5883,-1.3025,-0.4914
+per_station,station_11611 (n=348),CatBoost_log1p,,,21.1947,16.0611,-10.9562,0.0,1.3666
+per_station,station_11611 (n=348),LightGBM_log1p,,,23.7377,17.9323,-14.8988,2.5429,3.9096
+per_station,station_11611 (n=348),XGBoost_log1p,,,22.4861,16.9085,-13.5236,1.2913,2.658
+per_station,station_11611 (n=348),Statistical_Blend50,,,17.1852,13.6246,-0.1573,-4.0095,-2.6429
+per_station,station_11611 (n=348),Candidate_A (83% CB + 17% Stat),,,19.8281,15.0647,-9.1204,-1.3666,0.0
+per_station,station_11611 (n=348),Candidate_B (50% CB + 50% Stat),,,17.8688,13.7934,-5.5567,-3.326,-1.9593
+per_station,station_11611 (n=348),Tree_Blend (50% CB + 50% LGB),,,21.911,16.3326,-12.9275,0.7163,2.0829
+per_station,station_11611 (n=348),Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,20.0566,14.9961,-10.3735,-1.1381,0.2285
+per_station,station_3409510 (n=325),CatBoost_log1p,,,19.5273,15.148,-6.4447,0.0,0.9163
+per_station,station_3409510 (n=325),LightGBM_log1p,,,21.181,16.8368,-10.1048,1.6537,2.57
+per_station,station_3409510 (n=325),XGBoost_log1p,,,20.2911,16.1171,-8.0153,0.7638,1.6801
+per_station,station_3409510 (n=325),Statistical_Blend50,,,18.3281,14.3749,3.1347,-1.1992,-0.2829
+per_station,station_3409510 (n=325),Candidate_A (83% CB + 17% Stat),,,18.611,14.3016,-4.8162,-0.9163,0.0
+per_station,station_3409510 (n=325),Candidate_B (50% CB + 50% Stat),,,17.6174,13.8859,-1.655,-1.9099,-0.9936
+per_station,station_3409510 (n=325),Tree_Blend (50% CB + 50% LGB),,,19.8351,15.8809,-8.2747,0.3078,1.2241
+per_station,station_3409510 (n=325),Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,18.5987,14.7041,-5.9929,-0.9286,-0.0123
+per_station,station_3409511 (n=311),CatBoost_log1p,,,60.7805,22.737,-16.7093,0.0,2.0771
+per_station,station_3409511 (n=311),LightGBM_log1p,,,61.8952,23.7711,-17.7965,1.1147,3.1917
+per_station,station_3409511 (n=311),XGBoost_log1p,,,61.0911,23.2355,-17.5188,0.3107,2.3877
+per_station,station_3409511 (n=311),Statistical_Blend50,,,52.5627,17.9933,-0.5399,-8.2178,-6.1407
+per_station,station_3409511 (n=311),Candidate_A (83% CB + 17% Stat),,,58.7034,20.8126,-13.9605,-2.0771,0.0
+per_station,station_3409511 (n=311),Candidate_B (50% CB + 50% Stat),,,55.402,17.5947,-8.6246,-5.3784,-3.3014
+per_station,station_3409511 (n=311),Tree_Blend (50% CB + 50% LGB),,,61.287,23.1044,-17.2529,0.5065,2.5835
+per_station,station_3409511 (n=311),Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,58.7345,20.7503,-13.9103,-2.0459,0.0311
+pollution_regime,Clean (y < 50) (n=846),CatBoost_log1p,,,11.1546,8.6092,1.0915,0.0,0.0314
+pollution_regime,Clean (y < 50) (n=846),LightGBM_log1p,,,12.7141,9.9732,-2.1111,1.5596,1.591
+pollution_regime,Clean (y < 50) (n=846),XGBoost_log1p,,,12.5197,9.732,-0.3113,1.3651,1.3965
+pollution_regime,Clean (y < 50) (n=846),Statistical_Blend50,,,15.0297,11.6803,7.4491,3.8752,3.9065
+pollution_regime,Clean (y < 50) (n=846),Candidate_A (83% CB + 17% Stat),,,11.1232,8.497,2.1723,-0.0314,0.0
+pollution_regime,Clean (y < 50) (n=846),Candidate_B (50% CB + 50% Stat),,,11.9731,9.1751,4.2703,0.8186,0.85
+pollution_regime,Clean (y < 50) (n=846),Tree_Blend (50% CB + 50% LGB),,,11.2924,8.877,-0.5098,0.1378,0.1692
+pollution_regime,Clean (y < 50) (n=846),Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,11.0778,8.6179,1.082,-0.0767,-0.0453
+pollution_regime,Moderate (50 <= y < 100) (n=459),CatBoost_log1p,,,30.2199,27.2191,-27.1723,0.0,3.0234
+pollution_regime,Moderate (50 <= y < 100) (n=459),LightGBM_log1p,,,32.2009,28.3809,-28.285,1.9811,5.0045
+pollution_regime,Moderate (50 <= y < 100) (n=459),XGBoost_log1p,,,30.9972,27.6666,-27.4991,0.7773,3.8008
+pollution_regime,Moderate (50 <= y < 100) (n=459),Statistical_Blend50,,,17.6926,14.7499,-10.9697,-12.5272,-9.5038
+pollution_regime,Moderate (50 <= y < 100) (n=459),Candidate_A (83% CB + 17% Stat),,,27.1964,24.4787,-24.4179,-3.0234,0.0
+pollution_regime,Moderate (50 <= y < 100) (n=459),Candidate_B (50% CB + 50% Stat),,,22.0533,19.3132,-19.071,-8.1666,-5.1431
+pollution_regime,Moderate (50 <= y < 100) (n=459),Tree_Blend (50% CB + 50% LGB),,,30.87,27.755,-27.7287,0.6501,3.6735
+pollution_regime,Moderate (50 <= y < 100) (n=459),Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,27.1816,24.4216,-24.3769,-3.0382,-0.0148
+pollution_regime,Elevated (y >= 100) (n=11),CatBoost_log1p,,,301.0746,197.9031,-197.9031,0.0,5.5685
+pollution_regime,Elevated (y >= 100) (n=11),LightGBM_log1p,,,303.7176,196.0444,-196.0444,2.643,8.2116
+pollution_regime,Elevated (y >= 100) (n=11),XGBoost_log1p,,,301.0703,193.6905,-193.6905,-0.0043,5.5642
+pollution_regime,Elevated (y >= 100) (n=11),Statistical_Blend50,,,268.8065,180.0194,-180.0194,-32.2681,-26.6995
+pollution_regime,Elevated (y >= 100) (n=11),Candidate_A (83% CB + 17% Stat),,,295.506,194.8629,-194.8629,-5.5685,0.0
+pollution_regime,Elevated (y >= 100) (n=11),Candidate_B (50% CB + 50% Stat),,,284.788,188.9612,-188.9612,-16.2866,-10.718
+pollution_regime,Elevated (y >= 100) (n=11),Tree_Blend (50% CB + 50% LGB),,,302.3781,196.9738,-196.9738,1.3036,6.8721
+pollution_regime,Elevated (y >= 100) (n=11),Multi_Ensemble (40% CB + 40% LGB + 20% Stat),,,295.5494,193.5829,-193.5829,-5.5252,0.0434
