@@ -1,0 +1,7 @@
+comparison,experiment,feature_count,roc_auc,top_discriminative_features
+Monsoon/Autumn (Aug-Oct 2026) vs Nov 2026 Private Window,Experiment A: Calendar-Only,16,1.0,"hour (133), month (101), horizon_hours (44)"
+Monsoon/Autumn (Aug-Oct 2026) vs Nov 2026 Private Window,Experiment B: Pollution-State-Only,33,1.0,"latest_pm25 (110), obs_count_24 (105), city_median_pm25 (92)"
+Monsoon/Autumn (Aug-Oct 2026) vs Nov 2026 Private Window,Experiment C: All Features,54,1.0,"hour (124), month (101), hist24_same_hour_mean (70)"
+Matched November 2025 Control vs Nov 2026 Private Window,Experiment A: Calendar-Only,16,1.0,"weekday (195), horizon_hours (102), day_of_year (54)"
+Matched November 2025 Control vs Nov 2026 Private Window,Experiment B: Pollution-State-Only,33,1.0,"latest_pm25 (119), delta_median_24_48 (3), obs_count_24 (2)"
+Matched November 2025 Control vs Nov 2026 Private Window,Experiment C: All Features,54,1.0,"hist24_ratio_to_recent (161), latest_pm25 (116), delta_median_24_48 (3)"
