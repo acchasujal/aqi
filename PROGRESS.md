@@ -285,3 +285,27 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
 - **Decisions added or superseded:** DEC-20261108-11.
 - **Known limitations / blockers:** None. Ready for private evaluation on Zindi.
 - **Next action:** Final git commit on `feat/competition-ml-pipeline` and project presentation.
+
+
+### 2026-11-08 — Independent Verification of ML Experiments, Feature Ablation Reconciliation, and Private Target Analysis
+- **Task / issue:** Independent verification of experimental results, feature ablations, adversarial validation, and private candidates.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / [pending commit]
+- **Files changed:** `scripts/verify_ml_experiments.py` (new); `tests/test_independent_verification.py` (new); `reports/ablation_reconciliation.csv` (new); `reports/adversarial_private_window.csv` (new); `reports/fold_target_coverage.csv` (new); `reports/ensemble_diversity.csv` (new); `reports/final_independent_verification.md` (new); `PROGRESS.md`.
+- **Work completed:**
+  1. Reconciled feature ablation and benchmark metrics: resolved stride subsampling discrepancy (`len // 30` vs `len // 35`), proving CatBoost log1p progression (14.77 -> 16.82 -> 14.40 -> 14.29) and LightGBM log1p progression (13.93 -> 17.56 -> 15.10 -> 15.38) across identical 690 ground-truth labels.
+  2. Isolated 11–12 November private target window (192 rows) and matched historical 48h blocks: demonstrated ROC-AUC 1.0 is driven by authentic seasonal meteorological progression into November (`hist24_same_hour_mean` 29.78 -> 77.35 $\mu\text{g}/\text{m}^3$).
+  3. Conducted 5-fold target coverage audit: verified 690 observed labels out of 960 possible rows, clean exclusion of 270 missing labels without zero-imputation, and 0 cross-fold target overlaps.
+  4. Performed paired ensemble diversity audit: Candidate A (83/17) outperforms Candidate B (50/50) across all 5 folds, 3/4 stations, all 4 horizon buckets, and high-pollution readings, with residual correlation 0.8904 proving healthy model diversity.
+  5. Implemented comprehensive leakage regression tests in `tests/test_independent_verification.py` (5 passing tests).
+  6. Verified station-specific last available timestamps in current `Train.csv` (`2026-11-02 23:00:00+05:30`) and documented provisional submission status awaiting 10 November refresh.
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe scripts/verify_ml_experiments.py`
+  - `.\.venv\Scripts\python.exe -m pytest tests/test_independent_verification.py` (5 passed in 17.84s)
+  - `.\.venv\Scripts\python.exe -m pytest -ra` (64 passed in 23.5s)
+  - `.\.venv\Scripts\python.exe -m ruff check scripts/verify_ml_experiments.py tests/test_independent_verification.py`
+- **Tests and exact results:** 64 passed across full test suite. Zero failures.
+- **Experiment IDs / metrics:** CatBoost log1p full ablation reconciled at 14.29. Private adversarial ROC-AUC: 1.0000. Candidate A RMSE: 14.24, Candidate B RMSE: 14.43.
+- **Decisions added or superseded:** None.
+- **Known limitations / blockers:** Awaiting final 10 November Train snapshot release by competition organizers.
+- **Next action:** Final git commit and user presentation.

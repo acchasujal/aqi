@@ -1,0 +1,16 @@
+segment_type,segment_name,rmse_catboost_alone,rmse_stat_blend_alone,rmse_candidate_a,rmse_candidate_b,diff_b_minus_a,candidate_a_advantage
+fold,fold_24_20260806,6.4407,6.6424,6.2097,6.0688,-0.1409,No
+fold,fold_25_20260827,6.5688,8.4727,6.6807,7.1742,0.4935,Yes
+fold,fold_26_20260917,6.4583,9.4866,6.6971,7.5416,0.8445,Yes
+fold,fold_27_20261008,15.8527,19.3695,16.1772,17.1566,0.9794,Yes
+fold,fold_28_20261029,21.3287,19.9133,20.8958,20.2712,-0.6246,No
+station,station_11606,10.2453,11.2748,10.0578,10.1303,0.0726,Yes
+station,station_11611,13.8344,17.0396,14.1944,15.1309,0.9364,Yes
+station,station_3409510,16.7067,18.6532,16.8915,17.4298,0.5383,Yes
+station,station_3409511,15.633,13.5861,15.0224,14.1186,-0.9038,No
+horizon_bucket,1-12h,18.2511,19.9388,18.3527,18.7751,0.4224,Yes
+horizon_bucket,13-24h,14.1796,14.0031,13.9842,13.7957,-0.1885,No
+horizon_bucket,25-36h,14.6238,16.576,14.6865,15.1401,0.4535,Yes
+horizon_bucket,37-48h,10.1873,11.0136,9.9518,9.9429,-0.0089,No
+high_pollution_subset,y > 50ug (n=87),21.8127,24.8018,22.1596,23.033,0.8734,Yes
+overall_pooled,all_evaluated_rows (n=690),14.2913,15.4128,14.2417,14.4346,0.1928,Yes

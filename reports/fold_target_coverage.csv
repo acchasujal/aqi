@@ -1,0 +1,6 @@
+fold_id,target_start,target_end,possible_targets,observed_targets,missing_targets,coverage_pct,count_station_11606,count_station_11611,count_station_3409510,count_station_3409511,max_observed_pm25,count_above_500,count_above_1000,missing_handling,cross_fold_overlap
+fold_24_20260806,2026-08-06T22:00:00+05:30,2026-08-08T22:00:00+05:30,192,120,72,62.5,30,32,34,24,39.77,0,0,excluded (no imputation),0 (strictly disjoint non-overlapping windows)
+fold_25_20260827,2026-08-27T22:00:00+05:30,2026-08-29T22:00:00+05:30,192,28,164,14.6,7,7,7,7,17.88,0,0,excluded (no imputation),0 (strictly disjoint non-overlapping windows)
+fold_26_20260917,2026-09-17T22:00:00+05:30,2026-09-19T22:00:00+05:30,192,177,15,92.2,46,46,39,46,36.89,0,0,excluded (no imputation),0 (strictly disjoint non-overlapping windows)
+fold_27_20261008,2026-10-08T22:00:00+05:30,2026-10-10T22:00:00+05:30,192,190,2,99.0,48,46,48,48,86.43,0,0,excluded (no imputation),0 (strictly disjoint non-overlapping windows)
+fold_28_20261029,2026-10-29T22:00:00+05:30,2026-10-31T22:00:00+05:30,192,175,17,91.1,44,44,44,43,64.59,0,0,excluded (no imputation),0 (strictly disjoint non-overlapping windows)

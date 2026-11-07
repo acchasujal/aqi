@@ -1,0 +1,16 @@
+rank,feature,importance_splits,historical_mean,private_window_mean,mean_diff,distribution_shift_type
+1,hour,124,11.358,11.5,0.142,temporal/seasonal
+2,month,101,9.3145,11.0,1.6855,temporal/seasonal
+3,hist24_same_hour_mean,70,29.7768,77.3455,47.5687,temporal/seasonal
+4,horizon_hours,43,26.2536,24.5,-1.7536,temporal/seasonal
+5,hour_sin,11,-0.0064,-0.0,0.0064,temporal/seasonal
+6,day_of_year,8,269.7739,315.5,45.7261,station/network
+7,doy_sin,7,-0.882,-0.7551,0.127,temporal/seasonal
+8,hour_cos,7,-0.0095,-0.0,0.0095,temporal/seasonal
+9,hist24_month_hour_mean,6,29.724,76.7627,47.0387,temporal/seasonal
+10,obs_count_72,6,43.9783,63.5,19.5217,station/network
+11,latest_pm25,5,30.4735,43.7119,13.2384,station/network
+12,hist24_ratio_to_recent,5,1.1793,2.1318,0.9526,temporal/seasonal
+13,min_24,4,18.6404,22.4325,3.7921,station/network
+14,obs_count_24,3,16.771,22.0,5.229,station/network
+15,ratio_median_24_168,2,1.037,0.9318,-0.1052,station/network

@@ -1,0 +1,9 @@
+model_family,target_transform,ablation_mode,features_included,evaluated_rows,pooled_rmse,clean_rmse,mae,bias
+catboost,log1p,calendar_only,"pm=False, seas=False, spat=False",690,14.7654,14.7654,10.681,2.0125
+catboost,log1p,pm_history_only,"pm=True, seas=False, spat=False",690,16.8188,16.8188,12.0631,4.129
+catboost,log1p,pm_history_plus_seasonal,"pm=True, seas=True, spat=False",690,14.3996,14.3996,10.4341,2.78
+catboost,log1p,all_features_full,"pm=True, seas=True, spat=True",690,14.2913,14.2913,10.3439,2.3421
+lightgbm,log1p,calendar_only,"pm=False, seas=False, spat=False",690,13.9349,13.9349,10.1849,0.8671
+lightgbm,log1p,pm_history_only,"pm=True, seas=False, spat=False",690,17.5583,17.5583,12.5126,7.1494
+lightgbm,log1p,pm_history_plus_seasonal,"pm=True, seas=True, spat=False",690,15.0987,15.0987,10.7746,3.619
+lightgbm,log1p,all_features_full,"pm=True, seas=True, spat=True",690,15.379,15.379,10.9804,2.8369
