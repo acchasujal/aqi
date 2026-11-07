@@ -280,11 +280,17 @@ def predict_test_ensemble(
     X_train = pd.concat(train_dfs, ignore_index=True)
     y_train = pd.concat(train_ys, ignore_index=True)
 
-    # Build features for test rows
+    # Build features for test rows with aligned in-distribution block horizon (1..48)
     test_df = test.copy()
-    test_df["horizon_hours"] = (
-        (test_df["target_start"] - test_df["target_start"].min()).dt.total_seconds() / 3600.0 + 1.0
+    priv_start = pd.Timestamp("2026-11-11 00:00:00", tz="Asia/Kolkata")
+    offset_h = (
+        (test_df["target_start"] - priv_start).dt.total_seconds() / 3600.0
     ).astype(int)
+    test_df["horizon_hours"] = np.where(
+        (offset_h >= 0) & (offset_h < 48),
+        offset_h + 1,
+        (offset_h % 48) + 1,
+    )
 
     X_test = build_feature_matrix(
         station_histories,
