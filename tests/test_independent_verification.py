@@ -167,6 +167,28 @@ def test_supervised_training_examples_strictly_precede_cutoff_and_validation(cha
                 )
 
 
+def test_training_origins_support_conservative_reporting_delay(challenge_data):
+    """Enforce Task 4 conservative reporting delay rule:
+    Under 24h and 48h ingestion latency assumptions, target_end + delta <= cutoff.
+    """
+    train, _, _, _, _, _ = challenge_data
+    folds = generate_fixed_target_folds(
+        train, gap_hours=48, horizon_hours=48, step_days=21, holdout_hours=48
+    )
+    for fold in folds:
+        for delta_hours in [24, 48]:
+            hist_origins = pd.date_range(
+                train.target_start.min() + pd.Timedelta(days=21),
+                fold.pm_history_cutoff - pd.Timedelta(hours=48 + delta_hours),
+                freq="72h",
+                tz="Asia/Kolkata",
+            )
+            for orig in hist_origins:
+                target_end = orig + pd.Timedelta(hours=48)
+                assert target_end + pd.Timedelta(hours=delta_hours) <= fold.pm_history_cutoff
+                assert target_end < fold.target_start
+
+
 def test_candidate_submissions_compliance():
     sample = pd.read_csv(DATA_DIR / "SampleSubmission.csv")
     sub_a_path = ROOT / "artifacts" / "submissions" / "submission_A_accuracy_ensemble.csv"
