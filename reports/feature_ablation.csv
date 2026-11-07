@@ -1,0 +1,5 @@
+ablation_mode,features_included,pooled_rmse,clean_rmse,mae
+calendar_only,"pm=False, seas=False, spat=False",14.1341,14.1341,10.812
+pm_history_only,"pm=True, seas=False, spat=False",12.8604,12.8604,9.4503
+pm_history_plus_seasonal,"pm=True, seas=True, spat=False",12.3254,12.3254,8.8879
+all_features_full,"pm=True, seas=True, spat=True",11.8869,11.8869,8.768

@@ -1,4 +1,4 @@
-# Paths are repository-relative. Do not store secrets here.
+# Versioned competition forecasting configuration. Paths are repository-relative.
 paths:
   train: data/raw/challenge/Train.csv
   test: data/raw/challenge/Test.csv
@@ -19,6 +19,8 @@ time:
 validation:
   target_horizon_hours: 48
   pm_history_gaps_hours: [48, 72, 96, 120]
+  step_days: 14
+  holdout_hours: 48
   primary_metric: rmse_full
   diagnostic_clean_target_threshold: 500
   min_station_rows_per_fold: 1
@@ -29,15 +31,41 @@ features:
   station_category: true
   calendar: true
   recent_pm_history: true
+  pollution_dynamics: true
   diurnal_profile_days: 7
-  previous_year_features: false
+  seasonal_2024: true
+  seasonal_window_days: 14
+  cross_station_features: true
   weather_features: false
-  cross_station_features: false
 
 models:
-  baseline_candidates: [last_value, recent_mean, recent_median, recent_ewm, diurnal_7d]
-  supervised_candidates: [lightgbm_ratio]
-  blend_weights_to_test: [0.25, 0.5, 0.75]
+  statistical_candidates:
+    - last
+    - median24
+    - median72
+    - median168
+    - mean24
+    - mean72
+    - mean168
+    - ewm72
+    - diurnal7
+    - hour_week4
+    - trend_adjusted_median
+    - seasonal_2024
+    - seasonal_blend50_median72
+  supervised_candidates:
+    - lightgbm
+    - catboost
+    - xgboost
+    - random_forest
+  target_transforms:
+    - raw
+    - sqrt
+    - log1p
+    - residual_median72
+  ensembles:
+    - ensemble_accuracy
+    - ensemble_robust
   random_seed: 42
 
 external_data:

@@ -171,6 +171,69 @@ def _match_archive_station(loc_id: int, available_stations: list[str]) -> str | 
     return None
 
 
+_LOOKUP_CACHE: dict[int, pd.DataFrame] = {}
+
+
+def get_seasonal_lookup_table(
+    history: pd.DataFrame,
+    *,
+    window_days: int = 14,
+    min_obs: int = 3,
+) -> pd.DataFrame:
+    """Precompute full-year seasonal lookup table (365 days x 24 hours x 4 stations)."""
+    cache_key = id(history)
+    if cache_key in _LOOKUP_CACHE:
+        return _LOOKUP_CACHE[cache_key]
+
+    hist = history.copy()
+    if not pd.api.types.is_datetime64_any_dtype(hist["hour_start"]):
+        hist["hour_start"] = pd.to_datetime(hist["hour_start"])
+    hist["norm_doy"] = hist["hour_start"].apply(normalized_doy)
+    hist["hod"] = hist["hour_start"].dt.hour
+    hist["month"] = hist["hour_start"].dt.month
+
+    station_sub = {
+        loc_id: hist[hist["station_name"] == sname]
+        for loc_id, sname in CANONICAL_STATION_MAP.items()
+    }
+
+    records = []
+    for loc_id, sub in station_sub.items():
+        if sub.empty:
+            continue
+        sub_hod = {h: sub[sub["hod"] == h] for h in range(24)}
+        sub_month_hod = {
+            (m, h): sub[(sub["month"] == m) & (sub["hod"] == h)]["pm25"].dropna()
+            for m in range(1, 13)
+            for h in range(24)
+        }
+
+        for d in range(1, 366):
+            m = (pd.Timestamp("2026-01-01") + pd.Timedelta(days=d - 1)).month
+            for h in range(24):
+                sh = sub_hod[h]
+                dists = circular_doy_distance(sh["norm_doy"].to_numpy(), float(d))
+                in_win = sh.iloc[dists <= window_days]["pm25"].dropna()
+                n_obs = len(in_win)
+                sh_mean = float(in_win.mean()) if n_obs >= min_obs else np.nan
+
+                mh = sub_month_hod.get((m, h))
+                mh_mean = float(mh.mean()) if mh is not None and len(mh) >= min_obs else np.nan
+
+                records.append({
+                    "location_id": loc_id,
+                    "norm_doy": float(d),
+                    "hod": h,
+                    "hist24_same_hour_mean": sh_mean,
+                    "hist24_month_hour_mean": mh_mean,
+                    "hist24_coverage": n_obs,
+                })
+
+    lookup = pd.DataFrame(records)
+    _LOOKUP_CACHE[cache_key] = lookup
+    return lookup
+
+
 def build_seasonal_features(
     history: pd.DataFrame,
     target_df: pd.DataFrame,
@@ -181,102 +244,37 @@ def build_seasonal_features(
 ) -> pd.DataFrame:
     """Build 2024 seasonal climatology features for each row in target_df.
 
-    Uses normalized day-of-year for leap-year alignment between 2024 and 2026,
-    and circular day-of-year distance for year-boundary handling.
-
-    Parameters
-    ----------
-    history:
-        Output of load_2024_history(): columns station_name, hour_start, pm25.
-    target_df:
-        DataFrame with columns ``location_id`` and ``target_start`` (IST-aware).
-    station_map:
-        Optional custom mapping location_id -> station name or fragment.
-    window_days:
-        Half-width in calendar days for the circular day-of-year window.
-    min_obs:
-        Minimum number of unique observation hours required; returns NaN otherwise.
-
-    Returns
-    -------
-    DataFrame indexed like target_df with columns:
-        hist24_same_hour_mean: mean pm25 in 2024 for same hour-of-day ±window_days
-        hist24_month_hour_mean: mean pm25 in 2024 for same calendar month + hour-of-day
-        hist24_coverage: number of unique observation hours contributing to hist24_same_hour_mean
+    Uses precomputed vectorized lookup table for maximum efficiency.
     """
-    if history.empty:
+    if history.empty or target_df.empty:
         return pd.DataFrame({
-            "hist24_same_hour_mean": np.nan,
-            "hist24_month_hour_mean": np.nan,
-            "hist24_coverage": 0,
+            "hist24_same_hour_mean": np.full(len(target_df), np.nan),
+            "hist24_month_hour_mean": np.full(len(target_df), np.nan),
+            "hist24_coverage": np.zeros(len(target_df), dtype=int),
         }, index=target_df.index)
 
-    history = history.copy()
-    if not pd.api.types.is_datetime64_any_dtype(history["hour_start"]):
-        history["hour_start"] = pd.to_datetime(history["hour_start"])
+    lookup = get_seasonal_lookup_table(history, window_days=window_days, min_obs=min_obs)
 
-    # Compute normalized day of year for leap year alignment
-    history["norm_doy"] = history["hour_start"].apply(normalized_doy)
-    history["hod"] = history["hour_start"].dt.hour
-    history["month"] = history["hour_start"].dt.month
+    t_df = target_df[["location_id", "target_start"]].copy()
+    t_df["norm_doy"] = t_df["target_start"].apply(normalized_doy).round().astype(float)
+    # Clip 59.5 to 59 or 60 for integer-day lookup index
+    t_df["norm_doy"] = np.clip(t_df["norm_doy"], 1.0, 365.0)
+    t_df["hod"] = t_df["target_start"].dt.hour
+    t_df["orig_order"] = np.arange(len(t_df))
 
-    # Group by station name for fast lookups
-    station_cache: dict[str, pd.DataFrame] = {
-        str(sname): sub for sname, sub in history.groupby("station_name")
-    }
-    available_stations = list(station_cache.keys())
+    merged = t_df.merge(
+        lookup,
+        on=["location_id", "norm_doy", "hod"],
+        how="left",
+    ).sort_values("orig_order")
 
-    result_rows: list[dict] = []
-    for row in target_df.itertuples(index=True):
-        loc_id = int(row.location_id)
-        t_start: pd.Timestamp = row.target_start
-        idx = row.Index
-
-        matched_station = _match_archive_station(loc_id, available_stations)
-        if matched_station is None:
-            result_rows.append({
-                "idx": idx,
-                "hist24_same_hour_mean": np.nan,
-                "hist24_month_hour_mean": np.nan,
-                "hist24_coverage": 0,
-            })
-            continue
-
-        sub = station_cache[matched_station]
-        target_hod = t_start.hour
-        target_norm_doy = normalized_doy(t_start)
-        target_month = t_start.month
-
-        # Circular day-of-year distance on 365-day calendar
-        dists = circular_doy_distance(sub["norm_doy"].to_numpy(), target_norm_doy)
-        same_hod_mask = (sub["hod"].to_numpy() == target_hod) & (dists <= window_days)
-        same_hod = sub.iloc[same_hod_mask]
-
-        obs_vals = same_hod["pm25"].dropna()
-        n_obs = len(obs_vals)
-        if n_obs >= min_obs:
-            same_hour_mean = float(obs_vals.mean())
-        else:
-            same_hour_mean = np.nan
-
-        # Month + hour profile
-        month_hod_mask = (sub["month"].to_numpy() == target_month) & (sub["hod"].to_numpy() == target_hod)
-        month_hod = sub.iloc[month_hod_mask]["pm25"].dropna()
-        if len(month_hod) >= min_obs:
-            month_hour_mean = float(month_hod.mean())
-        else:
-            month_hour_mean = np.nan
-
-        result_rows.append({
-            "idx": idx,
-            "hist24_same_hour_mean": same_hour_mean,
-            "hist24_month_hour_mean": month_hour_mean,
-            "hist24_coverage": n_obs,
-        })
-
-    result = pd.DataFrame(result_rows).set_index("idx")
-    result.index.name = target_df.index.name
-    return result
+    res = pd.DataFrame({
+        "hist24_same_hour_mean": merged["hist24_same_hour_mean"].to_numpy(dtype=float),
+        "hist24_month_hour_mean": merged["hist24_month_hour_mean"].to_numpy(dtype=float),
+        "hist24_coverage": np.nan_to_num(merged["hist24_coverage"].to_numpy(dtype=float), nan=0).astype(int),
+    }, index=target_df.index)
+    res.index.name = target_df.index.name
+    return res
 
 
 def compute_station_seasonal_profiles(
