@@ -1,13 +1,12 @@
 """Tests for the AirWindow artifact contract using synthetic test-only data."""
 
-from copy import deepcopy
 import csv
+from copy import deepcopy
 from pathlib import Path
 
 import pytest
 
 from apps.airwindow.contract_validation import validate_artifact
-
 
 STATIONS = [
     ("11606", "Borivali East", 19.232410, 72.868950),
