@@ -151,3 +151,27 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
   - Final Train refresh (scheduled 9/10 November) has not yet been released. Pipeline must be rerun against the new Train file once released.
   - GitHub remote push and PR require manual or unsandboxed execution if credential helper requires interactive auth.
 - **Next action:** Review diff, execute unsandboxed commit/push/PR if desired, and await 9/10 November Train snapshot refresh.
+
+### 2026-11-08 — Deep Repository Audit, Historical Station Mapping, and Leap-Year Alignment Fix
+- **Task / issue:** Upgrade Mumbai PM2.5 forecasting system to competition-grade pipeline (Phase 1).
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / `f30b740`
+- **Files changed:** `reports/repository_audit.md` (new); `src/mumbai_pm25/historical_archive.py` (updated); `src/mumbai_pm25/models.py` (updated); `tests/test_seasonal_history.py` (updated).
+- **Work completed:**
+  1. Performed complete repository audit and data audit across all modules, tests, configs, and raw archives; documented findings in `reports/repository_audit.md`.
+  2. Fixed broad substring matching in `historical_archive.py` where `Mindspace-Malad West, Mumbai - MPCB` (site_5807) was improperly matched into `Malad West IITM` (location 11611).
+  3. Fixed multi-series sensor aggregation for dual-sensor monitors (Borivali East IITM sites 5113 & 5400, Malad West IITM sites 5102 & 5402): pre-aggregated concurrent readings per timestamp so coverage correctly reflects unique observed hours.
+  4. Fixed leap-year calendar misalignment between 2024 (leap year) and 2026 (non-leap year) using normalized day-of-year and circular distance, ensuring November 11 matches November 11 identically.
+  5. Fixed ExtraTrees bitwise determinism test by setting single-threaded job execution (`n_jobs=1`).
+  6. Added comprehensive regression tests for station mapping, multi-series aggregation, and key leap-year boundary dates.
+- **Commands run:**
+  - `git checkout -b feat/competition-ml-pipeline`
+  - `.\.venv\Scripts\python.exe -m pytest -ra` (42 passed)
+  - `.\.venv\Scripts\python.exe -m ruff check src/mumbai_pm25/historical_archive.py src/mumbai_pm25/models.py tests/test_seasonal_history.py` (all passed)
+  - `git commit -m "fix: correct historical station series mapping and leap year alignment"`
+- **Tests and exact results:** 42 passed in 3.25s. All ruff linting checks passed.
+- **Experiment IDs / metrics:** Pre-modelling defect remediation and audit checkpoint.
+- **Decisions added or superseded:** None yet; DEC-20261107-10 remains current.
+- **Known limitations / blockers:** Fixed-origin validation overhaul and model implementations scheduled next.
+- **Next action:** Phase 2: Design and implement the fixed-origin, aligned validation framework and produce validation methodology and data quality reports.
+

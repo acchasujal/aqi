@@ -160,3 +160,54 @@ def test_submission_requires_exact_order_and_finite_nonnegative_values():
     bad.loc[0, "Target"] = np.inf
     with pytest.raises(ValueError, match="finite"):
         validate_submission(bad, test)
+
+
+def test_fixed_origin_folds_identical_across_reporting_gaps():
+    """Target windows must be 100% identical when comparing different reporting gaps."""
+    from mumbai_pm25.validation import generate_fixed_target_folds
+
+    train = synthetic_train()
+    folds_48 = generate_fixed_target_folds(train, gap_hours=48, horizon_hours=48, step_days=7, holdout_hours=24, min_history_days=7)
+    folds_72 = generate_fixed_target_folds(train, gap_hours=72, horizon_hours=48, step_days=7, holdout_hours=24, min_history_days=7)
+    folds_96 = generate_fixed_target_folds(train, gap_hours=96, horizon_hours=48, step_days=7, holdout_hours=24, min_history_days=7)
+    folds_120 = generate_fixed_target_folds(train, gap_hours=120, horizon_hours=48, step_days=7, holdout_hours=24, min_history_days=7)
+
+    assert len(folds_48) == len(folds_72) == len(folds_96) == len(folds_120)
+    assert len(folds_48) > 0
+
+    for f48, f72, f96, f120 in zip(folds_48, folds_72, folds_96, folds_120):
+        # Target windows must be EXACTLY identical
+        assert f48.target_start == f72.target_start == f96.target_start == f120.target_start
+        assert f48.target_end == f72.target_end == f96.target_end == f120.target_end
+
+        # Cutoffs must strictly precede target_start by exactly the gap
+        assert f48.pm_history_cutoff == f48.target_start - pd.Timedelta(hours=48)
+        assert f72.pm_history_cutoff == f72.target_start - pd.Timedelta(hours=72)
+        assert f96.pm_history_cutoff == f96.target_start - pd.Timedelta(hours=96)
+        assert f120.pm_history_cutoff == f120.target_start - pd.Timedelta(hours=120)
+
+
+def test_evaluate_predictions_metrics():
+    """evaluate_predictions must compute accurate pooled RMSE, clean RMSE, and bucketed errors."""
+    from mumbai_pm25.validation import evaluate_predictions
+
+    oof = pd.DataFrame({
+        "fold_id": ["f1"] * 4 + ["f2"] * 4,
+        "location_id": [11606, 11611, 3409510, 3409511] * 2,
+        "horizon_hours": [6, 18, 30, 42] * 2,
+        "y": [50.0, 150.0, 350.0, 600.0, 40.0, 120.0, 200.0, 50.0],
+        "prediction": [55.0, 140.0, 320.0, 580.0, 42.0, 110.0, 190.0, 52.0],
+    })
+    metrics = evaluate_predictions(oof)
+    assert metrics["rows"] == 8
+    assert metrics["pooled_rmse"] > 0
+    assert metrics["clean_rmse"] > 0
+    assert metrics["fold_count"] == 2
+    assert "h01_12" in metrics["by_horizon"]
+    assert "h13_24" in metrics["by_horizon"]
+    assert "h25_36" in metrics["by_horizon"]
+    assert "h37_48" in metrics["by_horizon"]
+    assert 11606 in metrics["by_station"]
+    assert metrics["high_pollution_rmse"] is not None
+    assert metrics["extreme_pollution_rmse"] is not None
+
