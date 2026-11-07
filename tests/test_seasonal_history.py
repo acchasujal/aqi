@@ -375,3 +375,41 @@ def test_submission_finite_nonnegative_complete():
     with pytest.raises(ValueError, match="finite"):
         validate_submission(bad_inf, test)
 
+
+
+
+def test_validation_and_inference_differ_when_recent_pm_baseline_is_missing():
+    """Known EXP-008 parity defect: validation uses hist24, inference rejects the row."""
+    from scripts.validate_seasonal_history import _seasonal_baseline_for_fold
+
+    history = _make_history_df("Borivali East, Mumbai - IITM", n_hours=24 * 60)
+    target_start = pd.Timestamp("2026-01-05 10:00:00+05:30")
+    fold_targets = pd.DataFrame({
+        "location_id": [11606],
+        "target_start": [target_start],
+    })
+    empty_station_history = pd.Series(
+        dtype=float,
+        index=pd.DatetimeIndex([], tz="Asia/Kolkata", name="target_start"),
+    )
+    validation = _seasonal_baseline_for_fold(
+        history,
+        fold_targets,
+        {11606: empty_station_history},
+    )
+    assert np.isfinite(validation["hist24_blend50_median72"][0])
+
+    # Inference requires a station median before it evaluates seasonal fallback.
+    train = pd.DataFrame({
+        "location_id": [9999],
+        "target_start": [pd.Timestamp("2026-01-01 00:00:00+05:30")],
+        "pm25": [25.0],
+    })
+    test = pd.DataFrame({
+        "ID": ["target"],
+        "location_id": [11606],
+        "target_start": [target_start],
+    })
+    issue = pd.Timestamp("2026-01-10 00:00:00+05:30")
+    with pytest.raises(ValueError, match="No eligible PM history for test stations"):
+        predict_test_with_hist24_blend(train, test, history, issue_time=issue)
