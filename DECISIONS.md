@@ -177,3 +177,17 @@ This is an append-only decision log. Do not rewrite old decisions. If a decision
 - **Confidence:** High. Supported by 1,316 evaluated ground-truth observations across 9 chronological folds.
 - **Alternatives considered:** Pure tree ensemble (CatBoost + LightGBM; rejected due to 0.9693 error correlation); pure statistical climatology (rejected due to higher autumn error).
 - **Consequences / revisit trigger:** Both submissions remain cryptographically archived in `artifacts/submissions/`. On 10 November 2026, re-execute `scripts/train_predict.py` with the refreshed `Train.csv` snapshot.
+
+
+## DEC-20261108-13 — Adopt Candidate C (Statistical Seasonal) and Candidate B (Robust Ensemble) as the Final Private Submission Pair
+
+- **Date / owner:** 2026-11-08 / Senior Data Scientist, ML Engineer, and Software Architect
+- **Status:** Accepted (Updates DEC-20261108-11 and DEC-20261108-12 with final candidate selection)
+- **Context:** A comprehensive model-selection study evaluated Strategies A, B, C, D and their constituents across all 9 validation folds ($N=1,316$). The Statistical Seasonal model alone (Strategy C) achieved the lowest pooled RMSE (29.30) and lowest winter RMSE (39.28) with near-zero bias (-0.54 $\mu\text{g}/\text{m}^3$), strictly outperforming tree-heavy models in winter transitions.
+- **Decision:** Designate Candidate C (`submission_C_statistical_seasonal.csv`) and Candidate B (`submission_B_robust_ensemble.csv`) as the primary recommendation for the two official private submission slots on Zindi:
+  - **Candidate C (Strategy C: 50% 2024 CAAQMS Climatology + 50% Recent 72h Median):** The optimal solution for the expected winter transition regime. It avoids gradient-boosted tree under-prediction bias, dominates at high-emission industrial stations (Shivaji Nagar RMSE 52.56 vs 58.70 for Candidate A), and delivers the lowest overall pooled RMSE across all 9 folds (29.30).
+  - **Candidate B (Strategy B: 50% CatBoost log1p + 50% Statistical Seasonal):** The optimal solution for the alternative regime of late-monsoon atmospheric persistence or rapid local level fluctuations. It achieved the lowest Autumn RMSE among all tested models (14.75) while maintaining strong winter protection (41.66).
+  - Candidate A (83% CatBoost) and Candidate D (20% CatBoost) are retained as archived alternatives.
+- **Evidence:** `reports/final_candidate_comparison.csv` and `reports/final_submission_selection.md`.
+- **Confidence:** High. Supported by 1,316 evaluated ground-truth observations across 9 chronological folds.
+- **Consequences / revisit trigger:** Both candidates are generated with cryptographic manifests in `artifacts/submissions/`. On 10 November 2026, execute the refreshed pipeline to generate the final upload pair.

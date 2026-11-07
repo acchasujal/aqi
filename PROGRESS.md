@@ -338,3 +338,27 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
 - **Decisions added or superseded:** DEC-20261108-12 adopted.
 - **Known limitations / blockers:** Provisional candidate predictions ready; operational re-run scheduled for 10 November 2026 upon organizer release of final refreshed `Train.csv`.
 - **Next action:** Final review and delivery to user.
+
+
+### 2026-11-08 — Final Model Selection Study, Strategy Optimization, and Dual-Submission Decision
+- **Task / issue:** Final model selection study, forecast-feature semantics audit, station metadata correction, conservative label availability verification, and final submission optimization.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / [pending commit]
+- **Files changed:** `src/mumbai_pm25/forecast.py`; `scripts/train_predict.py`; `tests/test_independent_verification.py`; `scripts/final_model_selection_study.py` (new); `reports/station_metadata_correction.md` (new); `reports/forecast_feature_semantics.md` (new); `reports/training_label_availability_audit.md` (new); `reports/final_candidate_comparison.csv` (new); `reports/final_submission_selection.md` (new); `DECISIONS.md`; `PROGRESS.md`.
+- **Work completed:**
+  1. Audited and corrected official station metadata against `Stations.csv`: clarified that Station 11606 is Borivali East (bordering Sanjay Gandhi National Park, acting as a green buffer) and Station 3409511 is Shivaji Nagar (Deonar/Govandi hyper-emission hotspot), distinguishing empirical patterns from physical atmospheric mechanisms (`reports/station_metadata_correction.md`).
+  2. Formalized forecast-feature semantics and clocks (`block_hour`, `lead_time_hours`, `pm_history_age_hours`, `forecast_issue_time`, `pm_history_cutoff`, `target interval`), ensuring mathematical equivalence between cross-validation and test inference (`reports/forecast_feature_semantics.md`).
+  3. Extended training label availability verification under conservative CAAQMS reporting delay assumptions ($\delta \in \{0\text{h}, 24\text{h}, 48\text{h}\}$), confirming zero risk of un-published label leakage and adding regression tests (`reports/training_label_availability_audit.md`).
+  4. Executed multi-strategy evaluation comparing Strategy A (83/17), Strategy B (50/50), Strategy C (Statistical Seasonal alone), and Strategy D (20/80 validation-tuned blend) directly against constituent models across all 9 folds ($N=1,316$), demonstrating that Strategy C achieves the lowest overall pooled RMSE (29.30), lowest winter RMSE (39.28), and near-zero bias (-0.54 $\mu\text{g}/\text{m}^3$) (`reports/final_candidate_comparison.csv`).
+  5. Formulated the optimal final two-submission pairing: Candidate C (`submission_C_statistical_seasonal.csv`) as the primary winter surge solution and Candidate B (`submission_B_robust_ensemble.csv`) as the robust level-tracking solution, generating full candidate artifacts with SHA-256 manifests (`reports/final_submission_selection.md`).
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe scripts/final_model_selection_study.py`
+  - `.\.venv\Scripts\python.exe scripts/train_predict.py --model hist24_blend50_median72 --model-run-time 2026-11-08T12:00:00+05:30 --output artifacts/submissions/submission_C_statistical_seasonal.csv`
+  - `.\.venv\Scripts\python.exe scripts/train_predict.py --model ensemble_balanced --model-run-time 2026-11-08T12:00:00+05:30 --output artifacts/submissions/submission_D_balanced_ensemble.csv`
+  - `.\.venv\Scripts\python.exe -m pytest -ra` (66 passed in 22.31s)
+  - `.\.venv\Scripts\python.exe -m ruff check src/ scripts/ tests/` (all passed)
+- **Tests and exact results:** 66 passed across full test suite. Zero failures.
+- **Experiment IDs / metrics:** Strategy C Pooled RMSE 29.30 (Winter 39.28, Autumn 15.41, Bias -0.54); Strategy D Pooled RMSE 29.58 (Winter 39.87, Autumn 15.02); Strategy B Pooled RMSE 30.65 (Winter 41.66, Autumn 14.75); Strategy A Pooled RMSE 32.67 (Winter 44.72, Autumn 14.89).
+- **Decisions added or superseded:** DEC-20261108-13 adopted.
+- **Known limitations / blockers:** None. Ready for operational execution on 10 November 2026.
+- **Next action:** Final summary delivery to user.
