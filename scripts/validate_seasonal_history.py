@@ -28,9 +28,10 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from mumbai_pm25.data import load_data
 from mumbai_pm25.historical_archive import (
-    STATION_NAME_MAP,
+    P_FIX_SERIES,
     build_seasonal_features,
     load_2024_history,
+    source_coverage_report,
 )
 from mumbai_pm25.validation import rolling_oof
 
@@ -48,7 +49,7 @@ def _seasonal_baseline_for_fold(
     seasonal = build_seasonal_features(
         history_2024,
         target_df,
-        station_map=STATION_NAME_MAP,
+        series_map=P_FIX_SERIES,
         window_days=14,
         min_obs=3,
     )
@@ -242,11 +243,9 @@ def main() -> None:
     print("Loading 2024 archive history ...")
     history_2024 = load_2024_history(ARCHIVE)
     print(f"  Archive rows (cpcb_caaqm only): {len(history_2024):,}")
-    for loc_id, name_frag in STATION_NAME_MAP.items():
-        matched = history_2024.loc[
-            history_2024["station_name"].str.contains(name_frag, case=False)
-        ]
-        print(f"  {name_frag} (loc {loc_id}): {len(matched):,} archive rows")
+    print(source_coverage_report(history_2024).to_string(index=False))
+    for loc_id, series_ids in P_FIX_SERIES.items():
+        print(f"  location {loc_id}: {', '.join(series_ids)}")
 
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
 

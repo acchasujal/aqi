@@ -70,17 +70,58 @@ def history_features(
         raise ValueError(
             f"No eligible PM history for station {station_id} before {pm_history_cutoff}"
         )
-    # 72-hour window: include observations whose interval-end falls within 72h of cutoff.
-    # target_start > cutoff - 73h gives the 72h before cutoff (with 1h buffer for
-    # interval-end vs interval-start semantics).
-    recent = history.loc[
-        history.index > pm_history_cutoff - pd.Timedelta(hours=73), "pm25"
-    ]
-    observed = recent.dropna()
-    level = float(observed.median()) if not observed.empty else float(history.pm25.dropna().median())
+    level = _baseline_level(history["pm25"], pm_history_cutoff, "median72")
     if not np.isfinite(level):
         raise ValueError(f"No finite PM history for station {station_id}")
     return {"median72": level}
+
+
+def predict_station_baseline(
+    history: pd.Series,
+    target_starts: pd.DatetimeIndex,
+    *,
+    pm_history_cutoff: pd.Timestamp,
+    model: str,
+) -> np.ndarray:
+    """Shared fixed-origin baseline used by validation and inference.
+
+    ``history`` is indexed by target-hour start. Only complete labels ending by
+    ``pm_history_cutoff`` are used. The diur7 profile reproduces Task 005's
+    history-only cleaning (drop values >=1000, cap remaining history at 300).
+    """
+    if pm_history_cutoff.tz is None:
+        raise ValueError("pm_history_cutoff must be timezone-aware")
+    history = history.sort_index()
+    eligible = history.loc[history.index < pm_history_cutoff]
+    if eligible.empty or not eligible.notna().any():
+        return np.full(len(target_starts), np.nan)
+    if model == "median72":
+        return np.full(len(target_starts), _baseline_level(eligible, pm_history_cutoff, model))
+    if model != "diur7":
+        raise ValueError(f"Unsupported shared baseline {model!r}")
+
+    clean = eligible.where(eligible < 1000).clip(upper=300)
+    recent = clean.loc[clean.index > pm_history_cutoff - pd.Timedelta(hours=73)]
+    if int(recent.notna().sum()) < 24:
+        # Match Task 005's minimum coverage gate; unsupported station/origin
+        # pairs remain unavailable for the candidate instead of being imputed.
+        return np.full(len(target_starts), np.nan)
+    window = clean.loc[clean.index > pm_history_cutoff - pd.Timedelta(hours=169)]
+    profile = window.groupby(window.index.hour).mean()
+    values = np.asarray([profile.get(target.hour, np.nan) for target in target_starts], dtype=float)
+    return values
+
+
+def _baseline_level(history: pd.Series, cutoff: pd.Timestamp, model: str) -> float:
+    if model != "median72":
+        raise ValueError(f"Unsupported baseline level {model!r}")
+    recent = history.loc[history.index > cutoff - pd.Timedelta(hours=73)].dropna()
+    if recent.empty:
+        available = history.dropna()
+        if available.empty:
+            return float("nan")
+        return float(available.median())
+    return float(recent.median())
 
 
 def predict_test(
@@ -152,6 +193,7 @@ def predict_test_with_hist24_blend(
     issue_time: pd.Timestamp,
     pm_history_cutoff: pd.Timestamp | None = None,
     blend_weight_hist24: float = 0.5,
+    series_map: dict[int, str | tuple[str, ...]] | None = None,
 ) -> pd.DataFrame:
     """Forecast using a 50:50 blend of median72 and 2024 seasonal same-hour feature.
 
@@ -164,7 +206,7 @@ def predict_test_with_hist24_blend(
     blend_weight_hist24:
         Weight given to hist24_same_hour (1 - weight goes to median72).
     """
-    from mumbai_pm25.historical_archive import STATION_NAME_MAP, build_seasonal_features
+    from mumbai_pm25.historical_archive import build_seasonal_features
 
     if issue_time.tz is None:
         raise ValueError("issue_time must be timezone-aware")
@@ -192,7 +234,7 @@ def predict_test_with_hist24_blend(
     seasonal = build_seasonal_features(
         history_2024,
         target_df,
-        station_map=STATION_NAME_MAP,
+        series_map=series_map,
         window_days=14,
         min_obs=3,
     )
@@ -285,7 +327,7 @@ def write_manifest(
         f"numpy: {np.__version__}",
         "weather: disabled",
         "history_window_hours: 72",
-        "seasonal_archive: History_Mumbai_2024.csv.gz (cpcb_caaqm, name-matched only)",
+        "seasonal_archive: History_Mumbai_2024.csv.gz (cpcb_caaqm, exact series_id lookup)",
         "station_pm_history_cutoffs:",
     ]
     lines.extend(

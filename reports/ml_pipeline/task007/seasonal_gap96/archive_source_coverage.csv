@@ -1,0 +1,29 @@
+series_id,station_id,station_name,source,rows,first_hour,last_hour,non_missing,median_pm25,maximum_pm25
+xkdr:site_5810,site_5810,"Bandra Kurla Complex, Mumbai - MPCB",cpcb_caaqm,8371,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,8371,37.42,263.82
+xkdr:site_5113,site_5113,"Borivali East, Mumbai - IITM",cpcb_caaqm,8097,2024-01-01 00:00:00+05:30,2024-12-31 15:00:00+05:30,8097,15.87,124.79
+xkdr:site_5400,site_5400,"Borivali East, Mumbai - IITM",cpcb_caaqm,7387,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,7387,34.99,256.96
+xkdr:site_5960,site_5960,"Byculla, Mumbai - BMC",cpcb_caaqm,8456,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,8456,18.08,180.64
+xkdr:site_5399,site_5399,"Chakala-Andheri East, Mumbai - IITM",cpcb_caaqm,4101,2024-01-01 00:00:00+05:30,2024-07-08 12:00:00+05:30,4101,37.57,310.2
+xkdr:site_5811,site_5811,"Chembur, Mumbai - MPCB",cpcb_caaqm,8275,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,8275,33.15,424.16
+xkdr:site_5107,site_5107,"Chhatrapati Shivaji Intl. Airport (T2), Mumbai - MPCB",cpcb_caaqm,8422,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,8422,23.0,203.33
+xkdr:site_5120,site_5120,"Colaba, Mumbai - MPCB",cpcb_caaqm,7899,2024-01-01 00:00:00+05:30,2024-12-31 15:00:00+05:30,7899,23.4,114.24
+xkdr:site_5396,site_5396,"Deonar, Mumbai - IITM",cpcb_caaqm,5186,2024-01-20 09:00:00+05:30,2024-12-31 16:00:00+05:30,5186,24.58,484.15
+xkdr:site_5964,site_5964,"Ghatkopar, Mumbai - BMC",cpcb_caaqm,8299,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,8299,21.34,246.19
+xkdr:site_5412,site_5412,"Kandivali East, Mumbai - MPCB",cpcb_caaqm,7870,2024-01-01 00:00:00+05:30,2024-12-31 15:00:00+05:30,7870,18.67,788.0
+xkdr:site_5962,site_5962,"Kandivali West, Mumbai - BMC",cpcb_caaqm,8019,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,8019,20.05,490.19
+xkdr:site_5814,site_5814,"Kherwadi_Bandra East, Mumbai - MPCB",cpcb_caaqm,8501,2024-01-01 13:00:00+05:30,2024-12-31 23:00:00+05:30,8501,30.27,313.89
+xkdr:site_5397,site_5397,"Khindipada-Bhandup West, Mumbai - IITM",cpcb_caaqm,8140,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,8140,27.415,119.05
+xkdr:site_5104,site_5104,"Kurla, Mumbai - MPCB",cpcb_caaqm,8109,2024-01-01 00:00:00+05:30,2024-12-31 15:00:00+05:30,8109,26.49,200.09
+xkdr:site_5102,site_5102,"Malad West, Mumbai - IITM",cpcb_caaqm,7486,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,7486,24.405,177.9
+xkdr:site_5402,site_5402,"Malad West, Mumbai - IITM",cpcb_caaqm,5982,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,5982,33.230000000000004,684.95
+xkdr:site_5394,site_5394,"Mazgaon, Mumbai - IITM",cpcb_caaqm,4302,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,4302,63.93,253.38
+xkdr:site_5807,site_5807,"Mindspace-Malad West, Mumbai - MPCB",cpcb_caaqm,8120,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,8120,28.585,963.56
+xkdr:site_5413,site_5413,"Mulund West, Mumbai - MPCB",cpcb_caaqm,8171,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,8171,23.13,1000.0
+xkdr:site_5398,site_5398,"Navy Nagar-Colaba, Mumbai - IITM",cpcb_caaqm,7871,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,7871,28.03,213.09
+xkdr:site_5112,site_5112,"Powai, Mumbai - MPCB",cpcb_caaqm,8396,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,8396,20.57,185.26
+xkdr:site_5963,site_5963,"Sewri, Mumbai - BMC",cpcb_caaqm,7623,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,7623,24.69,602.95
+xkdr:site_5961,site_5961,"Shivaji Nagar, Mumbai - BMC",cpcb_caaqm,5856,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,5856,33.129999999999995,312.54
+xkdr:site_5403,site_5403,"Siddharth Nagar-Worli, Mumbai - IITM",cpcb_caaqm,5135,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,5135,57.52,279.24
+xkdr:site_5119,site_5119,"Sion, Mumbai - MPCB",cpcb_caaqm,8383,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,8383,28.08,985.0
+xkdr:site_5106,site_5106,"Vile Parle West, Mumbai - MPCB",cpcb_caaqm,7618,2024-01-01 00:00:00+05:30,2024-12-31 23:00:00+05:30,7618,23.12,237.68
+xkdr:site_5115,site_5115,Worli Mumbai,cpcb_caaqm,7968,2024-01-01 00:00:00+05:30,2024-12-31 13:00:00+05:30,7968,23.92,394.0

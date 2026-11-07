@@ -131,3 +131,14 @@ This is an append-only decision log. Do not rewrite old decisions. If a decision
 - **Confidence:** High for gap 48h and 72h regimes; Medium for longer horizons where rare extreme targets dominate RMSE.
 - **Alternatives considered:** Pure `hist24_same_hour` without blend (poorer level tracking at gap 72h: 494.29 vs 490.90); standalone `median72` (fails to exploit diurnal cycle; higher MAE and clean RMSE); calendar-only ExtraTrees (already rejected in DEC-20261107-09).
 - **Consequences / revisit trigger:** Update `train_predict.py` to support `hist24_blend50_median72` and explicit PM-history cutoffs. Re-evaluate on final 10 November Train refresh.
+
+## DEC-20261108-11 — Retain P_fix as fallback; do not promote F4 yet
+
+- **Date / owner:** 2026-11-08 / Codex
+- **Status:** Provisional for the current Train snapshot; final refresh rerun required.
+- **Context:** TASK 007 repaired exact archive-series handling and compared seasonal and LightGBM candidates at the current 193-hour target lead with fixed-origin 48-hour windows.
+- **Decision:** Keep P_fix as the provisional fallback and keep F4 as an unpromoted challenger. Exclude Mindspace `xkdr:site_5807` from the Malad P_fix mapping; compare it only as a separately named candidate. P_fix uses Borivali `site_5400`, explicit Malad combination `site_5102` + `site_5402`, Byculla `site_5960`, and Shivaji Nagar `site_5961`.
+- **Evidence:** At 193h, P_fix development full RMSE was 30.181 (2,820 rows/20 origins) versus F4 fixed 32.224; paired F4-P_fix delta +1.624, 95% moving-block interval [-0.860, 3.399]. The 318-row/two-origin holdout favored F4 (13.618) over P_fix (20.948), but has no extreme targets and is too small to establish robust promotion. Ratio B was 35.970 on development and 17.429 on holdout. See `reports/ml_pipeline/task007/TASK007_FINAL_REPORT.md` and `EXP-20261108-008`.
+- **Confidence:** Medium that F4 should not be promoted on this evidence; Low about final competition ranking until refreshed data and more independent origins.
+- **Alternatives considered:** Promote fixed F4 because of holdout gain; use median72. Rejected promotion because F4 loses development and only two held-out origins exist. Median72 remains the fallback if seasonal inputs fail validation.
+- **Consequences / revisit trigger:** Use the provisional P_fix artifact only as a current-snapshot candidate. Recompute all cutoffs and validation after the final Train refresh. Reconsider F4 only if full-target RMSE gains replicate across more untouched origins, stations, lead buckets and extreme-event regimes.

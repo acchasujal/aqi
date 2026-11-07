@@ -151,3 +151,19 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
   - Final Train refresh (scheduled 9/10 November) has not yet been released. Pipeline must be rerun against the new Train file once released.
   - GitHub remote push and PR require manual or unsandboxed execution if credential helper requires interactive auth.
 - **Next action:** Review diff, execute unsandboxed commit/push/PR if desired, and await 9/10 November Train snapshot refresh.
+# 2026-11-08 — TASK 007 Final Model Optimisation and Seasonal Repair
+
+- **Task / issue:** TASK 007 — reproduce and evaluate seasonal fallback, Task 005 ratio LightGBM B, and F4 at the expected private target lead.
+- **Branch:** `feature/task007-final-model-optimisation`, created from verified `origin/main` at `9d3fad0afb25b3247bb564464a5e6a090e107444`.
+- **Files changed:** `src/mumbai_pm25/historical_archive.py`, `src/mumbai_pm25/forecast.py`, `src/mumbai_pm25/validation.py`, `scripts/validate_seasonal_history.py`, `scripts/validate_task007_seasonal.py`, `scripts/validate_task007_lightgbm.py`, `tests/test_seasonal_history.py`, `tests/test_ml_pipeline.py`, `experiments/EXP-20261108-008.yaml`, `experiments/EXPERIMENT_LOG.csv`, `DECISIONS.md`, `PROGRESS.md`, Task 007 reports/OOF outputs, and the uniquely named provisional submission plus manifest.
+- **Work completed:**
+  1. Audited TASK005/006 source/scripts and the current immutable raw snapshot; no weather vintage file or final Train refresh was present.
+  2. Repaired archive provenance and calendar mapping; retained exact source IDs and excluded Mindspace from Malad P_fix after confirming it must remain a separate candidate.
+  3. Shared fixed-origin median72/diur7 inference between production and validation; corrected lead-time off-by-one; added coverage, leap-day, source-isolation and cutoff tests.
+  4. Completed seasonal comparisons at 48, 72, 73, 96 and actual 193h gap; completed corrected categorical/cyclic LightGBM ratio/direct/residual comparison and F4 fixed/grid blend at 193h.
+  5. Generated current snapshot provisional P_fix artifact and manifest. Verified 2,592 finite nonnegative predictions, exact ID order, no raw data changes.
+- **Key results:** At 193h, P_fix development full RMSE 30.181 across 20 origins; fixed F4 32.224. Holdout over two origins/318 rows favored F4 (13.618) over P_fix (20.948), but no holdout extremes and insufficient origins for promotion. Selected ratio B (Huber) scored 35.970 dev and 17.429 holdout. F4 remains challenger; P_fix remains fallback pending final Train refresh.
+- **Commands and results:** `.venv\Scripts\python.exe -m pytest` (44 passed); scoped Ruff check over changed ML/scripts/tests (passed); Task007 seasonal runs at gaps 48/72/73/96/193; LightGBM Task007 validation at gap 193; `scripts/train_predict.py` current-snapshot provisional candidate generation. See `reports/ml_pipeline/task007/TASK007_FINAL_REPORT.md` for exact metrics, hashes, and limitations.
+- **Decision:** Added `DEC-20261108-11`; updated `EXP-20261108-008` to completed.
+- **Known limitations / blockers:** Final Train refresh scheduled Nov10 was not present. Weather is untested because `weather_single_runs.csv` is absent. LightGBM build is nightly Windows ARM64 (`4.7.0.99`). Holdout contains only two origins and no extreme labels. No commit/push/PR yet.
+- **Next action:** Review git diff, commit the narrow task branch, push and open a PR if remote auth permits. After final Train release, rerun the exact-gap pipeline and generate a newly named final candidate.
