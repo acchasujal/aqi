@@ -34,4 +34,10 @@ Thumbs.db
 *.parquet
 *.feather
 
+# Machine learning caches
+catboost_info/
+lightning_logs/
+wandb/
+
 # Keep raw challenge files tracked; do not add a blanket data/ ignore.
+

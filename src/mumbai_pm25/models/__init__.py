@@ -9,10 +9,12 @@ from mumbai_pm25.models.statistical import (
     StatisticalForecaster,
     compute_station_history_stats,
 )
+from mumbai_pm25.models.supervised import SupervisedForecaster
 
 __all__ = [
     "HistoryStats",
     "StatisticalForecaster",
+    "SupervisedForecaster",
     "calendar_features",
     "compute_station_history_stats",
     "fit_extra_trees",
