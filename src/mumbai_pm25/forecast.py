@@ -83,6 +83,40 @@ def history_features(
     return {"median72": level}
 
 
+def recent_median72(history: pd.Series, cutoff: pd.Timestamp) -> float | None:
+    """Median in the 72 elapsed hours ending at an interval-end cutoff."""
+    if cutoff.tz is None:
+        raise ValueError("PM cutoff must be timezone-aware")
+    if history.index.tz is None:
+        raise ValueError("PM history index must be timezone-aware")
+    eligible = history.loc[history.index < cutoff].dropna()
+    if eligible.empty:
+        return None
+    recent = eligible.loc[eligible.index >= cutoff - pd.Timedelta(hours=72)]
+    value = recent.median() if not recent.empty else eligible.median()
+    if not np.isfinite(value):
+        raise ValueError("Non-finite recent PM estimate")
+    return float(value)
+
+
+def combine_forecasts(recent_pm: float | None, seasonal_pm: float | None,
+                      seasonal_weight: float = 0.5) -> float:
+    """Blend available estimates; fail explicitly when neither exists."""
+    if not 0 <= seasonal_weight <= 1:
+        raise ValueError("seasonal_weight must be in [0, 1]")
+    values = [recent_pm, seasonal_pm]
+    for value in values:
+        if value is not None and (not np.isfinite(value) or value < 0):
+            raise ValueError("Forecast components must be finite and non-negative")
+    if recent_pm is None and seasonal_pm is None:
+        raise ValueError("Neither recent PM nor seasonal history is available")
+    if recent_pm is None:
+        return float(seasonal_pm)
+    if seasonal_pm is None:
+        return float(recent_pm)
+    return float((1 - seasonal_weight) * recent_pm + seasonal_weight * seasonal_pm)
+
+
 def predict_test(
     train: pd.DataFrame,
     test: pd.DataFrame,
@@ -172,20 +206,14 @@ def predict_test_with_hist24_blend(
     effective_cutoff = pm_history_cutoff if pm_history_cutoff is not None else issue_time
 
     eligible = train.loc[train.target_start + pd.Timedelta(hours=1) <= issue_time]
-    if eligible.empty:
-        raise ValueError("No PM labels were available by issue_time")
-
-    grid = eligible.set_index(["location_id", "target_start"])[["pm25"]]
-    cutoffs = station_history_cutoffs(eligible)
-    median72_feat = {
-        int(s): history_features(grid, pm_history_cutoff=effective_cutoff, station_id=int(s))
-        for s in cutoffs.index
+    station_history = {
+        int(station): group.set_index("target_start")["pm25"].sort_index()
+        for station, group in eligible.groupby("location_id")
     }
-    missing_stations = {int(s) for s in test.location_id.unique()} - set(median72_feat)
-    if missing_stations:
-        raise ValueError(
-            f"No eligible PM history for test stations: {sorted(missing_stations)}"
-        )
+    median72_feat = {
+        station: recent_median72(series, effective_cutoff)
+        for station, series in station_history.items()
+    }
 
     # Compute seasonal features for all test rows
     target_df = test[["location_id", "target_start"]].copy()
@@ -201,20 +229,11 @@ def predict_test_with_hist24_blend(
     predictions: list[float] = []
     for i, row in enumerate(out.itertuples(index=False)):
         loc_id = int(row.location_id)
-        m72 = max(0.0, float(median72_feat[loc_id]["median72"]))
-
-        # seasonal feature index aligns with test DataFrame index
+        m72 = median72_feat.get(loc_id)
         idx = test.index[i]
         sh = seasonal.loc[idx, "hist24_same_hour_mean"] if idx in seasonal.index else np.nan
-
-        if np.isfinite(sh):
-            sh_val = max(0.0, float(sh))
-            blended = (1 - blend_weight_hist24) * m72 + blend_weight_hist24 * sh_val
-        else:
-            # No seasonal data: fall back to median72
-            blended = m72
-
-        predictions.append(max(0.0, blended))
+        seasonal_value = float(sh) if np.isfinite(sh) else None
+        predictions.append(combine_forecasts(m72, seasonal_value, blend_weight_hist24))
 
     out["Target"] = predictions
     validate_submission(out[["ID", "Target"]], test)

@@ -151,3 +151,15 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
   - Final Train refresh (scheduled 9/10 November) has not yet been released. Pipeline must be rerun against the new Train file once released.
   - GitHub remote push and PR require manual or unsandboxed execution if credential helper requires interactive auth.
 - **Next action:** Review diff, execute unsandboxed commit/push/PR if desired, and await 9/10 November Train snapshot refresh.
+
+### 2026-11-07 — EXP-009 Production/Validation Parity
+- **Branch / base:** `feature/exp-009-forecast-parity` worktree from `9d3fad0`; EXP-008 changes remain isolated.
+- **Files:** Shared median and blend in `forecast.py`; validation calls both; parity tests and five reports plus diagnostic CSVs added. Experiment log and progress appended. No raw data, station mapping, leap policy, or model selection changed.
+- **Evidence:** Production CSVs: 2,592 rows, zero changes, identical SHA-256 `55e2fc8c7cad94db22f1358a8715216b0c7fbbb7a50c728c4413890f6a8716bc`. Matched OOF results in `VALIDATION_IMPACT.md`.
+- **Checks:** Focused parity tests 7 passed. Full suite was run three times: first 38 passed/1 unrelated ExtraTrees exact-equality failure before adding parity tests; second 45 passed; final 45 passed/1 ExtraTrees exact-equality failure. Focused parity + seasonal tests: 21 passed. Ruff passed; `git diff --check` passed.
+- **Limitation:** Existing fold construction skips no-prior-PM station rows; synthetic test covers seasonal-only fallback.
+
+### 2026-11-07 — EXP-009 Acceptance Update
+- **ExtraTrees test diagnosis:** Base commit `9d3fad0` also fails the exact-equality test intermittently. Five direct paired seeded fits on the base differed by at most `3.552713678800501e-15` with NumPy 2.3.5, pandas 2.3.3, scikit-learn 1.8.0 and `n_jobs=2`. Changed only the assertion to `rtol=0, atol=1e-12`; model configuration unchanged.
+- **Verification:** `$env:PYTHONPATH='src'; python -m pytest -q` — 47 passed, 1 warning. EXP-009 production artifact remains byte-identical to its reference as recorded in `reports/ml_pipeline/exp_009/BEFORE_AFTER_COMPARISON.md`.
+- **Decision:** EXP-009 accepted for EXP-010 base with this documented pre-existing numerical test issue resolved at the assertion level.

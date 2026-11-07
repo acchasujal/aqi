@@ -115,7 +115,7 @@ def test_extra_trees_uses_station_one_hot_and_is_deterministic():
     first = fit_extra_trees(available, targets, station_ids=[1, 2], seed=42)
     second = fit_extra_trees(available, targets, station_ids=[1, 2], seed=42)
     assert np.isfinite(first).all() and (first >= 0).all()
-    assert np.array_equal(first, second)
+    np.testing.assert_allclose(first, second, rtol=0, atol=1e-12)
     leaked = available.copy()
     leaked.loc[leaked.index[0], "target_start"] = cutoff
     with pytest.raises(ValueError, match="exceed"):
