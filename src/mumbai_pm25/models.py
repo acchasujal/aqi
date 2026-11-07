@@ -46,7 +46,7 @@ def fit_extra_trees(train_rows: pd.DataFrame, predict_rows: pd.DataFrame, *,
     if not np.isfinite(y_train).all() or (y_train < 0).any():
         raise ValueError("ExtraTrees training labels must be finite and non-negative")
     model = ExtraTreesRegressor(n_estimators=64, min_samples_leaf=40, max_features=0.8,
-                                n_jobs=2, random_state=seed)
+                                n_jobs=1, random_state=seed)
     model.fit(x_train, y_train)
     prediction = np.maximum(model.predict(x_predict), 0.0)
     if not np.isfinite(prediction).all():

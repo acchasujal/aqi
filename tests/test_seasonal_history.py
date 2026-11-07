@@ -375,3 +375,86 @@ def test_submission_finite_nonnegative_complete():
     with pytest.raises(ValueError, match="finite"):
         validate_submission(bad_inf, test)
 
+
+# ---------------------------------------------------------------------------
+# Additional regression tests for station mapping, multi-series aggregation & leap year
+# ---------------------------------------------------------------------------
+
+def test_station_mapping_excludes_mindspace_malad():
+    """Station 11611 (Malad West IITM) must NOT match Mindspace-Malad West MPCB."""
+    from mumbai_pm25.historical_archive import _match_archive_station
+
+    stations = [
+        "Mindspace-Malad West, Mumbai - MPCB",
+        "Malad West, Mumbai - IITM",
+        "Borivali East, Mumbai - IITM",
+        "Byculla, Mumbai - BMC",
+        "Shivaji Nagar, Mumbai - BMC",
+    ]
+    matched = _match_archive_station(11611, stations)
+    assert matched == "Malad West, Mumbai - IITM"
+
+    # Even if Mindspace is the ONLY Malad station present, 11611 must NOT match it
+    matched_only_mindspace = _match_archive_station(11611, ["Mindspace-Malad West, Mumbai - MPCB"])
+    assert matched_only_mindspace is None
+
+
+def test_multi_series_timestamp_aggregation_unique_coverage():
+    """Multi-series at the same station-hour must be aggregated and not inflate coverage."""
+    # Simulate dual sensors (site_5113 and site_5400) at Borivali East with identical timestamps
+    times = pd.date_range("2024-01-01 10:00:00", periods=5, freq="D", tz="Asia/Kolkata")
+    rows = []
+    for t in times:
+        rows.append({"station_name": "Borivali East, Mumbai - IITM", "hour_start": t, "pm25": 40.0, "source": "cpcb_caaqm"})
+        rows.append({"station_name": "Borivali East, Mumbai - IITM", "hour_start": t, "pm25": 60.0, "source": "cpcb_caaqm"})
+    raw_df = pd.DataFrame(rows)
+
+    # Pre-aggregation should produce mean 50.0 and exactly 5 unique rows
+    agg_df = (
+        raw_df.groupby(["station_name", "hour_start"], as_index=False)
+        .agg({"pm25": "mean", "source": "first"})
+    )
+    assert len(agg_df) == 5
+    assert (agg_df["pm25"] == 50.0).all()
+
+    target_df = pd.DataFrame({
+        "location_id": [11606],
+        "target_start": [pd.Timestamp("2026-01-03 10:00:00+05:30")],
+    })
+    res = build_seasonal_features(agg_df, target_df, window_days=14, min_obs=3)
+    assert res["hist24_same_hour_mean"].iloc[0] == 50.0
+    assert res["hist24_coverage"].iloc[0] == 5  # Exactly 5 unique hours, not 10!
+
+
+def test_leap_year_alignment_all_key_dates():
+    """Normalized DOY must align calendar dates across leap year (2024) and non-leap year (2026)."""
+    from mumbai_pm25.historical_archive import circular_doy_distance, normalized_doy
+
+    # 1. Before Feb 29 (e.g. Jan 15, Feb 20)
+    assert normalized_doy(pd.Timestamp("2024-01-15")) == normalized_doy(pd.Timestamp("2026-01-15")) == 15.0
+    assert normalized_doy(pd.Timestamp("2024-02-28")) == normalized_doy(pd.Timestamp("2026-02-28")) == 59.0
+
+    # 2. Feb 29 itself
+    assert normalized_doy(pd.Timestamp("2024-02-29")) == 59.5
+
+    # 3. March 1 (Day after leap day)
+    assert normalized_doy(pd.Timestamp("2024-03-01")) == normalized_doy(pd.Timestamp("2026-03-01")) == 60.0
+
+    # 4. November 11 (Private evaluation target date!)
+    assert normalized_doy(pd.Timestamp("2024-11-11")) == normalized_doy(pd.Timestamp("2026-11-11")) == 315.0
+
+    # Distance on November 11 between 2024 and 2026 is exactly 0
+    d_nov11 = circular_doy_distance(
+        normalized_doy(pd.Timestamp("2024-11-11")),
+        normalized_doy(pd.Timestamp("2026-11-11")),
+    )
+    assert d_nov11 == 0.0
+
+    # Distance across year boundary (Dec 31 to Jan 2) is 2 days
+    d_wrap = circular_doy_distance(
+        normalized_doy(pd.Timestamp("2024-12-31")),
+        normalized_doy(pd.Timestamp("2026-01-02")),
+    )
+    assert d_wrap == 2.0
+
+
