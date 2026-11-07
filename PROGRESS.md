@@ -362,3 +362,25 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
 - **Decisions added or superseded:** DEC-20261108-13 adopted.
 - **Known limitations / blockers:** None. Ready for operational execution on 10 November 2026.
 - **Next action:** Final summary delivery to user.
+
+
+### 2026-11-08 — Sensitivity Audit of Candidate C vs Candidate B, Extreme Observation Diagnostics, and Deployment Readiness
+- **Task / issue:** Final sensitivity audit of Candidate C vs Candidate B across extreme observations, block bootstrap, November comparability, and final readiness protocol.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / [pending commit]
+- **Files changed:** `scripts/audit_extreme_events_and_paired.py` (new); `reports/extreme_event_sensitivity.md` (new); `reports/november_2025_2026_comparison.md` (new); `reports/candidate_C_B_paired_analysis.csv` (new); `reports/final_two_submission_readiness.md` (new); `DECISIONS.md`; `PROGRESS.md`.
+- **Work completed:**
+  1. Identified all four ground-truth observations $> 250\ \mu\text{g}/\text{m}^3$ (all occurred at Shivaji Nagar during `fold_nov_2025_calendar_match`, peaking at 688.07 $\mu\text{g}/\text{m}^3$), reporting observed values and candidate predictions (`reports/extreme_event_sensitivity.md`).
+  2. Conducted individual jackknife and collective exclusion diagnostics: proved Candidate C achieves lower RMSE than Candidate B both on full data (29.30 vs 30.65) and when all four extreme observations are excluded (16.34 vs 16.53), establishing that Candidate C's advantage is distribution-wide rather than outlier-driven.
+  3. Audited November 2025 vs 2026 validation comparability, verifying frozen 48h features, in-distribution lead times, identical normalized DOY (315.0–316.0), and identical 2024 CPCB CAAQM climatology, while articulating real-world non-equivalences in festival timing (post-Diwali) and synoptic meteorology (`reports/november_2025_2026_comparison.md`).
+  4. Executed Cluster Bootstrap by forecast fold (10,000 iterations), showing an 88.6% probability of Candidate C outperforming Candidate B overall, while verifying that Candidate B wins in 5 out of 9 folds and dominates in clean regimes ($y < 50$ RMSE 11.97 vs 15.03) (`reports/candidate_C_B_paired_analysis.csv`).
+  5. Established the operational execution checklist and verification protocol for the final 10 November `Train.csv` release, ensuring all hashes, manifests, and format constraints are respected (`reports/final_two_submission_readiness.md`).
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe scripts/audit_extreme_events_and_paired.py`
+  - `.\.venv\Scripts\python.exe -m pytest -ra` (66 passed in 35.52s)
+  - `.\.venv\Scripts\python.exe -m ruff check scripts/audit_extreme_events_and_paired.py` (all passed)
+- **Tests and exact results:** 66 passed across full test suite. Zero failures.
+- **Experiment IDs / metrics:** Full Pooled RMSE: C 29.30, B 30.65. Non-extreme Diagnostic RMSE ($y < 250$): C 16.34, B 16.53. Cluster Bootstrap 95% CI: C `[13.58, 47.53]`, B `[13.56, 49.88]`, win rate 88.6%. Mean prediction divergence: 5.47 $\mu\text{g}/\text{m}^3$ overall, 18.69 $\mu\text{g}/\text{m}^3$ in November transition.
+- **Decisions added or superseded:** DEC-20261108-14 adopted.
+- **Known limitations / blockers:** None. Awaiting final refreshed `Train.csv` release on 10 November 2026.
+- **Next action:** Final summary delivery to user.

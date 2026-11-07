@@ -191,3 +191,17 @@ This is an append-only decision log. Do not rewrite old decisions. If a decision
 - **Evidence:** `reports/final_candidate_comparison.csv` and `reports/final_submission_selection.md`.
 - **Confidence:** High. Supported by 1,316 evaluated ground-truth observations across 9 chronological folds.
 - **Consequences / revisit trigger:** Both candidates are generated with cryptographic manifests in `artifacts/submissions/`. On 10 November 2026, execute the refreshed pipeline to generate the final upload pair.
+
+
+## DEC-20261108-14 — Reaffirm Robustness of Candidate C and B Under Extreme-Observation Sensitivity and Block Bootstrap
+
+- **Date / owner:** 2026-11-08 / Senior Data Scientist, ML Engineer, and Software Architect
+- **Status:** Accepted (Confirms robustness of DEC-20261108-13 selection)
+- **Context:** A sensitivity audit investigated whether Candidate C's lower pooled RMSE was an artifact of four extreme Shivaji Nagar observations ($y > 250\ \mu\text{g}/\text{m}^3$) in November 2025, and tested whether Candidate C and Candidate B provide an authentic two-submission hedge under cluster-resampled bootstrap.
+- **Decision:** Reaffirm the final submission pairing of Candidate C (`submission_C_statistical_seasonal.csv`) and Candidate B (`submission_B_robust_ensemble.csv`):
+  - **Extreme Observation Robustness:** Diagnostic jackknife analysis proves Candidate C achieves lower RMSE than Candidate B both on the complete ground-truth dataset (29.30 vs 30.65) and when all four extreme observations $>250\ \mu\text{g}/\text{m}^3$ are diagnostically excluded (16.34 vs 16.53). Candidate C's performance is not driven by outlier distortion.
+  - **Cluster Bootstrap by Forecast Fold:** 10,000 block-resampled bootstrap iterations yield a 95% CI for Candidate C of `[13.58, 47.53]` (mean 27.72) vs Candidate B of `[13.56, 49.88]` (mean 28.94), with an 88.6% probability of Candidate C winning overall.
+  - **Hedge Value:** Candidate B provides genuine protection if post-monsoon conditions remain clean ($y < 50$ RMSE: 11.97 vs 15.03 for Candidate C) and wins in 5 out of 9 individual folds. The mean absolute prediction divergence of 18.69 $\mu\text{g}/\text{m}^3$ on November transition days provides a true two-submission hedge across meteorological regimes.
+- **Evidence:** `reports/extreme_event_sensitivity.md`, `reports/november_2025_2026_comparison.md`, `reports/candidate_C_B_paired_analysis.csv`, and `reports/final_two_submission_readiness.md`.
+- **Confidence:** High. Supported by 1,316 observations across 9 chronological folds.
+- **Consequences / revisit trigger:** On 10 November 2026, execute the verified readiness protocol to ingest the refreshed `Train.csv` and regenerate both final submission files.
