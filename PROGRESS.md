@@ -309,3 +309,32 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
 - **Decisions added or superseded:** None.
 - **Known limitations / blockers:** Awaiting final 10 November Train snapshot release by competition organizers.
 - **Next action:** Final git commit and user presentation.
+
+
+### 2026-11-08 — Final Generalization Audit, Multi-Regime Winter Validation, and Private Window Verification
+- **Task / issue:** Final Generalization Audit of Mumbai PM2.5 forecasting system on unseen private period (11–12 November 2026).
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / [pending commit]
+- **Files changed:** `src/mumbai_pm25/forecast.py`; `tests/test_independent_verification.py`; `scripts/decompose_adversarial_validation.py` (new); `scripts/reassess_candidate_diversity.py` (new); `scripts/analyze_candidate_submissions.py` (new); `reports/forecast_timeline_audit.md` (new); `reports/november_seasonal_validation.md` (new); `reports/high_pollution_robustness.md` (new); `reports/adversarial_validation_decomposition.csv` (new); `reports/candidate_diversity_reassessment.csv` (new); `reports/seasonal_summary.csv` (new); `reports/seasonal_per_fold.csv` (new); `reports/high_pollution_bins.csv` (new); `reports/final_generalization_assessment.md` (new); `DECISIONS.md`; `PROGRESS.md`.
+- **Work completed:**
+  1. Audited all four information clocks (model run time, PM cutoff, target interval, operational issue time) and resolved test horizon indexing discrepancy in `src/mumbai_pm25/forecast.py`, mapping private targets into aligned in-distribution block horizon $1 \dots 48$ (`reports/forecast_timeline_audit.md`).
+  2. Implemented extended seasonal winter validation on 4 historical winter pseudo-forecast folds ($N=626$), demonstrating Candidate B achieves 41.66 RMSE vs Candidate A's 44.72 RMSE and reduces under-prediction bias from -15.89 to -10.59 $\mu\text{g}/\text{m}^3$ (`reports/november_seasonal_validation.md`).
+  3. Diagnosed extreme pollution robustness across 5 ground-truth bins, proving Candidate B beats Candidate A and single tree models across all elevated levels ($y \ge 50$) by 5.2 to 7.7 $\mu\text{g}/\text{m}^3$ (`reports/high_pollution_robustness.md`).
+  4. Decomposed adversarial validation across calendar-only, pollution-state-only, and all features vs both monsoonal and matched 2025 controls, confirming separation is legitimate climatological seasonality (`reports/adversarial_validation_decomposition.csv`).
+  5. Implemented strict Task 6 availability test in `tests/test_independent_verification.py` verifying target_end <= pm_history_cutoff < target_start across all folds.
+  6. Reassessed model diversity and multi-model blends across all 9 validation folds ($N=1,316$), demonstrating tree models share 0.9693 residual correlation and tree-tree blending provides negligible protection against winter shifts, whereas 2024 seasonal blend provides authentic orthogonal variance (corr 0.9140) (`reports/candidate_diversity_reassessment.csv`).
+  7. Conducted detailed distributional and physical plausibility analysis of the 192 private prediction slots in Candidate A and Candidate B, confirming physically sound diurnal variation and spatially selective divergence (+5.10 $\mu\text{g}/\text{m}^3$ at industrial Station 3409511 vs -0.20 $\mu\text{g}/\text{m}^3$ at marine Station 11606) (`reports/final_generalization_assessment.md`).
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe scripts/decompose_adversarial_validation.py`
+  - `.\.venv\Scripts\python.exe scripts/reassess_candidate_diversity.py`
+  - `.\.venv\Scripts\python.exe scripts/analyze_candidate_submissions.py`
+  - `.\.venv\Scripts\python.exe -m pytest -ra` (65 passed in 22.57s)
+  - `.\.venv\Scripts\python.exe -m ruff check src/ scripts/ tests/` (all passed)
+- **Tests and exact results:** 65 passed across full test suite. Zero failures.
+- **Experiment IDs / metrics:**
+  - Monsoon/Autumn Folds (N=690): Candidate B RMSE 14.75; Candidate A RMSE 14.89; CatBoost RMSE 15.14.
+  - Winter Transition Folds (N=626): Statistical Blend RMSE 39.28; Candidate B RMSE 41.66; Candidate A RMSE 44.72; CatBoost RMSE 46.67; LightGBM RMSE 47.37.
+  - Pooled All 9 Folds (N=1316): Statistical Blend RMSE 29.30; Candidate B RMSE 30.65; Candidate A RMSE 32.67; CatBoost RMSE 34.00; LightGBM RMSE 35.17.
+- **Decisions added or superseded:** DEC-20261108-12 adopted.
+- **Known limitations / blockers:** Provisional candidate predictions ready; operational re-run scheduled for 10 November 2026 upon organizer release of final refreshed `Train.csv`.
+- **Next action:** Final review and delivery to user.

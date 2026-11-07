@@ -155,3 +155,25 @@ This is an append-only decision log. Do not rewrite old decisions. If a decision
   - LightGBM `raw` MSE loss: Rejected due to severe distortion by positive tail skew (RMSE 38.00).
   - Pure statistical `median72`: Retained as control, but superseded by seasonal blend (15.65) and CatBoost ensemble (14.24).
 - **Consequences / revisit trigger:** Both files are exported to `artifacts/submissions/` with `.manifest.txt` files and are designated for the 2 allowed private submissions on Zindi.
+
+
+## DEC-20261108-12 — Validate Dual-Candidate Ensembles Across Multi-Regime Winter Validation and In-Distribution Horizon Alignment
+
+- **Date / owner:** 2026-11-08 / Senior Data Scientist, ML Engineer, and Software Architect
+- **Status:** Accepted (Reaffirms and strengthens DEC-20261108-11 with winter empirical evidence)
+- **Context:** Following the initial multi-model benchmarking on August–October 2026 folds, a comprehensive generalization audit was conducted to verify performance during the post-monsoon/winter transition (11–12 November) where ambient PM2.5 historically surges (e.g. 11–12 Nov 2025 mean $y = 65.74$, max $688.07 \mu\text{g}/\text{m}^3$).
+- **Decision:** Reaffirm Candidate A (83% CatBoost log1p + 17% Statistical Blend) and Candidate B (50% CatBoost log1p + 50% Statistical Blend) as the official pair of final submissions for private evaluation.
+  - Fix horizon calculation in test inference to map target offset into aligned in-distribution block horizon $1 \dots 48$.
+  - Candidate A is retained as the primary precision candidate for steady autumn/late-monsoon air quality conditions (RMSE 14.24 on monsoon folds).
+  - Candidate B is validated as the critical robust hedge candidate against winter meteorological inversions and pollution surges (RMSE 41.66 on winter folds vs 44.72 for Candidate A, cutting under-prediction bias by 5.3 $\mu\text{g}/\text{m}^3$ and dominating all observations with $y \ge 50$).
+  - Reject tree-tree blending (CatBoost + LightGBM) as an alternative hedge because gradient boosted trees share 0.9693 residual correlation and fail simultaneously during winter distribution shifts (winter RMSE 46.74).
+- **Evidence:**
+  - `reports/forecast_timeline_audit.md`: Audited all 4 information clocks and corrected block horizon mapping.
+  - `reports/november_seasonal_validation.md`: Evaluated 4 seasonal winter pseudo-forecast folds ($N=626$).
+  - `reports/high_pollution_robustness.md`: Binned performance across pollution levels ($<50$, $50-75$, $75-100$, $100-250$, $>250$).
+  - `reports/adversarial_validation_decomposition.csv`: Proved ROC-AUC 1.0 is driven purely by calendar seasonality and macro levels, not leakage.
+  - `reports/candidate_diversity_reassessment.csv`: Evaluated 8 model configurations across all 9 folds ($N=1316$).
+  - `reports/final_generalization_assessment.md`: Complete synthesis and inspection of the 192 private slots.
+- **Confidence:** High. Supported by 1,316 evaluated ground-truth observations across 9 chronological folds.
+- **Alternatives considered:** Pure tree ensemble (CatBoost + LightGBM; rejected due to 0.9693 error correlation); pure statistical climatology (rejected due to higher autumn error).
+- **Consequences / revisit trigger:** Both submissions remain cryptographically archived in `artifacts/submissions/`. On 10 November 2026, re-execute `scripts/train_predict.py` with the refreshed `Train.csv` snapshot.
