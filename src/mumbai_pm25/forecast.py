@@ -186,6 +186,7 @@ def predict_test_with_hist24_blend(
     issue_time: pd.Timestamp,
     pm_history_cutoff: pd.Timestamp | None = None,
     blend_weight_hist24: float = 0.5,
+    calendar_mode: str = "legacy_doy",
 ) -> pd.DataFrame:
     """Forecast using a 50:50 blend of median72 and 2024 seasonal same-hour feature.
 
@@ -223,6 +224,7 @@ def predict_test_with_hist24_blend(
         station_map=STATION_NAME_MAP,
         window_days=14,
         min_obs=3,
+        calendar_mode=calendar_mode,
     )
 
     out = test[["ID", "location_id", "target_start"]].copy()

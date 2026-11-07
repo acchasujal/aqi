@@ -68,6 +68,8 @@ def main() -> None:
         "--model", choices=SUPPORTED_MODELS, default="median72",
         help="Forecasting model to use",
     )
+    parser.add_argument("--calendar-mode", choices=("legacy_doy", "month_day_365"),
+                        default="legacy_doy", help="Seasonal calendar matching mode")
     parser.add_argument("--seasonal-weight", type=float, default=0.5,
                         help="Seasonal blend weight in [0, 1] (hist24 model only)")
     # Primary argument names
@@ -103,6 +105,8 @@ def main() -> None:
         parser.error("--seasonal-weight must be in [0, 1]")
     if args.model == "median72" and args.seasonal_weight != 0.5:
         parser.error("--seasonal-weight applies only to hist24_blend50_median72")
+    if args.model == "median72" and args.calendar_mode != "legacy_doy":
+        parser.error("--calendar-mode applies only to hist24_blend50_median72")
 
     train, test, sample, stations = load_data(args.data_dir)
 
@@ -121,6 +125,8 @@ def main() -> None:
     if args.output is None:
         ts_tag = model_run_time.strftime("%Y%m%d_%H%M")
         model_tag = args.model if args.seasonal_weight == 0.5 else f"hist24_blend_w{int(args.seasonal_weight * 100):03d}"
+        if args.calendar_mode == "month_day_365":
+            model_tag += "_calendar365"
         output = ROOT / "artifacts" / "submissions" / f"{model_tag}_{ts_tag}.csv"
     else:
         output = args.output
@@ -143,6 +149,7 @@ def main() -> None:
             issue_time=model_run_time,
             pm_history_cutoff=pm_history_cutoff,
             blend_weight_hist24=args.seasonal_weight,
+            calendar_mode=args.calendar_mode,
         )
     else:
         raise SystemExit(f"Unknown model: {args.model!r}")
@@ -164,7 +171,7 @@ def main() -> None:
         pm_history_cutoff=pm_history_cutoff,
         train=train,
         stations=stations,
-        model=args.model,
+        model=args.model if args.calendar_mode == "legacy_doy" else f"{args.model}_calendar365",
         extra_sources=[args.data_dir / "AdditionalHistory.zip"],
     )
     print(f"Wrote manifest to {manifest_path}")

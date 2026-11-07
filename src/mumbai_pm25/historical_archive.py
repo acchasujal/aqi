@@ -122,6 +122,7 @@ def build_seasonal_features(
     station_map: dict[int, str] | None = None,
     window_days: int = 14,
     min_obs: int = 3,
+    calendar_mode: str = "legacy_doy",
 ) -> pd.DataFrame:
     """Build 2024 seasonal climatology features for each row in target_df.
 
@@ -147,6 +148,8 @@ def build_seasonal_features(
         hist24_month_hour_mean: mean pm25 in 2024 for same calendar month + hour-of-day
         hist24_coverage: number of observations used for hist24_same_hour_mean
     """
+    if calendar_mode not in {"legacy_doy", "month_day_365"}:
+        raise ValueError(f"Unknown calendar_mode: {calendar_mode}")
     if station_map is None:
         station_map = STATION_NAME_MAP
 
@@ -166,6 +169,11 @@ def build_seasonal_features(
     history["doy"] = history["hour_start"].dt.day_of_year
     history["hod"] = history["hour_start"].dt.hour
     history["month"] = history["hour_start"].dt.month
+    if calendar_mode == "month_day_365" and "calendar_day" not in history.columns:
+        month_day = history["hour_start"].dt.strftime("%m-%d")
+        history["calendar_day"] = pd.to_datetime(
+            "2025-" + month_day, errors="coerce"
+        ).dt.dayofyear
 
     # Build a lookup dict: archive_station_name -> sub-DataFrame
     station_cache: dict[str, pd.DataFrame] = {}
@@ -206,36 +214,45 @@ def build_seasonal_features(
         target_doy = t_start.day_of_year
         target_month = t_start.month
 
-        # Day-of-year window (handle year wrap: DOY 1-365/366)
-        # Map to a range of doy values within ±window_days
-        # Use modular arithmetic on 365-day year (non-leap aware)
-        doy_min = target_doy - window_days
-        doy_max = target_doy + window_days
-
-        if doy_min < 1 and doy_max > 365:
-            # Window spans the whole year — use all doys for this hour
-            same_hod = sub.loc[sub["hod"] == target_hod]
-        elif doy_min < 1:
-            # Wraps into previous year
-            mask = (
-                (sub["hod"] == target_hod)
-                & ((sub["doy"] >= doy_min + 365) | (sub["doy"] <= doy_max))
-            )
-            same_hod = sub.loc[mask]
-        elif doy_max > 365:
-            # Wraps into next year
-            mask = (
-                (sub["hod"] == target_hod)
-                & ((sub["doy"] >= doy_min) | (sub["doy"] <= doy_max - 365))
-            )
-            same_hod = sub.loc[mask]
+        if calendar_mode == "month_day_365":
+            # Feb 29 has no equivalent in the canonical non-leap calendar.
+            if t_start.month == 2 and t_start.day == 29:
+                same_hod = sub.iloc[:0]
+            else:
+                target_day = pd.Timestamp(2025, t_start.month, t_start.day).dayofyear
+                distance = ((sub["calendar_day"] - target_day + 182) % 365) - 182
+                same_hod = sub.loc[(sub["hod"] == target_hod) & (distance.abs() <= window_days)]
         else:
-            mask = (
-                (sub["hod"] == target_hod)
-                & (sub["doy"] >= doy_min)
-                & (sub["doy"] <= doy_max)
-            )
-            same_hod = sub.loc[mask]
+            # Day-of-year window (handle year wrap: DOY 1-365/366)
+            # Map to a range of doy values within ±window_days
+            # Use modular arithmetic on 365-day year (non-leap aware)
+            doy_min = target_doy - window_days
+            doy_max = target_doy + window_days
+
+            if doy_min < 1 and doy_max > 365:
+                # Window spans the whole year — use all doys for this hour
+                same_hod = sub.loc[sub["hod"] == target_hod]
+            elif doy_min < 1:
+                # Wraps into previous year
+                mask = (
+                    (sub["hod"] == target_hod)
+                    & ((sub["doy"] >= doy_min + 365) | (sub["doy"] <= doy_max))
+                )
+                same_hod = sub.loc[mask]
+            elif doy_max > 365:
+                # Wraps into next year
+                mask = (
+                    (sub["hod"] == target_hod)
+                    & ((sub["doy"] >= doy_min) | (sub["doy"] <= doy_max - 365))
+                )
+                same_hod = sub.loc[mask]
+            else:
+                mask = (
+                    (sub["hod"] == target_hod)
+                    & (sub["doy"] >= doy_min)
+                    & (sub["doy"] <= doy_max)
+                )
+                same_hod = sub.loc[mask]
 
         obs_vals = same_hod["pm25"].dropna()
         n_obs = len(obs_vals)

@@ -176,3 +176,14 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
 
 ### 2026-11-07 — EXP-010 OOF Reproduction Check
 - **Result:** Reconstructed W50 OOF predictions match EXP-009 corrected OOF on all 53,160 keyed rows; maximum absolute difference 0.0. The first comparison attempt omitted gap from the join and failed the one-to-one key check; rerun with gap included passed.
+
+### 2026-11-07 — EXP-011 Leap-Year Calendar Alignment
+- **Branch / base:** `feature/exp-011-calendar-alignment` from accepted EXP-010 commit `0270e58c491b87913cae53234edbf3981ffac1a7`; EXP-009 commit `e043a6788416bcb5896b142d788e791f9cd591e7` verified.
+- **Files:** Added opt-in `month_day_365` feature mode in `historical_archive.py`; threaded calendar mode through forecast, CLI and seasonal validation; added matched validation runner and calendar tests; five EXP-011 reports plus metrics/feature comparison CSVs. Legacy default, W50 weight, source mapping, timestamp semantics, and raw data unchanged.
+- **Results:** Matched 48/72/96/120h rows: 13,528/13,060/13,177/13,395. Confirmation RMSE improves slightly at each gap but folds and November evidence are mixed; retain original W50. In-memory corrected inference would change 2,218 of 2,592 rows (mean absolute 1.015863, max 53.4625); no challenger CSV.
+- **Commands/checks:** `$env:PYTHONPATH='src'; python scripts/validate_calendar_alignment.py` completed all gaps; `$env:PYTHONPATH='src'; python -m pytest -q` — 64 passed, 1 warning; focused calendar/parity tests — 16 passed; original W50 and median72 inference smoke runs — 2,592 rows each. Original W50 SHA-256 `55e2fc8c7cad94db22f1358a8715216b0c7fbbb7a50c728c4413890f6a8716bc`. Ruff and diff checks recorded in final report.
+- **Next:** Resolve EXP-008 station identity and hourly interval uncertainty, then rerun after official Train refresh.
+
+### 2026-11-07 — EXP-011 Final Verification Addendum
+- **Final checks:** `$env:PYTHONPATH='src'; python -m pytest -q` — 64 passed, 1 warning. `python -m ruff check src/mumbai_pm25/historical_archive.py src/mumbai_pm25/forecast.py scripts/train_predict.py scripts/validate_seasonal_history.py scripts/validate_calendar_alignment.py scripts/summarize_calendar_diagnostics.py tests/test_calendar_alignment.py` — passed. `git diff --check` — passed. `python scripts/summarize_calendar_diagnostics.py` — completed.
+- **Evidence:** Full-gap metrics, station/fold/horizon diagnostics, extreme squared-error share and actual PM gaps are under `reports/ml_pipeline/exp_011/`. The first slower paired validation run was interrupted before producing results; an optimized complete rerun used the identical source series and generated all four matched gaps. No source raw data were modified.

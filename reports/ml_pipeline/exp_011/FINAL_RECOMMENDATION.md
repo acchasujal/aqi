@@ -1,0 +1,7 @@
+# EXP-011 final recommendation
+
+**RETAIN BASELINE — original W50.** The calendar inconsistency is confirmed and the `month_day_365` mode implements a coherent correction while preserving the original default. Corrected aggregate RMSE improves slightly on all four held-out gaps, but fold-wise evidence is mixed (more folds worsen than improve at 48/72/96h), Byculla and Shivaji Nagar have small station regressions, and the confirmation period has no November or extreme targets. November development folds favor the legacy model at 48/72h. The evidence does not justify a leaderboard challenger under the predeclared criteria. No challenger CSV or manifest was generated, and no Zindi upload, push, or merge occurred.
+
+In-memory production comparison at model run time `2026-11-07T12:00:00+05:30` and PM cutoff `2026-11-02T23:00:00+05:30`: 2,592 valid rows in exact SampleSubmission order; 2,218 predictions would change, with mean absolute change 1.015863 and maximum 53.4625 µg/m³. The original W50 CSV remains byte-identical to reference SHA-256 `55e2fc8c7cad94db22f1358a8715216b0c7fbbb7a50c728c4413890f6a8716bc`.
+
+The unresolved archive station-series provenance and hourly interval semantics remain independent risks. The next high-value task is source identity and interval evidence, followed by a fresh matched regime-aware comparison after the official Train refresh; do not tune this calendar mode to the public leaderboard.

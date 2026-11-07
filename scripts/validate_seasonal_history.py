@@ -42,6 +42,8 @@ def _seasonal_baseline_for_fold(
     history_2024: pd.DataFrame,
     fold_targets: pd.DataFrame,
     history_values: dict[int, pd.Series],
+    *,
+    calendar_mode: str = "legacy_doy",
 ) -> dict[str, np.ndarray]:
     """Compute seasonal baselines for a fold's target rows."""
     # Build seasonal features using 2024 archive
@@ -52,6 +54,7 @@ def _seasonal_baseline_for_fold(
         station_map=STATION_NAME_MAP,
         window_days=14,
         min_obs=3,
+        calendar_mode=calendar_mode,
     )
 
     n = len(fold_targets)
@@ -90,6 +93,7 @@ def rolling_oof_seasonal(
     gap_hours: int,
     horizon_hours: int = 48,
     step_days: int = 7,
+    calendar_mode: str = "legacy_doy",
 ) -> pd.DataFrame:
     """Rolling OOF evaluation including seasonal 2024 baselines.
 
@@ -139,7 +143,7 @@ def rolling_oof_seasonal(
 
         # Compute seasonal predictions for the whole fold at once
         seasonal_preds = _seasonal_baseline_for_fold(
-            history_2024, fold_df, history_per_station
+            history_2024, fold_df, history_per_station, calendar_mode=calendar_mode
         )
 
         # Emit rows for each seasonal model
