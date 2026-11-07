@@ -167,3 +167,12 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
 - **Decision:** Added `DEC-20261108-11`; updated `EXP-20261108-008` to completed.
 - **Known limitations / blockers:** Final Train refresh scheduled Nov10 was not present. Weather is untested because `weather_single_runs.csv` is absent. LightGBM build is nightly Windows ARM64 (`4.7.0.99`). Holdout contains only two origins and no extreme labels. No commit/push/PR yet.
 - **Next action:** Review git diff, commit the narrow task branch, push and open a PR if remote auth permits. After final Train release, rerun the exact-gap pipeline and generate a newly named final candidate.
+
+### 2026-11-08 — TASK 007 branch and PR handoff
+
+- **Task / issue:** TASK 007 implementation and evidence handoff.
+- **Branch / commit:** `feature/task007-final-model-optimisation`, commit `7f69692` (`TASK007: repair seasonal provenance and compare final-gap models`).
+- **Files / artifacts:** All TASK 007 code, tests, experiment records, final report and OOF/metrics outputs committed. Provisional submission CSV and manifests remain local under ignored `artifacts/submissions/`.
+- **Commands / results:** `git diff --cached --check` passed before commit; `git push -u origin feature/task007-final-model-optimisation` succeeded; PR created at https://github.com/acchasujal/aqi/pull/4.
+- **Status:** PR open, not merged. Final Train refresh remains pending; no final submission generated.
+- **Next action:** Rerun the pipeline after the final Train snapshot is published and refresh the provisional candidate/manifest under a new filename.
