@@ -32,15 +32,22 @@ from mumbai_pm25.data import load_data
 from mumbai_pm25.forecast import (
     derive_pm_history_cutoff,
     predict_test,
+    predict_test_ensemble,
     predict_test_with_hist24_blend,
     write_manifest,
 )
+from mumbai_pm25.historical_archive import load_2024_history
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data" / "raw" / "challenge"
 ARCHIVE = DATA_DIR / "AdditionalHistory.zip"
 
-SUPPORTED_MODELS = ("median72", "hist24_blend50_median72")
+SUPPORTED_MODELS = (
+    "median72",
+    "hist24_blend50_median72",
+    "ensemble_accuracy",
+    "ensemble_robust",
+)
 
 
 def _parse_ts(value: str) -> pd.Timestamp:
@@ -120,6 +127,7 @@ def main() -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
 
     # Generate predictions
+    archive_path = args.data_dir / "AdditionalHistory.zip"
     if args.model == "median72":
         prediction = predict_test(
             train, test,
@@ -127,14 +135,28 @@ def main() -> None:
             pm_history_cutoff=pm_history_cutoff,
         )
     elif args.model == "hist24_blend50_median72":
-        from mumbai_pm25.historical_archive import load_2024_history
-        archive_path = args.data_dir / "AdditionalHistory.zip"
         history_2024 = load_2024_history(archive_path)
         prediction = predict_test_with_hist24_blend(
             train, test, history_2024,
             issue_time=model_run_time,
             pm_history_cutoff=pm_history_cutoff,
             blend_weight_hist24=0.5,
+        )
+    elif args.model == "ensemble_accuracy":
+        history_2024 = load_2024_history(archive_path)
+        prediction = predict_test_ensemble(
+            train, test, history_2024,
+            issue_time=model_run_time,
+            pm_history_cutoff=pm_history_cutoff,
+            ensemble_type="accuracy",
+        )
+    elif args.model == "ensemble_robust":
+        history_2024 = load_2024_history(archive_path)
+        prediction = predict_test_ensemble(
+            train, test, history_2024,
+            issue_time=model_run_time,
+            pm_history_cutoff=pm_history_cutoff,
+            ensemble_type="robust",
         )
     else:
         raise SystemExit(f"Unknown model: {args.model!r}")
@@ -147,17 +169,27 @@ def main() -> None:
     print(f"Wrote {len(prediction):,} predictions to {output}")
 
     # Write manifest
+    weights = None
+    if args.model == "ensemble_accuracy":
+        weights = "0.83 * CatBoost_log1p + 0.17 * Seasonal_Blend50"
+    elif args.model == "ensemble_robust":
+        weights = "0.50 * CatBoost_log1p + 0.50 * Seasonal_Blend50"
+    elif args.model == "hist24_blend50_median72":
+        weights = "0.50 * hist24_same_hour_mean + 0.50 * median72"
+
     manifest_path = output.with_suffix(".manifest.txt")
     write_manifest(
         manifest_path,
         train_path=args.data_dir / "Train.csv",
         test_path=args.data_dir / "Test.csv",
+        output_path=output,
         issue_time=model_run_time,
         pm_history_cutoff=pm_history_cutoff,
         train=train,
         stations=stations,
         model=args.model,
-        extra_sources=[args.data_dir / "AdditionalHistory.zip"],
+        extra_sources=[archive_path],
+        ensemble_weights=weights,
     )
     print(f"Wrote manifest to {manifest_path}")
 

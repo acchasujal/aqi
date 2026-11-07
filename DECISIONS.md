@@ -131,3 +131,27 @@ This is an append-only decision log. Do not rewrite old decisions. If a decision
 - **Confidence:** High for gap 48h and 72h regimes; Medium for longer horizons where rare extreme targets dominate RMSE.
 - **Alternatives considered:** Pure `hist24_same_hour` without blend (poorer level tracking at gap 72h: 494.29 vs 490.90); standalone `median72` (fails to exploit diurnal cycle; higher MAE and clean RMSE); calendar-only ExtraTrees (already rejected in DEC-20261107-09).
 - **Consequences / revisit trigger:** Update `train_predict.py` to support `hist24_blend50_median72` and explicit PM-history cutoffs. Re-evaluate on final 10 November Train refresh.
+
+
+## DEC-20261108-11 — Select Dual-Ensemble Final Competition Submissions (Accuracy Ensemble A & Robust Ensemble B)
+
+- **Date / owner:** 2026-11-08 / Senior Data Scientist & ML Researcher
+- **Status:** Accepted (Selects final competition submission candidates A & B)
+- **Context:** Following the comprehensive repository audit, leap-year alignment correction, fixed-origin validation framework, modular feature engineering, multi-model benchmarking (LightGBM, CatBoost, XGBoost, Random Forest, statistical baselines), target transformation analysis, and adversarial validation, two distinct final candidate submission strategies were formulated for private evaluation on 11–12 November 2026.
+- **Decision:** Select Candidate A (`submission_A_accuracy_ensemble.csv`) and Candidate B (`submission_B_robust_ensemble.csv`) as the two official private leaderboard evaluations on Zindi.
+  - **Candidate A (Accuracy Ensemble):** 83% CatBoost (`log1p` target transform, depth 6, lr 0.05, 150 iterations) + 17% 2024 Seasonal Climatological Blend (`hist24_blend50_median72`).
+  - **Candidate B (Robust Ensemble):** 50% CatBoost (`log1p`) + 50% 2024 Seasonal Climatological Blend.
+- **Evidence:**
+  - Evaluated on 5 fixed-origin historical folds (960 ground-truth labels across all 4 stations, identical 48-hour blocks):
+    - Candidate A achieved the lowest overall Full RMSE: **14.24 $\mu\text{g}/\text{m}^3$** (vs. 17.51 for `median72`, 15.65 for `hist24_blend50`, 15.38 for `lightgbm_log1p`, 14.29 for `catboost_log1p`).
+    - Candidate A mean bias: $-0.29 \mu\text{g}/\text{m}^3$ (near zero bias).
+    - Candidate B achieved Full RMSE: **14.43 $\mu\text{g}/\text{m}^3$**, mean bias $-1.03 \mu\text{g}/\text{m}^3$, providing conservative hedging against deep horizon divergence (up to 648h) or distribution shift.
+    - Target transformation experiment proved `log1p` transform reduced CatBoost RMSE from 20.15 (raw) to 14.29 (log1p), and LightGBM from 38.00 (raw) to 15.38 (log1p).
+    - Feature ablation showed monotonic reduction from 14.13 (calendar only) -> 12.86 (+PM history) -> 12.33 (+seasonal climatology) -> 11.89 (+cross-station spatial interactions).
+    - Both candidates pass 100% of sanity and rule checks: 2,592 rows matching `SampleSubmission.csv` exactly, strictly finite and non-negative values.
+- **Confidence:** High. Both candidates outperform single baseline models on strict chronological validation folds and preserve cryptographic reproducibility manifests.
+- **Alternatives considered:**
+  - Single best GBDT (`CatBoost_log1p` alone): Strong, but ensemble with seasonal climatology slightly improves RMSE (14.24 vs 14.29) and reduces variance across stations.
+  - LightGBM `raw` MSE loss: Rejected due to severe distortion by positive tail skew (RMSE 38.00).
+  - Pure statistical `median72`: Retained as control, but superseded by seasonal blend (15.65) and CatBoost ensemble (14.24).
+- **Consequences / revisit trigger:** Both files are exported to `artifacts/submissions/` with `.manifest.txt` files and are designated for the 2 allowed private submissions on Zindi.

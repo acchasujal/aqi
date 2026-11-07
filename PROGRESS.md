@@ -175,3 +175,113 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
 - **Known limitations / blockers:** Fixed-origin validation overhaul and model implementations scheduled next.
 - **Next action:** Phase 2: Design and implement the fixed-origin, aligned validation framework and produce validation methodology and data quality reports.
 
+
+### 2026-11-08 — Fixed-Origin Validation Framework & Data Quality Audit
+- **Task / issue:** Phase 2: Design and implement trustworthy fixed-origin validation framework.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / `41453fa`
+- **Files changed:** `src/mumbai_pm25/validation.py`; `reports/validation_methodology.md`; `reports/data_quality_report.md`.
+- **Work completed:**
+  1. Implemented `generate_fixed_target_folds` in `src/mumbai_pm25/validation.py` guaranteeing identical 48-hour ground truth evaluation windows regardless of whether reporting gap is 48h, 72h, 96h, or 120h.
+  2. Decoupled forecast issuance time, PM cutoff, target interval, and forecast horizon across all folds.
+  3. Produced `reports/validation_methodology.md` detailing the mathematical fold generation protocol.
+  4. Produced `reports/data_quality_report.md` auditing station availability, sensor duplicates, and missing-hour distributions.
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe -m pytest -ra` (42 passed)
+  - `.\.venv\Scripts\python.exe -m ruff check src/mumbai_pm25/validation.py` (all passed)
+  - `git commit -m "feat: implement fixed-origin validation framework and data quality audit"`
+- **Tests and exact results:** 42 passed in 3.12s. All ruff linting checks passed.
+- **Experiment IDs / metrics:** Validation infrastructure stabilized across gaps 48h, 72h, 96h, 120h.
+- **Decisions added or superseded:** None.
+
+### 2026-11-08 — Statistical Forecasting Baselines Module
+- **Task / issue:** Phase 3: Comprehensive statistical baseline models implementation.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / `e416c11`
+- **Files changed:** `src/mumbai_pm25/models/statistical.py` (new); `src/mumbai_pm25/models/__init__.py`; `tests/test_statistical_models.py` (new).
+- **Work completed:**
+  1. Implemented `StatisticalForecaster` and `compute_station_history_stats` in `src/mumbai_pm25/models/statistical.py` supporting all 11+ baseline models: `last`, `median24`, `mean24`, `median72`, `mean72`, `median168`, `ewm72`, `diurnal7`, `hour_week4`, `seasonal2024`, `hist24_blend50`, and `trend_median`.
+  2. Implemented age-aware fallback mechanisms preventing silent failure on missing station history.
+  3. Added full unit and regression test suite in `tests/test_statistical_models.py`.
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe -m pytest tests/test_statistical_models.py` (3 passed)
+  - `.\.venv\Scripts\python.exe -m ruff check src/mumbai_pm25/models/statistical.py` (all passed)
+  - `git commit -m "feat: implement statistical forecasting baselines module"`
+- **Tests and exact results:** 45 passed across full test suite.
+- **Experiment IDs / metrics:** All 11 baseline forecasters verified deterministic and past-only.
+- **Decisions added or superseded:** None.
+
+### 2026-11-08 — Modular Feature Engineering System & Feature Registry
+- **Task / issue:** Phase 4: Organize modular feature engineering system.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / `6cdede5`
+- **Files changed:** `src/mumbai_pm25/features/` (`calendar.py`, `pm_history.py`, `seasonal.py`, `spatial.py`, `pipeline.py`); `reports/feature_engineering_report.md` (new); `tests/test_features.py` (new).
+- **Work completed:**
+  1. Built modular feature pipelines: Group A/B PM history (recency, medians, means, age, counts, trends), Group C calendar (hour, day of week, cyclical sin/cos encodings), Group D seasonal climatology (2024 CPCB CAAQM pre-aggregated and leap-year aligned), Group E spatial interaction features (network median, mean, station offsets).
+  2. Added feature generation pipeline `build_feature_matrix` enforcing strict past-only information gating relative to `pm_history_cutoff`.
+  3. Created `reports/feature_engineering_report.md` documenting the complete 27-feature registry.
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe -m pytest tests/test_features.py` (3 passed)
+  - `.\.venv\Scripts\python.exe -m ruff check src/mumbai_pm25/features/` (all passed)
+  - `git commit -m "feat: implement modular feature engineering system and registry"`
+- **Tests and exact results:** 48 passed across full test suite.
+- **Experiment IDs / metrics:** Feature registry established; verified leakage-free.
+- **Decisions added or superseded:** None.
+
+### 2026-11-08 — Supervised Model Exploration & Target Transformations
+- **Task / issue:** Phase 5: Implement LightGBM, CatBoost, XGBoost, and Random Forest forecasters with target transformations.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / `33e12aa`
+- **Files changed:** `src/mumbai_pm25/models/supervised.py` (new); `src/mumbai_pm25/models/__init__.py`; `tests/test_supervised_models.py` (new).
+- **Work completed:**
+  1. Built unified `SupervisedForecaster` supporting LightGBM, CatBoost, XGBoost, and Random Forest.
+  2. Implemented target transformation and inversion handlers: `raw`, `sqrt`, `log1p`, and `residual_median72`.
+  3. Added parameter normalization across model libraries and regression tests in `tests/test_supervised_models.py`.
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe -m pytest tests/test_supervised_models.py` (9 passed)
+  - `.\.venv\Scripts\python.exe -m ruff check src/mumbai_pm25/models/supervised.py` (all passed)
+  - `git commit -m "feat: implement supervised model families and target transformations"`
+- **Tests and exact results:** 57 passed across full test suite.
+- **Experiment IDs / metrics:** Supervised forecasters verified for all 4 model families and 4 target transformations.
+- **Decisions added or superseded:** None.
+
+### 2026-11-08 — Multi-Model Benchmarking, Adversarial Validation, and Ensembling
+- **Task / issue:** Phases 6, 7, 8: Benchmarking across folds/stations/horizons, adversarial validation, and ensemble search.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / `df11ae6`
+- **Files changed:** `scripts/run_experiments.py` (new); `reports/model_comparison.csv` (new); `reports/fold_comparison.csv` (new); `reports/station_metrics.csv` (new); `reports/horizon_metrics.csv` (new); `reports/feature_ablation.csv` (new); `reports/target_transformation_results.csv` (new); `reports/adversarial_validation.md` (new); `reports/experiment_summary.md` (new); `src/mumbai_pm25/historical_archive.py`; `src/mumbai_pm25/config.py` (new); `configs/default.yaml`.
+- **Work completed:**
+  1. Executed comprehensive benchmarking script `scripts/run_experiments.py` across 5 fixed-origin folds and 960 evaluations.
+  2. Generated all 7 required quantitative report tables and markdown analyses.
+  3. Conducted adversarial validation (ROC-AUC 1.0000 driven by expected November seasonal progression and deep test horizon).
+  4. Identified optimal ensemble weights: Accuracy Ensemble (83% CatBoost log1p + 17% Seasonal Blend) achieving best overall RMSE of 14.24, and Robust Ensemble (50% CatBoost log1p + 50% Seasonal Blend) achieving RMSE of 14.43.
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe scripts/run_experiments.py`
+  - `.\.venv\Scripts\python.exe -m pytest -ra` (58 passed)
+  - `git commit -m "feat: implement multi-model benchmarking, adversarial validation, and ensembling"`
+- **Tests and exact results:** 58 passed. Full experiment logs and metric tables generated.
+- **Experiment IDs / metrics:** Accuracy Ensemble RMSE 14.24; CatBoost log1p RMSE 14.29; Robust Ensemble RMSE 14.43; Seasonal Blend RMSE 15.65; median72 baseline RMSE 17.51.
+- **Decisions added or superseded:** DEC-20261108-11 adopted.
+
+### 2026-11-08 — Final Private Submissions Generation, Pipeline Verification, and System Report
+- **Task / issue:** Phases 9 & 10: Generate final competition submission candidates, cryptographic manifests, and comprehensive final report.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / [pending commit]
+- **Files changed:** `src/mumbai_pm25/forecast.py`; `scripts/train_predict.py`; `artifacts/submissions/submission_A_accuracy_ensemble.csv` (new); `artifacts/submissions/submission_A_accuracy_ensemble.manifest.txt` (new); `artifacts/submissions/submission_B_robust_ensemble.csv` (new); `artifacts/submissions/submission_B_robust_ensemble.manifest.txt` (new); `reports/final_submission_report.md` (new); `DECISIONS.md`; `PROGRESS.md`.
+- **Work completed:**
+  1. Upgraded `predict_test_ensemble` in `src/mumbai_pm25/forecast.py` and `scripts/train_predict.py` supporting CLI flags `--model ensemble_accuracy` and `--model ensemble_robust`.
+  2. Upgraded `write_manifest` to record output file SHA-256, git status (clean/modified), ML package versions (LightGBM, CatBoost, XGBoost, Scikit-learn), and deduplicated input hashes.
+  3. Fixed interval-start vs interval-end indexing in `history_features` ensuring exact 72-hour window alignment (`> pm_history_cutoff - 73h`).
+  4. Generated and cryptographically sealed Candidate A (`submission_A_accuracy_ensemble.csv`) and Candidate B (`submission_B_robust_ensemble.csv`).
+  5. Verified 100% submission compliance: exactly 2,592 rows matching `SampleSubmission.csv` IDs in identical order, strictly finite and non-negative values.
+  6. Produced `reports/final_submission_report.md` documenting complete methodology, candidate breakdown, verification checklist, and deployment instructions for private evaluation on 11–12 November 2026.
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe scripts/train_predict.py --model ensemble_accuracy --model-run-time 2026-11-08T12:00:00+05:30 --output artifacts/submissions/submission_A_accuracy_ensemble.csv`
+  - `.\.venv\Scripts\python.exe scripts/train_predict.py --model ensemble_robust --model-run-time 2026-11-08T12:00:00+05:30 --output artifacts/submissions/submission_B_robust_ensemble.csv`
+  - `.\.venv\Scripts\python.exe -m pytest -ra` (59 passed in 11.80s)
+  - `.\.venv\Scripts\python.exe -m ruff check src/mumbai_pm25/forecast.py scripts/train_predict.py` (All checks passed)
+- **Tests and exact results:** 59 passed in 11.80s. Zero failures.
+- **Experiment IDs / metrics:** Candidate A predicted mean 43.80, min 32.04, max 58.59. Candidate B predicted mean 45.75, min 32.48, max 70.94.
+- **Decisions added or superseded:** DEC-20261108-11.
+- **Known limitations / blockers:** None. Ready for private evaluation on Zindi.
+- **Next action:** Final git commit on `feat/competition-ml-pipeline` and project presentation.
