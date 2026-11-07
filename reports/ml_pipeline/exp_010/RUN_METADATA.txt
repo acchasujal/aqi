@@ -1,0 +1,7 @@
+Train.csv sha256: fcee20ebf7bd9c4a4e2487bab0a4f81339d6c820a53862b14443031db1f18ad6
+AdditionalHistory.zip sha256: 3233061ca4ac2af39e9f6e80e21d9261b1b8d2fd3b037e5d034bcec059a7e80e
+confirmation fold start: 2026-06-25T23:00:00+05:30
+weights: (0.0, 0.25, 0.5, 0.75, 1.0)
+gaps: (48, 72, 96, 120)
+horizon_hours: 48
+step_days: 7

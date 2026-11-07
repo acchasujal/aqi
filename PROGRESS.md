@@ -163,3 +163,16 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
 - **ExtraTrees test diagnosis:** Base commit `9d3fad0` also fails the exact-equality test intermittently. Five direct paired seeded fits on the base differed by at most `3.552713678800501e-15` with NumPy 2.3.5, pandas 2.3.3, scikit-learn 1.8.0 and `n_jobs=2`. Changed only the assertion to `rtol=0, atol=1e-12`; model configuration unchanged.
 - **Verification:** `$env:PYTHONPATH='src'; python -m pytest -q` — 47 passed, 1 warning. EXP-009 production artifact remains byte-identical to its reference as recorded in `reports/ml_pipeline/exp_009/BEFORE_AFTER_COMPARISON.md`.
 - **Decision:** EXP-009 accepted for EXP-010 base with this documented pre-existing numerical test issue resolved at the assertion level.
+
+### 2026-11-07 — EXP-010 Seasonal Blend Weight Comparison
+- **Branch / base:** `feature/exp-010-blend-weights` from accepted EXP-009 commit `e043a6788416bcb5896b142d788e791f9cd591e7`.
+- **Files changed:** `scripts/train_predict.py` adds explicit seasonal-weight CLI option; `scripts/validate_blend_weights.py` evaluates five fixed weights using corrected EXP-009 folds; `tests/test_blend_weights.py`; EXP-010 report and metric files; experiment log and this progress entry. Raw challenge files, source mapping, timestamps, and leap policy unchanged.
+- **Commands:** `$env:PYTHONPATH='src'; python scripts/validate_blend_weights.py` — completed four gaps, 85/87/87/87 folds and 13,528/13,060/13,177/13,395 rows per weight. `$env:PYTHONPATH='src'; python -m pytest -q` — 56 passed, 1 warning. `python -m ruff check src/mumbai_pm25/forecast.py scripts/train_predict.py scripts/validate_blend_weights.py tests/test_blend_weights.py` — passed.
+- **Results:** W0 provisional development winner (pooled RMSE 1883.266538 vs W50 1883.387394), but gain is driven by the 2025-12-03 extreme window duplicated across 96h/120h gaps. Non-extreme development rows favor W50. Confirmation RMSE favors W0 but has no extreme or November labels. Recommendation RETAIN BASELINE W50; no challenger CSV.
+- **Next action:** Resolve EXP-008 provenance and run a regime-aware confirmation after the official Train refresh, without tuning on leaderboard scores.
+
+### 2026-11-07 — EXP-010 Verification Addendum
+- **Commands:** `$env:PYTHONPATH='src'; python scripts/train_predict.py --model hist24_blend50_median72 --seasonal-weight 0.5 --model-run-time 2026-11-07T12:00:00+05:30 --output data/processed/exp010_w50_smoke.csv` — 2,592 rows, SHA-256 `55e2fc8c7cad94db22f1358a8715216b0c7fbbb7a50c728c4413890f6a8716bc`, identical to EXP-009. `$env:PYTHONPATH='src'; python scripts/train_predict.py --model median72 --model-run-time 2026-11-07T12:00:00+05:30 --output data/processed/exp010_median72_smoke.csv` — 2,592 valid rows. Both preserve sample ID order and have finite nonnegative targets. `python scripts/summarize_blend_diagnostics.py` — 40 diagnostic rows.
+
+### 2026-11-07 — EXP-010 OOF Reproduction Check
+- **Result:** Reconstructed W50 OOF predictions match EXP-009 corrected OOF on all 53,160 keyed rows; maximum absolute difference 0.0. The first comparison attempt omitted gap from the join and failed the one-to-one key check; rerun with gap included passed.

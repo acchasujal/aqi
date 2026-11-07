@@ -68,6 +68,8 @@ def main() -> None:
         "--model", choices=SUPPORTED_MODELS, default="median72",
         help="Forecasting model to use",
     )
+    parser.add_argument("--seasonal-weight", type=float, default=0.5,
+                        help="Seasonal blend weight in [0, 1] (hist24 model only)")
     # Primary argument names
     parser.add_argument(
         "--model-run-time",
@@ -97,6 +99,11 @@ def main() -> None:
     else:
         raise SystemExit("Error: --model-run-time is required")
 
+    if not 0 <= args.seasonal_weight <= 1:
+        parser.error("--seasonal-weight must be in [0, 1]")
+    if args.model == "median72" and args.seasonal_weight != 0.5:
+        parser.error("--seasonal-weight applies only to hist24_blend50_median72")
+
     train, test, sample, stations = load_data(args.data_dir)
 
     # Resolve PM-history cutoff
@@ -113,7 +120,8 @@ def main() -> None:
     # Resolve output path
     if args.output is None:
         ts_tag = model_run_time.strftime("%Y%m%d_%H%M")
-        output = ROOT / "artifacts" / "submissions" / f"{args.model}_{ts_tag}.csv"
+        model_tag = args.model if args.seasonal_weight == 0.5 else f"hist24_blend_w{int(args.seasonal_weight * 100):03d}"
+        output = ROOT / "artifacts" / "submissions" / f"{model_tag}_{ts_tag}.csv"
     else:
         output = args.output
 
@@ -134,7 +142,7 @@ def main() -> None:
             train, test, history_2024,
             issue_time=model_run_time,
             pm_history_cutoff=pm_history_cutoff,
-            blend_weight_hist24=0.5,
+            blend_weight_hist24=args.seasonal_weight,
         )
     else:
         raise SystemExit(f"Unknown model: {args.model!r}")
