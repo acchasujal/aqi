@@ -207,3 +207,10 @@ Append-only chronological record. Do not rewrite old entries. Each entry must sa
 - **Blockers / next:** Firebase CLI credentials/project unavailable, so deployment is reproducibly prepared and no hosted URL/billing is claimed. Creative-form processing and public-link verification remain human/platform work. Independent calibration and real final Train refresh remain unavailable. Local dev server is at `http://127.0.0.1:5173/`; no raw/private targets were modified or exposed.
 
 - **Delivery byte integrity:** Added Git binary attributes for PDFs and disabled text conversion for public generated JSON, preserving audited bytes across checkout. Initial staged diff check treated the ASCII-encoded PDF as text and reported PDF syntax whitespace; binary classification resolves that without altering the PDF. Final staged forecast/replay/PDF hashes are checked against their manifests before the creative commit.
+
+### 2026-11-08 — AirWindow 2.0 committed and pushed
+
+- **Implementation commit:** `b8aed54` (`AirWindow 2.0: build evidence-aware event planning and historical replay`) on existing `feature/task008-final-gap-execution`, following ML commit `1864636`.
+- **Publication:** `git push origin feature/task008-final-gap-execution` succeeded; main and PR #4 untouched. Precommit staged diff check passed, and no ML source/raw input/submission CSV paths were staged. Forecast/replay/PDF staged bytes matched their manifests. Working tree was clean after implementation push.
+- **Delivered:** Working local app `http://127.0.0.1:5173/`, tested real artifacts/replay, responsive screenshots, one-page event brief, five-page/157,195-byte submission PDF, reproduction notebook and full judging package. Test totals: 60 Python, 9 domain, 5 browser; build/lint/PDF visual/source checks passed as recorded in `reports/creative_submission/INTEGRATION_QA.md`.
+- **Pending external steps:** Authenticated Firebase project/deployment, independent calibration, actual future final Train refresh, and human platform submissions. No deployment, calibration or platform-processing success is claimed.

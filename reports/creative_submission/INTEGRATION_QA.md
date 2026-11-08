@@ -46,3 +46,7 @@ Git attributes mark PDFs and generated public JSON payloads as binary for Git st
 ## Remaining limits
 
 No formal user study, independent calibration, cross-browser certification, public Firebase deployment, cloud Colab execution or creative-form processing is claimed. The app works locally and its static hosting configuration is ready. Forecasts remain the provisional current-data P_fix snapshot; actual final ML data refresh is separate pending work.
+
+## Commit and push
+
+Implementation commit **`b8aed54`** was pushed successfully to the existing `feature/task008-final-gap-execution`, following TASK008 commit `1864636`. The implementation push left a clean working tree. Neither main nor PR #4 was merged or rewritten. Precommit staged diff check and byte-hash verification passed; raw challenge inputs, ML source and generated submission CSVs were absent from the creative staged paths. This final documentation entry records the already completed push.
