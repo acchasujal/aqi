@@ -35,3 +35,6 @@ Thumbs.db
 *.feather
 
 # Keep raw challenge files tracked; do not add a blanket data/ ignore.
+
+# TASK008 local feature cache (OOF predictions and compact reports are retained).
+/reports/ml_pipeline/task008/run*/all_block_rows.csv.gz

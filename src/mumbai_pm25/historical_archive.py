@@ -146,16 +146,20 @@ def build_seasonal_features(
         counts: list[int] = []
         source_coverage: dict[str, int] = {}
         source_means: dict[str, float] = {}
+        source_sums: dict[str, float] = {}
         for source_id in source_ids:
             table = by_source.get(source_id)
             if table is None:
                 source_coverage[source_id] = 0
+                source_means[source_id] = np.nan
+                source_sums[source_id] = 0.0
                 continue
             keys = [(date, timestamp.hour) for date in dates]
             selected = table.reindex(pd.MultiIndex.from_tuples(keys, names=["calendar_date", "hour"]))
             n = int(selected["count"].fillna(0).sum())
             source_coverage[source_id] = n
             sums.append(float(selected["sum"].fillna(0).sum()))
+            source_sums[source_id] = sums[-1]
             counts.append(n)
             source_means[source_id] = (
                 float(sums[-1] / n) if n >= min_obs else np.nan
@@ -177,7 +181,7 @@ def build_seasonal_features(
         for source_id, n in source_coverage.items():
             item[f"hist24_series::{source_id}::mean"] = source_means[source_id]
             item[f"hist24_series::{source_id}::coverage"] = n
-            item[f"hist24_series::{source_id}::sum"] = sums[list(source_coverage).index(source_id)]
+            item[f"hist24_series::{source_id}::sum"] = source_sums[source_id]
         features.append(item)
     return pd.DataFrame(features, index=target_df.index)
 
