@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "issue_time": "2026-11-08T18:29:06.0346564Z",
+  "pm_history_cutoff": "2026-11-02T23:00:00+05:30",
+  "model": "P_fix",
+  "weather_correction": false,
+  "historical_weather_validation": "BLOCKED_NO_ISSUE_POLICY",
+  "deterministic": true,
+  "rows": 2592,
+  "control_sha256": "1259efdec9d9781869c0c81b55f101feb4bee8373edeb1b1fd750326f73a6aa5",
+  "private_diagnostic_rows": 192,
+  "private_cams_mean": 47.60318755524579,
+  "private_pfix_mean": 56.465515147910786,
+  "forecast_means_are_not_validation": true,
+  "input_hashes": {
+    "AdditionalHistory.zip": "3233061ca4ac2af39e9f6e80e21d9261b1b8d2fd3b037e5d034bcec059a7e80e",
+    "DataDictionary.txt": "0d10dcbb6d31232d29558ecd50e7a08272a393048d1e62e3ac460c5863522a55",
+    "README.md": "4c06dc678e5ad1270aac0177565dfbad9443bd29f4e709ddcd83bdbaf30f3fdb",
+    "SampleSubmission.csv": "5806d6109f381043e59fffb48a5d0af5d9de56fd4e0e956e4c5e7f2e6ae5dcd9",
+    "Stations.csv": "383269fa04abf8f2eb49e5ec0bb5a77c2df11acb6aca996b7edf269a109ee9cf",
+    "Test.csv": "cdb2b6c3035f6331848c565b4d3dd89ac5281efab07fa62bfabc2e7ff172db0a",
+    "Train.csv": "fcee20ebf7bd9c4a4e2487bab0a4f81339d6c820a53862b14443031db1f18ad6"
+  }
+}

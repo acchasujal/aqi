@@ -191,3 +191,15 @@ Decision: retain exact archive-identity P_fix for TASK008 and isolate historical
 - **Confidence:** High in C reproduction, source-code gap finding and decision against C promotion; no claim about B or Low's unseen-period ranking.
 - **Alternatives considered:** Merge the source branch or choose C/B/Low by public score. Rejected because matched C evidence fails and B/Low reproduction remains incomplete. No substitute learner is called B.
 - **Consequences / revisit trigger:** Use a compatible CatBoost runtime for B; enforce actual-gap chronological training eligibility. Obtain Low's real generation pipeline and as-issued weather provenance. Repeat frozen evaluation after official data refresh. Main production and creative application remain unchanged.
+
+
+## DEC-20261109-16 - Retain P_fix; weather research requires a defensible historical issue policy
+
+- **Date / owner:** 2026-11-09 / Codex and project owner
+- **Status:** Accepted for current-data work; final release pending.
+- **Context:** Actual supplied CAMS/GFS differ from the request's example audit. CAMS has full hourly coverage for five fields but no pressure; fresh NOAA48h ingestion succeeds. Owner explicitly confirms no documented historical model issue-time policy and forbids inventing one.
+- **Decision:** Keep P_fix unchanged. Mark all weather corrections and historical model-selection experiments BLOCKED until issue-time mapping, historical as-issued vintages, catalogue eligibility and matched development/later confirmation evidence exist. Allow clearly labelled current-period spatial/units/coverage diagnostics only. Register weather candidates without granting production status. Preserve existing EXP-20261108-025; namespace this collision as EXP-025-WEATHER. Retire unsafe unvalidated Open-Meteo prototype arguments and delegate its entry point to shared audited ingestion.
+- **Evidence:** reports/ml_pipeline/weather/WEATHER_EXPERIMENT_REPORT.md, per-message raw audits, NOAA_DOWNLOADED_FILE_AUDITS.json,169-row run manifest and48-row coverage table; owner clarification in this session.139 tests pass; repeated P_fix2592 values match prior TASK008 exactly. Current forecast means do not establish skill.
+- **Confidence:** High on ingestion results and need for blocked promotion; no claim about weather improvement/private score.
+- **Alternatives:** Infer issue time from PM cutoff or nominal cycle; validate against reanalysis or current private forecast levels; treat ADS/NOAA licence as organiser permission; reject all supplied CAMS hourly data based on the older endpoint request. Rejected for leakage, unsupported eligibility or contradiction with decoded bytes.
+- **Consequences / revisit trigger:** Obtain missing pressure only through the exact saved supplement request if needed. Resolve catalogue approval and defensible historical operational clocks, then inspect forecast retention before rerunning unchanged chronological folds. Until then P_fix/final-stage safeguards remain authoritative. Final10 November data retrieval/inference and platform submission are not claimed complete.

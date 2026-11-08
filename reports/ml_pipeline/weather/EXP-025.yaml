@@ -1,0 +1,20 @@
+experiment_id: EXP-025-WEATHER
+requested_label: EXP-025
+collision_note: Existing EXP-20261108-025 source-candidate experiment preserved unchanged
+date: '2026-11-08'
+control: P_fix
+status: ingestion_complete_historical_validation_blocked
+completed_local_date: '2026-11-09'
+gfs_complete_hours: 48
+cams_complete_hours_per_present_field: 121
+cams_missing_field: surface_pressure
+weather_corrections_enabled: false
+test_suite: 139 passed; 19 existing warnings
+primary_metric: full_target_raw_scale_RMSE
+historical_schedule: TASK008_COMMON_DEV69_CONFIRM8
+historical_weather_issue_mapping: unavailable
+models: [M0_P_fix, M1_CAMS, M2_past_only_residual_calibration, M3_P_fix_GFS, M4_P_fix_CAMS_GFS]
+promotion_requires: [permitted_sources, verified_historical_availability, identical_rows, development_gain, later_confirmation_gain, station_and_origin_stability]
+fallback: P_fix
+raw_challenge_mutation: forbidden
+submission: forbidden
