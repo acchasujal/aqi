@@ -1,0 +1,192 @@
+{
+  "date": "2026-11-08",
+  "sources": [
+    {
+      "repository": "acchasujal/aqi",
+      "ref": "feat/competition-ml-pipeline",
+      "pinned": "a191dbaf89f3324e8d8fe77542bf8cc70a848b4e",
+      "files": [
+        {
+          "path": "src/mumbai_pm25/README.md",
+          "git_blob": "659ad0d9a09b03bd9fab395affb0bc8e6455c064"
+        },
+        {
+          "path": "src/mumbai_pm25/__init__.py",
+          "git_blob": "db0371c0ba0a7eeac8b63485adc6502997c45c7f"
+        },
+        {
+          "path": "src/mumbai_pm25/config.py",
+          "git_blob": "0772afb3e66c44aab051d57f97b98ccc6d37d7ff"
+        },
+        {
+          "path": "src/mumbai_pm25/data.py",
+          "git_blob": "c2dd6e61e7a7686e55a309326e7c1d49b1ae26ba"
+        },
+        {
+          "path": "src/mumbai_pm25/features/__init__.py",
+          "git_blob": "545a19f27f1c69a56250ea0f2b75f1c62f72cbcd"
+        },
+        {
+          "path": "src/mumbai_pm25/features/calendar.py",
+          "git_blob": "2e1c01401e52d8438e70efc1320db62e2421a0b9"
+        },
+        {
+          "path": "src/mumbai_pm25/features/pipeline.py",
+          "git_blob": "f72b519c8632ebd26179a5fdc06f16a571ca2749"
+        },
+        {
+          "path": "src/mumbai_pm25/features/pm_history.py",
+          "git_blob": "ddd207c11f7c91237d581c2808ffcfafb24344b5"
+        },
+        {
+          "path": "src/mumbai_pm25/features/seasonal.py",
+          "git_blob": "e8b17cabbc479f5bf691d0967c79b11b4d4276fd"
+        },
+        {
+          "path": "src/mumbai_pm25/features/spatial.py",
+          "git_blob": "8a5fe2147d2c6eacf28aa46a4f5642f4ac020a87"
+        },
+        {
+          "path": "src/mumbai_pm25/forecast.py",
+          "git_blob": "a674d7a91e67fef763061d5d091c4eea3db6e223"
+        },
+        {
+          "path": "src/mumbai_pm25/historical_archive.py",
+          "git_blob": "825e5e7eb84706d60ac5a74d75d0a8f881fe4551"
+        },
+        {
+          "path": "src/mumbai_pm25/models/__init__.py",
+          "git_blob": "d235e479dc017a75d8c92b9b65dc91506a47c4ec"
+        },
+        {
+          "path": "src/mumbai_pm25/models/extra_trees.py",
+          "git_blob": "7f0dd6c2a6c75eeb0dd680314f74cdbce6b62b55"
+        },
+        {
+          "path": "src/mumbai_pm25/models/statistical.py",
+          "git_blob": "8be25633fd80142f010ca778ac7c420bd9ad7f9a"
+        },
+        {
+          "path": "src/mumbai_pm25/models/supervised.py",
+          "git_blob": "84da1860f3451cedff3607fddf34ed9aaa485142"
+        },
+        {
+          "path": "src/mumbai_pm25/validation.py",
+          "git_blob": "be4edfbde869221508fc9cb94698b2193eee3545"
+        }
+      ]
+    },
+    {
+      "repository": "vaibhavgupta9876/mumbai-air-outlook",
+      "ref": "main",
+      "pinned": "a4afdc56c757ce4138113b423a001275e38c0dff",
+      "files": [
+        {
+          "path": ".github/workflows/refresh.yml",
+          "git_blob": "a60bcbc0506eb71f8160c3c2d256f0d6106f0a25",
+          "size": 1055
+        },
+        {
+          "path": ".gitignore",
+          "git_blob": "64777da0fbb4b64e1c9bd2c05af650b9d8497a17",
+          "size": 23
+        },
+        {
+          "path": ".nojekyll",
+          "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+          "size": 0
+        },
+        {
+          "path": "LICENSE",
+          "git_blob": "1a24b7e1293ef50ae3084f5ba138eca7ffba132d",
+          "size": 1070
+        },
+        {
+          "path": "README.md",
+          "git_blob": "b7973161cdd66dfb614a1d84752504313647376f",
+          "size": 6084
+        },
+        {
+          "path": "build_data.py",
+          "git_blob": "6221760fb12a8f0d8d236f948e84baf3734ab23a",
+          "size": 24571
+        },
+        {
+          "path": "challenge/AdditionalHistory/HistoryNotes.txt",
+          "git_blob": "ede9bf43feddb6ed6dc30f2464af3a7609dd68c7",
+          "size": 1765
+        },
+        {
+          "path": "challenge/AdditionalHistory/History_Mumbai_2018_2020.csv.gz",
+          "git_blob": "ce06a9153af3adc39beef469d20cb6a192db7e43",
+          "size": 2385944
+        },
+        {
+          "path": "challenge/AdditionalHistory/History_Mumbai_2024.csv.gz",
+          "git_blob": "b55392a37989ec53865c96c1e8e1c2773dbade38",
+          "size": 2464936
+        },
+        {
+          "path": "challenge/AdditionalHistory/Kaggle_All_Stations.csv",
+          "git_blob": "eb7f60323f1ecc24a9b91dc32c598ff24f3db911",
+          "size": 14467
+        },
+        {
+          "path": "challenge/AdditionalHistory/Legacy_Observations_2020_2022.csv.gz",
+          "git_blob": "bdc0d49bbc4c6b6169ebf4c62a176fcee824bf3e",
+          "size": 78710
+        },
+        {
+          "path": "challenge/AdditionalHistory/Other_Mumbai_Stations_2025_2026.csv.gz",
+          "git_blob": "35ccf40a8d1e0d4d0a8c864baf92d06c9c48e07c",
+          "size": 68573
+        },
+        {
+          "path": "challenge/AdditionalHistory/XKDR_All_Stations.csv",
+          "git_blob": "c83d7b3d565503760d9cc8b90b97451c5b6ce003",
+          "size": 121640
+        },
+        {
+          "path": "challenge/Stations.csv",
+          "git_blob": "3e74bfa2fe4e4d3d2fa6f79f22550874b40da7ef",
+          "size": 369
+        },
+        {
+          "path": "challenge/Test.csv",
+          "git_blob": "cecd70446c5de6b89b31c086f01f042d934a4b59",
+          "size": 296429
+        },
+        {
+          "path": "challenge/Train.csv",
+          "git_blob": "a42fee690528a49def992650f89c7dfaf1a3b14b",
+          "size": 6755517
+        },
+        {
+          "path": "data.json",
+          "git_blob": "851b9ad99f43d420603ab5b974e3d4f9317594d3",
+          "size": 149185
+        },
+        {
+          "path": "forecast/high.csv",
+          "git_blob": "3d366725ce4d1c67d096c55d9a888e612b2092d8",
+          "size": 122185
+        },
+        {
+          "path": "forecast/low.csv",
+          "git_blob": "72061108e958a1ad23b90d523f215df7d47357ee",
+          "size": 122640
+        },
+        {
+          "path": "index.html",
+          "git_blob": "eee2b08c175bec0ffe77ede79611e5cf59d773c1",
+          "size": 28290
+        },
+        {
+          "path": "notebook.ipynb",
+          "git_blob": "f581594e64d4e19563446cdcecd62bb7a18fdb31",
+          "size": 4208
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+experiment_id: EXP-20261108-025
+status: predeclared
+question: Does the supplied branch reproduce C and improve matched 193h forecasts?
+branch_commit: a191dbaf89f3324e8d8fe77542bf8cc70a848b4e
+low_repository_ref: a4afdc56c757ce4138113b423a001275e38c0dff
+candidate: branch_C
+baseline: P_fix
+controls: [median72, blend_recent_50]
+folds: frozen TASK008 common 69 development and 8 confirmation origins
+selection: full-target RMSE; no tuning; original labels unchanged
+source_policy: exact canonical station names; average concurrent archive readings before seasonal mean
+production: no promotion without matched statistical and independent evidence
+catboost: attempt only with compatible existing runtime; no substitute model called B
+low: verify published artifact and inspect available generation code; no use as predictor

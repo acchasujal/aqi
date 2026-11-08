@@ -167,3 +167,27 @@ This is an append-only decision log. Do not rewrite old decisions. If a decision
 ## 2026-11-08 ? Preserve explicit seasonal policies when integrating main
 
 Decision: retain exact archive-identity P_fix for TASK008 and isolate historical EXP-007--015 calculations in legacy_seasonal.py, selected explicitly by existing experiment/CLI paths. Evidence: 107 tests pass; full W50 and P_fix inference hashes each reproduce their respective reviewed versions. Confidence: high for compatibility and integration, without a new score claim. Alternative: silently replace all legacy pooling/calendar behavior; rejected because it would invalidate prior experiment parity. Consequence: two clearly distinguished source policies remain supported, with regression gates. Reuse main per owner request.
+
+
+## DEC-20261108-14 - Reject EXP-024 station calibrations for production
+
+- **Date / owner:** 2026-11-08 / Codex
+- **Status:** Rejected candidates; retain current provisional P_fix.
+- **Context:** Owner requested analysis of five CSVs and pasted research/model suggestions. No B/C/Low generation lineage or new official labels were supplied.
+- **Decision:** Keep identity-shrunk offset, affine and Huber calibration as reproducible experiments only. Do not change production inference, upload an unchanged candidate, or integrate black-box forecasts. AIFS-COMPO remains unavailable as an established pipeline input.
+- **Evidence:** EXP-20261108-024, reports/ml_pipeline/exp024/REPORT.md and run02/. All three lose development and later full-target RMSE on the same 12,401 rows/77 origins. Later P_fix 15.796318 vs offset 22.110661 / affine 21.946022 / Huber 15.936059; all paired promotion gates fail. Official ECMWF announcement says underlying AIFS-COMPO data will be released in the future. Full suite 114 passed; raw hashes and 2,592-row production output fingerprint unchanged.
+- **Confidence:** High that these fixed calibrations lack promotion evidence; low about final private ranking. Historical confirmation remains analyst-exposed.
+- **Alternatives considered:** Arbitrary global reduction, selecting B/Low from public scores alone, promoting Huber for station/origin wins despite worse pooled RMSE. Rejected as unsupported by matched primary metrics or reproducible lineage.
+- **Consequences / revisit trigger:** Preserve P_fix and the existing final-release guards. Revisit only with eligible B/C/Low provenance or genuinely new official labels and recalculated actual-gap validation. No new external data, targets or event multipliers added.
+
+
+## DEC-20261108-15 - Retain P_fix after exact source-C reproduction
+
+- **Date / owner:** 2026-11-08 / Codex
+- **Status:** Rejected C promotion; B evaluation incomplete.
+- **Context:** Owner identified the team B/C branch and the public Low repository, then confirmed B/C's author is on the registered team.
+- **Decision:** Preserve production P_fix and keep the name-pooled C reconstruction isolated as an experiment. Do not merge the team's package rewrite or label Low's display builder a forecast trainer. B needs compatible CatBoost execution and actual-gap validation before promotion.
+- **Evidence:** EXP-20261108-025, reports/ml_pipeline/exp025/REPORT.md and run02/. Original pinned C source and independent implementation both reproduce all 2,592 supplied values exactly. Matched 69 development/8 later origins give C full RMSE 758.020061/15.849352 vs P_fix 757.988014/15.796318; paired intervals cross zero. B computes its training gap from the earliest Test hour, yielding -287h clamped to48h rather than actual private193h. Low CSV and newline-normalized Train/Test match, but the inspected repo lacks training code. Full suite117 passed; all raw hashes unchanged.
+- **Confidence:** High in C reproduction, source-code gap finding and decision against C promotion; no claim about B or Low's unseen-period ranking.
+- **Alternatives considered:** Merge the source branch or choose C/B/Low by public score. Rejected because matched C evidence fails and B/Low reproduction remains incomplete. No substitute learner is called B.
+- **Consequences / revisit trigger:** Use a compatible CatBoost runtime for B; enforce actual-gap chronological training eligibility. Obtain Low's real generation pipeline and as-issued weather provenance. Repeat frozen evaluation after official data refresh. Main production and creative application remain unchanged.

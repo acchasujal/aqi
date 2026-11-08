@@ -1,0 +1,103 @@
+{
+  "branch_commit": "a191dbaf89f3324e8d8fe77542bf8cc70a848b4e",
+  "low_ref": "a4afdc56c757ce4138113b423a001275e38c0dff",
+  "command": "scripts/audit_exp025.py --supplied-dir C:/Users/sujal/Downloads --output reports/ml_pipeline/exp025/run01",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:31:18) [MSC v.1943 64 bit (ARM64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "branch_source_hashes": {
+    "src/mumbai_pm25/__init__.py": "1c38baf7048f758e8c81733fe32fca2c5cceee94aeeb1b2110ba119befd312a5",
+    "src/mumbai_pm25/config.py": "148f7612c96d499ff70b2268501abfa11cd999a243261fb46d7a78a5025dfbd0",
+    "src/mumbai_pm25/data.py": "5ca1bd0a4fa56d07cfb9961a38cc460d7ceeec92c841d8d191b9ddffce59148d",
+    "src/mumbai_pm25/features/__init__.py": "ee48044e4cebb67dc6791c1022b1d4cfdb3ad2be038fcb760150197f7a883e26",
+    "src/mumbai_pm25/features/calendar.py": "0755cdacb028f5b360cca913deef9ac6a49fe582015f2e197774460ccc271b1a",
+    "src/mumbai_pm25/features/pipeline.py": "680f58ee16104d8be582737d069f4b1d9fae315cbf7009d78c889fe43f8b35c4",
+    "src/mumbai_pm25/features/pm_history.py": "da5a451a6353fe860d2c478b58fff8897ce3441e1859dc6f2a4993ff1ab9b520",
+    "src/mumbai_pm25/features/seasonal.py": "ba85ced3e76bfce6bd266a5e8f396cdb33e5549be85b5aa9293fd7e5aa1ea7f7",
+    "src/mumbai_pm25/features/spatial.py": "ee507716fb69734e11a51d9e6645e792c6bde53cc00f257d20f1216bb54875db",
+    "src/mumbai_pm25/forecast.py": "985135ec251c41e1ab46d88f8507ed92b8face831391756bb30cad8b08d553f4",
+    "src/mumbai_pm25/historical_archive.py": "b9eb876c0fe1a69c404645a91b86bd3a64f3e19b8e403c4eab7cd7f67be6b417",
+    "src/mumbai_pm25/models/__init__.py": "953c26d32866064f11ebfa763934154e915be0e511ff1bcfc61c2217f77f66f1",
+    "src/mumbai_pm25/models/extra_trees.py": "922edbcd86fbf00bcffbc6ccf575ba3f5c6c95bce4059c11f7d023017abb79fa",
+    "src/mumbai_pm25/models/statistical.py": "0fb45f58d7ea4c443db36de04a342d4a17997e1ac533b03dbd2bdf2f4df570b2",
+    "src/mumbai_pm25/models/supervised.py": "04faafa2ddfbe1be880e772dc474f8e15e9a4f6177cd3b2a7d00aae8855385b7",
+    "src/mumbai_pm25/validation.py": "11d03c294b563cd3dd0d01d3c14672d72765872ed9a9b75cc0d8980935ab0316"
+  },
+  "local_source_hashes": {
+    "scripts/audit_exp025.py": "39af1e162c6492b9ff397e60af8aa7344ea4167096b37cc4e4de2dee807637bb",
+    "src/mumbai_pm25/source_candidates.py": "b9b9b8e865aa64f417adf15dcb299a02e665578032c4f5037302bb5d31ea3e86",
+    "experiments/EXP-20261108-025.yaml": "18fd94f8c1c6d806b96fdf21be5c112a86af4cbb3c78c20c56b494930f36089f"
+  },
+  "branch_input_parity": {
+    "AdditionalHistory.zip": {
+      "exact_bytes": true,
+      "equal_after_crlf_normalization": true
+    },
+    "DataDictionary.txt": {
+      "exact_bytes": true,
+      "equal_after_crlf_normalization": true
+    },
+    "README.md": {
+      "exact_bytes": true,
+      "equal_after_crlf_normalization": true
+    },
+    "SampleSubmission.csv": {
+      "exact_bytes": true,
+      "equal_after_crlf_normalization": true
+    },
+    "Stations.csv": {
+      "exact_bytes": true,
+      "equal_after_crlf_normalization": true
+    },
+    "Test.csv": {
+      "exact_bytes": true,
+      "equal_after_crlf_normalization": true
+    },
+    "Train.csv": {
+      "exact_bytes": true,
+      "equal_after_crlf_normalization": true
+    }
+  },
+  "raw_hashes": {
+    "AdditionalHistory.zip": "3233061ca4ac2af39e9f6e80e21d9261b1b8d2fd3b037e5d034bcec059a7e80e",
+    "DataDictionary.txt": "0d10dcbb6d31232d29558ecd50e7a08272a393048d1e62e3ac460c5863522a55",
+    "README.md": "4c06dc678e5ad1270aac0177565dfbad9443bd29f4e709ddcd83bdbaf30f3fdb",
+    "SampleSubmission.csv": "5806d6109f381043e59fffb48a5d0af5d9de56fd4e0e956e4c5e7f2e6ae5dcd9",
+    "Stations.csv": "383269fa04abf8f2eb49e5ec0bb5a77c2df11acb6aca996b7edf269a109ee9cf",
+    "Test.csv": "cdb2b6c3035f6331848c565b4d3dd89ac5281efab07fa62bfabc2e7ff172db0a",
+    "Train.csv": "fcee20ebf7bd9c4a4e2487bab0a4f81339d6c820a53862b14443031db1f18ad6"
+  },
+  "raw_unchanged": true,
+  "source_oof_sha256": "8e2711d9f3bb2a740652608c8a18bdde0b0997a915843a15d042f51abb83fe32",
+  "rows": 12401,
+  "origins": 77,
+  "C_reproduction": {
+    "supplied_sha256": "d1fcc73e4a068bcf5a923f9d9867fac5ece5c3f5b85c5b01b844cf9115e748fb",
+    "rows": 2592,
+    "max_absolute_difference": 0.0,
+    "exact_values": true,
+    "within_1e_10": true
+  },
+  "independent_C_max_difference": 0.0,
+  "B_reproduction": {
+    "status": "NOT RUN",
+    "reason": "CatBoost is absent; Windows ARM64 runtime has no native PyPI wheel. No substitute model used."
+  },
+  "low_published_blob_matches": true,
+  "low_train_blob_matches": false,
+  "low_test_blob_matches": false,
+  "low_model_training_code": "ABSENT from inspected repository tree; build_data consumes forecasts",
+  "production": "UNCHANGED; analyst-exposed confirmation and unknown registered-team status",
+  "output_hashes": {
+    "confirmation/fold_metrics.csv": "267e2ba58a87b2eff3596fb68fb52fee46551d4fec107fe31a698e1cfb03140c",
+    "confirmation/lead_metrics.csv": "65f54e0c810d2fd4d358066a30623230c5e4071135c4b2f53f33947d71225f9d",
+    "confirmation/model_metrics.csv": "5b1e8b6504ade5d446a8a8118c8cb7f782b3781d5ee0efa589b06ff7c932484c",
+    "confirmation/paired_bootstrap.csv": "594cf50b84df7df494a7ed7e767caffe58a8d81c56bec4f40e84189816d5b7c4",
+    "confirmation/station_metrics.csv": "442b970827fcfbfb56b680f111bc021172eb7efbf8adaf2cfaf56932c0467820",
+    "development/fold_metrics.csv": "5c4ac367b22d773a7dad8800491cd858aa2d7be949eb7fec0b11ce7a0e38cc8c",
+    "development/lead_metrics.csv": "6246a10d45866eb0a0ab95c22aa2b44ab0eec50f0d952bbf8435e933c8cc7aa3",
+    "development/model_metrics.csv": "c8cc3d439d6ef97954f15c67340db100d6b43c5c4d345a02e1cebc3db11cde23",
+    "development/paired_bootstrap.csv": "3337639ed60907f20fa39724db5fbb421b8103f5865f8414bad2d6fb5b62f2a7",
+    "development/station_metrics.csv": "3f9aa1adb31320ea82cd47d4af5e100b25a7e7a63e325f094b40e798198018ef",
+    "matched_oof.csv.gz": "e46b72e323235963b962828115332f52c698ce7986ae61e0b80ec6851f573051"
+  }
+}
