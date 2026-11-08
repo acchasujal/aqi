@@ -1,5 +1,7 @@
 # AirWindow Mumbai MVP Implementation Plan
 
+> **8 November 2026 update:** This is the historical foundation plan. The current user-authorised AirWindow 2.0 implementation and evidence are described in [PRODUCT_OVERVIEW.md](PRODUCT_OVERVIEW.md), [RED_TEAM_REPORT.md](RED_TEAM_REPORT.md), [DEMO_SCRIPT.md](DEMO_SCRIPT.md) and the current [submission/QA checklist](SUBMISSION_CHECKLIST.md). Preserve the original findings below as historical context; the earlier scaffold approval gate has been superseded by the direct implementation request.
+
 **Status:** Planned; full frontend is gated on approval of the forecast artifact contract.
 
 ## Selected workflow

@@ -1,0 +1,52 @@
+{
+  "generated_at_ist": "2026-11-08T16:28:14+05:30",
+  "export_git_commit": "186463680a5a5180a0cc970da348c20fa34f73bd",
+  "prediction_sha256": "3d79cffcca78cea1ad6f5e24d2568bf931bbba8c3b15fcd7db1728462050ab1d",
+  "prediction_audit_sha256": "df39f6684e9b393e101b0166f2f47493aff655c53e07aaa61c569ed85c56683f",
+  "all_block_oof_sha256": "a5b6071dd9c75e1025d2d8810ad30121b361e07c5c31211f123f8d5240b47a49",
+  "matched_oof_sha256": "8e2711d9f3bb2a740652608c8a18bdde0b0997a915843a15d042f51abb83fe32",
+  "forecast_sha256": "821c6b01078200baa61a754ff19b6af9a5ccee063f5cca51b5fa24f13f58f541",
+  "replay_sha256": "e99d60bfdade3db297f3553e80de0d6c4f08300e5b747978b59c54a134d32c10",
+  "calibration": "NOT CALIBRATED",
+  "model_issue_time_ist": "2026-11-08T15:58:00+05:30",
+  "forecast_source_code": {
+    "src/mumbai_pm25/forecast.py": "2df272b2b8dbd9bbaf8bf81566d342489688628fcafe10ac168d3daf3355944f",
+    "src/mumbai_pm25/historical_archive.py": "2dba2c00a3c22f0b28e9b3e80ee286b84863e27b6cedf71c2fdabc65ceee9c15",
+    "src/mumbai_pm25/data.py": "5ca1bd0a4fa56d07cfb9961a38cc460d7ceeec92c841d8d191b9ddffce59148d",
+    "scripts/prepare_task008_submission.py": "35ec1520875c8dd9be995306314091e58159ced581f306b232c9155c99a3cf7a"
+  },
+  "training_data_sha256": "fcee20ebf7bd9c4a4e2487bab0a4f81339d6c820a53862b14443031db1f18ad6",
+  "forecast_hours_per_station": 296,
+  "replay_summary": {
+    "cases": 1848,
+    "origins": 77,
+    "paired_outcome_origins": 76,
+    "paired_outcome_cases": 1469,
+    "missing_outcome_cases": 379,
+    "selected_alternative_cases": 1291,
+    "recommended_cases": 0,
+    "lower_observed_fraction": 0.6367157242447715,
+    "median_realised_difference": -1.1708333333333343,
+    "hindsight_gap_median": 2.061111111111112,
+    "complete_hindsight_cases": 1221,
+    "missing_hindsight_cases": 248,
+    "median_absolute_difference_error": 2.2145794117647064
+  },
+  "replay_scenario": {
+    "original_hour_ist": 9,
+    "feasible_start_hour_ist": 8,
+    "feasible_end_hour_ist": 18,
+    "durations_hours": [
+      1,
+      2,
+      3
+    ],
+    "target_days": [
+      1,
+      2
+    ],
+    "definition": "All matched OOF origins, stations and both target days. Rank every complete forecast window before inspecting actual outcomes; retain cases with missing outcomes.",
+    "scenario_cases_considered": 1848,
+    "missing_original_or_feasible_forecast": 0
+  }
+}

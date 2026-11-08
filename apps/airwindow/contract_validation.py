@@ -4,18 +4,24 @@ from __future__ import annotations
 
 import json
 from datetime import datetime, timedelta
+from itertools import pairwise
 from pathlib import Path
 from typing import Any
 
 from jsonschema import Draft202012Validator, FormatChecker
 
-
 SCHEMA_PATH = Path(__file__).parent / "contracts" / "forecast.schema.json"
+STATION_COORDINATES = {
+    "11606": (19.232410, 72.868950), "11611": (19.197090, 72.822040),
+    "3409510": (18.976700, 72.838000), "3409511": (19.060498, 72.923356),
+}
 
 
 def validate_artifact(artifact: dict[str, Any]) -> None:
     """Raise ValueError when an artifact violates the schema or temporal invariants."""
-    schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+    schema_path = (SCHEMA_PATH.with_name("forecast.v1.1.schema.json")
+                   if artifact.get("schema_version") == "1.1.0" else SCHEMA_PATH)
+    schema = json.loads(schema_path.read_text(encoding="utf-8"))
     Draft202012Validator.check_schema(schema)
     validator = Draft202012Validator(schema, format_checker=FormatChecker())
     errors = sorted(validator.iter_errors(artifact), key=lambda error: list(error.absolute_path))
@@ -39,13 +45,16 @@ def validate_artifact(artifact: dict[str, Any]) -> None:
         raise ValueError("weather issue time must be no later than model issue time")
 
     for station in artifact["stations"]:
+        latitude, longitude = STATION_COORDINATES[station["station_id"]]
+        if abs(station["latitude"]-latitude) > 1e-6 or abs(station["longitude"]-longitude) > 1e-6:
+            raise ValueError("Station coordinates must match the actual challenge monitor")
         forecasts = station["forecasts"]
         target_starts = [_parse_ist(row["target_start_ist"]) for row in forecasts]
         if target_starts != sorted(set(target_starts)):
             raise ValueError(f"Forecast timestamps must be unique and increasing for {station['station_id']}")
         if any(
             right - left != timedelta(hours=1)
-            for left, right in zip(target_starts, target_starts[1:], strict=False)
+            for left, right in pairwise(target_starts)
         ):
             raise ValueError("Forecast records must form a contiguous hourly timeline, including missing hours")
 
@@ -57,6 +66,8 @@ def validate_artifact(artifact: dict[str, Any]) -> None:
             if freshness["observation_age_hours"] is not None:
                 raise ValueError("Observation age must be null when the last observation is unknown")
         else:
+            if artifact["schema_version"] == "1.1.0" and _parse_ist(observation) > pm_cutoff:
+                raise ValueError("Last observation must not occur after PM history cutoff")
             if freshness["status"] == "missing_observation":
                 raise ValueError("Freshness cannot be missing_observation when a timestamp is present")
             expected_age = (model_issue - _parse_ist(observation)).total_seconds() / 3600
@@ -82,8 +93,9 @@ def validate_artifact(artifact: dict[str, Any]) -> None:
             target_end = _parse_ist(row["target_end_ist"])
             if target_end - target_start != timedelta(hours=1):
                 raise ValueError("Each forecast target interval must be exactly one hour")
-            horizon_hours = int((target_start - model_issue).total_seconds() / 3600)
-            if horizon_hours < 1 or row["forecast_horizon_hours"] != horizon_hours:
+            exact_horizon = (target_start - model_issue).total_seconds() / 3600
+            horizon_hours = exact_horizon if artifact["schema_version"] == "1.1.0" else int(exact_horizon)
+            if exact_horizon <= 0 or abs(row["forecast_horizon_hours"] - horizon_hours) > 1e-9:
                 raise ValueError("forecast_horizon_hours must match target start minus model issue time")
             if row["status"] == "available":
                 available += 1

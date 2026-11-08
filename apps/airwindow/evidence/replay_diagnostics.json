@@ -1,0 +1,53 @@
+{
+  "method": "Paired original/selected differences; station-duration-lead conditioned; development-only descriptive error benchmark applied to later confirmation; no calibrated probabilities.",
+  "development": {
+    "status": "exploratory_not_calibrated",
+    "origins": 68,
+    "resamples": 1000,
+    "contiguous_origin_block_length": 4,
+    "seed": 20261108,
+    "win_fraction_resampling_sd": 0.028925438307396325,
+    "mean_difference_resampling_sd": 2.037568652930857,
+    "note": "Whole paired-origin cases resampled in contiguous blocks; no independent-hour bootstrap; not an uncertainty interval for live decisions."
+  },
+  "confirmation": {
+    "status": "exploratory_not_calibrated",
+    "origins": 8,
+    "resamples": 1000,
+    "contiguous_origin_block_length": 4,
+    "seed": 20261108,
+    "win_fraction_resampling_sd": 0.047217813469285275,
+    "mean_difference_resampling_sd": 1.0764458718901246,
+    "note": "Whole paired-origin cases resampled in contiguous blocks; no independent-hour bootstrap; not an uncertainty interval for live decisions."
+  },
+  "confirmation_metrics": {
+    "cases": 192,
+    "origins": 8,
+    "paired_outcome_origins": 8,
+    "paired_outcome_cases": 180,
+    "missing_outcome_cases": 12,
+    "selected_alternative_cases": 158,
+    "recommended_cases": 0,
+    "lower_observed_fraction": 0.6075949367088608,
+    "median_realised_difference": -1.0362500000000003,
+    "hindsight_gap_median": 3.019166666666667,
+    "complete_hindsight_cases": 156,
+    "missing_hindsight_cases": 24,
+    "median_absolute_difference_error": 2.500869581807077
+  },
+  "development_metrics": {
+    "cases": 1656,
+    "origins": 69,
+    "paired_outcome_origins": 68,
+    "paired_outcome_cases": 1289,
+    "missing_outcome_cases": 367,
+    "selected_alternative_cases": 1133,
+    "recommended_cases": 0,
+    "lower_observed_fraction": 0.6407766990291263,
+    "median_realised_difference": -1.179999999999998,
+    "hindsight_gap_median": 1.9124999999999996,
+    "complete_hindsight_cases": 1065,
+    "missing_hindsight_cases": 224,
+    "median_absolute_difference_error": 2.183448275862064
+  }
+}

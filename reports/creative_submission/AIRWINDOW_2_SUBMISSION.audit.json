@@ -1,0 +1,33 @@
+{
+  "file": "AIRWINDOW_2_SUBMISSION.pdf",
+  "bytes": 157195,
+  "pages": 5,
+  "sha256": "e457929edc97bcb730b4c62ffff3fc8436bd91cf72d6a190a22da7678799786e",
+  "render_directory": "data/processed/airwindow_pdf_render",
+  "text_characters_per_page": [
+    678,
+    1781,
+    1096,
+    2035,
+    1807
+  ],
+  "source_screenshots": [
+    "reports\\creative_submission\\screenshots\\airwindow_desktop_decision.png",
+    "reports\\creative_submission\\screenshots\\airwindow_desktop_replay_detail.png"
+  ],
+  "source_screenshot_sha256": {
+    "reports\\creative_submission\\screenshots\\airwindow_desktop_decision.png": "cdb5a39c51ee2f7d074c6577a9bedd0fc3e5f753f7d360387f2eb0bbea1cced4",
+    "reports\\creative_submission\\screenshots\\airwindow_desktop_replay_detail.png": "34794e7e02255734589971d77ec88a5824c2dc774cf9de69fc0b8f090fba47cd"
+  },
+  "visual_inspection": "PASS: all five final PDFium-rendered PNGs inspected; no clipping, overlap, broken glyphs, or unreadable primary text",
+  "inspected_pages": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "inspected_at_ist": "2026-11-08T16:35:17+05:30",
+  "source_screenshot_hashes_verified": true,
+  "size_under_10mb": true
+}
