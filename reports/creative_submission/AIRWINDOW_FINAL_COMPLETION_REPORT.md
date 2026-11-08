@@ -5,8 +5,7 @@ Task AIRWINDOW21, 9 November 2026 IST. Existing app extended, not rebuilt.
 Starting commit: `dba644a1d0e7394794335dc2d98c2d64c548633c`, clean `main`.
 `git fetch origin main` confirmed local/fetched main equality before edits. No
 unmerged local work, branch creation, history rewrite or ML integration was needed.
-Final implementation commit and publication evidence are recorded below after
-the reviewed commit is created. This report does not claim an unperformed push.
+Final implementation commit: `16e479dd2b33bf67d91828cc50ebbbc96653cc37`. Publication is verified below. A subsequent documentation-only commit records this already published implementation without altering its code or package.
 
 ## Delivered and preserved
 
@@ -180,5 +179,12 @@ genuine screenshots/brief, final gap audit and this report. Shared records:
 append-only DECISIONS.md and PROGRESS.md. No ML source/config, raw files,
 forecast/replay JSON, dependency lockfile or generated submission CSV changed.
 
-Publication record follows after staged review. Human/platform gates above remain
-open regardless of Git publication.
+- Reviewed implementation commit: `16e479dd2b33bf67d91828cc50ebbbc96653cc37`.
+- `git diff --cached --check` passed; staged PDF/source bytes matched the audit;
+  all 34 staged paths were creative application/docs/package or append-only logs.
+- `git push origin main` succeeded; `git ls-remote origin refs/heads/main`
+  returned the exact implementation SHA above. Working tree was clean afterward.
+- This publication record is a subsequent documentation-only commit. Its own
+  identity is available from `git log -1`; it does not change the tested build.
+- No Firebase deployment, Colab cloud execution, video or form processing is implied.
+  Human/platform gates above remain open regardless of Git publication.
