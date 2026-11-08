@@ -22,18 +22,18 @@ DATA_DIR = ROOT / "data" / "raw" / "challenge"
 ARCHIVE = DATA_DIR / "AdditionalHistory.zip"
 REPORT_DIR = ROOT / "reports" / "ml_pipeline" / "seasonal_history"
 
-import sys  # noqa: E402
+import sys
 
 sys.path.insert(0, str(ROOT / "src"))
 
-from mumbai_pm25.data import load_data  # noqa: E402
-from mumbai_pm25.historical_archive import (  # noqa: E402
+from mumbai_pm25.data import load_data
+from mumbai_pm25.forecast import combine_forecasts, recent_median72
+from mumbai_pm25.historical_archive import (
     STATION_NAME_MAP,
     build_seasonal_features,
     load_2024_history,
 )
-from mumbai_pm25.validation import rolling_oof  # noqa: E402
-from mumbai_pm25.forecast import combine_forecasts, recent_median72  # noqa: E402
+from mumbai_pm25.validation import rolling_oof
 
 SEASONAL_MODELS = ("hist24_same_hour", "hist24_month_hour", "hist24_blend50_median72")
 
@@ -112,7 +112,7 @@ def rolling_oof_seasonal(
     for cutoff in pd.date_range(first_origin, last_origin, freq=f"{step_days}D"):
         target_start_time = cutoff + pd.Timedelta(hours=gap_hours)
         targets = pd.date_range(target_start_time, periods=horizon_hours, freq="h")
-        issue_time = target_start_time
+        issue_time = cutoff
 
         # Build fold targets DataFrame for seasonal feature lookup
         fold_target_rows = []

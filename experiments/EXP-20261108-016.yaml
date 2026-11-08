@@ -1,0 +1,18 @@
+task: TASK008
+date: 2026-11-08
+owner: Codex
+base_commit: d7bfbdbaa0b112d8dc2c9341cd731287d4b57d92
+branch: feature/task008-final-gap-execution
+sequence: [EXP-016, EXP-017, EXP-018, EXP-019, EXP-020, EXP-022, EXP-023]
+primary_metric: full_target_raw_scale_rmse
+seed: 20261108
+status: in_progress
+source_policy: P_FIX_SERIES
+weather: NOT_TESTED_no_verified_permitted_vintages
+holdout_policy: Later chronological confirmation; previously inspected history is not blind.
+scope:
+  - Freeze raw and supplied evidence and review PR4 without merging.
+  - Add reusable fixed-origin 48h evaluator and narrow baseline/anomaly candidates.
+  - Test residual LightGBM only after evaluator tests pass.
+  - Freeze development selection before later confirmation; retain P_fix if uncertain.
+  - Verify deterministic current-snapshot inference; final official refresh pending.

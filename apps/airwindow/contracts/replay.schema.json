@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AirWindow retrospective decision replay 1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "artifact_id", "generated_at_ist", "model", "provenance", "calibration", "scenario", "summary", "by_station_duration", "reliability_profiles", "cases"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "artifact_id": {"type": "string"},
+    "generated_at_ist": {"type": "string", "format": "date-time"},
+    "model": {"type": "object"},
+    "provenance": {"type": "object", "required": ["oof_sha256", "prediction_lineage", "availability_assumption", "independent_calibration", "latest_available_observation_end_ist"]},
+    "calibration": {"type": "object", "required": ["status", "reason", "probability", "interval"], "properties": {"status": {"const": "not_calibrated"}, "probability": {"type": "null"}, "interval": {"type": "null"}}},
+    "scenario": {"type": "object"},
+    "summary": {"type": "object"},
+    "by_station_duration": {"type": "array", "items": {"type": "object"}},
+    "reliability_profiles": {"type": "array", "items": {"type": "object"}},
+    "cases": {"type": "array", "items": {"$ref": "#/$defs/case"}}
+  },
+  "$defs": {
+    "hour": {"type": "object", "additionalProperties": false, "required": ["target_start_ist", "target_end_ist", "prediction", "observed"], "properties": {"target_start_ist": {"type": "string", "format": "date-time"}, "target_end_ist": {"type": "string", "format": "date-time"}, "prediction": {"type": ["number", "null"], "minimum": 0}, "observed": {"type": ["number", "null"], "minimum": 0}}},
+    "case": {
+      "type": "object",
+      "required": ["case_id", "station_id", "station_name", "duration_hours", "fold_id", "split", "issue_time_ist", "pm_history_cutoff_ist", "last_pm_end_ist", "original_start_ist", "original_end_ist", "feasible_start_ist", "feasible_end_ist", "selected_start_ist", "selected_end_ist", "predicted_difference", "observed_difference", "hindsight_gap", "decision_status", "hours", "windows", "original", "selected"],
+      "properties": {
+        "duration_hours": {"enum": [1, 2, 3]},
+        "predicted_difference": {"type": "number"},
+        "observed_difference": {"type": ["number", "null"]},
+        "hindsight_gap": {"type": ["number", "null"], "minimum": 0},
+        "decision_status": {"enum": ["ROBUST IMPROVEMENT", "TENTATIVE IMPROVEMENT", "NO CLEAR WINNER", "INSUFFICIENT EVIDENCE"]},
+        "hours": {"type": "array", "items": {"$ref": "#/$defs/hour"}},
+        "windows": {"type": "array", "items": {"type": "object"}},
+        "original": {"type": "object"},
+        "selected": {"type": "object"}
+      }
+    }
+  }
+}

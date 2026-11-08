@@ -1,158 +1,70 @@
-# Creative Product Specification — AirWindow Mumbai
+# AirWindow Mumbai 2.0 - Product specification
 
-**Working name:** AirWindow Mumbai<br>
-**Tagline:** Turn hourly air-quality forecasts into better-timed outdoor plans.<br>
-**Category:** Best Additional / Most Creative Submission.
+**Product:** the confidence-aware outdoor activity scheduler.
 
-## 1. Product thesis
+**Audience:** school sports coordinators and outdoor-event organisers.
 
-Existing air-quality services are strong at displaying readings, maps, forecasts and advisories. AirWindow focuses on a narrower last-mile question:
+**Tagline:** Don't just check the air. Make a better-timed plan, and know whether the forecast is reliable enough to justify changing it.
 
-> Given the forecast at a selected CPCB monitoring station, which upcoming one-, two- or three-hour windows have the comparatively lower predicted PM2.5 concentration, and how confident should a user be in that comparison?
+## Product thesis
 
-The app is a decision-support prototype, not an official alert service, medical product or hyperlocal exposure map.
+A coordinator already has a two-hour event booked and can move it within a feasible range. AirWindow compares that original event with complete alternative windows at one of four actual CPCB stations, then explains whether historical evidence supports acting on the difference.
 
-## 2. Primary users
+The signature combines constraints, original-versus-alternative comparison, paired historical decision replay and honest abstention. Existing services already provide maps, forecasts and alerts; no first-in-Mumbai or universal superiority claim is justified. This independent challenge prototype complements official services.
 
-Prioritise two user groups for the MVP:
+## Core workflow
 
-1. School / sports / outdoor-event coordinators who must choose among available activity windows.
-2. Outdoor operations supervisors who need to compare forecast periods for outdoor tasks or breaks.
+1. Select Borivali East (11606), Malad West (11611), Byculla (3409510) or Shivaji Nagar (3409511). Show exact location and latest eligible observation timestamp.
+2. Set the original start and duration of one, two or three hours. Derive the original end and keep it visible.
+3. Set earliest feasible start and latest feasible end within the artifact horizon. Enumerate hourly starts only; every hour in each window must be present, consecutive and valid.
+4. Compare the original and lowest predicted alternative: mean, maximum, peak hour, individual hourly predictions and signed difference.
+5. Inspect the reliability state and other feasible windows. A numerical rank alone never establishes that moving is justified.
+6. Explore genuine historical replay and print a one-page event brief with evidence and limitations.
 
-Secondary audiences: environmental NGOs, community organisers and researchers.
+## Decision states and evidence
 
-## 3. Core user journey
+| State | Meaning |
+|---|---|
+| ROBUST IMPROVEMENT | Reserved for adequate comparable support and independently validated chronological decision reliability. Current artifacts cannot claim it without that evidence. |
+| TENTATIVE IMPROVEMENT | An alternative has lower predicted concentration, but reliable improvement is not established. |
+| NO CLEAR WINNER | Complete options are tied or validated evidence cannot distinguish them. |
+| INSUFFICIENT EVIDENCE | Comparable station/duration/lead evidence cannot support a reliability estimate. |
 
-1. User chooses one of the four actual monitored stations.
-2. User chooses an activity duration: 1, 2 or 3 contiguous hours.
-3. User selects the planning horizon (within available forecast hours).
-4. The app ranks candidate windows using the mean of the predicted hourly PM2.5 concentrations.
-5. Each option shows forecast values, an uncertainty interval, issue time, last PM observation time and a validation note.
-6. User opens a shareable planning brief suitable for a school or event coordinator.
+Calibration status is separate from case count. Overlapping hourly comparisons are not independent forecast origins. TASK008 supplies genuine retrospective rolling-origin OOF forecasts with fixed PM cutoffs and unmodified truth. Interval-end availability is a proxy, not verified first publication; historical confirmation has prior analyst exposure. Therefore the current app must not display calibrated probabilities or uncertainty intervals or claim independent confirmation.
 
-Do not state that any window is “safe”, “healthy” or medically recommended. Say “lower predicted concentration relative to the other windows shown”.
+The deterministic evidence build pairs original and alternative windows from the same origin, station, duration and comparable lead range. It compares predicted with later observed differences and preserves origin dependence in block resampling. Report case and origin counts, relevant station/lead RMSE, calibration status, exclusions and limitations. Document sufficiency criteria and method; do not invent thresholds in UI components.
 
-## 4. MVP features
+## Historical Decision Replay
 
-### A. Four-station map
+Replay is a separate retrospective artifact. A judge selects an origin, station and duration; sees what the model knew, its original slot, feasible forecasts, the selected lower-forecast window, later observations and whether the choice was actually better.
 
-- Plot only the four challenge stations from `Stations.csv`.
-- Show station name, coordinates, latest known PM observation and data timestamp.
-- Do not interpolate a continuous Mumbai pollution surface.
-- Do not imply that a station reading represents every nearby street or building.
+Aggregate metrics cover all eligible declared decision cases, including failures: lower-observed fraction for numerical selections, median realised difference, hindsight gap to the best observed feasible slot, coverage and origin counts, overall and by station/duration. Distinguish numerical selections from calibrated recommendations. No health benefit or personal exposure reduction is measured.
 
-### B. Hourly forecast timeline
+## Trust centre and missingness
 
-- Display forecast PM2.5 per station.
-- Distinguish measured history from future model outputs.
-- Show issue time, target interval and model version.
-- Show prediction intervals only after they are calibrated from validation residuals.
+Show model ID/version, code/data fingerprints, generation/issue time, PM cutoff, latest station observation, target intervals and actual leads. Weather fields stay null unless weather was used. Display the actual validation population, sample/fold counts and unmodified-target metrics.
 
-### C. Time-window ranking
+Missing forecasts stay missing. Missing original hours prevent comparison; incomplete alternatives are excluded with a reason. Invalid schemas fail visibly. Historical/stale artifacts are labelled snapshots, not a continuously refreshed service. Never extrapolate beyond available horizon.
 
-For a requested duration `d`, calculate the rolling mean of the next `d` predicted hourly PM2.5 values. Rank windows from lower to higher predicted mean. Also show the difference from the median of candidate windows. Do not call this a personal exposure or dose estimate.
+## Architecture and contracts
 
-### D. Forecast context
+Preserve the existing live forecast contract/validator and temporal invariants; see [the contract](FORECAST_ARTIFACT_CONTRACT.md) for its versioned migration. The separate replay contract retains origin, cutoff, training lineage, target intervals, predictions and subsequent released historical observations. Hidden/private actuals never enter app artifacts.
 
-Optionally show weather variables such as wind, humidity, rain and boundary-layer height when the data source is approved and has a correct issue-time vintage. Use neutral language such as “forecast conditions associated with this model output”. Do not claim causal source attribution.
+The Python build step owns artifact export, paired evidence and classification, without training a new model. React + Vite + TypeScript owns interaction and transparent window arithmetic. No account, database, health-data collection, chatbot or runtime external API is required. A station locator may show four actual points; no interpolated heatmap.
 
-### E. Trust centre
+Prepare Firebase Hosting Spark without paid billing. A Colab-compatible evidence notebook is reproducible support, not a live dependency. Hosting configuration does not prove deployment; record a public URL only after authorised project access and successful checks.
 
-Show:
-- Latest PM observation timestamp per station.
-- PM history cutoff used by the model.
-- Weather issue time, provider and model if weather is included.
-- Forecast horizon.
-- Per-station rolling-origin validation RMSE at comparable horizons.
-- Number of historical validation samples.
-- Data-missingness and uncertainty notes.
-- Model version and data fingerprint.
+## Printable brief
 
-### F. Shareable planning brief
+Show station/location, original time/duration, alternative when available, forecast means and peaks, difference, reliability state/reason, issue/cutoff/last observation, model version, validation counts and limitations. Preserve abstention. This is a planning comparison, not a statement that an event is safe.
 
-Provide a print/download/share view containing selected station, chosen duration, recommended relative window, alternatives, predicted concentrations, uncertainty, timestamps, model performance note and limitations.
+## Acceptance criteria
 
-### G. Historical replay
-
-Provide a fixed, clearly labelled backtest example showing actual observed target vs historical forecast, where prediction and label are legitimately available. Never use hidden private labels before they are officially released.
-
-## 5. Data contract between ML and app
-
-The frontend must consume a generated, versioned forecast artifact. Do not train models inside the browser.
-
-Suggested file: `apps/airwindow/public/data/forecast.json`.
-
-Suggested top-level fields:
-
-```json
-{
-  "schema_version": "1.0",
-  "generated_at_ist": "...",
-  "model_id": "...",
-  "model_version": "...",
-  "training_data_hash": "...",
-  "pm_history_cutoff_ist": "...",
-  "weather_issue_time_ist": null,
-  "weather_source": null,
-  "stations": [
-    {
-      "station_id": "BOR",
-      "station_name": "Borivali East",
-      "latitude": 19.23241,
-      "longitude": 72.86895,
-      "last_observation_ist": "...",
-      "validation": {
-        "horizon_hours": 48,
-        "rmse": null,
-        "n_targets": null
-      },
-      "forecasts": [
-        {
-          "target_start_ist": "...",
-          "target_end_ist": "...",
-          "pm25_pred": 0.0,
-          "lower": null,
-          "upper": null
-        }
-      ]
-    }
-  ]
-}
-```
-
-This is a schema example, not actual forecast data. `lower`/`upper` must remain null until calibrated prediction intervals exist. Do not put hidden labels or secret credentials in the artifact.
-
-## 6. Technical architecture
-
-- Frontend: React + Vite + TypeScript.
-- Charts: Chart.js / Recharts (choose one, avoid duplicate chart dependencies).
-- Map: Leaflet or MapLibre using a basemap provider whose terms are compatible; four station markers only.
-- Hosting: Firebase Hosting Spark, subject to plan and product quota review.
-- Data interface: static versioned JSON generated from the ML package.
-- No database, authentication, user tracking or live backend in MVP.
-- Use accessible contrast, keyboard interaction and responsive layout.
-
-## 7. Non-goals
-
-- No continuous 500m/300m/road-level PM2.5 map.
-- No route planner or “cleanest route” recommendation from four stations.
-- No medical advice, disease prediction or personal dose calculation.
-- No claims that wind/fire/satellite observations prove a particular pollution source.
-- No replacement for CPCB, IITM or government alerts.
-- No unvalidated forecast or uncertainty range presented as ground truth.
-- No unnecessary LLM chatbot, user account system or backend.
-
-## 8. MVP acceptance criteria
-
-- App loads from public URL without login.
-- All four station records render correctly.
-- User can change station and activity duration.
-- Window ranking is calculated from actual provided forecast values.
-- Forecast history and forecast future are visually distinct.
-- Every value has a timestamp and unit.
-- Trust centre shows actual validation evidence or clearly says “not yet measured”.
-- App has no dead buttons or fabricated values.
-- No prediction surface is shown outside monitored stations.
-- Mobile and desktop layouts work.
-- A PDF/print brief is generated correctly.
-- A static demo still works if an API is unavailable.
+- Opening question: **Should you move your outdoor event?** The core form and comparison should take a judge under 60 seconds; actual timing is QA, not a user-study claim.
+- Real artifact arithmetic and working controls; original and alternative remain visible.
+- Live logic cannot use retrospective actuals; replay is explicitly labelled.
+- Evidence states are honest, unsupported probability/interval fields remain null and abstention is prominent.
+- Four actual stations only; no streets/routes/exposure estimates, hourly-to-AQI conversion, medical advice or safe/healthy labels. Refer health questions to official CPCB/government guidance.
+- Missing/invalid/stale data and impossible ranges have actionable states; desktop/mobile, keyboard and print work.
+- Tests cover contracts, contiguous hours, bounds, arithmetic, original slot, clocks/leakage and reliability support.
+- Judging package uses real screenshots/evidence and a PDF under 10 MB; deployment is verified or explicitly pending with commands.

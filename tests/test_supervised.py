@@ -145,6 +145,7 @@ def test_live_public_private_w50_feature_matches_production():
     built = pd.concat(parts).sort_values("ID")
     production = predict_test_with_hist24_blend(
         train, selected, archive,
+        calendar_mode="legacy_doy",
         issue_time=pd.Timestamp("2026-11-07T12:00:00+05:30"),
         pm_history_cutoff=pd.Timestamp("2026-11-02T23:00:00+05:30"),
     ).sort_values("ID")

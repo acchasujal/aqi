@@ -141,9 +141,9 @@ def main() -> None:
             pm_history_cutoff=pm_history_cutoff,
         )
     elif args.model == "hist24_blend50_median72":
-        from mumbai_pm25.historical_archive import load_2024_history
+        from mumbai_pm25.historical_archive import load_legacy_2024_history
         archive_path = args.data_dir / "AdditionalHistory.zip"
-        history_2024 = load_2024_history(archive_path)
+        history_2024 = load_legacy_2024_history(archive_path)
         prediction = predict_test_with_hist24_blend(
             train, test, history_2024,
             issue_time=model_run_time,
@@ -173,6 +173,7 @@ def main() -> None:
         stations=stations,
         model=args.model if args.calendar_mode == "legacy_doy" else f"{args.model}_calendar365",
         extra_sources=[args.data_dir / "AdditionalHistory.zip"],
+        calendar_mode=args.calendar_mode,
     )
     print(f"Wrote manifest to {manifest_path}")
 

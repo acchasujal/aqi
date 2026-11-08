@@ -51,13 +51,15 @@ def test_rolling_oof_records_clocks_and_preserves_extreme_labels():
     assert not oof.empty
     assert (oof.pm_history_cutoff < oof.target_start).all()
     assert (oof.prediction_origin >= oof.pm_history_cutoff).all()
-    assert (oof.target_start - oof.prediction_origin).dt.total_seconds().div(3600).add(1).eq(oof.horizon_hours).all()
+    assert (oof.pm_history_cutoff == oof.prediction_origin).all()
+    assert oof.forecast_lead_hours.min() == 48
+    assert oof.forecast_lead_hours.max() == 95
     assert (oof.pm_gap_hours >= 48).all()
     assert (oof.last_pm_available_at <= oof.pm_history_cutoff).all()
     eligible_models = oof.groupby(["fold_id", "location_id", "target_start"]).model.nunique()
-    assert eligible_models.eq(9).all()
+    assert eligible_models.isin([9, 10]).all()
     assert set(oof.model) == {"last", "mean72", "median72", "ewm72", "diurnal7", "hour_week4",
-                              "mean72_clip300", "mean72_exclude_gt1000", "year_ago"}
+                              "mean72_clip300", "mean72_exclude_gt1000", "year_ago", "diur7"}
     assert train.pm25.max() == 10000.0
     by_model, by_station, by_horizon, by_fold = metric_tables(oof)
     assert set(by_model.columns) >= {"full_target_rmse", "clean_rmse", "bias", "fold_rmse_sd", "fold_count", "rows", "extreme_squared_error_share"}
@@ -89,7 +91,8 @@ def test_previous_year_baseline_uses_only_exact_past_same_calendar_hour():
     index = pd.date_range("2025-01-01 00:00", periods=3, freq="h", tz="Asia/Kolkata")
     history = pd.Series([8.0, 9.0, 10.0], index=index)
     targets = pd.date_range("2026-01-01 00:00", periods=2, freq="h", tz="Asia/Kolkata")
-    assert _baseline(history, targets, "year_ago").tolist() == [8.0, 9.0]
+    cutoff = index[-1] + pd.Timedelta(hours=1)
+    assert _baseline(history, targets, "year_ago", cutoff).tolist() == [8.0, 9.0]
 
 
 def test_historical_extreme_ablations_do_not_change_inclusion_threshold():
@@ -98,8 +101,9 @@ def test_historical_extreme_ablations_do_not_change_inclusion_threshold():
     values[-2:] = [1000.0, 1001.0]
     history = pd.Series(values, index=index)
     target = pd.DatetimeIndex([index[-1] + pd.Timedelta(hours=72)])
-    assert _baseline(history, target, "mean72_exclude_gt1000")[0] == pytest.approx((70 * 10 + 1000) / 71)
-    assert _baseline(history, target, "mean72_clip300")[0] == pytest.approx((70 * 10 + 300 + 300) / 72)
+    cutoff = index[-1] + pd.Timedelta(hours=1)
+    assert _baseline(history, target, "mean72_exclude_gt1000", cutoff)[0] == pytest.approx((70 * 10 + 1000) / 71)
+    assert _baseline(history, target, "mean72_clip300", cutoff)[0] == pytest.approx((70 * 10 + 300 + 300) / 72)
 
 
 def test_extra_trees_uses_station_one_hot_and_is_deterministic():

@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.firebase/
+.firebaserc
+*.local
+test-results/
+playwright-report/

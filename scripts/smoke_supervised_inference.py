@@ -64,7 +64,7 @@ def main() -> None:
     comparison = pd.concat(parts, ignore_index=True)
     baseline = predict_test_with_hist24_blend(
         train, test, archive, issue_time=pd.Timestamp("2026-11-07T12:00:00+05:30"),
-        pm_history_cutoff=cutoff)
+        pm_history_cutoff=cutoff, calendar_mode="legacy_doy")
     if baseline.ID.tolist() != sample.ID.tolist():
         raise ValueError("W50 submission order differs from sample")
     comparison = comparison.merge(baseline, on="ID", validate="one_to_one")

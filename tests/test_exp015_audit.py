@@ -42,4 +42,4 @@ def test_mindspace_exclusion_and_hour_shift_are_explicit_and_deterministic() -> 
     shifted["hour_start"] += pd.Timedelta(hours=1)
     assert np.isnan(build_seasonal_features(shifted, target, window_days=2)
                     .hist24_same_hour_mean.iloc[0])
-    assert shifted.hour_start.dt.tz.zone == "Asia/Kolkata"
+    assert str(shifted.hour_start.dt.tz) == "Asia/Kolkata"

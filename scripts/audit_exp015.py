@@ -10,8 +10,8 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from mumbai_pm25.data import load_data  # noqa: E402
-from mumbai_pm25.historical_archive import build_seasonal_features, load_2024_history  # noqa: E402
+from mumbai_pm25.data import load_data
+from mumbai_pm25.legacy_seasonal import build_seasonal_features, load_2024_history
 
 OUT = ROOT / "reports/ml_pipeline/exp_015"
 KEY = ["regime", "prediction_origin", "location_id", "target_start"]

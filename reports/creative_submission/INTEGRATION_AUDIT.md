@@ -1,5 +1,7 @@
 # AirWindow Foundation Audit
 
+> **8 November 2026 update:** This audit records the foundation state on 6 November. Current genuine forecast/replay integration, limits and execution evidence are in [PRODUCT_OVERVIEW.md](PRODUCT_OVERVIEW.md), [RED_TEAM_REPORT.md](RED_TEAM_REPORT.md) and the [submission/QA checklist](SUBMISSION_CHECKLIST.md). The older absence-of-app/exporter findings below are historical, not the current implementation status.
+
 **Audit date:** 2026-11-06<br>
 **Repository at start:** branch `main`, commit `c5e6a3f`; user-added README section and the creative strategy pack were uncommitted and have been preserved on `feature/airwindow-creative`.
 
