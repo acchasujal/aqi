@@ -112,7 +112,7 @@ def footer(canvas, doc) -> None:
     canvas.drawString(42, HEIGHT - 25, "AIRWINDOW MUMBAI / PRODUCT + EVIDENCE")
     canvas.setFont("Helvetica", 8)
     canvas.setFillColor(MUTED)
-    canvas.drawString(42, 24, "Independent challenge prototype | 8 November 2026 | IST")
+    canvas.drawString(42, 24, "Independent challenge prototype | 9 November 2026 | IST")
     canvas.drawRightString(WIDTH - 42, 24, str(doc.page))
     canvas.restoreState()
 
@@ -215,7 +215,7 @@ def make_pdf(output: Path, desktop: Path, replay_image: Path) -> None:
               p("Deployment status", "subhead"),
               p("The application runs locally and static deployment configuration is prepared. Firebase deployment is pending authenticated CLI/project access. No billing was enabled, and no public hosting URL or cloud-notebook execution is claimed."),
               p("Working source and reproducibility", "subhead"),
-              p('<link href="https://github.com/acchasujal/aqi/tree/feature/task008-final-gap-execution" color="#226D5A">Source: github.com/acchasujal/aqi - existing feature branch</link><br/>Run/build instructions, tests and notebook: apps/airwindow/<br/>Method, red-team review, real screenshots and submission checklist: reports/creative_submission/'),
+              p('<link href="https://github.com/acchasujal/aqi/tree/main" color="#226D5A">Source: github.com/acchasujal/aqi - main branch</link><br/>Run/build instructions, tests and notebook: apps/airwindow/<br/>Method, red-team review, real screenshots and submission checklist: reports/creative_submission/'),
               p("Selected primary references", "subhead"),
               p('<link href="https://www.tropmet.res.in/project_details.php?position=7&amp;project_id=3">IITM SAFAR project</link> · <link href="https://developers.google.com/maps/documentation/air-quality/forecast">Google Air Quality API</link> · <link href="https://airqo.africa/products/ai-platform">AirQo AI Platform</link><br/><link href="https://www.london.gov.uk/programmes-strategies/environment-and-climate-change/pollution-and-air-quality/models-and-alerts-air-quality">London City Hall alerts</link> · <link href="https://www.breathelondon.org/sensors/join-the-breathe-london-network">Breathe London</link> · <link href="https://firebase.google.com/docs/hosting/usage-quotas-pricing">Firebase Hosting quotas</link>', "small"),
               p("Data and use limits", "subhead"),

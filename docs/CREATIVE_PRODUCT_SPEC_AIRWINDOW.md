@@ -68,3 +68,7 @@ Show station/location, original time/duration, alternative when available, forec
 - Missing/invalid/stale data and impossible ranges have actionable states; desktop/mobile, keyboard and print work.
 - Tests cover contracts, contiguous hours, bounds, arithmetic, original slot, clocks/leakage and reliability support.
 - Judging package uses real screenshots/evidence and a PDF under 10 MB; deployment is verified or explicitly pending with commands.
+
+## 2.1 audit completion - 9 November 2026
+
+Preserve the existing visual system and forecast artifact. Forecast-first replay now requires an explicit reveal of subsequent observations, resets on case change, and includes every ranked feasible candidate. Runtime replay validation independently recomputes window means, maxima, forecast ordering and outcome coverage before rendering. Current elapsed PM age and age at issue are distinct. The trust centre exposes the frozen horizon and exact historical station/lead validation rows/origins/RMSE, explicitly outside live calibration. The event brief includes the PM cutoff and both peak times. No model change or new reliability claim is introduced.

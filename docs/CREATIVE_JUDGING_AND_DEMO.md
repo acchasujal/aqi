@@ -42,3 +42,7 @@ For network failure, run the built static app locally with bundled genuine artif
 ## Submission gate
 
 Reopen the official form and confirm required fields/document size. Use matching Zindi entrant details and keep eligibility documents private. The human submits or explicitly authorises submission and saves confirmation. A ready app/PDF does not prove form submission.
+
+## 9 November verification update
+
+The official challenge page was reopened and still states 13 November 18:29 GMT (23:59 IST), impact/novelty/functionality and a Google-tools bonus. The linked Google Form redirects to a form endpoint that returned 401 to a public read; current response status/fields/upload requirements need a signed-in human check. Earlier supplied form fields are preparation evidence, not a fresh form verification. Show forecasts first in replay, then click **Reveal subsequent observations** and retain a worse outcome. Built-static Chrome QA and a locally executed six-cell notebook support functionality; Firebase and cloud Colab execution remain unclaimed. Main is the current source branch.

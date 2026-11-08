@@ -4,7 +4,7 @@
 
 AirWindow remains under `apps/airwindow/`, consuming versioned genuine pipeline artifacts without browser training. Creative changes do not modify ML training, validation, raw data or submission behavior.
 
-The user explicitly requested reuse of the existing branch and parallel work/push. Continue on `feature/task008-final-gap-execution`; do not create another task branch, push main, merge PR #4, rewrite history or discard work. Keep coherent ML and creative commits where practical. The direct request authorises implementing the existing contract architecture and supersedes the earlier scaffold-approval gate.
+The owner's latest instruction is to work on `main`, fetch origin/main before edits, preserve existing work, and commit/push only after verification and staged review. Do not create a new task branch or rewrite history. The older feature-branch restriction applied to the initial implementation and is superseded. Creative changes stay isolated from ML.
 
 ## Responsibilities
 

@@ -1,15 +1,64 @@
-import type { ForecastArtifact, ForecastHour, Station, TimeWindow } from './types.ts';
+import type { ForecastArtifact, ForecastHour, ReplayArtifact, Station, TimeWindow } from './types.ts';
 
 const HOUR = 3_600_000;
 const IDS = ['11606', '11611', '3409510', '3409511'];
 const LOCATIONS: Record<string, [number, number]> = { '11606': [19.23241, 72.86895], '11611': [19.19709, 72.82204], '3409510': [18.9767, 72.838], '3409511': [19.060498, 72.923356] };
 const validIst = (value: unknown): value is string => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?\+05:30$/.test(value) && Number.isFinite(Date.parse(value));
 
+export function observationAge(timestamp: string | null, now = Date.now()): number | null {
+  return timestamp && validIst(timestamp) ? Math.max(0, (now - Date.parse(timestamp)) / HOUR) : null;
+}
+
+// Validate the retrospective payload before any component reads nested values.
+// The Python contract remains authoritative at export; these checks also guard
+// failed/incorrect static URLs and corrupted browser responses.
+export function validateReplay(value: unknown): ReplayArtifact {
+  const r = value as ReplayArtifact;
+  const fail = () => { throw new Error('Replay artifact is invalid. Check the versioned replay file and manifest.'); };
+  const finite = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n);
+  const concentration = (n: unknown) => finite(n) && n >= 0;
+  const equal = (a: number, b: number) => Math.abs(a - b) < 1e-7;
+  if (!r || r.schema_version !== '1.0.0' || !Array.isArray(r.cases) || !r.cases.length || !r.provenance || !r.calibration || !r.summary || !Array.isArray(r.by_station_duration)) fail();
+  if (r.calibration.status !== 'not_calibrated' || r.calibration.probability !== null || r.calibration.interval !== null || r.provenance.independent_calibration !== false || typeof r.calibration.reason !== 'string') fail();
+  if (!r.by_station_duration.every(p => p && IDS.includes(p.station_id!) && [1, 2, 3].includes(p.duration_hours!) && typeof p.split === 'string' && finite(p.cases) && finite(p.origins) && (p.lower_observed_fraction === null || finite(p.lower_observed_fraction))) || (r.reliability_profiles !== undefined && (!Array.isArray(r.reliability_profiles) || !r.reliability_profiles.every(p => p && IDS.includes(p.station_id) && finite(p.cases) && finite(p.origins))))) fail();
+  const ids = new Set<string>();
+  for (const c of r.cases) {
+    if (!c || typeof c.case_id !== 'string' || ids.has(c.case_id) || !IDS.includes(c.station_id) || ![1, 2, 3].includes(c.duration_hours) || !Array.isArray(c.hours) || !c.hours.length || !Array.isArray(c.windows) || !c.windows.length || !c.original || !c.selected) fail();
+    ids.add(c.case_id);
+    if (![c.issue_time_ist, c.pm_history_cutoff_ist, c.last_pm_end_ist, c.original_start_ist, c.original_end_ist, c.selected_start_ist, c.selected_end_ist, c.feasible_start_ist, c.feasible_end_ist].every(validIst) || Date.parse(c.pm_history_cutoff_ist) > Date.parse(c.issue_time_ist) || Date.parse(c.last_pm_end_ist) > Date.parse(c.pm_history_cutoff_ist)) fail();
+    let previous = -Infinity;
+    for (const h of c.hours) {
+      if (!h || !validIst(h.target_start_ist) || !validIst(h.target_end_ist) || Date.parse(h.target_start_ist) <= Date.parse(c.issue_time_ist) || Date.parse(h.target_start_ist) <= previous || Date.parse(h.target_end_ist) - Date.parse(h.target_start_ist) !== HOUR || !concentration(h.prediction) || (h.observed !== null && !concentration(h.observed))) fail();
+      previous = Date.parse(h.target_start_ist);
+    }
+    const forecasts: ForecastHour[] = c.hours.map(h => ({ target_start_ist: h.target_start_ist, target_end_ist: h.target_end_ist, pm25_prediction: h.prediction, status: 'available', unit: 'µg/m³', forecast_horizon_hours: 1, prediction_interval: null }));
+    const expected = enumerateWindows({ forecasts } as Station, c.feasible_start_ist, c.feasible_end_ist, c.duration_hours);
+    if (expected.length !== c.windows.length || new Set(c.windows.map(w => w?.start_ist)).size !== expected.length) fail();
+    for (const [i, w] of c.windows.entries()) {
+      const e = expected.find(e => e.start_ist === w?.start_ist);
+      // Python and JS summation can order effectively equal means differently.
+      if (!w || !e || w.end_ist !== e.end_ist || w.rank !== i + 1 || !equal(w.mean_prediction, e.mean_prediction) || !equal(w.max_prediction, e.max_prediction) || (i > 0 && w.mean_prediction < c.windows[i - 1].mean_prediction - 1e-7)) fail();
+    }
+    for (const w of [c.original, c.selected, ...c.windows]) {
+      const e = completeWindow(forecasts, w.start_ist, c.duration_hours);
+      if (!e || e.end_ist !== w.end_ist || !equal(e.mean_prediction, w.mean_prediction) || !equal(e.max_prediction, w.max_prediction)) fail();
+      const observed = c.hours.filter(h => h.target_start_ist >= w.start_ist && h.target_start_ist < w.end_ist).map(h => h.observed);
+      if (observed.some(n => n === null) ? w.mean_observed !== null : !finite(w.mean_observed) || !equal(w.mean_observed, (observed as number[]).reduce((a, b) => a + b, 0) / c.duration_hours)) fail();
+    }
+    if (c.original.start_ist !== c.original_start_ist || c.original.end_ist !== c.original_end_ist || c.selected.start_ist !== c.selected_start_ist || c.selected.end_ist !== c.selected_end_ist || c.selected.start_ist !== (c.windows[0].mean_prediction < c.original.mean_prediction ? c.windows[0].start_ist : c.original.start_ist) || !equal(c.predicted_difference, c.selected.mean_prediction - c.original.mean_prediction)) fail();
+    if (c.original.mean_observed === null || c.selected.mean_observed === null ? c.observed_difference !== null : !finite(c.observed_difference) || !equal(c.observed_difference, c.selected.mean_observed - c.original.mean_observed)) fail();
+  }
+  const paired = r.cases.filter(c => c.observed_difference !== null);
+  const alternatives = paired.filter(c => c.selected_start_ist !== c.original_start_ist);
+  if (r.summary.cases !== r.cases.length || r.summary.origins !== new Set(r.cases.map(c => c.fold_id)).size || r.summary.paired_outcome_cases !== paired.length || r.summary.missing_outcome_cases !== r.cases.length - paired.length || r.summary.selected_alternative_cases !== alternatives.length || r.summary.recommended_cases !== 0 || r.cases.some(c => c.decision_status === 'ROBUST IMPROVEMENT') || !equal(r.summary.lower_observed_fraction!, alternatives.filter(c => c.observed_difference! < 0).length / alternatives.length)) fail();
+  return r;
+}
+
 export function validateForecast(value: unknown): ForecastArtifact {
   if (!value || typeof value !== 'object') throw new Error('Forecast artifact is not an object.');
   const a = value as ForecastArtifact;
   if (!['1.0.0', '1.1.0'].includes(a.schema_version)) throw new Error('Unsupported forecast schema.');
-  if (!a.model || !a.uncertainty || !a.stations || !Array.isArray(a.stations) || a.stations.length !== 4) throw new Error('Forecast artifact is missing required metadata.');
+  if (!a.model || typeof a.model.id !== 'string' || typeof a.model.version !== 'string' || !a.weather || typeof a.weather.used !== 'boolean' || !a.uncertainty || typeof a.uncertainty.status !== 'string' || !a.stations || !Array.isArray(a.stations) || a.stations.length !== 4) throw new Error('Forecast artifact is missing required metadata.');
   const issue = Date.parse(a.model_issue_time_ist);
   const cutoff = Date.parse(a.pm_history_cutoff_ist);
   const generated = Date.parse(a.generated_at_ist);
@@ -19,7 +68,7 @@ export function validateForecast(value: unknown): ForecastArtifact {
   for (const s of a.stations) {
     if (!s.station_name || !s.freshness || !s.data_status || !Array.isArray(s.validation) || !Array.isArray(s.forecasts)) throw new Error('Station metadata is incomplete.');
     const coordinate = LOCATIONS[s.station_id];
-    if (!coordinate || Math.abs(s.latitude-coordinate[0]) > 1e-6 || Math.abs(s.longitude-coordinate[1]) > 1e-6) throw new Error('Station coordinates do not match the challenge monitors.');
+    if (!coordinate || !Number.isFinite(s.latitude) || !Number.isFinite(s.longitude) || Math.abs(s.latitude-coordinate[0]) > 1e-6 || Math.abs(s.longitude-coordinate[1]) > 1e-6) throw new Error('Station coordinates do not match the challenge monitors.');
     if (s.last_observation_ist !== null && !validIst(s.last_observation_ist)) throw new Error('Observation time must carry an explicit IST offset.');
     if (s.last_observation_ist && Date.parse(s.last_observation_ist) > cutoff) throw new Error('Observation is after the PM history cutoff.');
     let previous = -Infinity;

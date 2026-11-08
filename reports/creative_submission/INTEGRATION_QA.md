@@ -50,3 +50,7 @@ No formal user study, independent calibration, cross-browser certification, publ
 ## Commit and push
 
 Implementation commit **`b8aed54`** was pushed successfully to the existing `feature/task008-final-gap-execution`, following TASK008 commit `1864636`. The implementation push left a clean working tree. Neither main nor PR #4 was merged or rewritten. Precommit staged diff check and byte-hash verification passed; raw challenge inputs, ML source and generated submission CSVs were absent from the creative staged paths. This final documentation entry records the already completed push.
+
+## 9 November 2026 final audit supersedes release status
+
+The older branch-specific records above describe the original implementation. The owner now requires main; the final audit starts at dba644a with clean local/fetched main. Current results, exact commands, artifact/PDF hashes, real browser captures, failed attempts and platform blockers are in AIRWINDOW_FINAL_COMPLETION_REPORT.md. Python baseline: 139 passed/19 existing warnings; frontend: 12 domain and 8 Chrome tests pass. Existing scientific artifacts are byte-preserved. No Firebase/cloud Colab/form completion is claimed.

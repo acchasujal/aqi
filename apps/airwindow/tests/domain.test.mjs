@@ -1,9 +1,35 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { completeWindow, enumerateWindows, isExpired, matchedValidation, validateForecast } from '../src/domain.ts';
+import { completeWindow, enumerateWindows, isExpired, matchedValidation, validateForecast, validateReplay, observationAge } from '../src/domain.ts';
 
 const actual = JSON.parse(readFileSync(new URL('../public/data/forecast.json', import.meta.url), 'utf8'));
+const replay = JSON.parse(readFileSync(new URL('../public/data/replay.json', import.meta.url), 'utf8'));
+
+test('real replay validates complete ranking, paired outcomes and declared coverage', () => {
+  assert.equal(validateReplay(replay).cases.length, 1848);
+});
+
+test('replay rejects corrupt clocks, rankings, outcomes, coverage and invented calibration', () => {
+  for (const mutate of [
+    r => { r.cases[0].hours[0].prediction = -1; },
+    r => { r.cases[0].hours[0].target_start_ist = r.cases[0].issue_time_ist; },
+    r => { r.cases[0].windows.reverse(); },
+    r => { r.cases[0].selected.mean_prediction += 1; },
+    r => { r.cases[0].selected.mean_observed = 999; },
+    r => { r.summary.paired_outcome_cases = 0; },
+    r => { r.calibration.status = 'calibrated'; },
+    r => { r.cases[0].hours = null; },
+  ]) {
+    const corrupt = structuredClone(replay); mutate(corrupt);
+    assert.throws(() => validateReplay(corrupt));
+  }
+});
+
+test('observation age is elapsed time, independent of a freshness threshold', () => {
+  assert.equal(observationAge('2026-11-02T23:00:00+05:30', Date.parse('2026-11-09T12:00:00+05:30')), 157);
+  assert.equal(observationAge(null), null);
+});
 const hour = (n, value) => ({ target_start_ist: `2030-01-01T${String(n).padStart(2, '0')}:00:00+05:30`, target_end_ist: `2030-01-01T${String(n+1).padStart(2, '0')}:00:00+05:30`, pm25_prediction: value, status: value === null ? 'missing' : 'available', unit: 'µg/m³', forecast_horizon_hours: n, prediction_interval: null });
 const station = (values) => ({ forecasts: values.map((v, i) => hour(i+8, v)) });
 

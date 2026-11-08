@@ -203,3 +203,12 @@ Decision: retain exact archive-identity P_fix for TASK008 and isolate historical
 - **Confidence:** High on ingestion results and need for blocked promotion; no claim about weather improvement/private score.
 - **Alternatives:** Infer issue time from PM cutoff or nominal cycle; validate against reanalysis or current private forecast levels; treat ADS/NOAA licence as organiser permission; reject all supplied CAMS hourly data based on the older endpoint request. Rejected for leakage, unsupported eligibility or contradiction with decoded bytes.
 - **Consequences / revisit trigger:** Obtain missing pressure only through the exact saved supplement request if needed. Resolve catalogue approval and defensible historical operational clocks, then inspect forecast retention before rerunning unchanged chronological folds. Until then P_fix/final-stage safeguards remain authoritative. Final10 November data retrieval/inference and platform submission are not claimed complete.
+
+
+### DEC-20261109-17 - AirWindow 2.1 final product audit
+
+- **Decision:** retain the genuine frozen P_fix/replay artifacts and existing scheduler/design; improve forecast-first replay/reveal, candidate inspection, runtime data checks/retry, exact time/provenance, historical lead-specific validation and one-page brief. Work/publish on main under the owner's latest explicit instruction.
+- **Evidence:** clean/fetched dba644a baseline; 139 Python tests, 12 domain tests, eight real Chrome tests, production build/static smoke and locally executed notebook. Full task evidence in reports/creative_submission/AIRWINDOW_FINAL_COMPLETION_REPORT.md. No independent calibration or newer official refresh is available.
+- **Confidence:** high for deterministic arithmetic/artifact preservation and tested Chrome paths; limited for human usability, accessibility certification and public platform readiness.
+- **Alternatives:** rebuild UI, fabricate demonstration/freshness/calibration, add external APIs, or block engineering on Firebase access. Rejected: unnecessary scope or unsupported evidence.
+- **Consequences:** original scientific claims/data remain fixed; no probabilities or health guarantees. Firebase needs authenticated existing Spark access; form returned401 and requires human verification/submission. Native URL verification stopped Computer Use, so native zoom/print dialog are not claimed. Local print output and reflow are verified.

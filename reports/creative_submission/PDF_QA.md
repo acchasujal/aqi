@@ -31,3 +31,27 @@ The PDF skill's artifact-operation marker was executed successfully once before 
 The audit JSON records exact screenshot hashes, size/hash and completed visual/source inspection. Rebuilding the PDF may alter creation metadata and thus its file hash; re-render and inspect after changes. Intermediate drafts and render/dependency directories remain ignored.
 
 The document states that calibration and Firebase deployment are unavailable and that no form processing, cloud Colab execution, user interview or measured health benefit is claimed. Firebase/project access and human creative submission remain pending release actions.
+
+## 9 November 2026 final package
+
+Supersedes the preceding original-build size/hash: **5 A4 pages, 162,376 bytes**,
+SHA-256 `aa0adabe83849a2bb647472d2ea935406a15768b5f34dca10494c42d72dfd168`.
+The existing PDF was rebuilt because genuine UI captures and its obsolete source
+branch link changed. All five final PDFium page PNGs were inspected after the final
+rebuild: no overlap, clipping or broken glyphs; evidence denominators and limitations
+are readable. Source capture hashes match the new audit. The document now links to
+main and uses the 9 November review date. The underlying forecast and replay bytes
+and claims remain frozen.
+
+The actual Chrome-generated event brief remains **one A4 page**. Text inspection
+confirms original/alternative, peak times, PM cutoff, issue/model/artifact, unmatched
+validation warning and abstention; its print-rendered PNG was visually reviewed.
+Native print-dialog review was unavailable because Computer Use could not verify
+the current Chrome URL and stopped. This does not imply native print-preview QA.
+
+Authoring used the existing isolated PDF libraries and the builder command above;
+the PDF skill's operation marker ran successfully once before this task's authoring.
+The final `apps/airwindow/audit_release.py` verifies PDF/source hashes together with
+forecast/replay contracts and local notebook execution. No new PDF dependencies
+were installed. Native sandbox reads of the old PDF dependency folder initially
+failed with PermissionError; approved execution succeeded.

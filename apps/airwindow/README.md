@@ -1,4 +1,4 @@
-# AirWindow Mumbai 2.0
+# AirWindow Mumbai 2.1
 
 An activity scheduling prototype for school sports coordinators and outdoor-event organisers. Compare the original activity slot with every feasible consecutive one-, two- or three-hour window at one of the four actual Mumbai monitoring stations. Forecast differences, historical evidence and reasons to abstain stay visible.
 
@@ -21,7 +21,7 @@ npm.cmd run build
 npm.cmd run test:browser
 ```
 
-`npm test` runs nine deterministic domain/boundary tests using Node's TypeScript stripping. `npm run build` checks TypeScript and creates `dist/`. The five Playwright browser tests require the development server and an installed Google Chrome (`channel: chrome`); no browser download or live cloud service is required. They exercise actual artifacts, every main screen, changed-input invalidation, original-slot retention, abstention, impossible ranges, invalid/missing forecasts, missing historical outcomes, partial/full horizon expiry, mobile overflow and a printable brief. Test fixtures never populate production data.
+`npm test` runs twelve deterministic domain/boundary tests using Node's TypeScript stripping. `npm run build` checks TypeScript and creates `dist/`. The eight Playwright browser tests require the development server and an installed Google Chrome (`channel: chrome`); no browser download or live cloud service is required. They exercise actual artifacts, every main screen, changed-input invalidation, original-slot retention, abstention, impossible ranges, invalid/missing forecasts, missing historical outcomes, partial/full horizon expiry, mobile overflow and a printable brief. Test fixtures never populate production data.
 
 Browser captures are written to `reports/creative_submission/screenshots/` from the repository root. Playwright's temporary results remain under ignored `data/processed/airwindow-browser-tests/`.
 
@@ -67,3 +67,36 @@ firebase deploy --only hosting --project YOUR_EXISTING_SPARK_PROJECT_ID
 Do not upgrade to Blaze or enable Maps/paid services. Verify the deployed link, artifact hashes, mobile workflow and print output before using it in the creative submission. The app works locally without Firebase or network APIs. Google Colab replay material is prepared separately under `notebooks/`; it is not a dependency of the live app.
 
 The judging package, actual screenshots, 90-second demo script, red-team review, submission PDF and deployment checklist are under `reports/creative_submission/`.
+
+## 9 November final audit
+
+Work now continues on `main`; older feature-branch instructions are historical.
+Replay starts with forecasts only, reveals subsequent observations on request, and
+lists every ranked complete candidate. Switching cases hides outcomes again.
+The browser checks replay ranking, arithmetic, clocks and coverage before display;
+failed replay loads have a working retry. The trust centre exposes exact historical
+station/lead RMSE, rows, origins and fold variability with the unmatched-clock warning.
+Current observation age updates every minute; it does not invent a freshness limit.
+The printable brief includes PM cutoff and both peak times on one A4 page.
+
+From the repository root, verify forecast/replay/PDF source hashes and execute all
+six notebook code cells locally:
+
+```powershell
+.venv/Scripts/python.exe apps/airwindow/audit_release.py
+```
+
+[Open Decision Replay in Google Colab](https://colab.research.google.com/github/acchasujal/aqi/blob/main/apps/airwindow/notebooks/Decision_Replay.ipynb).
+Run all cells; setup clones public main if needed. Local execution passed; no
+Google-hosted session is claimed. Colab must provide pandas, NumPy and jsonschema.
+
+For the built-static smoke test, run `npm.cmd run preview -- --port 5174` and use
+`AIRWINDOW_BASE_URL=http://127.0.0.1:5174` with `npm.cmd run test:browser`.
+Set `AIRWINDOW_SCREENSHOT_DIR=../../data/processed/airwindow21-review` for ordinary
+reruns so audited package screenshots are not overwritten. Rebuild and review the
+PDF whenever its source screenshots change. No service worker is installed: the
+app needs a local static server for disconnected use; a first visit to a public
+URL is not guaranteed to work offline.
+
+See the final gap audit and completion report under `reports/creative_submission/`
+for exact results, public-deployment blockers and human submission actions.

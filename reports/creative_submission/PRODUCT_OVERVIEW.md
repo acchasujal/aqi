@@ -45,4 +45,8 @@ The four stations are Borivali East, Malad West, Byculla and Shivaji Nagar. They
 
 The static React/Vite application uses bundled artifacts and deterministic logic, with no runtime external API requirement. Firebase Hosting Spark configuration and commands are prepared; deployment is blocked by absent authenticated CLI/project access, so no public hosting URL is claimed. The reproducibility notebook is Colab-compatible and demonstrates the evidence calculation; that does not imply execution on Google-hosted compute.
 
-Source branch: [acchasujal/aqi - existing feature branch](https://github.com/acchasujal/aqi/tree/feature/task008-final-gap-execution). Local run and build commands are in the app README. The human must still verify a public link and submit the creative form; this package is not a form-processing confirmation.
+Source: [acchasujal/aqi - main branch](https://github.com/acchasujal/aqi/tree/main). Local run and build commands are in the app README. The human must still verify a public link and submit the creative form; this package is not a form-processing confirmation.
+
+## AirWindow 2.1 finish - 9 November
+
+The audit preserved genuine artifact bytes and scheduler behavior while improving forecast-first replay, all-candidate inspection, runtime corruption checks/retry, actual observation-age context, historical lead-specific validation inspection, keyboard result focus and the brief's peak/cutoff details. Supporting mobile text is larger. See AIRWINDOW_FINAL_COMPLETION_REPORT.md for final tests and remaining platform actions. The contribution is an inspectable scheduling decision, with no new-to-world or measured user-impact claim.

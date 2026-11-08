@@ -26,3 +26,7 @@ If the replay outcome is worse, show it. Explain why abstention and auditable ou
 5. If connectivity fails during judging, use the local static build and actual screenshots/PDF. A recording has not been claimed complete by this plan.
 
 No user interviews, live deployment, video upload or form-submission confirmation is claimed here.
+
+## 2.1 recording adjustment
+
+At 58-78 seconds, show the forecast-only original/selected slots first; expand **All complete feasible forecast windows**, then click **Reveal subsequent observations**. Keep the worse default outcome visible and explain the aggregate missing-outcome count. On the plan screen show both current observation age and age at issue. Use main, the frozen 8 November issue, and the final audited PDF. No recording/video URL or completed user study exists. The same recording plan above remains applicable.
