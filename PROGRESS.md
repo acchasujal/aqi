@@ -715,3 +715,33 @@ Merged TASK008/AirWindow with current main, preserving exact P_fix source select
 - **Known limitations / blockers:** None. Ready for private evaluation.
 - **Next action:** Final review and git commit.
 
+### 2026-11-09 — TASK 012: Resolve Task 011 Regression and Final Model Selection
+- **Task / issue:** Resolve Task 011 regression (Kernel Climatology RMSE 45.91 vs Candidate C ~28.20), audit extreme predictions, perform paired block bootstrap across all 11 models, and establish the final model selection recommendation.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / [pending commit]
+- **Files changed:** `scripts/audit_task012.py` (new); `TASK012_REGRESSION_AUDIT.md` (new); `reports/task012_candidate_comparison.csv` (new); `reports/task012_fold_metrics.csv` (new); `reports/task012_paired_bootstrap.csv` (new); `DECISIONS.md`; `PROGRESS.md`.
+- **Work completed:**
+  1. Exactly reproduced Candidate C (28.198) and Candidate E (28.748) across all 9 Task 011 chronological folds and 1,460 validation rows.
+  2. Identified root causes of Task 011 regression:
+     - Unflagged telemetry error codes in `Train.csv` (Station 3409511 had 241,587.56 µg/m³ on 2025-12-03 and 1,915.41 µg/m³ on 2025-11-21) infected Gaussian kernel weighted means, producing extreme predictions (up to 1,892.42 µg/m³ in Fold 28). Clean 2024 archive has a station max of 312.54 µg/m³.
+     - Standalone climatology discarded current air mass state. Candidate C derived its performance by blending 50% recent 72h median with seasonal climatology.
+  3. Discovered the **Corrected Kernel Climatology Blend (50% recent 72h median + 50% clean 2024 kernel climatology)**, setting a new all-time low RMSE:
+     - Pooled RMSE: **27.232 µg/m³** (beats Candidate C at 28.198, Candidate E at 28.748, 72h median at 28.691).
+     - Winter RMSE: **38.620 µg/m³** (beats Candidate C at 40.069, Candidate E at 41.675, 72h median at 40.992).
+     - Autumn RMSE: **13.369 µg/m³** (beats Candidate C at 13.670).
+  4. Executed 10,000 paired block bootstrap iterations against Candidate C and 72h median:
+     - vs Candidate C: Mean $\Delta\text{RMSE} = -0.829$, 95% CI `[-1.846, +0.118]`, win rate 93.1%.
+     - vs 72h Station Median: Mean $\Delta\text{RMSE} = -1.497$, 95% CI `[-2.564, -0.171]`, win rate 98.4% (statistically significant at 95% confidence).
+  5. Diagnosed failure modes of Ridge anomaly (52.97) and LightGBM residual (86.59): collinearity between $a_{24}, a_{72}, a_{168}$ ($r > 0.85$) and squared loss explosion on unclipped 2025 errors corrupted weights; tree extrapolation failed over 43–91h leads.
+  6. Generated complete documentation in `TASK012_REGRESSION_AUDIT.md` and exported all metric tables.
+  7. Ran full test suite (175 passed in 23.10s) and scoped ruff checks (all passed).
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe -u scripts/audit_task012.py`
+  - `.\.venv\Scripts\python.exe -m pytest -ra` (175 passed in 23.10s)
+  - `.\.venv\Scripts\python.exe -m ruff check scripts/audit_task012.py`
+- **Tests and exact results:** 175 passed across full test suite. Zero failures.
+- **Experiment IDs / metrics:** Corrected Kernel Climatology Blend Pooled RMSE 27.232, Winter RMSE 38.620; Candidate C Pooled RMSE 28.198, Winter RMSE 40.069; Candidate E Pooled RMSE 28.748, Winter RMSE 41.675; 72h Median Baseline Pooled RMSE 28.691, Winter RMSE 40.992.
+- **Decisions added or superseded:** DEC-20261109-23 adopted.
+- **Known limitations / blockers:** Do not regenerate final submissions until user approves the updated portfolio selection.
+- **Next action:** Final review, git commit, and summary report to user.
+

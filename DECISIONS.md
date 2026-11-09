@@ -263,6 +263,28 @@ Every technical decision must include:
 - **Alternatives considered:** Pure `train_only` climatology (rejected: error explodes to 92.33); residual LightGBM (rejected: significant positive bias and overfit).
 - **Consequences:** Provides a fully validated, production-grade climatology-first alternative portfolio with cryptographic manifests in `artifacts/submissions/`.
 
+## DEC-20261109-23 [Task012-Regression-Resolution] — Root-Cause Resolution of Climatology Regression & Identification of State-of-the-Art Blend
 
-
+- **Date / owner:** 2026-11-09 / Senior Data Scientist, ML Engineer, and Software Architect
+- **Status:** Adopted for final model portfolio selection.
+- **Context:** Targeted audit of Task 011's validation regression (Kernel Climatology pooled RMSE 45.91 vs earlier Candidate C ~28.20). Investigation of outlier infection, prediction magnitude spikes, lead-bucket Ridge instability, and LightGBM degradation across 9 standardized chronological folds ($N=1,460$).
+- **Decision:**
+  1. Reject Task 011's uncorrected Kernel Climatology (45.91), Ridge anomaly (52.97), and LightGBM residual (86.59) from final submission consideration due to error infection and out-of-distribution instability.
+  2. Adopt the **Corrected Kernel Climatology Blend (50% Recent 72h Station Median + 50% Clean 2024 Kernel Climatology)** as the repository's new benchmark leader.
+  3. Confirm the final submission portfolio: **Corrected Kernel Climatology Blend** (Primary recommendation, pooled RMSE 27.23) and **Candidate C** (`hist24_blend50_median72`, Secondary non-parametric hedge, pooled RMSE 28.20).
+- **Evidence:**
+  - *Root Cause 1 (Outlier Infection):* `Train.csv` contains unflagged telemetry error codes at Station 3409511 (e.g. 241,587.56 µg/m³ on 2025-12-03; 1,915.41 µg/m³ on 2025-11-21). In Task 011, Gaussian kernel smoothing ($\sigma_{\text{doy}}=10$) computed weighted *means* over combined history containing these logger spikes, causing late November predictions to explode to 1,892.42 µg/m³ at Station 3409511. Clean 2024 archive has a station maximum of only 312.54 µg/m³ and hourly medians are impervious to such single spikes.
+  - *Root Cause 2 (Standalone vs Blended Forecasting):* Candidate C gained its predictive power by blending 50% recent 72h median with seasonal climatology. In Task 011, Kernel Climatology was evaluated standalone (0% recent level), discarding current baseline atmospheric information.
+  - *Breakthrough Benchmark (All 9 chronological folds, $N=1,460$):*
+    - **Corrected Kernel Climatology Blend:** Pooled RMSE **27.232**, Winter RMSE **38.620**, Autumn RMSE **13.369**, MAE **12.275**, Bias **-3.746**.
+    - **Previous Candidate C:** Pooled RMSE **28.198**, Winter RMSE **40.069**, Autumn RMSE **13.670**, MAE **12.429**, Bias **-3.472**.
+    - **72h Station Median Baseline:** Pooled RMSE **28.691**, Winter RMSE **40.992**, Autumn RMSE **13.410**, MAE **12.522**, Bias **-8.522**.
+    - **Previous Candidate E:** Pooled RMSE **28.748**, Winter RMSE **41.675**, Autumn RMSE **11.964**, MAE **12.247**, Bias **-3.299**.
+  - *10,000 Paired Block Bootstrap Verification:*
+    - vs Candidate C: Mean $\Delta\text{RMSE} = -0.829$, 95% CI `[-1.846, +0.118]`, win rate **93.1%**.
+    - vs 72h Station Median: Mean $\Delta\text{RMSE} = -1.497$, 95% CI `[-2.564, -0.171]`, win rate **98.4%** (**statistically significant** improvement at 95% confidence).
+  - *Residual Ridge / LightGBM Failure Mechanics:* Collinearity among $a_{24}, a_{72}, a_{168}$ ($r > 0.85$) and squared loss penalties exceeding $5 \times 10^{10}$ on unclipped 2025 logger errors corrupted Ridge coefficients and tree leaves, causing severe multi-day extrapolation errors at 43–91h horizons.
+- **Confidence:** High. Verified on identical folds, identical unclipped labels, and validated with paired block bootstrap.
+- **Alternatives considered:** Keeping Candidate E (rejected: 28.75 RMSE, 0.27 worse than Candidate C, loses in bootstrap); using unblended Clean Kernel Climatology (rejected: 29.51 RMSE, loses recent level information).
+- **Consequences:** Provides complete explanation of Task 011 regression and establishes the Corrected Kernel Climatology Blend as the best-performing model developed for the challenge.
 

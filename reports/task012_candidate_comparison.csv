@@ -1,0 +1,12 @@
+model,pooled_rmse,pooled_mae,monsoon_autumn_rmse,winter_rmse,pooled_bias,rmse_11606,rmse_11611,rmse_3409510,rmse_3409511
+72h Station Median Baseline,28.691,12.522,13.41,40.992,-8.522,13.6,19.81,12.57,50.87
+Persistence Baseline,31.427,15.373,16.802,43.902,-8.516,15.53,23.03,18.29,53.66
+Previous Candidate C (hist24_blend50_median72),28.198,12.429,13.67,40.069,-3.472,15.04,16.62,13.82,50.22
+Previous Candidate E (CatBoost residual + Cand C),28.748,12.247,11.964,41.675,-3.299,13.28,19.87,13.05,50.95
+Timestamp-Median Seasonal (sh24 alone),31.525,16.92,18.321,43.251,1.578,20.31,20.46,21.59,52.13
+Task 011 Kernel Climatology (standalone),45.912,19.987,49.712,40.296,7.107,71.02,17.49,17.77,52.74
+Clean 2024 Kernel Climatology (standalone),29.512,16.542,17.605,40.229,1.029,20.12,18.25,20.96,48.39
+Corrected Kernel Climatology Blend (50% m72 + 50% Clean Kernel Clim),27.232,12.275,13.369,38.62,-3.746,15.01,16.23,13.62,48.21
+Task 011 Lead-Bucket Ridge Anomaly,52.969,24.229,39.347,66.942,2.148,65.38,43.9,44.5,55.21
+Task 011 LightGBM Residual,86.591,48.757,90.377,81.273,29.905,116.81,89.77,72.17,53.71
+Task 011 Climatology Blend,51.04,22.552,45.453,57.648,8.581,72.8,33.22,35.34,52.69

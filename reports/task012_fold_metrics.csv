@@ -1,0 +1,10 @@
+fold_id,regime,row_count,72h Station Median Baseline,Persistence Baseline,Previous Candidate C (hist24_blend50_median72),Previous Candidate E (CatBoost residual + Cand C),Timestamp-Median Seasonal (sh24 alone),Task 011 Kernel Climatology (standalone),Clean 2024 Kernel Climatology (standalone),Corrected Kernel Climatology Blend (50% m72 + 50% Clean Kernel Clim),Task 011 Lead-Bucket Ridge Anomaly,Task 011 LightGBM Residual,Task 011 Climatology Blend
+fold_24_20260813,monsoon_autumn,124,5.974,7.276,5.838,5.705,9.528,93.365,9.461,5.83,60.309,152.031,82.12
+fold_25_20260903,monsoon_autumn,180,5.934,7.054,4.777,4.261,9.813,60.733,9.045,4.562,59.539,143.058,58.762
+fold_26_20260924,monsoon_autumn,183,4.9,11.868,6.737,5.879,12.742,7.926,11.971,6.428,6.604,7.153,6.825
+fold_27_20261015,monsoon_autumn,192,22.17,26.931,23.485,20.671,25.85,24.761,24.785,22.988,22.987,29.678,24.028
+fold_28_20261105,monsoon_autumn,155,16.153,18.82,14.661,12.366,24.542,34.732,23.893,14.385,24.446,23.253,30.683
+fold_nov_2025_calendar_match,winter_transition,138,79.622,87.086,79.85,83.393,83.412,75.727,76.571,76.471,75.876,78.766,74.94
+fold_dec_2025_winter,winter_transition,127,22.524,15.871,17.863,16.308,25.978,24.15,23.939,17.261,20.297,24.554,19.458
+fold_jan_2026_early,winter_transition,178,20.674,21.774,16.141,17.869,18.639,22.776,19.821,16.913,26.459,26.484,20.946
+fold_jan_2026_late,winter_transition,183,14.125,15.428,14.463,14.203,18.603,17.91,18.3,14.393,100.104,129.677,80.273

@@ -1,0 +1,10 @@
+model,mean_diff_vs_CandC,ci95_vs_CandC,p_beats_CandC,mean_diff_vs_m72,ci95_vs_m72,p_beats_m72
+Persistence Baseline,3.249,"[1.596, 4.578]",0.0,2.573,"[-0.321, 4.493]",0.038
+Previous Candidate E (CatBoost residual + Cand C),0.269,"[-1.705, 1.819]",0.334,-0.387,"[-3.078, 1.658]",0.506
+Timestamp-Median Seasonal (sh24 alone),3.754,"[2.461, 6.283]",0.0,3.098,"[1.672, 5.117]",0.0
+Task 011 Kernel Climatology (standalone),18.941,"[1.010, 42.225]",0.01,18.26,"[0.585, 41.140]",0.014
+Clean 2024 Kernel Climatology (standalone),1.961,"[-0.858, 5.648]",0.139,1.286,"[-1.018, 4.437]",0.212
+Corrected Kernel Climatology Blend (50% m72 + 50% Clean Kernel Clim),-0.829,"[-1.846, 0.118]",0.931,-1.497,"[-2.564, -0.171]",0.984
+Task 011 Lead-Bucket Ridge Anomaly,25.098,"[2.478, 51.404]",0.009,24.434,"[1.825, 50.929]",0.013
+Task 011 LightGBM Residual,58.543,"[17.831, 100.244]",0.0,57.878,"[17.795, 99.585]",0.0
+Task 011 Climatology Blend,23.694,"[3.150, 46.847]",0.01,23.035,"[2.590, 46.001]",0.013
