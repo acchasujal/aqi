@@ -744,4 +744,25 @@ Merged TASK008/AirWindow with current main, preserving exact P_fix source select
 - **Decisions added or superseded:** DEC-20261109-23 adopted.
 - **Known limitations / blockers:** Do not regenerate final submissions until user approves the updated portfolio selection.
 - **Next action:** Final review, git commit, and summary report to user.
+### 2026-11-09 — TASK 013: Generate Corrected Blend Test Submission & Prediction Audit
+- **Task / issue:** Generate and audit a valid Zindi test submission using the Task 012 Corrected Kernel Climatology Blend (50% recent 72h station median + 50% clean 2024 kernel climatology) on the 9 November snapshot.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / [pending commit]
+- **Files changed:** `scripts/generate_task013_submission.py` (new); `tests/test_task013_submission.py` (new); `artifacts/submissions/submission_task012_corrected_blend_test.csv` (new); `artifacts/submissions/submission_task012_corrected_blend_test.manifest.txt` (new); `reports/TASK013_TEST_SUBMISSION_AUDIT.md` (new); `reports/task013_prediction_distribution.csv` (new); `reports/task013_largest_predictions.csv` (new); `DECISIONS.md`; `PROGRESS.md`.
+- **Work completed:**
+  1. Built reproducible inference script `scripts/generate_task013_submission.py` executing the Task 012 Corrected Kernel Climatology Blend (50% recent 72h median + 50% clean 2024 kernel climatology with $\sigma_{\text{doy}}=10.0, \sigma_{\text{hour}}=1.0$).
+  2. Enforced strict temporal eligibility: $c_i = \min(c_s, t_{\text{target}})$ ensures zero post-target observation leakage while exactly matching station cutoff for all 192 private test rows (leads 41–90h).
+  3. Generated submission artifact `submission_task012_corrected_blend_test.csv` (2,592 data rows, `ID,Target`, SHA-256: `875881a424e1b39a279f6c61384398c3b71cfb72cc788608a25dd96c1f7c3c0f`) and detailed `.manifest.txt`.
+  4. Executed comprehensive prediction audit: verified min 29.63 µg/m³, max 84.97 µg/m³, mean 53.29 µg/m³, median 50.96 µg/m³, std 11.57 µg/m³. Audited 20 largest predictions and confirmed they reflect legitimate morning/night inversion peaks at Shivaji Nagar without telemetry error corruption.
+  5. Implemented 9 dedicated regression tests in `tests/test_task013_submission.py`. Full test suite: 184 tests passed (100%), 0 failures, 100% ruff-compliant.
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe -u scripts/generate_task013_submission.py`
+  - `.\.venv\Scripts\python.exe -m pytest tests/test_task013_submission.py -ra` (9 passed in 0.48s)
+  - `.\.venv\Scripts\python.exe -m pytest -ra` (184 passed in 23.44s)
+  - `.\.venv\Scripts\python.exe -m ruff check scripts/generate_task013_submission.py tests/test_task013_submission.py`
+- **Tests and exact results:** 184 passed across full test suite. Zero failures.
+- **Experiment IDs / metrics:** Test Submission SHA-256: `875881a424e1b39a279f6c61384398c3b71cfb72cc788608a25dd96c1f7c3c0f`; Min 29.63 µg/m³, Max 84.97 µg/m³, Mean 53.29 µg/m³.
+- **Decisions added or superseded:** DEC-20261109-24 adopted.
+- **Known limitations / blockers:** Generated on 9 November snapshot. Must rerun after official Train update on 10 November 2026 at 09:00 IST.
+- **Next action:** Final review, git commit, and summary report to user.
 

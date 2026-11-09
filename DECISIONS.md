@@ -288,3 +288,20 @@ Every technical decision must include:
 - **Alternatives considered:** Keeping Candidate E (rejected: 28.75 RMSE, 0.27 worse than Candidate C, loses in bootstrap); using unblended Clean Kernel Climatology (rejected: 29.51 RMSE, loses recent level information).
 - **Consequences:** Provides complete explanation of Task 011 regression and establishes the Corrected Kernel Climatology Blend as the best-performing model developed for the challenge.
 
+## DEC-20261109-24 [Task013-Test-Submission-Audit] — End-to-End Verification of Corrected Kernel Climatology Blend Test Submission
+
+- **Date / owner:** 2026-11-09 / Senior Data Scientist, ML Engineer, and Software Architect
+- **Status:** Verified and adopted as provisional pre-refresh test submission.
+- **Context:** User requested generation and prediction audit of a valid Zindi test submission using the Task 012 Corrected Kernel Climatology Blend (50% recent 72h station median + 50% clean 2024 kernel climatology) on the 9 November snapshot.
+- **Decision:** Generate and verify `artifacts/submissions/submission_task012_corrected_blend_test.csv` (SHA-256: `875881a424e1b39a279f6c61384398c3b71cfb72cc788608a25dd96c1f7c3c0f`). Maintain as pre-refresh pipeline test artifact. Final competition submissions will be refreshed after the scheduled 10 November 09:00 IST official Train update.
+- **Evidence:**
+  - Full test submission generated with exactly 2,592 data rows, columns `ID,Target`, matching `Test.csv` ID sequence.
+  - Predictions are strictly finite, non-negative, and physically bounded: Min **29.63 µg/m³**, Mean **53.29 µg/m³**, Median **50.96 µg/m³**, Max **84.97 µg/m³**, Std **11.57 µg/m³**.
+  - All 20 largest predictions occur at Shivaji Nagar (`3409511`) during mid-November diurnal boundary layer compression hours (10:00–12:00 IST and 23:00 IST) with predictions between 83.85 and 84.97 µg/m³, resulting from legitimate clean 2024 historical patterns ($108\text{--}111\ \mu\text{g}/\text{m}^3$) blended with recent 72h median ($58.99\ \mu\text{g}/\text{m}^3$).
+  - Unflagged Train telemetry spikes ($1,892\ \mu\text{g}/\text{m}^3$) are 100% eliminated by using the clean 2024 CPCB CAAQS archive and `timestamp_median` collocation.
+  - Strict temporal eligibility ($c_i = \min(c_s, t_{\text{target}})$) ensures zero post-target future leakage.
+  - 184 tests pass across the full suite (100%), 0 failures, 100% ruff-compliant.
+- **Confidence:** High. The inference pipeline is completely verified and ready for instantaneous re-execution upon release of the final Train dataset on 10 November at 09:00 IST.
+- **Alternatives considered:** Uploading test submission immediately to Zindi (rejected: user explicitly requested manual review only, and official final Train refresh is scheduled for 10 November 09:00 IST).
+- **Consequences:** Pipeline verified and confirmed ready for final refresh on 10 November 2026.
+
