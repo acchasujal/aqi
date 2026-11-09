@@ -142,7 +142,7 @@ def test_submission_final_stage_rejects_initial_release_and_overwrite(tmp_path):
     from scripts.prepare_task008_submission import prepare
 
     data = Path(__file__).resolve().parents[1] / "data/raw/challenge"
-    with pytest.raises(ValueError, match="Initial Train snapshot"):
+    with pytest.raises(ValueError, match="9 November Train snapshot"):
         prepare(data, tmp_path / "final.csv", stage="final",
                 issue_time=pd.Timestamp("2026-11-10 12:00+05:30"),
                 release_time=pd.Timestamp("2026-11-10 09:00+05:30"))

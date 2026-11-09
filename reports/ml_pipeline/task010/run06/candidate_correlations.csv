@@ -1,0 +1,4 @@
+left,right,prediction_correlation,residual_correlation
+P_fix,C_legacy_doy,0.9868998931112678,0.993875274103112
+P_fix,C_exact_month_day,1.0,1.0
+C_legacy_doy,C_exact_month_day,0.9868998931112678,0.9938752741031122

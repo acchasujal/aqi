@@ -31,6 +31,11 @@ INITIAL_TRAIN_HASHES = {
     "86a9efdcf458f02d46589f416c59057273574727478c5908a92f1e9fa626ec5",
     "fcee20ebf7bd9c4a4e2487bab0a4f81339d6c820a53862b14443031db1f18ad6",
 }
+NOV9_TRAIN_HASHES = {
+    # Same official 9 Nov snapshot in Git's LF form and the supplied CRLF form.
+    "e107dda18670583c333be0966530fc444c18fdb30c870156ac25688a2c152210",
+    "11d6c4a4b20cc9ccf212b5e5f683ff5cc41f032fa0681e461b22fe0bd41047ee",
+}
 
 
 def digest(path: Path) -> str:
@@ -54,10 +59,12 @@ def prepare(data_dir: Path, output: Path, *, issue_time: pd.Timestamp,
             raise ValueError("Final stage requires a final release time <= issue <= deadline")
         if hashes["Train.csv"] in INITIAL_TRAIN_HASHES:
             raise ValueError("Initial Train snapshot cannot be claimed as final refresh")
+        if hashes["Train.csv"] in NOV9_TRAIN_HASHES:
+            raise ValueError("9 November Train snapshot cannot be claimed as final; wait for the 10 November final Train release")
     train, test, sample, _stations = load_data(data_dir)
     cutoff = derive_pm_history_cutoff(train)
-    if stage == "final" and cutoff <= pd.Timestamp("2026-11-02 23:00", tz="Asia/Kolkata"):
-        raise ValueError("Final snapshot contains no newer eligible PM history")
+    if stage == "final" and cutoff <= pd.Timestamp("2026-11-09 07:00", tz="Asia/Kolkata"):
+        raise ValueError("Final snapshot contains no PM history newer than the 9 November release")
     if cutoff > issue_time:
         raise ValueError("Snapshot contains PM intervals ending after issue_time")
     snapshot = ROOT / "data/processed/task008_snapshots" / hashes["Train.csv"]
