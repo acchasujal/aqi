@@ -1,0 +1,35 @@
+experiment_id: EXP-20261108-008
+task: TASK 007 final model optimisation and seasonal repair
+snapshot:
+  latest_train_interval_end_ist: 2026-11-02T23:00:00+05:30
+  target_private_start_ist: 2026-11-11T00:00:00+05:30
+  observed_private_lead_hours: 193
+  expected_final_refresh_date_ist: 2026-11-10
+validation:
+  target_window_hours: 48
+  primary_step_days: 7
+  pm_gaps_hours: [48, 72, 73, 96, 193]
+  development_end_target_date: 2026-09-30
+  holdout_origins_ist:
+    - 2026-10-20T00:00:00+05:30
+    - 2026-10-27T00:00:00+05:30
+  holdout_note: >-
+    These late-October origins are beyond the latest Task 006 192-hour routine
+    schedule (which ended 2026-10-13). Earlier reports inspected overlapping
+    seasonal regimes, so the holdout is new in row keys but not a fully blind
+    experiment to the analyst.
+candidates:
+  baseline_a: median72 with shared production fallback
+  baseline_b: P_fix exact-series 50:50 median72/2024 prior
+  baseline_c: Task 005 diur7 history cleaning and profile
+  candidate_d: LightGBM ratio to recent 168-hour level, all-label default
+  candidate_e: F4 = 0.25 * B + 0.25 * diur7 + 0.50 * P_fix
+  seasonal_sources: [site_5113, site_5400, site_5102, site_5402, site_5807, site_5960, site_5961]
+  seasonal_windows_days: [7, 14, 21]
+  seasonal_alignment_offsets_hours: [-1, 0, 1]
+metrics:
+  primary: full_target_raw_scale_RMSE
+  diagnostics: [MAE, bias, clean_rmse_y_lt_500, rmse_excluding_extreme_folds, station_rmse, first_day_rmse, second_day_rmse, lead_bucket_rmse, extreme_squared_error_share]
+weather:
+  run_if: weather_single_runs.csv is present with valid time, run init, publication availability, and station metadata
+  status_at_start: absent

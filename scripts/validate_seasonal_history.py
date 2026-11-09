@@ -27,6 +27,7 @@ import sys
 sys.path.insert(0, str(ROOT / "src"))
 
 from mumbai_pm25.data import load_data
+from mumbai_pm25.forecast import combine_forecasts, recent_median72
 from mumbai_pm25.historical_archive import (
     STATION_NAME_MAP,
     build_seasonal_features,
@@ -41,6 +42,8 @@ def _seasonal_baseline_for_fold(
     history_2024: pd.DataFrame,
     fold_targets: pd.DataFrame,
     history_values: dict[int, pd.Series],
+    *,
+    calendar_mode: str = "legacy_doy",
 ) -> dict[str, np.ndarray]:
     """Compute seasonal baselines for a fold's target rows."""
     # Build seasonal features using 2024 archive
@@ -51,6 +54,7 @@ def _seasonal_baseline_for_fold(
         station_map=STATION_NAME_MAP,
         window_days=14,
         min_obs=3,
+        calendar_mode=calendar_mode,
     )
 
     n = len(fold_targets)
@@ -69,22 +73,15 @@ def _seasonal_baseline_for_fold(
         preds["hist24_same_hour"][i] = max(0.0, sh) if np.isfinite(sh) else np.nan
         preds["hist24_month_hour"][i] = max(0.0, mh) if np.isfinite(mh) else np.nan
 
-        # Blend: 50% median72 + 50% hist24_same_hour
-        # Compute median72 for this station from PM history
         station_hist = history_values.get(loc_id)
-        if station_hist is not None and station_hist.notna().any():
-            cutoff = station_hist.index.max()
-            window = station_hist.loc[station_hist.index >= cutoff - pd.Timedelta(hours=72)]
-            m72 = float(window.median()) if window.notna().any() else float(station_hist.dropna().iloc[-1])
-        else:
-            m72 = np.nan
+        m72 = recent_median72(station_hist, row["cutoff"]) if station_hist is not None else None
+        seasonal_value = sh if np.isfinite(sh) else None
+        try:
+            preds["hist24_blend50_median72"][i] = combine_forecasts(m72, seasonal_value)
+        except ValueError as exc:
+            if "Neither recent PM nor seasonal history" not in str(exc):
+                raise
 
-        if np.isfinite(sh) and np.isfinite(m72):
-            preds["hist24_blend50_median72"][i] = max(0.0, 0.5 * m72 + 0.5 * sh)
-        elif np.isfinite(m72):
-            preds["hist24_blend50_median72"][i] = max(0.0, m72)
-        elif np.isfinite(sh):
-            preds["hist24_blend50_median72"][i] = max(0.0, sh)
 
     return preds
 
@@ -96,6 +93,7 @@ def rolling_oof_seasonal(
     gap_hours: int,
     horizon_hours: int = 48,
     step_days: int = 7,
+    calendar_mode: str = "legacy_doy",
 ) -> pd.DataFrame:
     """Rolling OOF evaluation including seasonal 2024 baselines.
 
@@ -114,7 +112,7 @@ def rolling_oof_seasonal(
     for cutoff in pd.date_range(first_origin, last_origin, freq=f"{step_days}D"):
         target_start_time = cutoff + pd.Timedelta(hours=gap_hours)
         targets = pd.date_range(target_start_time, periods=horizon_hours, freq="h")
-        issue_time = target_start_time
+        issue_time = cutoff
 
         # Build fold targets DataFrame for seasonal feature lookup
         fold_target_rows = []
@@ -123,8 +121,6 @@ def rolling_oof_seasonal(
             s = grid[("pm25", station)]
             history = s.loc[s.index < cutoff]
             last_observed_start = history.last_valid_index()
-            if last_observed_start is None:
-                continue
             history_per_station[station] = history
             truth = s.reindex(targets)
             for horizon, (t, y) in enumerate(zip(targets, truth.to_numpy()), start=1):
@@ -136,8 +132,8 @@ def rolling_oof_seasonal(
                         "horizon": horizon,
                         "cutoff": cutoff,
                         "issue_time": issue_time,
-                        "last_pm_end": last_observed_start + pd.Timedelta(hours=1),
-                        "pm_gap_hours": (t - (last_observed_start + pd.Timedelta(hours=1))).total_seconds() / 3600,
+                        "last_pm_end": last_observed_start + pd.Timedelta(hours=1) if last_observed_start is not None else pd.NaT,
+                        "pm_gap_hours": (t - (last_observed_start + pd.Timedelta(hours=1))).total_seconds() / 3600 if last_observed_start is not None else np.nan,
                     })
 
         if not fold_target_rows:
@@ -147,7 +143,7 @@ def rolling_oof_seasonal(
 
         # Compute seasonal predictions for the whole fold at once
         seasonal_preds = _seasonal_baseline_for_fold(
-            history_2024, fold_df, history_per_station
+            history_2024, fold_df, history_per_station, calendar_mode=calendar_mode
         )
 
         # Emit rows for each seasonal model

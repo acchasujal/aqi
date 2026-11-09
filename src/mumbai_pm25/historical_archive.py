@@ -1,26 +1,14 @@
-"""Historical archive loader and 2024 seasonal climatology features.
-
-Acceptance gate (EXP-20261107-007, updated in competition-grade ML pipeline):
-- Only History_Mumbai_2024.csv.gz is used as a seasonal prior source.
-- Filtered to source == 'cpcb_caaqm' (removes :30-minute US embassy timestamps).
-- Exact station mapping:
-  * 11606: Borivali East, Mumbai - IITM (site_5113, site_5400)
-  * 11611: Malad West, Mumbai - IITM (site_5102, site_5402)
-    NOTE: Mindspace-Malad West, Mumbai - MPCB (site_5807) is EXCLUDED.
-  * 3409510: Byculla, Mumbai - BMC (site_5960)
-  * 3409511: Shivaji Nagar, Mumbai - BMC (site_5961)
-- Multiple concurrent series per station are pre-aggregated per timestamp before
-  calculating seasonal statistics. Coverage represents unique observed hours.
-- Leap-year calendar alignment: 2024 was a leap year; normalized day-of-year
-  ensures calendar dates (e.g. November 11) match identically between 2024 and 2026.
-"""
+"""Identity-preserving loader, exact P_fix series, and calendar-aware 2024 PM2.5 profiles."""
 from __future__ import annotations
 
 import zipfile
+from collections.abc import Sequence
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
+
+from mumbai_pm25 import legacy_seasonal as _legacy_seasonal
 
 # Canonical competition target-station mapping to exact 2024 archive station names.
 CANONICAL_STATION_MAP: dict[int, str] = {
@@ -38,10 +26,26 @@ STATION_NAME_MAP: dict[int, str] = {
     3409511: "Shivaji Nagar",
 }
 
-_HISTORY_2024_MEMBER = "History_Mumbai_2024.csv.gz"
-_REQUIRED_COLS = {
-    "station_name", "timestamp_ist", "value", "source",
-    "flag_high_1000", "pm25_nonnegative",
+ARCHIVE_SERIES: dict[int, tuple[str, ...]] = {
+    11606: ("xkdr:site_5113", "xkdr:site_5400"),  # Borivali East candidates
+    11611: ("xkdr:site_5102", "xkdr:site_5402", "xkdr:site_5807"),  # Malad candidates
+    3409510: ("xkdr:site_5960",),
+    3409511: ("xkdr:site_5961",),
+}
+
+# Candidate fallback mapping. Predictive source selection does not establish
+# physical sensor equivalence. Keep Mindspace site_5807 outside the Malad mapping.
+P_FIX_SERIES: dict[int, tuple[str, ...]] = {
+    11606: ("xkdr:site_5400",),
+    11611: ("xkdr:site_5102", "xkdr:site_5402"),
+    3409510: ("xkdr:site_5960",),
+    3409511: ("xkdr:site_5961",),
+}
+
+HISTORY_MEMBER = "History_Mumbai_2024.csv.gz"
+REQUIRED_COLUMNS = {
+    "station_id", "series_id", "station_name", "collected_at", "timestamp_ist",
+    "value", "unit", "source", "flag_negative", "flag_high_500", "flag_high_1000",
 }
 
 
@@ -70,94 +74,12 @@ def circular_doy_distance(doy1: float | np.ndarray, doy2: float) -> float | np.n
     return np.minimum(diff, 365.0 - diff)
 
 
-def load_2024_history(
-    archive_path: Path,
-    *,
-    aggregation: str = "mean",
-) -> pd.DataFrame:
-    """Load and validate 2024 PM2.5 history from the archive.
-
-    Pre-aggregates multiple concurrent series (e.g. dual sensors at IITM stations)
-    per station and timestamp to produce exactly one clean observation per station-hour.
-
-    Returns a cleaned DataFrame with columns:
-        station_name: archive station name
-        hour_start: tz-aware timestamp (Asia/Kolkata) = hour start
-        pm25: PM2.5 µg/m³
-        source: 'cpcb_caaqm'
-    """
-    if not archive_path.is_file():
-        raise FileNotFoundError(f"Archive not found: {archive_path}")
-    with zipfile.ZipFile(archive_path) as z:
-        members = z.namelist()
-        if _HISTORY_2024_MEMBER not in members:
-            raise ValueError(
-                f"Expected {_HISTORY_2024_MEMBER!r} in archive; found: {members}"
-            )
-        with z.open(_HISTORY_2024_MEMBER) as f:
-            df = pd.read_csv(f, compression="gzip")
-
-    missing = _REQUIRED_COLS - set(df.columns)
-    if missing:
-        raise ValueError(
-            f"History_Mumbai_2024.csv.gz is missing columns: {sorted(missing)}"
-        )
-
-    # Filter to cpcb_caaqm only (removes us_embassy :30-minute rows)
-    df = df.loc[df["source"] == "cpcb_caaqm"].copy()
-    if df.empty:
-        raise ValueError("No cpcb_caaqm rows found in History_Mumbai_2024.csv.gz")
-
-    # Parse timestamps; require IST offset
-    offsets = df["timestamp_ist"].astype("string").str[-6:]
-    if not (offsets == "+05:30").all():
-        df["hour_start"] = pd.to_datetime(df["timestamp_ist"], utc=False)
-        if df["hour_start"].dt.tz is None:
-            df["hour_start"] = df["hour_start"].dt.tz_localize("Asia/Kolkata")
-        else:
-            df["hour_start"] = df["hour_start"].dt.tz_convert("Asia/Kolkata")
-    else:
-        df["hour_start"] = pd.to_datetime(df["timestamp_ist"], utc=True).dt.tz_convert(
-            "Asia/Kolkata"
-        )
-
-    # Verify minute values are 0 for cpcb_caaqm (hour-start aligned)
-    minute_vals = df["hour_start"].dt.minute.unique().tolist()
-    if any(m != 0 for m in minute_vals):
-        raise ValueError(
-            f"cpcb_caaqm rows have non-zero minute timestamps: {minute_vals}."
-        )
-
-    df["pm25"] = pd.to_numeric(df["value"], errors="coerce")
-
-    if df["pm25"].isna().any():
-        raise ValueError("Unexpected NaN in pm25 after cpcb_caaqm filter")
-    if (df["pm25"] < 0).any():
-        raise ValueError("Negative pm25 in archive after cpcb_caaqm filter")
-
-    # Pre-aggregate concurrent readings at the same timestamp (e.g. site_5113 and site_5400)
-    # This prevents multi-sensor locations from artificially doubling coverage or biasing means
-    if aggregation == "median":
-        agg_func = "median"
-    else:
-        agg_func = "mean"
-
-    aggregated = (
-        df.groupby(["station_name", "hour_start"], as_index=False)
-        .agg({"pm25": agg_func, "source": "first"})
-    )
-
-    aggregated = aggregated.sort_values(["station_name", "hour_start"]).reset_index(drop=True)
-    return aggregated
-
-
 def _match_archive_station(loc_id: int, available_stations: list[str]) -> str | None:
     """Find the exact canonical archive station matching the competition location_id."""
     canonical = CANONICAL_STATION_MAP.get(loc_id)
     if canonical and canonical in available_stations:
         return canonical
 
-    # If canonical exact name is not directly present, fall back to safe disambiguation
     fragment = STATION_NAME_MAP.get(loc_id)
     if not fragment:
         return None
@@ -171,110 +93,174 @@ def _match_archive_station(loc_id: int, available_stations: list[str]) -> str | 
     return None
 
 
-_LOOKUP_CACHE: dict[int, pd.DataFrame] = {}
+def load_2024_history(archive_path: Path) -> pd.DataFrame:
+    """Load eligible CPCB rows while retaining raw provenance columns.
+
+    ``collected_at`` and ``timestamp_ist`` are preserved verbatim. The parsed
+    ``hour_start`` is only an alignment hypothesis; archive interval semantics
+    have not been verified against the competition station measurements.
+    """
+    if not archive_path.is_file():
+        raise FileNotFoundError(f"Archive not found: {archive_path}")
+    with zipfile.ZipFile(archive_path) as archive:
+        if HISTORY_MEMBER not in archive.namelist():
+            raise ValueError(f"Expected {HISTORY_MEMBER!r} in archive")
+        with archive.open(HISTORY_MEMBER) as stream:
+            raw = pd.read_csv(stream, compression="gzip")
+    missing = REQUIRED_COLUMNS - set(raw.columns)
+    if missing:
+        raise ValueError(f"Archive member is missing columns: {sorted(missing)}")
+
+    rows = raw.loc[raw.source.eq("cpcb_caaqm")].copy()
+    if rows.empty:
+        raise ValueError("No cpcb_caaqm rows in the 2024 history member")
+    rows["hour_start"] = pd.to_datetime(rows.timestamp_ist, utc=True).dt.tz_convert(
+        "Asia/Kolkata"
+    )
+    if not rows.hour_start.dt.minute.eq(0).all():
+        bad = sorted(rows.loc[rows.hour_start.dt.minute.ne(0), "hour_start"].dt.minute.unique())
+        raise ValueError(f"CPCB archive timestamps have non-zero minute values: {bad}")
+    rows["pm25"] = pd.to_numeric(rows.value, errors="coerce")
+    valid = np.isfinite(rows.pm25.to_numpy(dtype=float)) & rows.pm25.ge(0).to_numpy()
+    rows = rows.loc[valid].copy()
+    if rows.empty:
+        raise ValueError("No finite non-negative CPCB PM2.5 rows remain")
+    if rows.duplicated(["series_id", "hour_start"]).any():
+        raise ValueError("Archive has duplicate series_id/hour_start keys")
+    if rows.hour_start.dt.year.ne(2024).any():
+        raise ValueError("Expected only 2024 timestamps in History_Mumbai_2024")
+    return rows.sort_values(["series_id", "hour_start"]).reset_index(drop=True)
 
 
-def get_seasonal_lookup_table(
-    history: pd.DataFrame,
-    *,
-    window_days: int = 14,
-    min_obs: int = 3,
-) -> pd.DataFrame:
-    """Precompute full-year seasonal lookup table (365 days x 24 hours x 4 stations)."""
-    cache_key = id(history)
-    if cache_key in _LOOKUP_CACHE:
-        return _LOOKUP_CACHE[cache_key]
-
-    hist = history.copy()
-    if not pd.api.types.is_datetime64_any_dtype(hist["hour_start"]):
-        hist["hour_start"] = pd.to_datetime(hist["hour_start"])
-    hist["norm_doy"] = hist["hour_start"].apply(normalized_doy)
-    hist["hod"] = hist["hour_start"].dt.hour
-    hist["month"] = hist["hour_start"].dt.month
-
-    station_sub = {
-        loc_id: hist[hist["station_name"] == sname]
-        for loc_id, sname in CANONICAL_STATION_MAP.items()
-    }
-
-    records = []
-    for loc_id, sub in station_sub.items():
-        if sub.empty:
-            continue
-        sub_hod = {h: sub[sub["hod"] == h] for h in range(24)}
-        sub_month_hod = {
-            (m, h): sub[(sub["month"] == m) & (sub["hod"] == h)]["pm25"].dropna()
-            for m in range(1, 13)
-            for h in range(24)
-        }
-
-        for d in range(1, 366):
-            m = (pd.Timestamp("2026-01-01") + pd.Timedelta(days=d - 1)).month
-            for h in range(24):
-                sh = sub_hod[h]
-                dists = circular_doy_distance(sh["norm_doy"].to_numpy(), float(d))
-                in_win = sh.iloc[dists <= window_days]["pm25"].dropna()
-                n_obs = len(in_win)
-                sh_mean = float(in_win.mean()) if n_obs >= min_obs else np.nan
-
-                mh = sub_month_hod.get((m, h))
-                mh_mean = float(mh.mean()) if mh is not None and len(mh) >= min_obs else np.nan
-
-                records.append({
-                    "location_id": loc_id,
-                    "norm_doy": float(d),
-                    "hod": h,
-                    "hist24_same_hour_mean": sh_mean,
-                    "hist24_month_hour_mean": mh_mean,
-                    "hist24_coverage": n_obs,
-                })
-
-    lookup = pd.DataFrame(records)
-    _LOOKUP_CACHE[cache_key] = lookup
-    return lookup
+def _calendar_anchor(timestamp: pd.Timestamp) -> pd.Timestamp:
+    """Map month/day to 2024; Feb 29 maps to Feb 29, other dates by month/day."""
+    try:
+        return pd.Timestamp(year=2024, month=timestamp.month, day=timestamp.day)
+    except ValueError as exc:
+        raise ValueError(f"Cannot map calendar date {timestamp:%m-%d} into 2024") from exc
 
 
-def build_seasonal_features(
+def _build_exact_seasonal_features(
     history: pd.DataFrame,
     target_df: pd.DataFrame,
     *,
-    station_map: dict[int, str] | None = None,
+    series_map: dict[int, str | Sequence[str]] | None = None,
     window_days: int = 14,
     min_obs: int = 3,
+    offset_hours: int = 0,
 ) -> pd.DataFrame:
-    """Build 2024 seasonal climatology features for each row in target_df.
+    """Build exact-series same-hour climatology on a calendar-date window.
 
-    Uses precomputed vectorized lookup table for maximum efficiency.
+    Window endpoints use 2024 calendar dates, including its leap day and year
+    boundary. A target on 29 February is matched to 29 February 2024. The
+    returned coverage is the number of source observations, not an imputed
+    count; an insufficient profile remains NaN.
     """
-    if history.empty or target_df.empty:
-        return pd.DataFrame({
-            "hist24_same_hour_mean": np.full(len(target_df), np.nan),
-            "hist24_month_hour_mean": np.full(len(target_df), np.nan),
-            "hist24_coverage": np.zeros(len(target_df), dtype=int),
+    if window_days < 0 or min_obs < 1 or offset_hours not in (-1, 0, 1):
+        raise ValueError("Require window_days >= 0, min_obs >= 1, and offset_hours in -1/0/1")
+    if not {"location_id", "target_start"}.issubset(target_df.columns):
+        raise ValueError("target_df needs location_id and target_start columns")
+    if series_map is None:
+        series_map = P_FIX_SERIES
+    if "series_id" not in history or "hour_start" not in history or "pm25" not in history:
+        raise ValueError("history needs exact series_id, parsed hour_start, and pm25 columns")
+
+    history = history.loc[history.series_id.isin({
+        sid for values in series_map.values()
+        for sid in ((values,) if isinstance(values, str) else values)
+    })].copy()
+    if history.empty:
+        empty = pd.DataFrame({
+            "hist24_same_hour_mean": np.nan,
+            "hist24_coverage": 0,
+            "hist24_expected_coverage": (2 * window_days + 1),
+            "hist24_coverage_fraction": 0.0,
+            "hist24_source_ids": "",
+            "hist24_month_hour_mean": np.nan,
+            "hist24_offset_hours": offset_hours,
         }, index=target_df.index)
+        return empty
+    history["calendar_date"] = history.hour_start.dt.date
+    history["hour"] = history.hour_start.dt.hour
+    by_source = {
+        source_id: group.groupby(["calendar_date", "hour"]).pm25.agg(["sum", "count"])
+        for source_id, group in history.groupby("series_id", sort=False)
+    }
 
-    lookup = get_seasonal_lookup_table(history, window_days=window_days, min_obs=min_obs)
+    features: list[dict[str, float | int | str]] = []
+    for idx, row in target_df.iterrows():
+        loc_id = int(row.location_id)
+        source_value = series_map.get(loc_id, ())
+        source_ids = (source_value,) if isinstance(source_value, str) else tuple(source_value)
+        timestamp = pd.Timestamp(row.target_start) + pd.Timedelta(hours=offset_hours)
+        if timestamp.tzinfo is None:
+            raise ValueError("target_start values must be timezone-aware")
+        anchor = _calendar_anchor(timestamp)
+        calendar_start = pd.Timestamp("2024-01-01")
+        anchor_index = int((anchor - calendar_start).days)
+        dates = [
+            (calendar_start + pd.Timedelta(days=(anchor_index + delta) % 366)).date()
+            for delta in range(-window_days, window_days + 1)
+        ]
+        sums: list[float] = []
+        counts: list[int] = []
+        source_coverage: dict[str, int] = {}
+        source_means: dict[str, float] = {}
+        source_sums: dict[str, float] = {}
+        for source_id in source_ids:
+            table = by_source.get(source_id)
+            if table is None:
+                source_coverage[source_id] = 0
+                source_means[source_id] = np.nan
+                source_sums[source_id] = 0.0
+                continue
+            keys = [(date, timestamp.hour) for date in dates]
+            selected = table.reindex(pd.MultiIndex.from_tuples(keys, names=["calendar_date", "hour"]))
+            n = int(selected["count"].fillna(0).sum())
+            source_coverage[source_id] = n
+            sums.append(float(selected["sum"].fillna(0).sum()))
+            source_sums[source_id] = sums[-1]
+            counts.append(n)
+            source_means[source_id] = (
+                float(sums[-1] / n) if n >= min_obs else np.nan
+            )
+        coverage = int(sum(counts))
+        mean = float(sum(sums) / coverage) if coverage >= min_obs else np.nan
+        item: dict[str, float | int | str] = {
+            "hist24_same_hour_mean": mean,
+            "hist24_coverage": coverage,
+            "hist24_expected_coverage": len(dates) * len(source_ids),
+            "hist24_coverage_fraction": (
+                coverage / (len(dates) * len(source_ids)) if source_ids else 0.0
+            ),
+            "hist24_source_ids": ",".join(source_ids),
+            "hist24_month_hour_mean": np.nan,
+            "hist24_offset_hours": offset_hours,
+        }
+        for source_id, n in source_coverage.items():
+            item[f"hist24_series::{source_id}::mean"] = source_means[source_id]
+            item[f"hist24_series::{source_id}::coverage"] = n
+            item[f"hist24_series::{source_id}::sum"] = source_sums[source_id]
+        features.append(item)
+    return pd.DataFrame(features, index=target_df.index)
 
-    t_df = target_df[["location_id", "target_start"]].copy()
-    t_df["norm_doy"] = t_df["target_start"].apply(normalized_doy).round().astype(float)
-    # Clip 59.5 to 59 or 60 for integer-day lookup index
-    t_df["norm_doy"] = np.clip(t_df["norm_doy"], 1.0, 365.0)
-    t_df["hod"] = t_df["target_start"].dt.hour
-    t_df["orig_order"] = np.arange(len(t_df))
 
-    merged = t_df.merge(
-        lookup,
-        on=["location_id", "norm_doy", "hod"],
-        how="left",
-    ).sort_values("orig_order")
+def source_coverage_report(history: pd.DataFrame) -> pd.DataFrame:
+    """Summarize exact archive series provenance and temporal coverage."""
+    report = history.groupby(["series_id", "station_id", "station_name", "source"],
+                             dropna=False).agg(
+        rows=("pm25", "size"),
+        first_hour=("hour_start", "min"),
+        last_hour=("hour_start", "max"),
+        non_missing=("pm25", "count"),
+        median_pm25=("pm25", "median"),
+        maximum_pm25=("pm25", "max"),
+    ).reset_index()
+    return report.sort_values(["station_name", "series_id"]).reset_index(drop=True)
 
-    res = pd.DataFrame({
-        "hist24_same_hour_mean": merged["hist24_same_hour_mean"].to_numpy(dtype=float),
-        "hist24_month_hour_mean": merged["hist24_month_hour_mean"].to_numpy(dtype=float),
-        "hist24_coverage": np.nan_to_num(merged["hist24_coverage"].to_numpy(dtype=float), nan=0).astype(int),
-    }, index=target_df.index)
-    res.index.name = target_df.index.name
-    return res
+
+# Public names retained for reproduction of main's EXP-007--015.
+load_legacy_2024_history = _legacy_seasonal.load_2024_history
 
 
 def compute_station_seasonal_profiles(
@@ -282,26 +268,41 @@ def compute_station_seasonal_profiles(
     station_map: dict[int, str] | None = None,
 ) -> dict[int, pd.DataFrame]:
     """Pre-compute per-station 2024 seasonal profiles keyed by competition location_id."""
-    history = history.copy()
-    history["norm_doy"] = history["hour_start"].apply(normalized_doy)
-    history["hod"] = history["hour_start"].dt.hour
-    history["month"] = history["hour_start"].dt.month
+    return _legacy_seasonal.compute_station_seasonal_profiles(
+        history, station_map=station_map or STATION_NAME_MAP
+    )
 
-    available_stations = history["station_name"].unique().tolist()
-    profiles: dict[int, pd.DataFrame] = {}
 
-    for loc_id in CANONICAL_STATION_MAP:
-        matched = _match_archive_station(loc_id, available_stations)
-        if matched is None:
-            profiles[loc_id] = pd.DataFrame(
-                columns=["norm_doy", "hod", "month", "mean_pm25", "median_pm25", "count"]
-            )
-            continue
-        sub = history.loc[history["station_name"] == matched]
-        profile = (
-            sub.groupby(["norm_doy", "hod", "month"])["pm25"]
-            .agg(mean_pm25="mean", median_pm25="median", count="count")
-            .reset_index()
+def build_seasonal_features(
+    history: pd.DataFrame,
+    target_df: pd.DataFrame,
+    *,
+    series_map: dict[int, str | Sequence[str]] | None = None,
+    station_map: dict[int, str] | None = None,
+    window_days: int = 14,
+    min_obs: int = 3,
+    offset_hours: int = 0,
+    calendar_mode: str | None = None,
+) -> pd.DataFrame:
+    """Use exact P_fix identities by default; retain explicit legacy experiments.
+
+    Old name-only synthetic fixtures retain their prior compatibility behavior.
+    Real loaded history preserves series_id, so default inference never pools
+    by a station-name substring. Explicit calendar_mode/station_map selects the
+    separately retained historical experiment implementation.
+    """
+    legacy = calendar_mode is not None or station_map is not None
+    legacy_fixture = series_map is None and "series_id" not in history.columns
+    if legacy or legacy_fixture:
+        if series_map is not None:
+            raise ValueError("Choose exact series_map or legacy calendar/station mapping")
+        if offset_hours != 0:
+            raise ValueError("Legacy calendar compatibility does not accept offset_hours")
+        return _legacy_seasonal.build_seasonal_features(
+            history, target_df, station_map=station_map, window_days=window_days,
+            min_obs=min_obs, calendar_mode=calendar_mode or "legacy_doy",
         )
-        profiles[loc_id] = profile
-    return profiles
+    return _build_exact_seasonal_features(
+        history, target_df, series_map=series_map, window_days=window_days,
+        min_obs=min_obs, offset_hours=offset_hours,
+    )

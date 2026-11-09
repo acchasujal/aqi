@@ -81,7 +81,7 @@ Then inspect the relevant code, config, tests and current Git diff. Never rely s
 
 ## 6. Git and collaboration rules
 
-- Work on a feature branch. Never force-push or rewrite shared history.
+- Reuse the current branch by default; do not create a new branch for every task. Work on `main` when the owner requests it, and create a branch only when explicitly requested or necessary to isolate unrelated work. Never force-push or rewrite shared history.
 - Keep PRs narrow: one coherent experiment or one architecture change per PR.
 - Do not allow two agents to edit the same file concurrently. Claim files/tasks in the PR or task issue.
 - Do not edit old entries in `DECISIONS.md` or `PROGRESS.md`; append new entries only.

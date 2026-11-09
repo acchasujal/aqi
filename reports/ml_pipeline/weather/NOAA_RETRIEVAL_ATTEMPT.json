@@ -1,0 +1,7 @@
+{
+  "url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t06z.pgrb2.0p25.f061&dir=%2Fgfs.20261108%2F06%2Fatmos%2F&subregion=&toplat=19.6&bottomlat=18.6&leftlon=72.4&rightlon=73.4&lev_surface=on&lev_2_m_above_ground=on&lev_10_m_above_ground=on&var_HPBL=on&var_TMP=on&var_RH=on&var_UGRD=on&var_VGRD=on&var_PRATE=on",
+  "status": 200,
+  "size": 1564,
+  "grib_signature": true,
+  "retrieved_at_utc": "2026-11-08T18:19:50.606159+00:00"
+}

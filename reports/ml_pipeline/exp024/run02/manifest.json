@@ -1,0 +1,45 @@
+{
+  "command": "scripts/run_exp024.py --supplied-dir C:/Users/sujal/Downloads --output reports/ml_pipeline/exp024/run02",
+  "git_commit": "d44e02cb87634db1c2685b946a88d10587e6d702",
+  "source_oof_sha256": "8e2711d9f3bb2a740652608c8a18bdde0b0997a915843a15d042f51abb83fe32",
+  "raw_hashes": {
+    "AdditionalHistory.zip": "3233061ca4ac2af39e9f6e80e21d9261b1b8d2fd3b037e5d034bcec059a7e80e",
+    "DataDictionary.txt": "0d10dcbb6d31232d29558ecd50e7a08272a393048d1e62e3ac460c5863522a55",
+    "README.md": "4c06dc678e5ad1270aac0177565dfbad9443bd29f4e709ddcd83bdbaf30f3fdb",
+    "SampleSubmission.csv": "5806d6109f381043e59fffb48a5d0af5d9de56fd4e0e956e4c5e7f2e6ae5dcd9",
+    "Stations.csv": "383269fa04abf8f2eb49e5ec0bb5a77c2df11acb6aca996b7edf269a109ee9cf",
+    "Test.csv": "cdb2b6c3035f6331848c565b4d3dd89ac5281efab07fa62bfabc2e7ff172db0a",
+    "Train.csv": "fcee20ebf7bd9c4a4e2487bab0a4f81339d6c820a53862b14443031db1f18ad6"
+  },
+  "source_hashes": {
+    "src/mumbai_pm25/calibration.py": "c55eb7b4c217e0ab46e85bf7ad75e0940d169ed92aff5234c3f0aa9256fdf616",
+    "scripts/run_exp024.py": "70019de14a33153a87322d2bf4b6945120b94c29b423858a2f8cc4fa3b5a860f",
+    "experiments/EXP-20261108-024.yaml": "f7997a560de81ef47a8d1f699f14a30534896c71f0512f892e680351ca180ae3"
+  },
+  "packages": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scipy": "1.18.1"
+  },
+  "rows": 12401,
+  "origins": 77,
+  "truth_unchanged": true,
+  "availability_proxy": "interval end <= cutoff; first-publication times unverified",
+  "raw_hashes_unchanged": true,
+  "output_hashes": {
+    "confirmation/fold_metrics.csv": "589229c13a02dc6b4eccc3100f06b479e6b0fff4f58aa43a01d542deabd395c0",
+    "confirmation/lead_metrics.csv": "afe2449d2b901074ecc670e1bc3a8039dc4e724f05dd7142de95b100a91af1cd",
+    "confirmation/model_metrics.csv": "6973850e9cd62ba5168b68c29d69d039c58edb5df5de9357edcffc268e65ba83",
+    "confirmation/paired_bootstrap.csv": "6a3586b273418a95ec37b6d2c1d5bc385e6cf010732d3ab0f49bae00b9308338",
+    "confirmation/station_metrics.csv": "4bb83d6dc0bf3e6cebf6db9d00127b39e59df7b66038757f899988c0fb53d34f",
+    "development/fold_metrics.csv": "3b58933f1b30d9e1dfc5e2851301ff0527c2749295297ada9a97b05fe8287dc6",
+    "development/lead_metrics.csv": "6c7f04f83231e300fa18bba64ea5f7c2227f6d85cf50e5069246cfc048fb9dec",
+    "development/model_metrics.csv": "3eac52f27ee4a99354ef7d388c1db031b82ffbd37914af18a2b1592729a8c3f3",
+    "development/paired_bootstrap.csv": "21c398a7f17c3e176bba323f54ddb54bf4d449b9877db3e29f32a7ce4531387c",
+    "development/station_metrics.csv": "07d9eff142369133e14c01ba5b4d9e7de2246e23f74fc293f45204e9c52ffa46",
+    "fitting_lineage.csv": "a5175feae7ca870a22f695ab4c026e309281aa0e0f20aec97d38161f7b16230f",
+    "oof.csv.gz": "b2495e6a6d7799d69c0fd82b5235f2102838a2dc33dcdcf7ab6ef223c7c2b7c2",
+    "selection.json": "6a35ccbcf82bab96702fb849b963211b2939cd9411f32a3e580bf2dd30adda6e",
+    "supplied_audit.json": "11470c53debb17bdd431b8d9682382a23fb8d4f8d04758a88f796ec199f8dd85"
+  }
+}

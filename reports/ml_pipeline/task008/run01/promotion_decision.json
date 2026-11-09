@@ -1,0 +1,32 @@
+{
+  "selected_model": "P_fix",
+  "fallback": "median72",
+  "development_best": "blend_recent_50",
+  "candidate_evidence": {
+    "development": {
+      "model": "blend_recent_50",
+      "comparator": "P_fix",
+      "origins": 69,
+      "block_origins": 4,
+      "rmse_delta": -0.013930706625728817,
+      "lower95": -0.05390209139164881,
+      "upper95": 0.44729777607889354,
+      "origin_wins": 31,
+      "seed": 20261108,
+      "station_wins": 1
+    },
+    "confirmation": {
+      "model": "blend_recent_50",
+      "comparator": "P_fix",
+      "origins": 8,
+      "block_origins": 4,
+      "rmse_delta": -2.0054562466966743,
+      "lower95": -2.6725346146746247,
+      "upper95": -0.31674829651563563,
+      "origin_wins": 6,
+      "seed": 20261108,
+      "station_wins": 4
+    }
+  },
+  "reason": "Retain provisional P_fix unless fresh evidence establishes stable superiority; historical confirmation has prior analyst exposure."
+}

@@ -1,0 +1,346 @@
+{
+  "inputs": [
+    {
+      "file": "task008_provisional_pfix_20261108_1558.csv",
+      "sha256": "3d79cffcca78cea1ad6f5e24d2568bf931bbba8c3b15fcd7db1728462050ab1d",
+      "rows": 2592,
+      "min": 33.090833333333336,
+      "max": 93.4375,
+      "lineage": "TASK008 frozen manifest"
+    },
+    {
+      "file": "task007_provisional_pfix_current_train_v2.csv",
+      "sha256": "3d79cffcca78cea1ad6f5e24d2568bf931bbba8c3b15fcd7db1728462050ab1d",
+      "rows": 2592,
+      "min": 33.090833333333336,
+      "max": 93.4375,
+      "lineage": "TASK007 matched artifact"
+    },
+    {
+      "file": "submission_B_robust_ensemble.csv",
+      "sha256": "3bb1441fd6405631080ff6dd1202416053b5d8280c3ead574de9218adc1b3397",
+      "rows": 2592,
+      "min": 32.48053247491243,
+      "max": 70.93519401549263,
+      "lineage": "UNKNOWN"
+    },
+    {
+      "file": "submission_C_statistical_seasonal.csv",
+      "sha256": "d1fcc73e4a068bcf5a923f9d9867fac5ece5c3f5b85c5b01b844cf9115e748fb",
+      "rows": 2592,
+      "min": 33.090833333333336,
+      "max": 93.4375,
+      "lineage": "UNKNOWN"
+    },
+    {
+      "file": "low.csv",
+      "sha256": "f921efc5ca6ffc4459af216651d847d58fa1ee0f970d011874d51df65b205b9d",
+      "rows": 2592,
+      "min": 7.886348280130029,
+      "max": 76.49090434905823,
+      "lineage": "UNKNOWN"
+    }
+  ],
+  "pairs": [
+    {
+      "first": "task008_provisional_pfix_20261108_1558.csv",
+      "second": "task007_provisional_pfix_current_train_v2.csv",
+      "identical_values": true,
+      "max_absolute_difference": 0.0
+    },
+    {
+      "first": "task008_provisional_pfix_20261108_1558.csv",
+      "second": "submission_B_robust_ensemble.csv",
+      "identical_values": false,
+      "max_absolute_difference": 24.130384293111064
+    },
+    {
+      "first": "task008_provisional_pfix_20261108_1558.csv",
+      "second": "submission_C_statistical_seasonal.csv",
+      "identical_values": false,
+      "max_absolute_difference": 18.831299261083743
+    },
+    {
+      "first": "task008_provisional_pfix_20261108_1558.csv",
+      "second": "low.csv",
+      "identical_values": false,
+      "max_absolute_difference": 60.13178584494811
+    },
+    {
+      "first": "task007_provisional_pfix_current_train_v2.csv",
+      "second": "submission_B_robust_ensemble.csv",
+      "identical_values": false,
+      "max_absolute_difference": 24.130384293111064
+    },
+    {
+      "first": "task007_provisional_pfix_current_train_v2.csv",
+      "second": "submission_C_statistical_seasonal.csv",
+      "identical_values": false,
+      "max_absolute_difference": 18.831299261083743
+    },
+    {
+      "first": "task007_provisional_pfix_current_train_v2.csv",
+      "second": "low.csv",
+      "identical_values": false,
+      "max_absolute_difference": 60.13178584494811
+    },
+    {
+      "first": "submission_B_robust_ensemble.csv",
+      "second": "submission_C_statistical_seasonal.csv",
+      "identical_values": false,
+      "max_absolute_difference": 24.130384293111064
+    },
+    {
+      "first": "submission_B_robust_ensemble.csv",
+      "second": "low.csv",
+      "identical_values": false,
+      "max_absolute_difference": 36.124861248638474
+    },
+    {
+      "first": "submission_C_statistical_seasonal.csv",
+      "second": "low.csv",
+      "identical_values": false,
+      "max_absolute_difference": 60.13178584494811
+    }
+  ],
+  "windows": {
+    "full_grid": {
+      "rows": 2592,
+      "means": {
+        "task008_provisional_pfix_20261108_1558.csv": 51.463807390327894,
+        "task007_provisional_pfix_current_train_v2.csv": 51.463807390327894,
+        "submission_B_robust_ensemble.csv": 45.747017387446384,
+        "submission_C_statistical_seasonal.csv": 48.69535213889847,
+        "low.csv": 36.99333827707792
+      },
+      "station_means": {
+        "task008_provisional_pfix_20261108_1558.csv": {
+          "Borivali East, Mumbai - IITM": 54.76364000412567,
+          "Byculla, Mumbai - BMC": 46.976742112130914,
+          "Malad West, Mumbai - IITM": 53.61976792687939,
+          "Shivaji Nagar, Mumbai - BMC": 50.49507951817559
+        },
+        "task007_provisional_pfix_current_train_v2.csv": {
+          "Borivali East, Mumbai - IITM": 54.76364000412567,
+          "Byculla, Mumbai - BMC": 46.976742112130914,
+          "Malad West, Mumbai - IITM": 53.61976792687939,
+          "Shivaji Nagar, Mumbai - BMC": 50.49507951817559
+        },
+        "submission_B_robust_ensemble.csv": {
+          "Borivali East, Mumbai - IITM": 45.10534634918366,
+          "Byculla, Mumbai - BMC": 42.8308545730267,
+          "Malad West, Mumbai - IITM": 48.36651903791273,
+          "Shivaji Nagar, Mumbai - BMC": 46.685349589662444
+        },
+        "submission_C_statistical_seasonal.csv": {
+          "Borivali East, Mumbai - IITM": 43.47481414963815,
+          "Byculla, Mumbai - BMC": 46.976742112130914,
+          "Malad West, Mumbai - IITM": 53.834772775649206,
+          "Shivaji Nagar, Mumbai - BMC": 50.49507951817559
+        },
+        "low.csv": {
+          "Borivali East, Mumbai - IITM": 37.68401608015003,
+          "Byculla, Mumbai - BMC": 29.39571072477308,
+          "Malad West, Mumbai - IITM": 41.89694997523737,
+          "Shivaji Nagar, Mumbai - BMC": 38.996676328151196
+        }
+      },
+      "correlations": {
+        "task008_provisional_pfix_20261108_1558.csv": {
+          "task008_provisional_pfix_20261108_1558.csv": 1.0,
+          "task007_provisional_pfix_current_train_v2.csv": 1.0,
+          "submission_B_robust_ensemble.csv": 0.9439287133980033,
+          "submission_C_statistical_seasonal.csv": 0.8853620822250846,
+          "low.csv": 0.00933223578818268
+        },
+        "task007_provisional_pfix_current_train_v2.csv": {
+          "task008_provisional_pfix_20261108_1558.csv": 1.0,
+          "task007_provisional_pfix_current_train_v2.csv": 1.0,
+          "submission_B_robust_ensemble.csv": 0.9439287133980033,
+          "submission_C_statistical_seasonal.csv": 0.8853620822250846,
+          "low.csv": 0.00933223578818268
+        },
+        "submission_B_robust_ensemble.csv": {
+          "task008_provisional_pfix_20261108_1558.csv": 0.9439287133980033,
+          "task007_provisional_pfix_current_train_v2.csv": 0.9439287133980033,
+          "submission_B_robust_ensemble.csv": 1.0,
+          "submission_C_statistical_seasonal.csv": 0.9506285473537144,
+          "low.csv": 0.05074841066829492
+        },
+        "submission_C_statistical_seasonal.csv": {
+          "task008_provisional_pfix_20261108_1558.csv": 0.8853620822250846,
+          "task007_provisional_pfix_current_train_v2.csv": 0.8853620822250846,
+          "submission_B_robust_ensemble.csv": 0.9506285473537144,
+          "submission_C_statistical_seasonal.csv": 1.0,
+          "low.csv": 0.004290295334849166
+        },
+        "low.csv": {
+          "task008_provisional_pfix_20261108_1558.csv": 0.00933223578818268,
+          "task007_provisional_pfix_current_train_v2.csv": 0.00933223578818268,
+          "submission_B_robust_ensemble.csv": 0.05074841066829492,
+          "submission_C_statistical_seasonal.csv": 0.004290295334849166,
+          "low.csv": 1.0
+        }
+      }
+    },
+    "public_3_4_diagnostic_only": {
+      "rows": 192,
+      "means": {
+        "task008_provisional_pfix_20261108_1558.csv": 48.803875795131866,
+        "task007_provisional_pfix_current_train_v2.csv": 48.803875795131866,
+        "submission_B_robust_ensemble.csv": 43.23221050841027,
+        "submission_C_statistical_seasonal.csv": 46.09188891882184,
+        "low.csv": 41.15009216884827
+      },
+      "station_means": {
+        "task008_provisional_pfix_20261108_1558.csv": {
+          "Borivali East, Mumbai - IITM": 53.2237760519294,
+          "Byculla, Mumbai - BMC": 48.142235991379316,
+          "Malad West, Mumbai - IITM": 53.87449113721877,
+          "Shivaji Nagar, Mumbai - BMC": 39.975
+        },
+        "task007_provisional_pfix_current_train_v2.csv": {
+          "Borivali East, Mumbai - IITM": 53.2237760519294,
+          "Byculla, Mumbai - BMC": 48.142235991379316,
+          "Malad West, Mumbai - IITM": 53.87449113721877,
+          "Shivaji Nagar, Mumbai - BMC": 39.975
+        },
+        "submission_B_robust_ensemble.csv": {
+          "Borivali East, Mumbai - IITM": 43.59313600069658,
+          "Byculla, Mumbai - BMC": 42.02749357148302,
+          "Malad West, Mumbai - IITM": 47.70210417661602,
+          "Shivaji Nagar, Mumbai - BMC": 39.60610828484544
+        },
+        "submission_C_statistical_seasonal.csv": {
+          "Borivali East, Mumbai - IITM": 42.10033584770115,
+          "Byculla, Mumbai - BMC": 48.142235991379316,
+          "Malad West, Mumbai - IITM": 54.14998383620689,
+          "Shivaji Nagar, Mumbai - BMC": 39.975
+        },
+        "low.csv": {
+          "Borivali East, Mumbai - IITM": 42.07273232200069,
+          "Byculla, Mumbai - BMC": 34.25709959738331,
+          "Malad West, Mumbai - IITM": 46.20026082793988,
+          "Shivaji Nagar, Mumbai - BMC": 42.07027592806919
+        }
+      },
+      "correlations": {
+        "task008_provisional_pfix_20261108_1558.csv": {
+          "task008_provisional_pfix_20261108_1558.csv": 1.0,
+          "task007_provisional_pfix_current_train_v2.csv": 1.0,
+          "submission_B_robust_ensemble.csv": 0.916534109337429,
+          "submission_C_statistical_seasonal.csv": 0.7937884148871004,
+          "low.csv": 0.37715149233183015
+        },
+        "task007_provisional_pfix_current_train_v2.csv": {
+          "task008_provisional_pfix_20261108_1558.csv": 1.0,
+          "task007_provisional_pfix_current_train_v2.csv": 1.0,
+          "submission_B_robust_ensemble.csv": 0.916534109337429,
+          "submission_C_statistical_seasonal.csv": 0.7937884148871004,
+          "low.csv": 0.37715149233183015
+        },
+        "submission_B_robust_ensemble.csv": {
+          "task008_provisional_pfix_20261108_1558.csv": 0.916534109337429,
+          "task007_provisional_pfix_current_train_v2.csv": 0.916534109337429,
+          "submission_B_robust_ensemble.csv": 1.0,
+          "submission_C_statistical_seasonal.csv": 0.906536619802975,
+          "low.csv": 0.5496965932578034
+        },
+        "submission_C_statistical_seasonal.csv": {
+          "task008_provisional_pfix_20261108_1558.csv": 0.7937884148871004,
+          "task007_provisional_pfix_current_train_v2.csv": 0.7937884148871004,
+          "submission_B_robust_ensemble.csv": 0.906536619802975,
+          "submission_C_statistical_seasonal.csv": 1.0,
+          "low.csv": 0.31934538701077236
+        },
+        "low.csv": {
+          "task008_provisional_pfix_20261108_1558.csv": 0.37715149233183015,
+          "task007_provisional_pfix_current_train_v2.csv": 0.37715149233183015,
+          "submission_B_robust_ensemble.csv": 0.5496965932578034,
+          "submission_C_statistical_seasonal.csv": 0.31934538701077236,
+          "low.csv": 1.0
+        }
+      }
+    },
+    "private_11_12_forecasts_only": {
+      "rows": 192,
+      "means": {
+        "task008_provisional_pfix_20261108_1558.csv": 56.465515147910786,
+        "task007_provisional_pfix_current_train_v2.csv": 56.465515147910786,
+        "submission_B_robust_ensemble.csv": 48.668831953396676,
+        "submission_C_statistical_seasonal.csv": 53.44999523210865,
+        "low.csv": 32.876439670628365
+      },
+      "station_means": {
+        "task008_provisional_pfix_20261108_1558.csv": {
+          "Borivali East, Mumbai - IITM": 59.31648786717752,
+          "Byculla, Mumbai - BMC": 49.389781275656816,
+          "Malad West, Mumbai - IITM": 57.51158137936435,
+          "Shivaji Nagar, Mumbai - BMC": 59.64421006944445
+        },
+        "task007_provisional_pfix_current_train_v2.csv": {
+          "Borivali East, Mumbai - IITM": 59.31648786717752,
+          "Byculla, Mumbai - BMC": 49.389781275656816,
+          "Malad West, Mumbai - IITM": 57.51158137936435,
+          "Shivaji Nagar, Mumbai - BMC": 59.64421006944445
+        },
+        "submission_B_robust_ensemble.csv": {
+          "Borivali East, Mumbai - IITM": 47.10370990650461,
+          "Byculla, Mumbai - BMC": 44.663702876594904,
+          "Malad West, Mumbai - IITM": 50.990756688903154,
+          "Shivaji Nagar, Mumbai - BMC": 51.91715834158402
+        },
+        "submission_C_statistical_seasonal.csv": {
+          "Borivali East, Mumbai - IITM": 46.80679418103448,
+          "Byculla, Mumbai - BMC": 49.389781275656816,
+          "Malad West, Mumbai - IITM": 57.95919540229885,
+          "Shivaji Nagar, Mumbai - BMC": 59.64421006944445
+        },
+        "low.csv": {
+          "Borivali East, Mumbai - IITM": 31.945853789800307,
+          "Byculla, Mumbai - BMC": 27.29843769048803,
+          "Malad West, Mumbai - IITM": 38.58305291265601,
+          "Shivaji Nagar, Mumbai - BMC": 33.67841428956911
+        }
+      },
+      "correlations": {
+        "task008_provisional_pfix_20261108_1558.csv": {
+          "task008_provisional_pfix_20261108_1558.csv": 1.0,
+          "task007_provisional_pfix_current_train_v2.csv": 1.0,
+          "submission_B_robust_ensemble.csv": 0.9554966109052464,
+          "submission_C_statistical_seasonal.csv": 0.9151886165826045,
+          "low.csv": 0.24813937574096506
+        },
+        "task007_provisional_pfix_current_train_v2.csv": {
+          "task008_provisional_pfix_20261108_1558.csv": 1.0,
+          "task007_provisional_pfix_current_train_v2.csv": 1.0,
+          "submission_B_robust_ensemble.csv": 0.9554966109052464,
+          "submission_C_statistical_seasonal.csv": 0.9151886165826045,
+          "low.csv": 0.24813937574096506
+        },
+        "submission_B_robust_ensemble.csv": {
+          "task008_provisional_pfix_20261108_1558.csv": 0.9554966109052464,
+          "task007_provisional_pfix_current_train_v2.csv": 0.9554966109052464,
+          "submission_B_robust_ensemble.csv": 1.0,
+          "submission_C_statistical_seasonal.csv": 0.9769749346056332,
+          "low.csv": 0.3671395030944288
+        },
+        "submission_C_statistical_seasonal.csv": {
+          "task008_provisional_pfix_20261108_1558.csv": 0.9151886165826045,
+          "task007_provisional_pfix_current_train_v2.csv": 0.9151886165826045,
+          "submission_B_robust_ensemble.csv": 0.9769749346056332,
+          "submission_C_statistical_seasonal.csv": 1.0,
+          "low.csv": 0.2926086679072305
+        },
+        "low.csv": {
+          "task008_provisional_pfix_20261108_1558.csv": 0.24813937574096506,
+          "task007_provisional_pfix_current_train_v2.csv": 0.24813937574096506,
+          "submission_B_robust_ensemble.csv": 0.3671395030944288,
+          "submission_C_statistical_seasonal.csv": 0.2926086679072305,
+          "low.csv": 1.0
+        }
+      }
+    }
+  },
+  "limits": "No candidate errors or private score inferred. Public window unresolved; all potential rows shown. B/C/Low code and issue lineage unavailable."
+}

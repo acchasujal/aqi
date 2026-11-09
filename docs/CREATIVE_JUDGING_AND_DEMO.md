@@ -1,82 +1,48 @@
-# Creative Judging Strategy and Demo Plan
+# AirWindow 2.0 - Judging evidence and demo
 
 ## Official criteria
 
-The organiser lists impact, novelty and functionality, with bonus points for Google tools. No numeric weights or detailed rubric are published. The matrix below is a team planning rubric, not an official score sheet.
+The [official challenge page](https://zindi.world/competitions/google-mumbai-data-challenge) lists impact, novelty and functionality, with bonus consideration for Google tools. Creative deadline: 13 November 2026 18:29 GMT (23:59 IST). No numeric weights are published. Recheck form access and eligibility; the 19 November presentation and separate 20 November closing-event references remain distinct.
 
-## Proposed self-review rubric
+## Internal review rubric
 
-| Criterion | Weight for internal review only | Evidence required |
-|---|---:|---|
-| Impact | 35% | Specific user, concrete decision, problem explanation, feedback from at least 2–3 potential users if feasible |
-| Novelty | 30% | Comparison with IITM Mumbai EWS, Google Air View+, Singapore/UK/Seoul examples; clear distinction beyond a map/chart |
-| Functionality | 25% | Public working app, correct data, stable selectors, mobile usability, downloadable brief, no dead features |
-| Google integration | 10% | Meaningful use of a Google product such as Firebase Hosting; not merely a logo |
+This is our review checklist, not the judges' scoring formula.
 
-These internal weights must not be described as the judges' actual weights.
+| Criterion | Evidence |
+|---|---|
+| Impact | A sports coordinator's original booking, feasible constraints and shareable event brief. No invented interviews or health impact. |
+| Novelty | Original-versus-alternative decision, paired OOF replay and abstention, compared with established forecast/map/alert services. |
+| Functionality | Real data, correct contiguous-hour calculations, working controls, mobile/keyboard journey, print output and clear missingness. |
+| Google tools | Firebase Spark preparation or verified deployment plus executable Colab-compatible evidence notebook. State exactly what ran. |
+| Integrity | Issue/cutoff/lead lineage, station-only coverage, unmodified historical truth and no fabricated confidence. |
 
-## 30-second first impression
+## 60-second judge journey
 
-The opening screen should immediately answer:
-- What is AirWindow?
-- Who is it for?
-- What decision does it help with?
-- What is the forecast based on?
-- How confident should the user be?
+The opening asks **Should you move your outdoor event?** Choose a monitored station, existing booking, duration and feasible range. Compare shows the original and lowest forecast alternative with a prominent evidence state. Trust and replay are discoverable secondary routes, not prerequisites to understand the result.
 
-Suggested landing statement:
+## 90-second demonstration
 
-“AirWindow helps schools and outdoor organisers compare upcoming hourly PM2.5 windows at Mumbai's monitored CPCB stations, with forecast uncertainty and data freshness shown clearly.”
+| Time | Demonstration |
+|---|---|
+| 0-10s | A school coordinator can move a two-hour event; a city-wide number does not compare those actual options. |
+| 10-25s | Select a real station and set original booking/range. Show last observation and frozen snapshot label. |
+| 25-45s | Compare original versus alternative mean, peak, hourly path and signed concentration difference. |
+| 45-60s | Read the reliability state. Current evidence is uncalibrated: lower prediction alone is not a robust recommendation. Show comparable counts and lead. |
+| 60-78s | Open genuine retrospective replay, show later outcomes and all-case results including failed choices. |
+| 78-90s | Print the planning brief. Explain four-station limits and the reproducible static architecture. |
 
-## 90-second live demo
+Use an ordinary default case, not a hand-picked win. A historically worse choice is an honest demonstration of forecast risk. Do not fabricate a ROBUST state.
 
-1. **Problem (10 sec):** Current air-quality maps show levels, but a coordinator still needs to compare time slots for an outdoor activity.
-2. **Choose a station (10 sec):** Select Borivali East or another actual station. Show its exact monitored location and observation freshness.
-3. **Choose an activity (15 sec):** Select a two-hour activity duration.
-4. **Compare windows (20 sec):** Show ranked windows, predicted average, range and hourly trajectory.
-5. **Explain trust (15 sec):** Open the trust panel and show real backtest RMSE, horizon, sample size and known limitations.
-6. **Share a decision (10 sec):** Generate the one-page planning brief.
-7. **Close (10 sec):** Explain why it is complementary to government monitoring, not a replacement.
+## Package and fallback
 
-## Creative submission PDF / document (<=10 MB)
+The creative report folder holds overview, red-team review, detailed demo, checklist, real screenshots, PDF and checks. The PDF covers user/problem, differentiator, workflow, evidence, architecture, Google tools, provenance, limits and verified links, below 10 MB.
 
-Recommended contents:
-1. Title and one-sentence purpose.
-2. Problem and target users.
-3. Existing solution benchmark and exact gap.
-4. Product workflow with 3–4 screenshots.
-5. Model/data pipeline in one clear diagram.
-6. Data sources, licence/attribution and issue-time policy.
-7. Measured validation results (no invented metrics).
-8. Uncertainty, coverage and health-claim limitations.
-9. Google tools used and exactly how.
-10. Live link, GitHub link, demo video link if available, contact.
+For network failure, run the built static app locally with bundled genuine artifacts and use real screenshots. Record a 90-second screen capture after fixing final artifact/build hashes; a recording plan is not a completed video. A public URL must pass signed-out and mobile checks before availability is claimed.
 
-## Evidence that will impress more than extra features
+## Submission gate
 
-- Actual user feedback, with date and anonymised role (do not invent).
-- A live product that works on a phone.
-- A small and transparent but correctly validated model.
-- Real predictions plus timestamps and uncertainty.
-- Clear comparison with existing Indian and international systems.
-- A short story connecting a forecast to a concrete scheduling choice.
-- A product that is honest about its four-station spatial limitation.
+Reopen the official form and confirm required fields/document size. Use matching Zindi entrant details and keep eligibility documents private. The human submits or explicitly authorises submission and saves confirmation. A ready app/PDF does not prove form submission.
 
-## Do not do
+## 9 November verification update
 
-- Do not use fake screenshots or hardcoded forecast values without labelling them as demo data.
-- Do not claim a measured health outcome or reduction in exposure unless evaluated.
-- Do not call the product “first in India/Mumbai”.
-- Do not show interpolated pollution over unmonitored streets.
-- Do not overload the home page with charts, satellite layers and generic AI text.
-- Do not make the demo rely on an unstable live API.
-
-## Form submission checklist
-
-- Confirm the form accepts responses.
-- Use the email and username associated with the Zindi entry.
-- Confirm first/last name spelling against Zindi profile.
-- Test the live link in an incognito browser.
-- Prepare one PDF/document under 10 MB.
-- Confirm travel availability for the stated 19 Nov event.
-- Save the submission confirmation.
+The official challenge page was reopened and still states 13 November 18:29 GMT (23:59 IST), impact/novelty/functionality and a Google-tools bonus. The linked Google Form redirects to a form endpoint that returned 401 to a public read; current response status/fields/upload requirements need a signed-in human check. Earlier supplied form fields are preparation evidence, not a fresh form verification. Show forecasts first in replay, then click **Reveal subsequent observations** and retain a worse outcome. Built-static Chrome QA and a locally executed six-cell notebook support functionality; Firebase and cloud Colab execution remain unclaimed. Main is the current source branch.

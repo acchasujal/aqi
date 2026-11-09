@@ -54,7 +54,7 @@ def history_features(
     if pm_history_cutoff.tz is None:
         raise ValueError("pm_history_cutoff must be timezone-aware")
     station = grid.xs(station_id, level="location_id").sort_index()
-    history = station.loc[station.index < pm_history_cutoff]
+    history = station.loc[station.index + pd.Timedelta(hours=1) <= pm_history_cutoff]
     valid = history.dropna()
     if valid.empty:
         raise ValueError(f"No eligible PM history for station {station_id} before {pm_history_cutoff}")
@@ -107,6 +107,83 @@ def history_features(
     }
 
 
+def recent_median72(history: pd.Series, cutoff: pd.Timestamp) -> float | None:
+    """Median in the 72 elapsed hours ending at an interval-end cutoff."""
+    if cutoff.tz is None:
+        raise ValueError("PM cutoff must be timezone-aware")
+    if history.index.tz is None:
+        raise ValueError("PM history index must be timezone-aware")
+    eligible = history.loc[history.index + pd.Timedelta(hours=1) <= cutoff].dropna()
+    if eligible.empty:
+        return None
+    recent = eligible.loc[eligible.index > cutoff - pd.Timedelta(hours=73)]
+    value = recent.median() if not recent.empty else eligible.median()
+    if not np.isfinite(value):
+        raise ValueError("Non-finite recent PM estimate")
+    return float(value)
+
+
+def combine_forecasts(recent_pm: float | None, seasonal_pm: float | None,
+                      seasonal_weight: float = 0.5) -> float:
+    """Blend available estimates; fail explicitly when neither exists."""
+    if not 0 <= seasonal_weight <= 1:
+        raise ValueError("seasonal_weight must be in [0, 1]")
+    values = [recent_pm, seasonal_pm]
+    for value in values:
+        if value is not None and (not np.isfinite(value) or value < 0):
+            raise ValueError("Forecast components must be finite and non-negative")
+    if recent_pm is None and seasonal_pm is None:
+        raise ValueError("Neither recent PM nor seasonal history is available")
+    if recent_pm is None:
+        return float(seasonal_pm)
+    if seasonal_pm is None:
+        return float(recent_pm)
+    return float((1 - seasonal_weight) * recent_pm + seasonal_weight * seasonal_pm)
+
+
+def predict_station_baseline(
+    history: pd.Series,
+    target_starts: pd.DatetimeIndex,
+    *,
+    pm_history_cutoff: pd.Timestamp,
+    model: str,
+) -> np.ndarray:
+    """Shared fixed-origin baseline used by validation and inference.
+
+    ``history`` is indexed by target-hour start. Only complete labels ending by
+    ``pm_history_cutoff`` are used. The diur7 profile reproduces Task 005's
+    history-only cleaning (drop values >=1000, cap remaining history at 300).
+    """
+    if pm_history_cutoff.tz is None:
+        raise ValueError("pm_history_cutoff must be timezone-aware")
+    history = history.sort_index()
+    eligible = history.loc[history.index + pd.Timedelta(hours=1) <= pm_history_cutoff]
+    if eligible.empty or not eligible.notna().any():
+        return np.full(len(target_starts), np.nan)
+    if model == "median72":
+        return np.full(len(target_starts), _baseline_level(eligible, pm_history_cutoff, model))
+    if model != "diur7":
+        raise ValueError(f"Unsupported shared baseline {model!r}")
+
+    clean = eligible.where(eligible < 1000).clip(upper=300)
+    recent = clean.loc[clean.index > pm_history_cutoff - pd.Timedelta(hours=73)]
+    if int(recent.notna().sum()) < 24:
+        # Match Task 005's minimum coverage gate; unsupported station/origin
+        # pairs remain unavailable for the candidate instead of being imputed.
+        return np.full(len(target_starts), np.nan)
+    window = clean.loc[clean.index > pm_history_cutoff - pd.Timedelta(hours=169)]
+    profile = window.groupby(window.index.hour).mean()
+    values = np.asarray([profile.get(target.hour, np.nan) for target in target_starts], dtype=float)
+    return values
+
+
+def _baseline_level(history: pd.Series, cutoff: pd.Timestamp, model: str) -> float:
+    if model != "median72":
+        raise ValueError(f"Unsupported baseline level {model!r}")
+    value = recent_median72(history, cutoff)
+    return float("nan") if value is None else value
+
+
 def predict_test(
     train: pd.DataFrame,
     test: pd.DataFrame,
@@ -154,51 +231,64 @@ def predict_test_with_hist24_blend(
     issue_time: pd.Timestamp,
     pm_history_cutoff: pd.Timestamp | None = None,
     blend_weight_hist24: float = 0.5,
+    calendar_mode: str | None = None,
+    series_map: dict[int, str | tuple[str, ...]] | None = None,
 ) -> pd.DataFrame:
-    """Forecast using a blend of median72 and 2024 seasonal same-hour climatology."""
-    from mumbai_pm25.historical_archive import STATION_NAME_MAP, build_seasonal_features
+    """Forecast using a blend of median72 and 2024 seasonal same-hour feature.
+
+    Falls back to median72 if hist24 is unavailable for a station.
+
+    Parameters
+    ----------
+    history_2024:
+        Output of historical_archive.load_2024_history().
+    blend_weight_hist24:
+        Weight given to hist24_same_hour (1 - weight goes to median72).
+    """
+    from mumbai_pm25.historical_archive import build_seasonal_features
 
     if issue_time.tz is None:
         raise ValueError("issue_time must be timezone-aware")
 
     effective_cutoff = pm_history_cutoff if pm_history_cutoff is not None else issue_time
     eligible = train.loc[train.target_start + pd.Timedelta(hours=1) <= issue_time]
-    if eligible.empty:
-        raise ValueError("No PM labels were available by issue_time")
-
-    grid = eligible.set_index(["location_id", "target_start"])[["pm25"]]
-    cutoffs = station_history_cutoffs(eligible)
-    median72_feat = {
-        int(s): history_features(grid, pm_history_cutoff=effective_cutoff, station_id=int(s))
-        for s in cutoffs.index
+    station_history = {
+        int(station): pd.Series(
+            group.pm25.to_numpy(dtype=float),
+            index=pd.DatetimeIndex(pd.to_datetime(group.target_start, utc=True)).tz_convert(
+                "Asia/Kolkata"
+            ),
+        ).sort_index()
+        for station, group in eligible.groupby("location_id")
     }
-    missing_stations = {int(s) for s in test.location_id.unique()} - set(median72_feat)
-    if missing_stations:
-        raise ValueError(f"No eligible PM history for test stations: {sorted(missing_stations)}")
+    median72_feat = {
+        station: recent_median72(series, effective_cutoff)
+        for station, series in station_history.items()
+    }
 
     target_df = test[["location_id", "target_start"]].copy()
     seasonal = build_seasonal_features(
         history_2024,
         target_df,
-        station_map=STATION_NAME_MAP,
+        series_map=series_map,
         window_days=14,
         min_obs=3,
+        calendar_mode=calendar_mode,
     )
 
     out = test[["ID", "location_id", "target_start"]].copy()
     predictions: list[float] = []
     for i, row in enumerate(out.itertuples(index=False)):
         loc_id = int(row.location_id)
-        m72 = max(0.0, float(median72_feat[loc_id]["median72"]))
+        m72 = median72_feat.get(loc_id)
         idx = test.index[i]
         sh = seasonal.loc[idx, "hist24_same_hour_mean"] if idx in seasonal.index else np.nan
+        seasonal_value = float(sh) if np.isfinite(sh) else None
+        predictions.append(combine_forecasts(m72, seasonal_value, blend_weight_hist24))
 
-        if np.isfinite(sh):
-            sh_val = max(0.0, float(sh))
-            blended = (1.0 - blend_weight_hist24) * m72 + blend_weight_hist24 * sh_val
-        else:
-            blended = m72
-        predictions.append(max(0.0, blended))
+    out["Target"] = predictions
+    validate_submission(out[["ID", "Target"]], test)
+    return out[["ID", "Target"]]
 
     out["Target"] = predictions
     validate_submission(out[["ID", "Target"]], test)
@@ -351,6 +441,7 @@ def write_manifest(
     model: str = "median72",
     extra_sources: list[Path] | None = None,
     ensemble_weights: str | None = None,
+    calendar_mode: str | None = None,
 ) -> None:
     """Write an exhaustive, cryptographically verified reproducibility manifest."""
     def sha256(p: Path) -> str:
@@ -418,7 +509,9 @@ def write_manifest(
         f"xgboost: {get_pkg_version('xgboost')}",
         f"scikit_learn: {get_pkg_version('scikit-learn')}",
         "weather: disabled",
-        "seasonal_archive: History_Mumbai_2024.csv.gz (cpcb_caaqm, pre-aggregated, leap-year aligned)",
+        "history_window_hours: 72",
+        "seasonal_archive: History_Mumbai_2024.csv.gz (cpcb_caaqm, exact series_id lookup)",
+        f"seasonal_calendar_mode: {calendar_mode or 'month_day_2024'}",
     ]
 
     if output_path and output_path.is_file():

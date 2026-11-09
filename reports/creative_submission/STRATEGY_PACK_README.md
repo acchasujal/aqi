@@ -1,5 +1,7 @@
 # AQI Creative Strategy Add-on Pack
 
+> **8 November 2026 update:** The pack has evolved into the user-authorised AirWindow 2.0 implementation. Start with [PRODUCT_OVERVIEW.md](PRODUCT_OVERVIEW.md), [RED_TEAM_REPORT.md](RED_TEAM_REPORT.md), [DEMO_SCRIPT.md](DEMO_SCRIPT.md) and [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md) for current evidence, QA and pending deployment/form actions. The original pack description is retained below.
+
 This add-on pack is designed for `acchasujal/aqi`. Copy the contents into the repository root, merging folders rather than replacing existing files.
 
 It creates a separate creative-submission workstream for the Zindi Google Mumbai Data Challenge while preserving the existing forecasting/ML workstream.

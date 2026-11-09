@@ -1,0 +1,18 @@
+{
+  "exp012": {
+    "prior_unique_station_hours": 40546,
+    "current_scoring_rows_reused": 3430,
+    "current_unique_station_hours_reused": 1719
+  },
+  "exp013": {
+    "prior_unique_station_hours": 13244,
+    "current_scoring_rows_reused": 3422,
+    "current_unique_station_hours_reused": 1711
+  },
+  "exp014": {
+    "scoring_rows": 3430,
+    "unique_station_hours": 1719,
+    "unique_origins": 22,
+    "repeat_scoring_rows": 1711
+  }
+}

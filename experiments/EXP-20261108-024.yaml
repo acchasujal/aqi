@@ -1,0 +1,16 @@
+experiment_id: EXP-20261108-024
+status: predeclared
+question: Can past-only station calibration improve P_fix at the frozen 193h lead?
+source_oof: reports/ml_pipeline/task008/run01/matched_oof.csv.gz
+baseline: P_fix
+controls: [median24, median72, blend_recent_50]
+candidates: [cal_offset, cal_affine, cal_huber]
+prior_rows: 500
+predictor_scale: 50
+huber_delta: 20
+minimum_station_origins: 4
+fitting: expanding OOF blocks ending no later than each validation PM cutoff
+targets: all labels unchanged; no filtering or winsorisation
+selection: development full-target RMSE only; no parameter search
+promotion: negative upper95 paired block-bootstrap delta and majority station/origin wins in both splits; fresh independent confirmation still required
+limitations: historical confirmation already inspected; B/C/Low have unknown model lineage

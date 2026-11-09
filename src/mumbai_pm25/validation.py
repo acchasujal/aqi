@@ -17,9 +17,11 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+from mumbai_pm25.forecast import predict_station_baseline
+
 MODELS = (
     "last", "mean72", "median72", "ewm72", "diurnal7", "hour_week4",
-    "mean72_clip300", "mean72_exclude_gt1000", "year_ago"
+    "mean72_clip300", "mean72_exclude_gt1000", "year_ago", "diur7"
 )
 
 
@@ -101,17 +103,23 @@ def generate_fixed_target_folds(
     return folds
 
 
-def _baseline(history: pd.Series, target: pd.DatetimeIndex, model: str) -> np.ndarray:
+def _baseline(history: pd.Series, target: pd.DatetimeIndex, model: str,
+              cutoff: pd.Timestamp) -> np.ndarray:
     history = history.sort_index()
     if history.empty or not history.notna().any():
         return np.full(len(target), np.nan)
+    if model in {"median72", "diur7"}:
+        shared_model = model
+        return predict_station_baseline(
+            history, target, pm_history_cutoff=cutoff, model=shared_model
+        )
     if model == "last":
         return np.full(len(target), float(history.dropna().iloc[-1]))
     cutoff = history.index.max()
     if model == "year_ago":
         references = pd.DatetimeIndex([target_time - pd.DateOffset(years=1) for target_time in target])
         previous = history.reindex(references).to_numpy(dtype=float)
-        fallback = _baseline(history, target, "median72")
+        fallback = _baseline(history, target, "median72", cutoff)
         return np.where(np.isfinite(previous), previous, fallback)
     if model in {"mean72", "median72", "ewm72", "mean72_clip300", "mean72_exclude_gt1000"}:
         window = history.loc[history.index >= cutoff - pd.Timedelta(hours=72)]
@@ -182,7 +190,7 @@ def rolling_oof(
 
     for cutoff, target_start in loop_items:
         targets = pd.date_range(target_start, periods=horizon_hours, freq="h")
-        issue_time = target_start
+        issue_time = target_start if fixed_targets else cutoff
         fold_id = target_start if fixed_targets else cutoff
         for station in stations:
             s = grid[("pm25", station)]
@@ -193,19 +201,21 @@ def rolling_oof(
             last_observed_end = last_observed_start + pd.Timedelta(hours=1)
             truth = s.reindex(targets)
             for model in MODELS:
-                pred = _baseline(history, targets, model)
+                pred = _baseline(history, targets, model, cutoff)
                 for horizon, (t, y, p) in enumerate(zip(targets, truth.to_numpy(), pred), start=1):
                     if np.isfinite(y) and np.isfinite(p):
                         exact_gap = (t - last_observed_end).total_seconds() / 3600
+                        target_end = t + pd.Timedelta(hours=1)
+                        forecast_lead = (t - issue_time).total_seconds() / 3600
                         rows.append((
                             fold_id, issue_time, cutoff, last_observed_end, exact_gap, t,
-                            t + pd.Timedelta(hours=1), station, horizon, float(y),
+                            target_end, station, horizon, forecast_lead, float(y),
                             max(0.0, float(p)), model
                         ))
     return pd.DataFrame(rows, columns=[
         "fold_id", "prediction_origin", "pm_history_cutoff", "last_pm_available_at",
         "pm_gap_hours", "target_start", "target_end", "location_id",
-        "horizon_hours", "y", "prediction", "model"
+        "horizon_hours", "forecast_lead_hours", "y", "prediction", "model"
     ])
 
 

@@ -1,0 +1,7 @@
+{
+  "development_best": "P_fix",
+  "parameters": "experiments/EXP-20261108-024.yaml",
+  "production_model": "P_fix",
+  "promotion": false,
+  "reason": "Historical confirmation is analyst-exposed; fresh evidence required."
+}

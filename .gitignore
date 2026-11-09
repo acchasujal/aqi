@@ -1,36 +1,26 @@
-# Python
+.venv/
 __pycache__/
 *.py[cod]
+*$py.class
+*.so
 .pytest_cache/
-.mypy_cache/
-.ruff_cache/
 .coverage
 htmlcov/
+dist/
+build/
 *.egg-info/
-.venv/
-venv/
-.env
-.env.*
+.eggs/
 
-# Editors / OS
+# IDE / editor artifacts
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 .DS_Store
 Thumbs.db
 
-# Generated data and artifacts
-/data/processed/**
-!/data/processed/README.md
-/data/external/weather/**
-!/data/external/weather/README.md
-/artifacts/submissions/**
-!/artifacts/submissions/README.md
-/reports/experiments/**
-!/reports/README.md
-*.pkl
-*.joblib
-*.model
-*.cbm
+# Large intermediate artifacts (add specific rules as needed)
 *.parquet
 *.feather
 
@@ -40,4 +30,12 @@ lightning_logs/
 wandb/
 
 # Keep raw challenge files tracked; do not add a blanket data/ ignore.
+/data/processed/
 
+# TASK008 local feature cache (OOF predictions and compact reports are retained).
+/reports/ml_pipeline/task008/run*/all_block_rows.csv.gz
+
+# EXP-024/025 row-level OOF tables are generated intermediate data; summaries
+# and manifests remain versioned under the corresponding report directories.
+/reports/ml_pipeline/exp024/run*/oof.csv.gz
+/reports/ml_pipeline/exp025/run*/matched_oof.csv.gz

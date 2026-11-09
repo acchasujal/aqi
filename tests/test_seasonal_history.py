@@ -13,11 +13,12 @@ import pytest
 
 from mumbai_pm25.forecast import (
     derive_pm_history_cutoff,
+    predict_station_baseline,
     predict_test,
     predict_test_with_hist24_blend,
 )
 from mumbai_pm25.historical_archive import (
-    STATION_NAME_MAP,
+    P_FIX_SERIES,
     build_seasonal_features,
     load_2024_history,
 )
@@ -25,6 +26,11 @@ from mumbai_pm25.historical_archive import (
 # ---------------------------------------------------------------------------
 # Synthetic history fixtures
 # ---------------------------------------------------------------------------
+
+def test_pfix_keeps_mindspace_separate_from_malad_mapping():
+    assert P_FIX_SERIES[11611] == ("xkdr:site_5102", "xkdr:site_5402")
+    assert "xkdr:site_5807" not in P_FIX_SERIES[11611]
+
 
 def _make_archive_history(rows: list[dict]) -> pd.DataFrame:
     """Return a DataFrame with the same schema as load_2024_history output."""
@@ -40,8 +46,8 @@ def _make_synthetic_archive_zip(station_name: str, n_hours: int = 100) -> bytes:
     rows = []
     for t in starts:
         rows.append(
-            f"{station_name},,,,PM2.5,µg/m³,{t.isoformat()},{20 + t.hour},"
-            f"cpcb_caaqm,{20 + t.hour},False,False,series_123,{t.isoformat()},False"
+            f"site_5400,{station_name},Maharashtra,Mumbai,PM2.5,unit,{t.isoformat()},{20 + t.hour},"
+            f"cpcb_caaqm,{20 + t.hour},False,False,xkdr:site_5400,{t.isoformat()},False"
         )
 
     header = (
@@ -136,6 +142,9 @@ def test_load_2024_history_filters_to_cpcb_caaqm(tmp_path: Path):
     result = load_2024_history(archive)
     assert len(result) == 1
     assert result["station_name"].iloc[0] == "Test Station"
+    assert result["series_id"].iloc[0] == "s1"
+    assert result["collected_at"].notna().all()
+    assert result["flag_high_1000"].eq(False).all()
     assert result["hour_start"].dt.minute.eq(0).all()
     assert float(result["pm25"].iloc[0]) == pytest.approx(25.0)
 
@@ -174,6 +183,7 @@ def _make_history_df(station_name: str, n_hours: int = 300) -> pd.DataFrame:
     starts = pd.date_range("2024-01-01", periods=n_hours, freq="h", tz="Asia/Kolkata")
     return pd.DataFrame({
         "station_name": station_name,
+        "series_id": "xkdr:site_5400",
         "hour_start": starts,
         "pm25": [float(10 + t.hour) for t in starts],
         "source": "cpcb_caaqm",
@@ -188,7 +198,7 @@ def test_seasonal_features_match_expected_hour():
         "location_id": [11606],  # Borivali East
         "target_start": [pd.Timestamp("2026-01-05 10:00:00+05:30")],
     })
-    result = build_seasonal_features(history, target_df, station_map=STATION_NAME_MAP, window_days=14)
+    result = build_seasonal_features(history, target_df, series_map=P_FIX_SERIES, window_days=14)
     # Hour 10 should give 10 + 10 = 20
     assert "hist24_same_hour_mean" in result.columns
     assert np.isfinite(result["hist24_same_hour_mean"].iloc[0])
@@ -202,7 +212,7 @@ def test_seasonal_features_returns_nan_for_unknown_station():
         "location_id": [99999],  # Unknown station
         "target_start": [pd.Timestamp("2026-01-05 10:00:00+05:30")],
     })
-    result = build_seasonal_features(history, target_df, station_map=STATION_NAME_MAP)
+    result = build_seasonal_features(history, target_df, series_map=P_FIX_SERIES)
     assert np.isnan(result["hist24_same_hour_mean"].iloc[0])
     assert result["hist24_coverage"].iloc[0] == 0
 
@@ -212,6 +222,7 @@ def test_seasonal_features_returns_nan_when_insufficient_obs():
     # Only 2 observations for Borivali East at the target hour
     history = pd.DataFrame({
         "station_name": ["Borivali East, Mumbai - IITM"] * 2,
+        "series_id": ["xkdr:site_5400"] * 2,
         "hour_start": pd.to_datetime(["2024-01-05 10:00:00+05:30", "2024-01-06 10:00:00+05:30"]),
         "pm25": [15.0, 20.0],
         "source": "cpcb_caaqm",
@@ -221,7 +232,7 @@ def test_seasonal_features_returns_nan_when_insufficient_obs():
         "target_start": [pd.Timestamp("2026-01-05 10:00:00+05:30")],
     })
     result = build_seasonal_features(
-        history, target_df, station_map=STATION_NAME_MAP, window_days=14, min_obs=3
+        history, target_df, series_map=P_FIX_SERIES, window_days=14, min_obs=3
     )
     assert np.isnan(result["hist24_same_hour_mean"].iloc[0])
 
@@ -232,6 +243,7 @@ def test_seasonal_features_leap_year_doy():
     starts = pd.date_range("2024-02-20 08:00:00", periods=20, freq="D", tz="Asia/Kolkata")
     history = pd.DataFrame({
         "station_name": "Byculla, Mumbai - BMC",
+        "series_id": "xkdr:site_5960",
         "hour_start": starts,
         "pm25": [30.0] * 20,
         "source": "cpcb_caaqm",
@@ -241,7 +253,7 @@ def test_seasonal_features_leap_year_doy():
         "target_start": [pd.Timestamp("2026-02-28 08:00:00+05:30")],
     })
     result = build_seasonal_features(
-        history, target_df, station_map=STATION_NAME_MAP, window_days=14, min_obs=3
+        history, target_df, series_map=P_FIX_SERIES, window_days=14, min_obs=3
     )
     # Should not raise; value should be 30.0 or NaN (no assertion on exact value since
     # 2026-02-28 is DOY 59 and 2024 data at DOY 50-73 covers some of the window)
@@ -257,9 +269,97 @@ def test_seasonal_features_no_future_data_used():
         "location_id": [11606],
         "target_start": [pd.Timestamp("2026-11-11 10:00:00+05:30")],
     })
-    result = build_seasonal_features(history, target_df, station_map=STATION_NAME_MAP)
+    result = build_seasonal_features(history, target_df, series_map=P_FIX_SERIES)
     # Must not raise; NaN is acceptable if no matching window
     assert "hist24_same_hour_mean" in result.columns
+
+
+def test_archive_series_are_never_pooled_by_shared_station_name():
+    starts = pd.to_datetime([
+        "2024-01-01 10:00:00+05:30", "2024-01-02 10:00:00+05:30",
+        "2024-01-01 10:00:00+05:30", "2024-01-02 10:00:00+05:30",
+    ])
+    history = pd.DataFrame({
+        "station_name": ["Borivali East"] * 4,
+        "series_id": ["xkdr:site_5400"] * 2 + ["xkdr:site_5113"] * 2,
+        "hour_start": starts,
+        "pm25": [100.0, 100.0, 10.0, 10.0],
+    })
+    target = pd.DataFrame({
+        "location_id": [11606],
+        "target_start": [pd.Timestamp("2026-01-02 10:00", tz="Asia/Kolkata")],
+    })
+    result = build_seasonal_features(
+        history, target, series_map={11606: "xkdr:site_5400"}, window_days=1, min_obs=1
+    )
+    assert result.hist24_same_hour_mean.iloc[0] == pytest.approx(100.0)
+    assert result.hist24_coverage.iloc[0] == 2
+    assert result["hist24_series::xkdr:site_5400::coverage"].iloc[0] == 2
+    assert result["hist24_series::xkdr:site_5400::mean"].iloc[0] == pytest.approx(100.0)
+
+
+def test_calendar_date_alignment_preserves_feb_29_and_wraps_year():
+    history = pd.DataFrame({
+        "station_name": ["Byculla"] * 3,
+        "series_id": ["xkdr:site_5960"] * 3,
+        "hour_start": pd.to_datetime([
+            "2024-02-28 08:00+05:30", "2024-02-29 08:00+05:30",
+            "2024-12-31 08:00+05:30",
+        ]),
+        "pm25": [28.0, 29.0, 31.0],
+    })
+    targets = pd.DataFrame({
+        "location_id": [3409510, 3409510, 3409510],
+        "target_start": pd.to_datetime([
+            "2026-02-28 08:00+05:30", "2024-02-29 08:00+05:30",
+            "2026-01-01 08:00+05:30",
+        ]),
+    })
+    result = build_seasonal_features(
+        history, targets, series_map={3409510: "xkdr:site_5960"}, window_days=0, min_obs=1
+    )
+    assert result.hist24_same_hour_mean.tolist() == pytest.approx([28.0, 29.0, np.nan], nan_ok=True)
+    wrapped = build_seasonal_features(
+        history, targets.iloc[[2]], series_map={3409510: "xkdr:site_5960"},
+        window_days=1, min_obs=1,
+    )
+    assert wrapped.hist24_same_hour_mean.iloc[0] == pytest.approx(31.0)
+
+
+def test_seasonal_missingness_is_reported_and_not_filled():
+    history = pd.DataFrame({
+        "series_id": ["xkdr:site_5400", "xkdr:site_5400"],
+        "hour_start": pd.to_datetime(["2024-01-01 10:00+05:30", "2024-01-02 10:00+05:30"]),
+        "pm25": [20.0, 22.0],
+    })
+    target = pd.DataFrame({
+        "location_id": [11606],
+        "target_start": [pd.Timestamp("2026-01-02 10:00", tz="Asia/Kolkata")],
+    })
+    result = build_seasonal_features(
+        history, target, series_map={11606: "xkdr:site_5400"}, window_days=1, min_obs=3
+    )
+    assert np.isnan(result.hist24_same_hour_mean.iloc[0])
+    assert result.hist24_coverage.iloc[0] == 2
+    assert result.hist24_coverage_fraction.iloc[0] == pytest.approx(2 / 3)
+
+
+def test_shared_baseline_is_fixed_at_origin_and_uses_production_fallback():
+    index = pd.date_range("2026-01-01", periods=240, freq="h", tz="Asia/Kolkata")
+    history = pd.Series(np.arange(len(index), dtype=float), index=index)
+    cutoff = index[-1] + pd.Timedelta(hours=1)
+    target = pd.date_range(cutoff + pd.Timedelta(hours=193), periods=48, freq="h")
+    expected = predict_station_baseline(
+        history, target, pm_history_cutoff=cutoff, model="median72"
+    )
+    changed_future = pd.concat([
+        history, pd.Series([999999.0], index=[target[0]])
+    ])
+    actual = predict_station_baseline(
+        changed_future, target, pm_history_cutoff=cutoff, model="median72"
+    )
+    assert np.array_equal(expected, actual)
+    assert np.all(expected == history.loc[history.index > cutoff - pd.Timedelta(hours=73)].median())
 
 
 # ---------------------------------------------------------------------------
@@ -287,7 +387,7 @@ def test_hist24_blend_falls_back_to_median72_when_no_seasonal_data():
 
     # Empty history (no matching station names)
     empty_history = pd.DataFrame(
-        columns=["station_name", "hour_start", "pm25", "source"]
+        columns=["station_name", "series_id", "hour_start", "pm25", "source"]
     )
 
     issue = pd.Timestamp("2026-01-08 10:00:00+05:30")
@@ -318,7 +418,7 @@ def test_hist24_blend_is_deterministic():
         "location_id": [1],
         "target_start": [pd.Timestamp("2026-01-08 05:00:00+05:30")],
     })
-    empty_history = pd.DataFrame(columns=["station_name", "hour_start", "pm25", "source"])
+    empty_history = pd.DataFrame(columns=["station_name", "series_id", "hour_start", "pm25", "source"])
     issue = pd.Timestamp("2026-01-08 10:00:00+05:30")
 
     pred1 = predict_test_with_hist24_blend(train, test, empty_history, issue_time=issue)
@@ -348,7 +448,7 @@ def test_hist24_blend_excludes_future_labels():
         "location_id": [1],
         "target_start": [pd.Timestamp("2026-02-06 02:00:00+05:30")],
     })
-    empty_history = pd.DataFrame(columns=["station_name", "hour_start", "pm25", "source"])
+    empty_history = pd.DataFrame(columns=["station_name", "series_id", "hour_start", "pm25", "source"])
     issue = pd.Timestamp("2026-02-06 00:30:00+05:30")
 
     result = predict_test_with_hist24_blend(train, test, empty_history, issue_time=issue)
@@ -458,3 +558,43 @@ def test_leap_year_alignment_all_key_dates():
     assert d_wrap == 2.0
 
 
+
+
+def test_exp008_missing_recent_history_now_matches_inference():
+    """Preserve the EXP-008 sparse-history case under EXP-009's shared fallback."""
+    from scripts.validate_seasonal_history import _seasonal_baseline_for_fold
+
+    history = _make_history_df("Borivali East, Mumbai - IITM", n_hours=24 * 60)
+    target_start = pd.Timestamp("2026-01-05 10:00:00+05:30")
+    fold_targets = pd.DataFrame({
+        "location_id": [11606],
+        "target_start": [target_start],
+        "cutoff": [target_start - pd.Timedelta(hours=24)],
+    })
+    empty_station_history = pd.Series(
+        dtype=float,
+        index=pd.DatetimeIndex([], tz="Asia/Kolkata", name="target_start"),
+    )
+    validation = _seasonal_baseline_for_fold(
+        history,
+        fold_targets,
+        {11606: empty_station_history},
+    )
+    assert np.isfinite(validation["hist24_blend50_median72"][0])
+
+    # EXP-009 permits the same seasonal-only estimate during inference.
+    train = pd.DataFrame({
+        "location_id": [9999],
+        "target_start": [pd.Timestamp("2026-01-01 00:00:00+05:30")],
+        "pm25": [25.0],
+    })
+    test = pd.DataFrame({
+        "ID": ["target"],
+        "location_id": [11606],
+        "target_start": [target_start],
+    })
+    issue = pd.Timestamp("2026-01-10 00:00:00+05:30")
+    inference = predict_test_with_hist24_blend(train, test, history, issue_time=issue)
+    assert inference.Target.iloc[0] == pytest.approx(
+        validation["hist24_blend50_median72"][0]
+    )

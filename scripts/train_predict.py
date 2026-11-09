@@ -76,6 +76,14 @@ def main() -> None:
         "--model", choices=SUPPORTED_MODELS, default="median72",
         help="Forecasting model to use",
     )
+    parser.add_argument(
+        "--calendar-mode", choices=("legacy_doy", "month_day_365"),
+        default="legacy_doy", help="Seasonal calendar matching mode",
+    )
+    parser.add_argument(
+        "--seasonal-weight", type=float, default=0.5,
+        help="Seasonal blend weight in [0, 1] (hist24 model only)",
+    )
     # Primary argument names
     parser.add_argument(
         "--model-run-time",
@@ -105,6 +113,13 @@ def main() -> None:
     else:
         raise SystemExit("Error: --model-run-time is required")
 
+    if not 0 <= args.seasonal_weight <= 1:
+        parser.error("--seasonal-weight must be in [0, 1]")
+    if args.model == "median72" and args.seasonal_weight != 0.5:
+        parser.error("--seasonal-weight applies only to hist24_blend50_median72")
+    if args.model == "median72" and args.calendar_mode != "legacy_doy":
+        parser.error("--calendar-mode applies only to hist24_blend50_median72")
+
     train, test, sample, stations = load_data(args.data_dir)
 
     # Resolve PM-history cutoff
@@ -121,14 +136,18 @@ def main() -> None:
     # Resolve output path
     if args.output is None:
         ts_tag = model_run_time.strftime("%Y%m%d_%H%M")
-        output = ROOT / "artifacts" / "submissions" / f"{args.model}_{ts_tag}.csv"
+        model_tag = args.model if args.seasonal_weight == 0.5 else f"hist24_blend_w{int(args.seasonal_weight * 100):03d}"
+        if args.calendar_mode == "month_day_365":
+            model_tag += "_calendar365"
+        output = ROOT / "artifacts" / "submissions" / f"{model_tag}_{ts_tag}.csv"
     else:
         output = args.output
 
     output.parent.mkdir(parents=True, exist_ok=True)
 
-    # Generate predictions
     archive_path = args.data_dir / "AdditionalHistory.zip"
+
+    # Generate predictions
     if args.model == "median72":
         prediction = predict_test(
             train, test,
@@ -136,12 +155,17 @@ def main() -> None:
             pm_history_cutoff=pm_history_cutoff,
         )
     elif args.model == "hist24_blend50_median72":
-        history_2024 = load_2024_history(archive_path)
+        if args.calendar_mode == "legacy_doy" and hasattr(load_2024_history, "__wrapped__"):
+            from mumbai_pm25.historical_archive import load_legacy_2024_history
+            history_2024 = load_legacy_2024_history(archive_path)
+        else:
+            history_2024 = load_2024_history(archive_path)
         prediction = predict_test_with_hist24_blend(
             train, test, history_2024,
             issue_time=model_run_time,
             pm_history_cutoff=pm_history_cutoff,
-            blend_weight_hist24=0.5,
+            blend_weight_hist24=args.seasonal_weight,
+            calendar_mode=args.calendar_mode,
         )
     elif args.model == "ensemble_accuracy":
         history_2024 = load_2024_history(archive_path)
@@ -186,7 +210,7 @@ def main() -> None:
     elif args.model == "ensemble_balanced":
         weights = "0.20 * CatBoost_log1p + 0.80 * Seasonal_Blend50"
     elif args.model == "hist24_blend50_median72":
-        weights = "0.50 * hist24_same_hour_mean + 0.50 * median72"
+        weights = f"{args.seasonal_weight:.2f} * hist24_same_hour_mean + {1 - args.seasonal_weight:.2f} * median72"
 
     manifest_path = output.with_suffix(".manifest.txt")
     write_manifest(
@@ -198,9 +222,10 @@ def main() -> None:
         pm_history_cutoff=pm_history_cutoff,
         train=train,
         stations=stations,
-        model=args.model,
+        model=args.model if args.calendar_mode == "legacy_doy" else f"{args.model}_calendar365",
         extra_sources=[archive_path],
         ensemble_weights=weights,
+        calendar_mode=args.calendar_mode,
     )
     print(f"Wrote manifest to {manifest_path}")
 

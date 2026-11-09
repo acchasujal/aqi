@@ -1,0 +1,20 @@
+[
+  {
+    "original_filename": "f65626933fa022c9da340289d7db86e7.grib",
+    "sha256": "63cee70731bef9368b024aa8d629dfb61787af45483e952e41b8349cc27e2abf",
+    "size_bytes": 113256,
+    "raw_path": "data/external/weather/incoming/f65626933fa022c9da340289d7db86e7.grib",
+    "local_preservation_time_utc": "2026-11-08T18:18:04.687446+00:00",
+    "original_retrieval_time_utc": null,
+    "download_url": null
+  },
+  {
+    "original_filename": "gfs.t06z.pgrb2.0p25.f061",
+    "sha256": "07379d81726f0c0f258f43f05c31cd6390f932b053d171e01023b1b5fdfb3016",
+    "size_bytes": 1564,
+    "raw_path": "data/external/weather/incoming/gfs.t06z.pgrb2.0p25.f061",
+    "local_preservation_time_utc": "2026-11-08T18:18:04.689584+00:00",
+    "original_retrieval_time_utc": null,
+    "download_url": null
+  }
+]

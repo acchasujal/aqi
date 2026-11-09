@@ -1,0 +1,44 @@
+{
+  "seed": 20261108,
+  "gap_hours": 193,
+  "selected_families": {
+    "recent": "median24",
+    "anomaly": "archive_decay168",
+    "supervised": "lgbm_sqrt"
+  },
+  "development_best": "blend_recent_50",
+  "candidates": [
+    "median24",
+    "median72",
+    "median168",
+    "ewm72",
+    "diur7",
+    "diurnal7_raw",
+    "hour_week4",
+    "recent_shrink72",
+    "recent_shrink168",
+    "P_fix",
+    "archive_decay72",
+    "archive_decay168",
+    "archive_piecewise",
+    "archive_constant50",
+    "current_decay168",
+    "current_constant50",
+    "lgbm_delta",
+    "lgbm_logratio",
+    "lgbm_sqrt"
+  ],
+  "blends": [
+    "blend_recent_25",
+    "blend_recent_50",
+    "blend_recent_75",
+    "blend_anomaly_25",
+    "blend_anomaly_50",
+    "blend_anomaly_75",
+    "blend_supervised_25",
+    "blend_supervised_50",
+    "blend_supervised_75"
+  ],
+  "promotion_rule": "Require negative upper95 paired RMSE delta in development and confirmation, majority origin and station wins in both; historical confirmation is previously inspected so retain provisional status.",
+  "holdout_limit": "Historical rows previously inspected; confirmation is chronological, not blind."
+}

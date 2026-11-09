@@ -1,0 +1,91 @@
+{
+  "development_best": "P_fix",
+  "parameters": "experiments/EXP-20261108-024.yaml",
+  "production_model": "P_fix",
+  "promotion": false,
+  "reason": "Historical confirmation is analyst-exposed; fresh evidence required.",
+  "gates": {
+    "development": {
+      "cal_offset": {
+        "model": "cal_offset",
+        "comparator": "P_fix",
+        "origins": 69,
+        "block_origins": 4,
+        "rmse_delta": 0.3757411055667035,
+        "lower95": 0.15365967198305838,
+        "upper95": 8.954050243393441,
+        "origin_wins": 7,
+        "seed": 20261108,
+        "station_wins": 1,
+        "passes_statistical_gate": false
+      },
+      "cal_affine": {
+        "model": "cal_affine",
+        "comparator": "P_fix",
+        "origins": 69,
+        "block_origins": 4,
+        "rmse_delta": 0.42553499286259466,
+        "lower95": 0.16392190346351754,
+        "upper95": 9.880052612815724,
+        "origin_wins": 6,
+        "seed": 20261108,
+        "station_wins": 0,
+        "passes_statistical_gate": false
+      },
+      "cal_huber": {
+        "model": "cal_huber",
+        "comparator": "P_fix",
+        "origins": 69,
+        "block_origins": 4,
+        "rmse_delta": 0.0017014531086942952,
+        "lower95": -0.10089837353545814,
+        "upper95": 0.13167574646522884,
+        "origin_wins": 34,
+        "seed": 20261108,
+        "station_wins": 2,
+        "passes_statistical_gate": false
+      }
+    },
+    "confirmation": {
+      "cal_offset": {
+        "model": "cal_offset",
+        "comparator": "P_fix",
+        "origins": 8,
+        "block_origins": 4,
+        "rmse_delta": 6.3143436042155,
+        "lower95": 4.419154499352139,
+        "upper95": 10.084383332785368,
+        "origin_wins": 1,
+        "seed": 20261108,
+        "station_wins": 0,
+        "passes_statistical_gate": false
+      },
+      "cal_affine": {
+        "model": "cal_affine",
+        "comparator": "P_fix",
+        "origins": 8,
+        "block_origins": 4,
+        "rmse_delta": 6.149703999693431,
+        "lower95": 2.895117029181776,
+        "upper95": 11.758640579328546,
+        "origin_wins": 1,
+        "seed": 20261108,
+        "station_wins": 0,
+        "passes_statistical_gate": false
+      },
+      "cal_huber": {
+        "model": "cal_huber",
+        "comparator": "P_fix",
+        "origins": 8,
+        "block_origins": 4,
+        "rmse_delta": 0.13974119588516132,
+        "lower95": -0.7508218765068957,
+        "upper95": 1.5137878076025046,
+        "origin_wins": 6,
+        "seed": 20261108,
+        "station_wins": 3,
+        "passes_statistical_gate": false
+      }
+    }
+  }
+}

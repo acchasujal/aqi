@@ -1,0 +1,35 @@
+feature,source,availability,cutoff_rule,role
+station_11606,Stations.csv,known at issue,static target identity,station one-hot
+station_11611,Stations.csv,known at issue,static target identity,station one-hot
+station_3409510,Stations.csv,known at issue,static target identity,station one-hot
+station_3409511,Stations.csv,known at issue,static target identity,station one-hot
+lead_hours,Test target calendar and PM cutoff,known at issue,target start minus simulated PM cutoff,nominal horizon
+actual_lead_hours,Test target calendar and eligible PM history,known at issue,target start minus last eligible PM interval end,station horizon
+hour_sin,Test target calendar,known at issue,target start only,cyclical hour
+hour_cos,Test target calendar,known at issue,target start only,cyclical hour
+doy_sin,Test target calendar,known at issue,target start only,cyclical season
+doy_cos,Test target calendar,known at issue,target start only,cyclical season
+weekday_sin,Test target calendar,known at issue,target start only,cyclical weekday
+weekday_cos,Test target calendar,known at issue,target start only,cyclical weekday
+issue_hour,simulated issue clock,known at issue,explicit issue timestamp,origin calendar
+issue_month,simulated issue clock,known at issue,explicit issue timestamp,origin calendar
+last_pm,Train PM history,known at issue,last nonmissing station PM interval ending by cutoff,recent level
+age_hours,Train PM history,known at issue,cutoff minus last eligible interval start,staleness
+median6,Train PM history,known at issue,elapsed 6h window before PM cutoff,recent level
+median12,Train PM history,known at issue,elapsed 12h window before PM cutoff,recent level
+median24,Train PM history,known at issue,elapsed 24h window before PM cutoff,recent level
+median48,Train PM history,known at issue,elapsed 48h window before PM cutoff,recent level
+median72,Train PM history,known at issue,elapsed 72h window before PM cutoff,recent level
+mean24,Train PM history,known at issue,elapsed 24h window before PM cutoff,recent level
+mean72,Train PM history,known at issue,elapsed 72h window before PM cutoff,recent level
+std72,Train PM history,known at issue,elapsed 72h window before PM cutoff,recent variation
+min24,Train PM history,known at issue,elapsed 24h window before PM cutoff,recent range
+max24,Train PM history,known at issue,elapsed 24h window before PM cutoff,recent range
+available24,Train PM history,known at issue,number of observed station-hours in prior 24 elapsed hours,history coverage
+available72,Train PM history,known at issue,number of observed station-hours in prior 72 elapsed hours,history coverage
+missing_fraction72,Train PM history,known at issue,one minus available72 divided by 72,history coverage
+trend24,Train PM history,known at issue,median prior 24h minus median preceding 24h,robust trend
+station_history_median,Train PM history,known at issue,median over eligible station history only,station baseline
+station_history_iqr,Train PM history,known at issue,IQR over eligible station history only,station variation
+seasonal_pm,AdditionalHistory 2024,historical before issue,legacy same-hour ±14 day archive lookup,seasonal prior
+w50,eligible Train PM plus AdditionalHistory 2024,known at issue,shared 50:50 fallback contract,baseline or residual anchor

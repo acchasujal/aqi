@@ -1,0 +1,74 @@
+{
+  "private:11606": {
+    "rows": 48,
+    "changed": 48,
+    "mean_absolute_difference": 3.7888231631333356,
+    "max_absolute_difference": 8.412939614053712,
+    "prediction_min": 41.772366797932364,
+    "prediction_median": 42.961230514234586,
+    "prediction_max": 43.862740210507695
+  },
+  "private:11611": {
+    "rows": 48,
+    "changed": 48,
+    "mean_absolute_difference": 5.113571032476624,
+    "max_absolute_difference": 21.782199278253863,
+    "prediction_min": 45.83375673840128,
+    "prediction_median": 51.59345370027216,
+    "prediction_max": 58.0165018617632
+  },
+  "private:3409510": {
+    "rows": 48,
+    "changed": 48,
+    "mean_absolute_difference": 13.87872283374656,
+    "max_absolute_difference": 18.193654306311657,
+    "prediction_min": 33.36354647791275,
+    "prediction_median": 35.629781111594156,
+    "prediction_max": 38.97136693435344
+  },
+  "private:3409511": {
+    "rows": 48,
+    "changed": 48,
+    "mean_absolute_difference": 7.222177299336411,
+    "max_absolute_difference": 41.540986609691025,
+    "prediction_min": 40.82087080042001,
+    "prediction_median": 42.00570082699676,
+    "prediction_max": 51.93823343546581
+  },
+  "public:11606": {
+    "rows": 48,
+    "changed": 48,
+    "mean_absolute_difference": 5.717865678691354,
+    "max_absolute_difference": 10.58860261926909,
+    "prediction_min": 35.153496320825596,
+    "prediction_median": 35.49400980156963,
+    "prediction_max": 37.06053231972707
+  },
+  "public:11611": {
+    "rows": 48,
+    "changed": 48,
+    "mean_absolute_difference": 9.33579880590858,
+    "max_absolute_difference": 26.16852772208211,
+    "prediction_min": 38.34283194436852,
+    "prediction_median": 41.650041998646145,
+    "prediction_max": 48.92599560352623
+  },
+  "public:3409510": {
+    "rows": 48,
+    "changed": 48,
+    "mean_absolute_difference": 21.58420598937542,
+    "max_absolute_difference": 26.81754849222244,
+    "prediction_min": 25.093309357216796,
+    "prediction_median": 25.709418497324606,
+    "prediction_max": 27.775935704073866
+  },
+  "public:3409511": {
+    "rows": 48,
+    "changed": 48,
+    "mean_absolute_difference": 4.415442222072049,
+    "max_absolute_difference": 4.752610451361193,
+    "prediction_min": 35.22238954863881,
+    "prediction_median": 35.44540088198532,
+    "prediction_max": 36.31763470078667
+  }
+}

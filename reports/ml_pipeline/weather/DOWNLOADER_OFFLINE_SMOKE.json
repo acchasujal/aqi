@@ -1,0 +1,6 @@
+{
+  "atomic_exclusive_publication": "passed",
+  "real_eccodes_validation": "passed",
+  "verified_skip_without_network": "passed",
+  "sha256": "07379d81726f0c0f258f43f05c31cd6390f932b053d171e01023b1b5fdfb3016"
+}
