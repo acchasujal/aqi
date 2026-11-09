@@ -39,7 +39,9 @@ class SupervisedForecaster:
             return np.log1p(y_clean)
         elif self.target_transform == "residual_median72":
             baseline = X["median_72"].to_numpy(dtype=float) if "median_72" in X else 40.0
-            return y_clean - baseline
+            # Clip extreme unphysical sensor corruption spikes (>500 ug/m3) to prevent leaf distortion
+            y_capped = np.clip(y_clean, 0.0, 500.0)
+            return y_capped - baseline
         else:
             raise ValueError(f"Unknown target transformation: {self.target_transform}")
 
@@ -59,11 +61,19 @@ class SupervisedForecaster:
 
     def _prepare_features(self, X: pd.DataFrame) -> pd.DataFrame:
         """Prepare dataframe features for modeling."""
+        import re
         df = X.copy()
-        # Drop raw timestamp columns if present
-        for col in ["target_start", "target_end", "timestamp_ist"]:
+        # Drop raw timestamp, metadata, and string audit columns if present
+        drop_cols = ["target_start", "target_end", "timestamp_ist", "hist24_source_ids", "ID"]
+        for col in drop_cols:
             if col in df.columns:
                 df = df.drop(columns=[col])
+        # Ensure any remaining non-station string/object columns are dropped
+        for col in df.select_dtypes(include=["object", "string"]).columns:
+            if col != "station_id":
+                df = df.drop(columns=[col])
+        # Sanitize column names for LightGBM/JSON compatibility (replace ':', '-', etc. with '_')
+        df.columns = [re.sub(r'[^\w]', '_', str(c)) for c in df.columns]
         return df
 
     def fit(

@@ -610,3 +610,33 @@ Merged TASK008/AirWindow with current main, preserving exact P_fix source select
 - **Decisions added or superseded:** DEC-20261108-14 adopted.
 - **Known limitations / blockers:** None. Awaiting final refreshed `Train.csv` release on 10 November 2026.
 - **Next action:** Final summary delivery to user.
+
+
+### 2026-11-09 — TASK 009: Team Branch Integration, CatBoost Experiments, Data Refresh Audit, and Final Submission Selection
+- **Task / issue:** TASK 009 — Team branch synthesis, refreshed data audit (48,133 rows), CatBoost model benchmarking, and final two-submission selection for 10 Nov 23:59:59 IST deadline.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / [pending commit]
+- **Files changed:** `scripts/run_task009_experiments.py` (new); `reports/team_branch_audit.md` (new); `reports/updated_data_audit.md` (new); `reports/catboost_model_comparison.csv` (new); `reports/all_candidate_comparison.csv` (new); `reports/model_integration_audit.md` (new); `reports/oof_predictions_task009.csv.gz` (new); `TASK009_FINAL_REPORT.md` (new); `src/mumbai_pm25/models/supervised.py`; `src/mumbai_pm25/forecast.py`; `scripts/train_predict.py`; `scripts/prepare_task008_submission.py`; `tests/test_independent_verification.py`; `artifacts/submissions/submission_1_primary_candidate_C.csv` (new); `artifacts/submissions/submission_1_primary_candidate_C.manifest.txt` (new); `artifacts/submissions/submission_2_hedge_candidate_B.csv` (new); `artifacts/submissions/submission_2_hedge_candidate_B.manifest.txt` (new); `artifacts/submissions/submission_refined_blend_E.csv` (new); `artifacts/submissions/submission_refined_blend_E.manifest.txt` (new); `DECISIONS.md`; `PROGRESS.md`.
+- **Work completed:**
+  1. Audited all teammate branches (`origin/task007-final-model-optimisation`, `origin/task008-final-gap-execution`, AirWindow 2.0/2.1, NOAA weather pipeline) and resolved merge conflicts cleanly on `feat/competition-ml-pipeline` (commit `efa053a`).
+  2. Audited refreshed `Train.csv` (48,133 rows with observations up to 9 Nov 07:00 IST), verifying that the forecast lead time to the private window is 41–43h (spanning 41h to 90h across the block) and that the 7–8 Nov public window is omitted without target leakage.
+  3. Benchmarked 17 models and ensembles across 9 chronological validation folds ($N=1,460$): CatBoost Residual (RMSE 28.17), Candidate C (RMSE 28.20, Winter RMSE 40.07), Refined Blend E (RMSE 27.69), Candidate D (RMSE 28.39), Candidate B (RMSE 29.18, Clean RMSE 8.35).
+  4. Diagnosed tree-tree blending failure: CatBoost log1p and LightGBM log1p share a 0.969 residual correlation and both severely underpredict winter inversion levels (bias < -10.5).
+  5. Discovered 241,587 µg/m³ raw sensor corruption spike in `Train.csv`; implemented training target clipping safeguard (>500 µg/m³) in `SupervisedForecaster` for linear residual models.
+  6. Generated and verified final submission pair on refreshed data with cryptographic manifests: Submission 1 (Candidate C / Primary) and Submission 2 (Candidate B / Robust Hedge), plus Candidate E (Diagnostic Residual Benchmark).
+  7. Formulated comprehensive final report in `TASK009_FINAL_REPORT.md`.
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe scripts/run_task009_experiments.py`
+  - `.\.venv\Scripts\python.exe scripts/train_predict.py --model hist24_blend50_median72 --model-run-time 2026-11-09T14:30:00+05:30 --output artifacts/submissions/submission_1_primary_candidate_C.csv`
+  - `.\.venv\Scripts\python.exe scripts/train_predict.py --model ensemble_robust --model-run-time 2026-11-09T14:30:00+05:30 --output artifacts/submissions/submission_2_hedge_candidate_B.csv`
+  - `.\.venv\Scripts\python.exe scripts/train_predict.py --model ensemble_residual_blend --model-run-time 2026-11-09T14:30:00+05:30 --output artifacts/submissions/submission_refined_blend_E.csv`
+  - `.\.venv\Scripts\python.exe -m pytest -ra` (166 passed in 12.94s)
+  - `.\.venv\Scripts\python.exe -m ruff check scripts/ src/ tests/` (all passed)
+- **Tests and exact results:** 166 passed across full test suite. Zero failures.
+- **Experiment IDs / metrics:**
+  - Candidate C: Pooled RMSE 28.20, Winter RMSE 40.07, Bias -3.47, Private Mean 58.46 µg/m³.
+  - Candidate B: Pooled RMSE 29.18, Clean RMSE 8.35, Private Mean 61.84 µg/m³.
+  - Candidate E: Pooled RMSE 27.69, Private Mean 57.61 µg/m³.
+- **Decisions added or superseded:** DEC-20261109-19 adopted.
+- **Known limitations / blockers:** None. Ready for upload before 10 November 23:59:59 IST.
+- **Next action:** Final commit on `feat/competition-ml-pipeline` and final presentation.

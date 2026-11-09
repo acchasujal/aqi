@@ -1,0 +1,37 @@
+model: ensemble_residual_blend
+ensemble_weights: 0.50 * CatBoost_residual_median72 + 0.50 * Seasonal_Blend50
+model_run_time: 2026-11-09T14:30:00+05:30
+pm_history_cutoff_global: 2026-11-09T07:00:00+05:30
+git_commit: efa053a862a66b4035294d72faf29b961567df19
+git_working_tree: modified
+python: 3.11.9
+platform: Windows-10-10.0.26300-SP0
+pandas: 3.1.1
+numpy: 2.4.6
+lightgbm: 4.7.0
+catboost: 1.2.10
+xgboost: 3.2.0
+scikit_learn: 1.9.1
+weather: disabled
+history_window_hours: 72
+seasonal_archive: History_Mumbai_2024.csv.gz (cpcb_caaqm, exact series_id lookup)
+seasonal_calendar_mode: legacy_doy
+output_file: submission_refined_blend_E.csv
+output_sha256: de55f5240e7d7379974e8d2f36f7af1a87863e30f70c119e89976debb206fc64
+station_pm_history_cutoffs:
+  11606: 2026-11-09T06:00:00+05:30
+  11611: 2026-11-09T07:00:00+05:30
+  3409510: 2026-11-09T05:00:00+05:30
+  3409511: 2026-11-09T07:00:00+05:30
+station_names:
+  11606: Borivali East, Mumbai - IITM
+  11611: Malad West, Mumbai - IITM
+  3409510: Byculla, Mumbai - BMC
+  3409511: Shivaji Nagar, Mumbai - BMC
+input_sha256:
+  Train.csv: e107dda18670583c333be0966530fc444c18fdb30c870156ac25688a2c152210
+  Test.csv: cdb2b6c3035f6331848c565b4d3dd89ac5281efab07fa62bfabc2e7ff172db0a
+  SampleSubmission.csv: 5806d6109f381043e59fffb48a5d0af5d9de56fd4e0e956e4c5e7f2e6ae5dcd9
+  Stations.csv: 383269fa04abf8f2eb49e5ec0bb5a77c2df11acb6aca996b7edf269a109ee9cf
+  DataDictionary.txt: fd05ea59917978574d5e89feded505510a646f0800ab78541247a6a5ad0ec4d3
+  AdditionalHistory.zip: 3233061ca4ac2af39e9f6e80e21d9261b1b8d2fd3b037e5d034bcec059a7e80e

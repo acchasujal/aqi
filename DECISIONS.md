@@ -191,3 +191,20 @@ Every technical decision must include:
 - **Confidence:** high for deterministic arithmetic/artifact preservation and tested Chrome paths; limited for human usability, accessibility certification and public platform readiness.
 - **Alternatives:** rebuild UI, fabricate demonstration/freshness/calibration, add external APIs, or block engineering on Firebase access. Rejected: unnecessary scope or unsupported evidence.
 - **Consequences:** original scientific claims/data remain fixed; no probabilities or health guarantees. Firebase needs authenticated existing Spark access; form returned 401 and requires human verification/submission. Native URL verification stopped Computer Use, so native zoom/print dialog are not claimed. Local print output and reflow are verified.
+
+## DEC-20261109-19 [Task009-Selection] — Adopt Candidate C and Candidate B as Final Challenge Submissions on Refreshed 9 November Data
+
+- **Date / owner:** 2026-11-09 / Senior Data Scientist, ML Engineer, and Software Architect
+- **Status:** Adopted for final submission to Zindi Google Mumbai Data Challenge.
+- **Context:** Refreshed official data release (`Train.csv`, 48,133 rows with observations up to 9 Nov 07:00 IST) shortens the forecast lead time from 193h to 41–43h before the private evaluation window (11–12 Nov 2026, 192 target hours). All teammate branches were audited and merged on `feat/competition-ml-pipeline`.
+- **Decision:** Select **Submission 1 (Primary): Candidate C** (`submission_1_primary_candidate_C.csv` / `hist24_blend50_median72`) and **Submission 2 (Robust Hedge): Candidate B** (`submission_2_hedge_candidate_B.csv` / `ensemble_robust`). Maintain **Candidate E (Residual Blend)** (`submission_refined_blend_E.csv` / `ensemble_residual_blend`) as diagnostic benchmark. Implement training-target clipping safeguard (>500 µg/m³) in `SupervisedForecaster` for linear residual models.
+- **Evidence:** 9-fold chronological validation ($N=1,460$ across all 4 stations):
+  - Candidate C: Pooled RMSE 28.20, Winter RMSE 40.07 (lowest individual winter error), Mean Bias -3.47.
+  - Candidate B: Pooled RMSE 29.18, Autumn RMSE 12.41, Clean-regime ($y < 50$) RMSE 8.35 (lowest among all candidates).
+  - Pure GBDT models (CatBoost log1p, LightGBM log1p, Tree-Tree blends) suffer severe winter underprediction (bias < -10.5, winter RMSE > 46.5) due to high residual correlation (0.969) and lack of winter inversion training examples.
+  - Raw `Train.csv` contains an extreme sensor corruption spike of 241,587 µg/m³; `log1p` organically dampens it, while `residual_median72` requires training target clipping to prevent leaf distortion.
+  - Full test suite passes: 166 passing tests, 0 failures. All generated submissions strictly comply with 2,592-row, non-negative, finite, and ID format constraints with cryptographic manifests.
+- **Confidence:** High for leak-free reproducibility, lead-time alignment, and dual-regime protection; private leaderboard will reflect mid-November winter atmospheric progression.
+- **Alternatives considered:** Pure tree-tree blending (rejected: residual correlation 0.969, fails in winter); single CatBoost log1p (rejected: underpredicts winter levels by >10 µg/m³); arbitrary public-LB multiplier tuning (rejected: overfits clean 2-day public window and catastrophic on private winter inversion).
+- **Consequences:** Submissions 1 and 2 are cryptographically sealed in `artifacts/submissions/` with complete `.manifest.txt` records ready for the 10 November 23:59:59 IST deadline.
+

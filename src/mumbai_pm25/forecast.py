@@ -331,8 +331,9 @@ def predict_test_ensemble(
     }
 
     # Sample historical training origins strictly prior to cutoff
-    gap = int((test["target_start"].min() - effective_cutoff).total_seconds() / 3600.0)
-    gap = max(48, min(120, gap))
+    priv_start = pd.Timestamp("2026-11-11 00:00:00", tz="Asia/Kolkata")
+    actual_private_gap = int((priv_start - effective_cutoff).total_seconds() / 3600.0)
+    gap = max(41, min(120, actual_private_gap))
 
     origins = pd.date_range(
         train.target_start.min() + pd.Timedelta(days=21),
@@ -372,7 +373,6 @@ def predict_test_ensemble(
 
     # Build features for test rows with aligned in-distribution block horizon (1..48)
     test_df = test.copy()
-    priv_start = pd.Timestamp("2026-11-11 00:00:00", tz="Asia/Kolkata")
     offset_h = (
         (test_df["target_start"] - priv_start).dt.total_seconds() / 3600.0
     ).astype(int)
@@ -391,26 +391,36 @@ def predict_test_ensemble(
         include_spatial=True,
     )
 
-    # Fit CatBoost log1p
-    cb_model = SupervisedForecaster(
-        model_family="catboost",
-        target_transform="log1p",
-        params={"iterations": 150, "learning_rate": 0.05, "depth": 6},
-    )
-    cb_model.fit(X_train, y_train)
-    p_cb = cb_model.predict(X_test)
-
-    if ensemble_type == "accuracy":
-        # 83% CatBoost log1p + 17% Statistical Blend
-        final_preds = 0.83 * p_cb + 0.17 * p_stat
-    elif ensemble_type == "robust":
-        # 50% CatBoost log1p + 50% Statistical Blend
-        final_preds = 0.50 * p_cb + 0.50 * p_stat
-    elif ensemble_type == "balanced":
-        # 20% CatBoost log1p + 80% Statistical Blend (Strategy D)
-        final_preds = 0.20 * p_cb + 0.80 * p_stat
+    if ensemble_type == "residual_blend":
+        cb_res = SupervisedForecaster(
+            model_family="catboost",
+            target_transform="residual_median72",
+            params={"iterations": 150, "learning_rate": 0.05, "depth": 6},
+        )
+        cb_res.fit(X_train, y_train)
+        p_cb_res = cb_res.predict(X_test)
+        final_preds = 0.50 * p_cb_res + 0.50 * p_stat
     else:
-        raise ValueError(f"Unknown ensemble type: {ensemble_type}")
+        # Fit CatBoost log1p
+        cb_model = SupervisedForecaster(
+            model_family="catboost",
+            target_transform="log1p",
+            params={"iterations": 150, "learning_rate": 0.05, "depth": 6},
+        )
+        cb_model.fit(X_train, y_train)
+        p_cb = cb_model.predict(X_test)
+
+        if ensemble_type == "accuracy":
+            # 83% CatBoost log1p + 17% Statistical Blend
+            final_preds = 0.83 * p_cb + 0.17 * p_stat
+        elif ensemble_type == "robust":
+            # 50% CatBoost log1p + 50% Statistical Blend
+            final_preds = 0.50 * p_cb + 0.50 * p_stat
+        elif ensemble_type == "balanced":
+            # 20% CatBoost log1p + 80% Statistical Blend (Strategy D)
+            final_preds = 0.20 * p_cb + 0.80 * p_stat
+        else:
+            raise ValueError(f"Unknown ensemble type: {ensemble_type}")
 
     out = test[["ID"]].copy()
     out["Target"] = np.maximum(0.0, final_preds)

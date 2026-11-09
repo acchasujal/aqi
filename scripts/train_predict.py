@@ -48,6 +48,7 @@ SUPPORTED_MODELS = (
     "ensemble_accuracy",
     "ensemble_robust",
     "ensemble_balanced",
+    "ensemble_residual_blend",
 )
 
 
@@ -191,6 +192,14 @@ def main() -> None:
             pm_history_cutoff=pm_history_cutoff,
             ensemble_type="balanced",
         )
+    elif args.model == "ensemble_residual_blend":
+        history_2024 = load_2024_history(archive_path)
+        prediction = predict_test_ensemble(
+            train, test, history_2024,
+            issue_time=model_run_time,
+            pm_history_cutoff=pm_history_cutoff,
+            ensemble_type="residual_blend",
+        )
     else:
         raise SystemExit(f"Unknown model: {args.model!r}")
 
@@ -209,6 +218,8 @@ def main() -> None:
         weights = "0.50 * CatBoost_log1p + 0.50 * Seasonal_Blend50"
     elif args.model == "ensemble_balanced":
         weights = "0.20 * CatBoost_log1p + 0.80 * Seasonal_Blend50"
+    elif args.model == "ensemble_residual_blend":
+        weights = "0.50 * CatBoost_residual_median72 + 0.50 * Seasonal_Blend50"
     elif args.model == "hist24_blend50_median72":
         weights = f"{args.seasonal_weight:.2f} * hist24_same_hour_mean + {1 - args.seasonal_weight:.2f} * median72"
 
