@@ -2,7 +2,7 @@ model: ensemble_residual_blend
 ensemble_weights: 0.50 * CatBoost_residual_median72 + 0.50 * Seasonal_Blend50
 model_run_time: 2026-11-09T14:30:00+05:30
 pm_history_cutoff_global: 2026-11-09T07:00:00+05:30
-git_commit: efa053a862a66b4035294d72faf29b961567df19
+git_commit: b2f667b2f70aae9baa9e206a3be1ac6d4c0dfba5
 git_working_tree: modified
 python: 3.11.9
 platform: Windows-10-10.0.26300-SP0
@@ -17,7 +17,7 @@ history_window_hours: 72
 seasonal_archive: History_Mumbai_2024.csv.gz (cpcb_caaqm, exact series_id lookup)
 seasonal_calendar_mode: legacy_doy
 output_file: submission_refined_blend_E.csv
-output_sha256: de55f5240e7d7379974e8d2f36f7af1a87863e30f70c119e89976debb206fc64
+output_sha256: 0e89c48c73def8566843d85e9e5042006f8b0e371b3a95887c7fba54b091c42a
 station_pm_history_cutoffs:
   11606: 2026-11-09T06:00:00+05:30
   11611: 2026-11-09T07:00:00+05:30

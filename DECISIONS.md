@@ -208,3 +208,20 @@ Every technical decision must include:
 - **Alternatives considered:** Pure tree-tree blending (rejected: residual correlation 0.969, fails in winter); single CatBoost log1p (rejected: underpredicts winter levels by >10 µg/m³); arbitrary public-LB multiplier tuning (rejected: overfits clean 2-day public window and catastrophic on private winter inversion).
 - **Consequences:** Submissions 1 and 2 are cryptographically sealed in `artifacts/submissions/` with complete `.manifest.txt` records ready for the 10 November 23:59:59 IST deadline.
 
+## DEC-20261109-20 [Task010-Candidate-E] — Promote Candidate E to Primary Submission Alongside Candidate C
+
+- **Date / owner:** 2026-11-09 / Senior Data Scientist, ML Engineer, and Software Architect
+- **Status:** Adopted for final challenge submission.
+- **Context:** Targeted audit of Candidate E (50% CatBoost Residual + 50% Candidate C) vs Candidate B, evaluation of training target clipping, and horizon resolution across all 9 chronological folds ($N=1,460$).
+- **Decision:** Promote Candidate E (`submission_1_primary_candidate_E.csv` / `ensemble_residual_blend`) as the **Primary Submission (Submission 1)**. Select Candidate C (`submission_2_hedge_candidate_C.csv` / `hist24_blend50_median72`) as the **Robust Non-Parametric Hedge (Submission 2)**. Maintain Candidate B (`submission_2_hedge_candidate_B.csv`) as alternative clean-regime hedge. Set the residual training ceiling to 2,000 µg/m³ to reject multi-thousand instrument error codes without clipping legitimate atmospheric winter events (up to 700 µg/m³).
+- **Evidence:**
+  - Candidate E achieves Pooled RMSE **27.69** (lowest across all 17 models evaluated), Autumn RMSE **12.10**, Winter RMSE **39.91**, and MAE **11.79**.
+  - Candidate E outperforms Candidate B on **all four stations** (13.34 vs 15.04 at 11606; 16.57 vs 18.36 at 11611; 12.75 vs 12.91 at 3409510; 49.85 vs 52.07 at 3409511).
+  - Block bootstrap (10,000 resamples): Mean $\Delta\text{RMSE}(B - E) = +1.416\,\mu\text{g}/\text{m}^3$, 95% CI `[+0.170, +2.393]` (strictly positive). Probability that Candidate E beats Candidate B is **98.9%**. Probability of beating Candidate C is **93.2%**.
+  - Target clipping experiments show clipping training targets at 500 µg/m³ degrades winter RMSE from 40.31 to 45.27 (+4.96 penalty). Legitimate winter peaks reach 500–688 µg/m³ at Shivaji Nagar; an overflow ceiling at 2,000 µg/m³ protects against logger error codes (e.g. 99,999, 241,587) while preserving 100% of physical atmospheric dynamics.
+  - Forecast horizon resolved: 41–43h is onset latency; 41–90h is full 48-hour block evaluation span.
+- **Confidence:** High based on matched chronological folds, non-parametric paired bootstrap, and physical atmospheric calibration.
+- **Alternatives considered:** Pairing Candidate C + Candidate B (inferior: Candidate B loses to E on all stations and in 98.9% of bootstrap iterations); pairing Candidate E + Candidate B (rejected: both depend on CatBoost, losing non-parametric independence).
+- **Consequences:** The final submission pair comprises Candidate E (empirical maximum skill) and Candidate C (non-parametric physical safety), providing the optimal risk-adjusted competitive edge.
+
+

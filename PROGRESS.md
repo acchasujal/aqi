@@ -640,3 +640,28 @@ Merged TASK008/AirWindow with current main, preserving exact P_fix source select
 - **Decisions added or superseded:** DEC-20261109-19 adopted.
 - **Known limitations / blockers:** None. Ready for upload before 10 November 23:59:59 IST.
 - **Next action:** Final commit on `feat/competition-ml-pipeline` and final presentation.
+
+
+### 2026-11-09 — TASK 010: Candidate E vs B Targeted Audit, Target Clipping Evaluation, and Final Submission Selection
+- **Task / issue:** TASK 010 — Comprehensive audit of Candidate E vs Candidate B and Candidate C, training target clipping ablation, forecast horizon resolution, and final submission determination.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / [pending commit]
+- **Files changed:** `scripts/audit_target_clipping.py` (new); `scripts/audit_candidate_e_vs_b.py` (new); `reports/training_target_clipping_audit.md` (new); `reports/forecast_horizon_resolution.md` (new); `reports/clipping_audit_comparison.csv` (new); `reports/clipping_per_fold.csv` (new); `reports/clipping_audit_predictions.csv.gz` (new); `reports/candidate_E_vs_B_metrics.csv` (new); `reports/candidate_E_vs_B_correlations.csv` (new); `reports/candidate_E_vs_B_hybrids.csv` (new); `reports/candidate_E_vs_B_stations.csv` (new); `reports/candidate_E_vs_B_folds.csv` (new); `artifacts/submissions/submission_1_primary_candidate_E.csv` (new); `artifacts/submissions/submission_1_primary_candidate_E.manifest.txt` (new); `artifacts/submissions/submission_2_hedge_candidate_C.csv` (new); `artifacts/submissions/submission_2_hedge_candidate_C.manifest.txt` (new); `src/mumbai_pm25/models/supervised.py`; `TASK009_FINAL_REPORT.md`; `DECISIONS.md`; `PROGRESS.md`.
+- **Work completed:**
+  1. Executed targeted Candidate E vs Candidate B and Candidate C audit on identical 9 chronological folds ($N=1,460$): Candidate E achieves lowest Pooled RMSE (27.69), lowest Winter RMSE (39.91), lowest MAE (11.79), and beats Candidate B on all 4 stations.
+  2. Conducted 10,000-resample Block Bootstrap by fold: mean delta RMSE (B - E) is +1.416 µg/m³ with strictly positive 95% CI `[+0.170, +2.393]`, proving Candidate E beats Candidate B with 98.9% probability, and beats Candidate C with 93.2% probability.
+  3. Audited training target clipping: showed clipping training labels at 500 µg/m³ degrades winter RMSE from 40.31 to 45.27 (+4.96 penalty) because legitimate atmospheric winter spikes reach 500–688 µg/m³. Identified multi-thousand values (e.g. 99,999 error code and 241,587 overflow) and set an instrument overflow ceiling at 2,000 µg/m³ to protect against data logging codes without clipping real atmospheric events.
+  4. Resolved the 41–43h vs 41–90h horizon distinction: 41–43h is the initial forecast onset latency from the latest station observation to the start of the private window; 41–90h is the full spectrum of evaluated lead times across all 48 hours of the private block.
+  5. Verified complete branch integration: confirmed `feat/competition-ml-pipeline` contains all commits from `origin/main`, `origin/feature/task007-final-model-optimisation`, and `origin/feature/task008-final-gap-execution` with 0 missing commits.
+  6. Finalized canonical submissions: designated Candidate E as Submission 1 (Primary, SHA256: `0e89c48c...`) and Candidate C as Submission 2 (Robust Hedge, SHA256: `a198cb11...`), with Candidate B preserved as clean-regime alternative.
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe scripts/audit_target_clipping.py`
+  - `.\.venv\Scripts\python.exe scripts/audit_candidate_e_vs_b.py`
+  - `.\.venv\Scripts\python.exe scripts/train_predict.py --model ensemble_residual_blend --model-run-time 2026-11-09T14:30:00+05:30 --output artifacts/submissions/submission_refined_blend_E.csv`
+  - `.\.venv\Scripts\python.exe -m pytest -ra`
+  - `.\.venv\Scripts\python.exe -m ruff check scripts/ src/ tests/`
+- **Tests and exact results:** 166 passed in 22.42s across full test suite. Zero failures.
+- **Experiment IDs / metrics:** Candidate E Pooled RMSE 27.69, Winter RMSE 39.91; Candidate C Pooled RMSE 28.20, Winter RMSE 40.07; Candidate B Pooled RMSE 29.18, Winter RMSE 42.20. Bootstrap win rate: E > B = 98.9%, E > C = 93.2%.
+- **Decisions added or superseded:** DEC-20261109-20 adopted.
+- **Known limitations / blockers:** None. Ready for private leaderboard evaluation.
+- **Next action:** Final commit on `feat/competition-ml-pipeline` and final presentation.

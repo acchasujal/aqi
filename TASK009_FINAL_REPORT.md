@@ -236,5 +236,63 @@ python scripts/train_predict.py \
 
 ---
 
-## 10. Conclusion
-TASK 009 has achieved full team branch synthesis, resolved critical validation and data inconsistencies, identified and rectified sensor corruption dynamics, and delivered two competition-grade submissions engineered specifically for the private evaluation window. Candidates C and B represent the principled equilibrium between physical seasonal expectation and machine learning precision.
+## 10. TASK 010 Targeted Audit: Candidate E vs B, Target Clipping & Final Decision
+
+### 10.1 Candidate E vs Candidate B Statistical Audit
+A targeted evaluation across all 9 chronological folds ($N=1,460$) and 10,000 cluster bootstrap iterations produced the following definitive comparison:
+
+| Metric | Candidate E (Residual Blend) | Candidate C (Statistical Seasonal) | Candidate B (CatBoost log1p Blend) | Difference (E vs B) | E Advantage |
+|---|:---:|:---:|:---:|:---:|:---:|
+| **Pooled RMSE** | **27.69** | 28.20 | 29.18 | **-1.49 µg/m³** | **E wins** |
+| **Autumn RMSE** | **12.10** | 13.67 | 12.41 | **-0.31 µg/m³** | **E wins** |
+| **Winter RMSE** | **39.91** | 40.07 | 42.20 | **-2.29 µg/m³** | **E wins** |
+| **Clean RMSE ($y < 50$)** | 9.90 | 11.51 | **8.35** | +1.55 µg/m³ | B wins |
+| **High RMSE ($y \ge 100$)** | **277.58** | **277.43** | 288.71 | **-11.13 µg/m³** | **E wins** |
+| **MAE** | **11.79** | 12.43 | 12.49 | **-0.70 µg/m³** | **E wins** |
+| **Mean Bias** | **-3.51** | **-3.47** | -7.04 | **+3.53 µg/m³** | **E wins** |
+
+- **Per-Station Wins:** Candidate E outperforms Candidate B on **all four stations**:
+  - Station 11606 (Borivali East): **13.34** (E) vs 15.04 (B)
+  - Station 11611 (Malad West): **16.57** (E) vs 18.36 (B)
+  - Station 3409510 (Byculla): **12.75** (E) vs 12.91 (B)
+  - Station 3409511 (Shivaji Nagar): **49.85** (E) vs 52.07 (B)
+- **Block Bootstrap (10,000 resamples):**
+  - $\Delta\text{RMSE}(B - E) = +1.416\,\mu\text{g}/\text{m}^3$, 95% CI = `[+0.170, +2.393]` (strictly positive).
+  - **Probability that Candidate E outperforms Candidate B: 98.9%.**
+  - **Probability that Candidate E outperforms Candidate C: 93.2%.**
+
+### 10.2 Training Target Clipping Audit
+- In `Train.csv`, readings of 25,000, 50,000, 75,000, 99,999, and 241,587 $\mu\text{g}/\text{m}^3$ represent multi-thousand instrument/overflow codes (e.g. `99999.01` followed by `0.00`).
+- However, legitimate atmospheric winter peaks at Shivaji Nagar reach 500–688 $\mu\text{g}/\text{m}^3$.
+- Controlled experiments on the 9 folds prove that **clipping training targets at 500 µg/m³ severely degrades winter RMSE** (rising from 40.31 to 45.27, a +4.96 penalty) because the tree is artificially barred from predicting legitimate high-pollution winter events.
+- An instrument overflow ceiling at 2,000 $\mu\text{g}/\text{m}^3$ completely protects against multi-thousand logging codes while leaving 100% of authentic atmospheric variation untouched.
+
+### 10.3 Forecast Horizon Discrepancy Resolved
+- **41–43 Hours:** The **initial forecast latency** (onset gap) from the last station observation in `Train.csv` (9 Nov 04:00–06:00 IST) to the start of the private evaluation window (11 Nov 00:00 IST).
+- **41–90 Hours:** The **complete evaluation lead time span** across all 48 consecutive hours of the private block (from 41h at Hour 1 to $41+47=88$h or $43+47=90$h at Hour 48).
+- Both metrics describe the exact same timeline. Final predictions strictly adhere to this timeline.
+
+### 10.4 Final Submission Portfolios & Filenames
+
+The team has two clear, fully verified submission options:
+
+#### Portfolio A (Recommended — Empirical Champion + Physical Seasonal Anchor):
+1. **Submission 1 (Primary): Candidate E**
+   - **File:** `artifacts/submissions/submission_1_primary_candidate_E.csv` (SHA256: `0e89c48c73def8566843d85e9e5042006f8b0e371b3a95887c7fba54b091c42a`)
+   - **Architecture:** 50% CatBoost Residual + 50% Candidate C.
+   - **Rationale:** Ranked #1 overall (Pooled RMSE 27.69, Winter RMSE 39.91), wins on all 4 stations, 98.9% bootstrap win rate.
+2. **Submission 2 (Robust Hedge): Candidate C**
+   - **File:** `artifacts/submissions/submission_2_hedge_candidate_C.csv` (SHA256: `a198cb11186ae65ed88459f2d33d0667bcc9f452b9a9954cbe86bfdd9501493d`)
+   - **Architecture:** 50% 2024 CPCB CAAQM Climatology + 50% Recent 72h Median.
+   - **Rationale:** Pure non-parametric baseline with 0 tree parameters; complete insurance against unexpected tree feature drift or missing sensor anomalies.
+
+#### Portfolio B (Conservative Alternative — Seasonal Prior + Clean Regime Hedge):
+- **Submission 1 (Candidate C):** `artifacts/submissions/submission_1_primary_candidate_C.csv`
+- **Submission 2 (Candidate B):** `artifacts/submissions/submission_2_hedge_candidate_B.csv` (SHA256: `3b8efb1c65dfd0ef4d5af1066504f9028b7680c1cf513ced7e0d4a2faf7fe635`)
+
+Both files in both portfolios contain **exactly 2,592 rows**, strictly match `SampleSubmission.csv` IDs in identical order, and contain strictly finite, non-negative predictions.
+
+---
+
+## 11. Conclusion
+All audits and empirical tests confirm that Candidate E is the strongest predictive model engineered across the entire project, while Candidate C provides the ultimate non-parametric hedge. Combining Candidate E and Candidate C yields the optimal competitive advantage on the unseen private forecasting window.

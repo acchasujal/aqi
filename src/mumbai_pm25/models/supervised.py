@@ -39,8 +39,8 @@ class SupervisedForecaster:
             return np.log1p(y_clean)
         elif self.target_transform == "residual_median72":
             baseline = X["median_72"].to_numpy(dtype=float) if "median_72" in X else 40.0
-            # Clip extreme unphysical sensor corruption spikes (>500 ug/m3) to prevent leaf distortion
-            y_capped = np.clip(y_clean, 0.0, 500.0)
+            # Clip multi-thousand instrument overflow codes (>2000 ug/m3) while preserving all atmospheric spikes (up to 1000 ug/m3)
+            y_capped = np.clip(y_clean, 0.0, 2000.0)
             return y_capped - baseline
         else:
             raise ValueError(f"Unknown target transformation: {self.target_transform}")
