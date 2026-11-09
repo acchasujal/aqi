@@ -1,0 +1,4 @@
+candidate_model,mean_rmse_diff_vs_clim,ci_95_lower,ci_95_upper,excludes_zero,statistically_significant
+Model B: Lead-Bucket Ridge,6.521,-13.152,32.386,False,False
+Model C: LightGBM Residual,39.391,2.588,66.584,True,False
+Model D: OOF Climatology Blend,5.151,-5.405,22.636,False,False

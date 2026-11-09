@@ -1,0 +1,7 @@
+source_mode,description,pooled_rmse,autumn_rmse,winter_rmse,row_count
+p_fix,"P_FIX (Borivali: site_5400, Malad: site_5102/5402)",70.805,86.351,41.933,1460
+series_5113_5102,Series 5113 & 5102 (IITM Primary),47.044,51.022,41.152,1460
+series_5400_5402,Series 5400 & 5402 (Secondary),71.15,86.332,43.325,1460
+equal_weight,Equal-weight Overlapping Average,45.94,49.717,40.364,1460
+timestamp_median,Timestamp Median Overlapping,45.912,49.712,40.296,1460
+train_only,Train-only (No 2024 Archive),92.333,101.528,78.426,1460

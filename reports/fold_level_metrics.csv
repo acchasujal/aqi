@@ -1,0 +1,10 @@
+fold_id,regime,row_count,Persistence Baseline,Station-Hour Baseline,72h Station Median Baseline,Model A: Kernel Climatology,Model B: Lead-Bucket Ridge,Model C: LightGBM Residual,Model D: OOF Climatology Blend
+fold_24_20260813,monsoon_autumn,124,6.666,57.913,5.896,93.365,60.309,152.031,82.12
+fold_25_20260903,monsoon_autumn,180,7.315,50.518,5.939,60.733,59.539,143.058,58.762
+fold_26_20260924,monsoon_autumn,183,12.552,44.346,4.84,7.926,6.604,7.153,6.825
+fold_27_20261015,monsoon_autumn,192,27.269,45.131,22.21,24.761,22.987,29.678,24.028
+fold_28_20261105,monsoon_autumn,155,18.159,43.503,16.17,34.732,24.446,23.253,30.683
+fold_nov_2025_calendar_match,winter_transition,138,87.086,86.555,79.622,75.727,75.876,78.766,74.94
+fold_dec_2025_winter,winter_transition,127,15.871,29.128,22.524,24.15,20.297,24.554,19.458
+fold_jan_2026_early,winter_transition,178,21.774,64.455,20.674,22.776,26.459,26.484,20.946
+fold_jan_2026_late,winter_transition,183,15.428,60.551,14.125,17.91,100.104,129.677,80.273

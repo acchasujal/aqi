@@ -1,0 +1,17 @@
+submission_file: submission_task011_blend_20261110_1200.csv
+sha256: 2941a1edf6d31249b751c416213ff9ce1ccd83a32bf267143a1f703eff69319e
+model_type: blend
+model_run_time: 2026-11-10T12:00:00+05:30
+pm_history_cutoff: 2026-11-09T06:00:00+05:30
+train_rows: 48133
+test_rows: 2592
+train_sha256: e107dda18670583c333be0966530fc444c18fdb30c870156ac25688a2c152210
+test_sha256: cdb2b6c3035f6331848c565b4d3dd89ac5281efab07fa62bfabc2e7ff172db0a
+climatology_params: sigma_doy=10.0, sigma_hour=1.0, clim_gap_days=14, min_weight=5.0
+ridge_params: n_buckets=5, alpha=100.0, feature_cols=['a24', 'a72', 'a168']
+fill_observed: False
+summary_stats:
+  min: 33.121
+  mean: 81.065
+  median: 59.081
+  max: 1892.422

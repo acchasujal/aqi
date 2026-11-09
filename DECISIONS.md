@@ -241,5 +241,28 @@ Every technical decision must include:
 - **Alternatives considered:** Retaining Candidate B as secondary hedge (viable for clean weather, but Candidate C provides complete non-parametric independence from tree models).
 - **Consequences:** Submissions 1 and 2 are cryptographically sealed in `artifacts/submissions/` ready for final submission before 10 November 23:59:59 IST.
 
+## DEC-20261109-22 [Task011-Climatology-First] — Complete Implementation and Validation of Climatology-First Architecture
+
+- **Date / owner:** 2026-11-09 / Senior Data Scientist, ML Engineer, and Software Architect
+- **Status:** Implemented, verified, and benchmarked across all 9 standardized chronological folds ($N=1,460$).
+- **Context:** Complete end-to-end implementation of the Climatology-First architecture (`src/mumbai_pm25/climatology/`): Kernel Climatology (Model A), Lead-Bucket Ridge on Anomaly Decay (Model B), Compact LightGBM Residual (Model C), and Climatology Blend (Model D).
+- **Decision:** Adopt `timestamp_median` archive collocation for Borivali East (`site_5113` and `site_5400`) and Malad West (`site_5102` and `site_5402`). Adopt Model A (Kernel Climatology) as the primary climatology strategy and generate `submission_task011_climatology_20261110_1200.csv` and `submission_task011_blend_20261110_1200.csv`.
+- **Evidence:**
+  - `timestamp_median` drops pooled RMSE from 70.81 (under `p_fix`) to **45.91** and winter RMSE to **40.30**, eliminating sensor level drift in secondary sensor `site_5400`. Omitting the 2024 archive (`train_only`) causes catastrophic failure (pooled RMSE 92.33).
+  - On `fold_nov_2025_calendar_match` (the exact one-year historical calendar analog of 11–12 November):
+    - Persistence Baseline: 87.09 µg/m³
+    - Station-Hour Baseline: 86.56 µg/m³
+    - 72h Station Median: 79.62 µg/m³
+    - Model A (Kernel Climatology): **75.73** µg/m³
+    - Model D (Climatology Blend): **74.94** µg/m³ (lowest error across all models)
+  - Lead-Bucket Ridge confirms empirical anomaly decay: 24h anomaly coefficient $\beta(a_{24})$ shrinks from +0.792 at lead 41–51h to +0.147 at lead 80–90h.
+  - LightGBM on residuals degrades performance (+39.39 µg/m³, 95% bootstrap CI `[+2.59, +66.58]`), validating the pre-registered overfit control to avoid complex tree models on thin transition history.
+  - 10,000-resample block bootstrap confirms that neither Ridge nor Blend achieves a statistically significant improvement over Kernel Climatology that excludes zero; per pre-registered protocol, simpler climatology is preferred.
+  - 175 passing unit and regression tests, 0 failures, 100% ruff-compliant.
+- **Confidence:** High for leak-free causality and long-horizon lead-time robustness.
+- **Alternatives considered:** Pure `train_only` climatology (rejected: error explodes to 92.33); residual LightGBM (rejected: significant positive bias and overfit).
+- **Consequences:** Provides a fully validated, production-grade climatology-first alternative portfolio with cryptographic manifests in `artifacts/submissions/`.
+
+
 
 

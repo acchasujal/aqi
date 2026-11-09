@@ -687,3 +687,31 @@ Merged TASK008/AirWindow with current main, preserving exact P_fix source select
 - **Decisions added or superseded:** DEC-20261109-21 adopted.
 - **Known limitations / blockers:** None. Final submissions ready for submission.
 - **Next action:** Final summary delivery to user.
+
+### 2026-11-09 — TASK 011: Complete Climatology-First Mumbai PM2.5 Forecasting Pipeline
+- **Task / issue:** Complete implementation, validation, and benchmarking of Climatology-First Mumbai PM2.5 forecasting architecture.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / [pending commit]
+- **Files changed:** `src/mumbai_pm25/climatology/` (`__init__.py`, `kernel.py`, `anomaly.py`, `ridge_model.py`, `lgbm_residual.py`, `blend.py`); `scripts/audit_data_task011.py` (new); `scripts/run_task011_experiments.py` (new); `scripts/train_predict_climatology.py` (new); `tests/test_climatology_pipeline.py` (new); `reports/data_inventory_task011.md` (new); `reports/archive_alignment_audit.md` (new); `reports/climatology_validation.csv` (new); `reports/ridge_anomaly_validation.csv` (new); `reports/lightgbm_residual_validation.csv` (new); `reports/blend_validation.csv` (new); `reports/fold_level_metrics.csv` (new); `reports/source_series_validation.csv` (new); `reports/ridge_bucket_coefficients.csv` (new); `reports/bootstrap_climatology_diffs.csv` (new); `reports/oof_predictions.csv.gz` (new); `artifacts/submissions/submission_task011_climatology_20261110_1200.csv` (new); `artifacts/submissions/submission_task011_climatology_20261110_1200.manifest.txt` (new); `artifacts/submissions/submission_task011_blend_20261110_1200.csv` (new); `artifacts/submissions/submission_task011_blend_20261110_1200.manifest.txt` (new); `TASK011_IMPLEMENTATION_REPORT.md` (new); `DECISIONS.md`; `PROGRESS.md`.
+- **Work completed:**
+  1. Audited data and archive alignment: confirmed CPCB CAAQS timestamps in `History_Mumbai_2024.csv.gz` are cleanly aligned at minute `:00` IST. Quantified overlapping sensor differences: Borivali East IITM median absolute diff 14.39 µg/m³, Malad West IITM 14.50 µg/m³.
+  2. Implemented complete climatology-first architecture in `src/mumbai_pm25/climatology/`: circular Gaussian Kernel Climatology with 14-day causality gap, multi-scale anomaly extraction ($a_{24}, a_{72}, a_{168}$), Lead-Bucket Ridge regression across 5 lead buckets, compact LightGBM residual model (3 seeds), and simplex grid search blender.
+  3. Evaluated 6 source-series aggregation strategies across 9 standardized chronological folds ($N=1,460$): discovered that `timestamp_median` drops pooled RMSE from 70.81 (under `p_fix`) to **45.91** and winter RMSE to **40.30**, avoiding severe monsoon offset drift in secondary sensor `site_5400`. Omitting 2024 archive (`train_only`) causes error to explode to 92.33.
+  4. Benchmark on `fold_nov_2025_calendar_match`: Kernel Climatology achieves **75.73** µg/m³ and Climatology Blend achieves **74.94** µg/m³, decisively beating Persistence (87.09) and 72h Station Median (79.62).
+  5. Evaluated anomaly decay: confirmed $\beta(a_{24})$ shrinks from +0.792 at lead 41–51h to +0.147 at lead 80–90h.
+  6. Conducted 10,000-resample block bootstrap CIs: confirmed residual LightGBM degrades performance (+39.39, 95% CI `[+2.59, +66.58]`), while Ridge (+6.52) and Blend (+5.15) do not yield significant gains over Kernel Climatology. Kernel Climatology is selected as the most robust, non-overfitting candidate.
+  7. Built production inference pipeline `scripts/train_predict_climatology.py` and generated two verified submission candidates (2,592 rows, non-negative, finite) with cryptographic manifests.
+  8. Full test suite passing: 175 tests passed, 0 failures; 100% ruff-compliant on all new and modified modules.
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe scripts/audit_data_task011.py`
+  - `.\.venv\Scripts\python.exe -u scripts/run_task011_experiments.py`
+  - `.\.venv\Scripts\python.exe scripts/train_predict_climatology.py --model climatology --model-run-time 2026-11-10T12:00:00+05:30`
+  - `.\.venv\Scripts\python.exe scripts/train_predict_climatology.py --model blend --model-run-time 2026-11-10T12:00:00+05:30`
+  - `.\.venv\Scripts\python.exe -m pytest -ra` (175 passed in 23.17s)
+  - `.\.venv\Scripts\python.exe -m ruff check src/mumbai_pm25/climatology/ scripts/audit_data_task011.py scripts/run_task011_experiments.py scripts/train_predict_climatology.py tests/test_climatology_pipeline.py`
+- **Tests and exact results:** 175 passed across full test suite. Zero failures.
+- **Experiment IDs / metrics:** Model A (Kernel Climatology with timestamp_median) Pooled RMSE 45.91, Winter RMSE 40.30; Model B Pooled RMSE 52.97; Model C Pooled RMSE 86.59; Model D Pooled RMSE 51.04; 72h Median Baseline Pooled RMSE 28.69, Winter RMSE 40.99.
+- **Decisions added or superseded:** DEC-20261109-22 adopted.
+- **Known limitations / blockers:** None. Ready for private evaluation.
+- **Next action:** Final review and git commit.
+

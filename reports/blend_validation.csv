@@ -1,0 +1,5 @@
+model,pooled_rmse,pooled_mae,monsoon_autumn_rmse,winter_rmse,pooled_bias,rmse_11606,rmse_11611,rmse_3409510,rmse_3409511
+Model A: Kernel Climatology,45.912,19.987,49.712,40.296,7.107,71.02,17.49,17.77,52.74
+Model B: Lead-Bucket Ridge,52.969,24.229,39.347,66.942,2.148,65.38,43.9,44.5,55.21
+Model C: LightGBM Residual,86.591,48.757,90.377,81.273,29.905,116.81,89.77,72.17,53.71
+Model D: OOF Climatology Blend,51.04,22.552,45.453,57.648,8.581,72.8,33.22,35.34,52.69

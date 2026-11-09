@@ -1,0 +1,3 @@
+model,pooled_rmse,pooled_mae,monsoon_autumn_rmse,winter_rmse,pooled_bias,rmse_11606,rmse_11611,rmse_3409510,rmse_3409511
+Model A: Kernel Climatology,45.912,19.987,49.712,40.296,7.107,71.02,17.49,17.77,52.74
+Model B: Lead-Bucket Ridge,52.969,24.229,39.347,66.942,2.148,65.38,43.9,44.5,55.21
