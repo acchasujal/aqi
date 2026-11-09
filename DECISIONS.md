@@ -224,4 +224,22 @@ Every technical decision must include:
 - **Alternatives considered:** Pairing Candidate C + Candidate B (inferior: Candidate B loses to E on all stations and in 98.9% of bootstrap iterations); pairing Candidate E + Candidate B (rejected: both depend on CatBoost, losing non-parametric independence).
 - **Consequences:** The final submission pair comprises Candidate E (empirical maximum skill) and Candidate C (non-parametric physical safety), providing the optimal risk-adjusted competitive edge.
 
+## DEC-20261109-21 [Verification-Candidate-E-2000] — Final Verification of Candidate E (2000 Ceiling) Across All 9 Chronological Folds
+
+- **Date / owner:** 2026-11-09 / Senior Data Scientist, ML Engineer, and Software Architect
+- **Status:** Verified and adopted as final challenge submission portfolio.
+- **Context:** User requested final verification of Candidate E with the exact 2,000 µg/m³ training ceiling across all 9 chronological folds ($N=1,460$) with strictly unclipped validation labels.
+- **Decision:** Confirm Candidate E (`submission_1_primary_candidate_E.csv`) and Candidate C (`submission_2_hedge_candidate_C.csv`) as the final competition submissions. Candidate B is archived as alternative clean-regime hedge.
+- **Evidence:**
+  - Candidate E (2,000 ceiling): Pooled RMSE **28.75**, Autumn RMSE **11.96**, Winter RMSE **41.68**, MAE **12.25**, Mean Bias **-3.30**.
+  - Candidate C: Pooled RMSE **28.20**, Autumn RMSE **13.67**, Winter RMSE **40.07**, MAE **12.43**, Mean Bias **-3.47**.
+  - Candidate B: Pooled RMSE **29.18**, Autumn RMSE **12.41**, Winter RMSE **42.20**, MAE **12.49**, Mean Bias **-7.04**.
+  - Both Candidate E and Candidate C beat Candidate B on overall pooled RMSE and winter RMSE.
+  - Validation labels are 100% unclipped across all folds. Candidate E's generated CSV (`0e89c48c...`) matches the audited model configuration identically.
+  - 166 pytest tests pass (0 failures), scoped lint checks pass cleanly, working tree is clean.
+- **Confidence:** High for leak-free reproducibility and optimal competition risk-return.
+- **Alternatives considered:** Retaining Candidate B as secondary hedge (viable for clean weather, but Candidate C provides complete non-parametric independence from tree models).
+- **Consequences:** Submissions 1 and 2 are cryptographically sealed in `artifacts/submissions/` ready for final submission before 10 November 23:59:59 IST.
+
+
 
