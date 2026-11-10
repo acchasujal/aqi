@@ -8,3 +8,5 @@ UPDATE (final audit): pushed as deeecaf (CSV excluded). W11 integrity PASS; W12 
 TASK012 update: W00-W12 were not repeated. Frozen final-snapshot OOF was rebuilt with provenance and TASK012 A/B/C tested separately; no challenger was promoted. P_fix remains best broad full-target control and B50 the validated complementary hedge. The reference cleaner is noncausal for historical labels; CAMS/NWP and auxiliary-station features remain blocked. Read reports/ml_pipeline/task012_vayudrishti_transfer/TASK012_FINAL_REPORT.md and REFERENCE_TECHNIQUE_AUDIT.md for methods and evidence.
 
 TASK012 final-run clarification: dimensionless alpha lambda=1 was selected on development; shrunk station calibration RMSE10.8791, unregularized10.6894, both behind B50 10.4333. B50 beats P_fix on the final23-origin forward set by0.7601 RMSE (moving-block95% interval excludes zero), but that period has no extreme targets. Full result and station/lead diagnostics are in TASK012_FINAL_REPORT.md. Full suite147 passed.
+
+TASK012 is published on main as `97b65e6da5db7aa1f9ee3666bb1cc63ed0cdf631` (normal fast-forward from `58fd180`). Raw data and submission files were excluded.
