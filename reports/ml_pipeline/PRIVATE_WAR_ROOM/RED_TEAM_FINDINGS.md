@@ -14,3 +14,10 @@ Not checked (time): friend-branch Candidate B-E reproduction, weather features (
 10. [MED] 2026 private predictions (P_fix means 63-89) sit well above pre-event baselines (24-41). If 2026 post-event air clears as in 2025, ALL submitted candidates over-predict; B50 most. If it persists as in 2024, B50 is best. Weak inference: Nov 11-12 is seasonally closer to 2024 timing (31 Oct-3 Nov) than 2025 (23-25 Oct); unvalidated.
 11. [INFO] Lead-dependent diur7 weight rejected (best weight ~60% on both days).
 12. [INFO] Malad: strongest event-night ratio (3.76x 2026, 4.24x 2024, 1.98x 2025) and still 245 at 10-Nov 00-06; this is a candidate source of downside risk, not tested.
+
+## Addendum 2 (Stage 1-4 final audit)
+13. [CORRECTION] The 8 labels >=1000 lie in ONE origin (2025-12-03 block), not two; they are two contiguous fault episodes inside it.
+14. [HIGH decision-relevant] B50+P_fix vs B50+B25 is a statistical tie on complete-block OOF (17/17/49). The preference for P_fix as the second slot rests on diversity (private-row corr with B50 0.724 vs 0.948; RMS diff 13.1 vs 6.6) and one 2025 event block (n=1; 2024 archive disagrees; archive alignment uncertain). Confidence in B50 being in the pair: high-ish; in P_fix over B25 as partner: low. P_fix+B25 pair is clearly inferior.
+15. [LOW] B50 file overlay differs from Train by ~1e-14 on 1284 overlay rows (float parser in builder); no private impact.
+16. [MED, unresolved] Zindi Info text ('latest valid submission is evaluated') vs Rules/Submissions page (choose 2) conflict; mitigated by selecting 2 incl. the newest upload and uploading nothing further.
+17. [LOW] OOF-reuse guard still absent in run_task011.py on remote main; deliberately unpatched to preserve manifest source hashes.

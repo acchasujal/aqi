@@ -11,3 +11,6 @@ Next: 1) owner decides Slot A/B and selects 2 on Zindi before deadline; 2) optio
 ## Update after W06-W10
 Dynamic/lead blends REJECTED; festival-robust baseline REJECTED (2024 vs 2025 opposite). 2026 still elevated at cutoff (Malad 245 on 10-Nov 00-06). Event-aligned 2025: P_fix<B25<B50 RMSE (n=1).
 CURRENT RECOMMENDATION: select ZFX65qUt (B50) + vCB5vdBZ (P_fix). Next 3 actions: 1) owner selects those 2 on Zindi and saves; 2) optional OOF-reuse provenance guard; 3) optional: test Malad/Shivaji event downside (low evidence).
+
+## Update after final audit
+Remote main = deeecafcdd8c75d949d29c729d21093415bc0da5 (war-room docs/scripts only; candidate CSV deliberately not in git). Local backup tag backup/prepush-6ba0aba. Integrity of all 3 submissions verified. Pair lock: ZFX65qUt + vCB5vdBZ (tie-break decision, see FINAL_PRIVATE_RANKING_RECOMMENDATION.md). Owner still must select+save+refresh on Zindi.
