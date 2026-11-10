@@ -1,0 +1,16 @@
+{
+  "file": "warroom_Pfix_diur50_20261110.csv",
+  "sha256": "b4d601812ec14c7f7516139e8f65085efcfe38b9e27c67469b5ed6774b798904",
+  "formula": "0.5*P_fix+0.5*diur7 (diur7 NaN -> P_fix); exact released-label overlay (1284 rows)",
+  "rows": 2592,
+  "overlay_rows": 1284,
+  "private_overlay_rows": 0,
+  "reproduced_controls": {
+    "P_fix_sha256": "f450b68212463f64bab67adfb0d98e1c4cce7ee83ec118f2564d38d738e34c13",
+    "Pfix_diur25_sha256": "96aff853c4692d29fd25c460e7efa0c25caa04fd84119c8bb0914ca0a1c6f2d1"
+  },
+  "audit_input_sha256": "cb5b04ec568e43e7fb34091e5a2ff8e53e86f60de7d3732e88e814d5065d8e81",
+  "builder_sha256": "80600e53578c0f336d308a01cb9e63aac5a7526061e8b2890c8967b357bf91fb",
+  "git_base": "afd28272dc221e3ab3d170b0661c7732a552e03b",
+  "zindi_action": "NOT uploaded; owner decision"
+}
