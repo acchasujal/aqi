@@ -1,0 +1,17 @@
+{
+  "file_name": "submission_TASK017_EXACT_OVERLAY.csv",
+  "sha256": "5359e4a637797acf658d29d2184b4ecdaadc33ce3259a419d237e879b4978064",
+  "row_count": 2592,
+  "columns": [
+    "ID",
+    "Target"
+  ],
+  "public_overlap_rows": 657,
+  "private_rows": 192,
+  "private_stats": {
+    "min": 46.6802,
+    "max": 94.102,
+    "mean": 64.2279,
+    "median": 60.7479
+  }
+}

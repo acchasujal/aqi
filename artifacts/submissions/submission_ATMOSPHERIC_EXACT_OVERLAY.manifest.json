@@ -1,0 +1,17 @@
+{
+  "file_name": "submission_ATMOSPHERIC_EXACT_OVERLAY.csv",
+  "sha256": "3b094c4a9e1edd069b3ddf7985cae15cd49afc714c7fe18be36e4a64128121d9",
+  "row_count": 2592,
+  "columns": [
+    "ID",
+    "Target"
+  ],
+  "public_overlap_rows": 657,
+  "private_rows": 192,
+  "private_stats": {
+    "min": 47.3898,
+    "max": 84.0204,
+    "mean": 59.0036,
+    "median": 57.3725
+  }
+}
