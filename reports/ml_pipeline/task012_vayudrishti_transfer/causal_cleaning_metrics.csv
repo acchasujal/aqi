@@ -1,0 +1,5 @@
+variant,training_treatment,training_rows_fit_across_forward_origins,training_labels_changed_across_forward_fits,validation_labels_modified,full_target_rmse,mae,bias,clean_y_lt_500_rmse,status
+ridge_raw,raw target; Ridge squared loss,248012,0,False,345.56080032096764,143.48877100813462,126.93591840721803,345.56080032096764,measured
+huber_raw,raw target; Huber loss epsilon=1.35 alpha=10,248012,0,False,11.63824365676632,7.4760136031650415,-2.8166960403727916,11.63824365676632,measured
+ridge_past_median_1000,training y>=1000 replaced by median of 24 prior eligible station observations,248012,184,False,11.87607461604603,7.661118629768481,-2.194285146501943,11.87607461604603,measured
+flag_based,flag_high_1000,0,0,False,,,,,blocked; historical flag availability is not verified

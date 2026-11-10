@@ -1,0 +1,79 @@
+{
+  "B50_vs_P_fix": {
+    "model": "B50",
+    "comparator": "P_fix",
+    "origins": 23,
+    "block_origins": 4,
+    "rmse_delta": -0.7600773323063894,
+    "lower95": -1.187779337913503,
+    "upper95": -0.2620656272018045,
+    "origin_wins": 18,
+    "seed": 20261108
+  },
+  "pred_station_alpha_vs_P_fix": {
+    "model": "pred_station_alpha",
+    "comparator": "P_fix",
+    "origins": 23,
+    "block_origins": 4,
+    "rmse_delta": -0.503980200412661,
+    "lower95": -0.7678231843633018,
+    "upper95": -0.08086476558488702,
+    "origin_wins": 18,
+    "seed": 20261108
+  },
+  "pred_shrunk_alpha_vs_P_fix": {
+    "model": "pred_shrunk_alpha",
+    "comparator": "P_fix",
+    "origins": 23,
+    "block_origins": 4,
+    "rmse_delta": -0.31428888949843703,
+    "lower95": -0.45100698659226723,
+    "upper95": -0.08389215162655358,
+    "origin_wins": 18,
+    "seed": 20261108
+  },
+  "pred_station_alpha_vs_B50": {
+    "model": "pred_station_alpha",
+    "comparator": "B50",
+    "origins": 23,
+    "block_origins": 4,
+    "rmse_delta": 0.2560971318937284,
+    "lower95": 0.06347380926634849,
+    "upper95": 0.5057726297095722,
+    "origin_wins": 5,
+    "seed": 20261108
+  },
+  "pred_shrunk_alpha_vs_B50": {
+    "model": "pred_shrunk_alpha",
+    "comparator": "B50",
+    "origins": 23,
+    "block_origins": 4,
+    "rmse_delta": 0.4457884428079524,
+    "lower95": 0.1373465764747779,
+    "upper95": 0.7540596664096982,
+    "origin_wins": 3,
+    "seed": 20261108
+  },
+  "huber_raw_vs_P_fix": {
+    "model": "huber_raw",
+    "comparator": "P_fix",
+    "origins": 23,
+    "block_origins": 4,
+    "rmse_delta": 0.4448791598943256,
+    "lower95": -0.8182936974092877,
+    "upper95": 1.2318620670929596,
+    "origin_wins": 16,
+    "seed": 20261108
+  },
+  "ridge_past_median_1000_vs_P_fix": {
+    "model": "ridge_past_median_1000",
+    "comparator": "P_fix",
+    "origins": 23,
+    "block_origins": 4,
+    "rmse_delta": 0.6827101191740326,
+    "lower95": -0.6029667472913114,
+    "upper95": 1.448115599394829,
+    "origin_wins": 14,
+    "seed": 20261108
+  }
+}

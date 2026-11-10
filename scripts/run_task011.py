@@ -25,6 +25,7 @@ from mumbai_pm25.forecast import (
     validate_submission,
 )
 from mumbai_pm25.historical_archive import load_2024_history
+from mumbai_pm25.oof_cache import cache_manifest_matches
 
 STATIONS = (11606, 11611, 3409510, 3409511)
 IST = ZoneInfo("Asia/Kolkata")
@@ -167,7 +168,28 @@ def run(data_dir: Path, supplied_submission: Path, report_dir: Path,
     report_dir.mkdir(parents=True, exist_ok=True)
     oof_path = report_dir / "task011_84_origin_oof.csv.gz"
     coverage_path = report_dir / "task011_origin_coverage.csv"
-    if oof_path.exists() and coverage_path.exists():
+    cache_manifest_path = report_dir / "task011_84_origin_oof.manifest.json"
+    fold_schedule = [t.isoformat() for t in pd.date_range("2025-04-02 00:00", "2026-11-04 00:00", freq="7D", tz=IST)]
+    source_files = ["scripts/run_task011.py", "scripts/prepare_task008_submission.py",
+                    "src/mumbai_pm25/final_gap.py", "src/mumbai_pm25/forecast.py",
+                    "src/mumbai_pm25/historical_archive.py", "src/mumbai_pm25/oof_cache.py"]
+    expected_cache_manifest = {
+        "input_sha256": {name: digest(data_dir / name) for name in
+                         ("Train.csv", "Test.csv", "SampleSubmission.csv", "Stations.csv", "AdditionalHistory.zip")},
+        "source_sha256": {name: digest(ROOT / name) for name in source_files},
+        "fold_schedule": fold_schedule,
+        "configuration": {"initial_gap_hours": 15, "horizon_hours": 48, "frequency": "7D",
+                          "models": models, "archive_blend_weight": 0.5},
+    }
+    cache_valid = False
+    if oof_path.exists() and coverage_path.exists() and cache_manifest_path.exists():
+        cached_manifest = json.loads(cache_manifest_path.read_text(encoding="utf-8"))
+        expected_with_artifacts = {
+            **expected_cache_manifest,
+            "artifact_sha256": {oof_path.name: digest(oof_path), coverage_path.name: digest(coverage_path)},
+        }
+        cache_valid = cache_manifest_matches(cached_manifest, expected_with_artifacts)
+    if cache_valid:
         metrics_rows = pd.read_csv(oof_path, parse_dates=["fold_id","prediction_origin","pm_history_cutoff","target_start","target_end","block_target_end","last_pm_end"])
         for col in ("fold_id","prediction_origin","pm_history_cutoff","target_start","target_end","block_target_end","last_pm_end"):
             metrics_rows[col] = pd.to_datetime(metrics_rows[col], utc=True).dt.tz_convert(IST)
@@ -176,6 +198,7 @@ def run(data_dir: Path, supplied_submission: Path, report_dir: Path,
         blocks = [ForecastBlock(t, t-pd.Timedelta(hours=15), t-pd.Timedelta(hours=15))
                   for t in pd.date_range("2025-04-02 00:00", "2026-11-04 00:00", freq="7D", tz=IST)]
         metrics_rows, coverage = __import__("mumbai_pm25.final_gap", fromlist=["labelled_blocks"]).labelled_blocks(train, archive, blocks)
+    # Publish a sidecar after the OOF and coverage artifacts have been written below.
     metrics_rows["Pfix_diur10"] = .90*metrics_rows.P_fix + .10*metrics_rows.diur7.fillna(metrics_rows.P_fix)
     metrics_rows["Pfix_diur25"] = .75*metrics_rows.P_fix + .25*metrics_rows.diur7.fillna(metrics_rows.P_fix)
     metrics_rows["Pfix_diur50"] = .50*metrics_rows.P_fix + .50*metrics_rows.diur7.fillna(metrics_rows.P_fix)
@@ -183,6 +206,11 @@ def run(data_dir: Path, supplied_submission: Path, report_dir: Path,
     met = metric_table(metrics_rows, metric_models)
     metrics_rows.to_csv(oof_path, index=False, compression="gzip")
     coverage.to_csv(coverage_path, index=False)
+    cache_manifest = {
+        **expected_cache_manifest,
+        "artifact_sha256": {oof_path.name: digest(oof_path), coverage_path.name: digest(coverage_path)},
+    }
+    cache_manifest_path.write_text(json.dumps(cache_manifest, indent=2) + "\n", encoding="utf-8")
     met.to_csv(report_dir / "task011_baseline_comparison.csv", index=False)
     for weight in (10,25,50):
         m = f"Pfix_diur{weight}"

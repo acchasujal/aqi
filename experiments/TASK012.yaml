@@ -1,0 +1,27 @@
+task_id: TASK012
+date: 2026-11-10
+status: completed_research_no_promotion
+reference_repository: https://github.com/guglxni/VayuDrishti
+reference_commit: 0d4681eaf0d18a6a3f67345ba59b260bf89f117c
+reference_archive_sha256: 2742c30eac7ab84c1e3454876bba825bd6ae48cc140cf0ee7d637b24b3015b89
+snapshot:
+  train_sha256: 8adbcf55315f166d7dc3dc1d3e4d7400651f26c1d8b95ff387eef38f4e70a283
+  target_rows: 12731
+  scheduled_origins: 84
+  labelled_origins: 83
+  pm_gap_hours: 15
+  horizon_hours: 48
+selection:
+  development_origins: first_60_labelled_origins
+  forward_origins: last_23_labelled_origins
+  metric: raw_full_target_rmse
+  validation_labels_modified: false
+experiments:
+  - station_specific_alpha_global_shrinkage
+  - raw_vs_huber_vs_past_median_training_targets
+  - ridge_residual_over_pfix
+blocked:
+  - historical_weather_issue_time_and_source_permission
+  - auxiliary_station_provenance_and_private_snapshot_coverage
+  - meteorological_analogs
+  - foundation_model_runtime_and_oof_diversity

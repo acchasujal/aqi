@@ -232,3 +232,36 @@ Decision: retain exact archive-identity P_fix for TASK008 and isolate historical
 - **Confidence:** High in input hash, exact fold/row calculation, baseline arithmetic, overlay and deterministic output; medium-low that the hedge helps the private two-day window.
 - **Alternatives:** Choose two P_fix variants; use median72; promote an unverified EXP030 or Candidate B file. Rejected because the requested blend is more distinct but only modestly different, median72 is weaker in prior matched evidence, and EXP030/B do not have comparable final-release validation/manifests here.
 - **Consequences / revisit trigger:** Upload and select these two final files manually if the owner accepts the hedge; never claim the blend improved broad primary RMSE. Revisit only with matched, eligible private confirmation evidence.
+
+## DEC-20261110-20 - Retain P_fix/B50; reject calibration and residual promotions
+
+- **Date / owner:** 2026-11-10 / Codex
+- **Status:** Accepted for current evidence; no production forecast change.
+- **Context:** TASK012 rebuilt the frozen TASK011 84-origin OOF from source and input hashes and evaluated regularized station alpha and causal residual variants on the final 23 chronological origins.
+- **Decision:** Keep P_fix as the primary control and B50 as the current complementary hedge. Do not promote station-specific alpha, raw/cleaned Ridge or Huber residual challengers. Keep weather and auxiliary-station predictors blocked.
+- **Evidence:** `reports/ml_pipeline/task012_vayudrishti_transfer/TASK012_FINAL_REPORT.md`, `control_metrics.csv`, `station_shrinkage_metrics.csv`, `causal_cleaning_metrics.csv`, and `residual_model_metrics.csv`. Across all 12,731 raw labels/83 origins, P_fix RMSE 2391.716290; B50 2391.761889. On the later 3,545 labels/23 origins, P_fix 11.1934, B50 10.4333, selected global-alpha model 11.1934, unregularized station alpha 10.6894, Huber residual 11.6382. The cleaner from VayuDrishti uses centered rolling windows and bidirectional interpolation and is applied before multi-cutoff target slicing; it is not causal for its historical training labels. Weather issue mapping/permission and auxiliary identity/coverage remain unresolved.
+- **Confidence:** High that the frozen artifacts reproduced and tested challengers did not beat the controls on their selected matched rows; limited for private-period ranking and extreme-event behavior.
+- **Alternatives considered:** Port the full stack, apply reference cleaner, fit station alpha on all OOF, or add CAMS/auxiliary features. Rejected due same-OOF optimizer bias, target leakage, lack of forward gain, or unavailable/uncleared inputs.
+- **Consequences / revisit trigger:** P_fix/B50 production predictions and submitted files remain unchanged. Reopen with new eligible as-issued weather/provenance evidence or a preregistered candidate that passes unchanged raw full-target forward folds.
+
+## DEC-20261110-21 - TASK012 final regularization rerun clarification
+
+- **Date / owner:** 2026-11-10 / Codex
+- **Status:** Clarifies DEC-20261110-20; main decision unchanged.
+- **Context:** The first TASK012 execution preceded a correction to the dimensionless station-alpha shrinkage grid. The final deterministic run/report supersedes that early alpha detail.
+- **Decision:** The development-selected dimensionless ridge strength is `lambda=1`. On the final 23 forward origins, regularized station alpha scores 10.8791 RMSE and unregularized station alpha 10.6894; both improve over P_fix 11.1934 but lose to B50 10.4333. Do not promote either calibration.
+- **Evidence:** `reports/ml_pipeline/task012_vayudrishti_transfer/station_shrinkage_metrics.csv`, `station_shrinkage_config.json`, `paired_candidate_metrics.json`; final TASK012 runner SHA-256 `562322c0799724be6483dabc89917eda0773cd6a2fc85855364f49e36f80da7a`.
+- **Confidence:** High for these matched forward metrics; no implication about private extremes.
+- **Alternatives considered:** Rely on the earlier run's global-only alpha record; rejected because its regularization grid was superseded before final execution.
+- **Consequences / revisit trigger:** `TASK012_FINAL_REPORT.md` is authoritative; forecast outputs and submitted files remain unchanged.
+
+## DEC-20261110-22 - TASK012 deterministic artifact fingerprint
+
+- **Date / owner:** 2026-11-10 / Codex
+- **Status:** Accepted reproducibility record.
+- **Context:** The first full TASK012 rerun changed only the gzip header timestamp. The runner now fixes gzip `mtime` to zero and was executed twice after that change.
+- **Decision:** Treat the deterministic OOF artifact SHA-256 as `d280f06a8bb244b48e5faa12c919a4ff0a8758de4e32a8c45a34a62c0736291e`; the two complete reruns matched. Final runner source SHA-256 is `fbd08dfd97c9443d35fd2c5e64150a8e7126b68591543018e1908595bdff329b`.
+- **Evidence:** `reports/ml_pipeline/task012_vayudrishti_transfer/oof_manifest.json`; `scripts/run_task012.py` uses gzip `mtime=0`; both runner commands exited zero with the same OOF and coverage hashes.
+- **Confidence:** High for byte-identical output under Python 3.12.10/pandas 3.1.1 and the frozen inputs.
+- **Alternatives considered:** Record only parsed-row equivalence; fixed gzip metadata provides an exact artifact-level check.
+- **Consequences / revisit trigger:** Use this SHA in future comparisons; input/source/fold changes require a fresh OOF manifest.

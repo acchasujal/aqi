@@ -14,3 +14,9 @@ CURRENT RECOMMENDATION: select ZFX65qUt (B50) + vCB5vdBZ (P_fix). Next 3 actions
 
 ## Update after final audit
 Remote main = deeecafcdd8c75d949d29c729d21093415bc0da5 (war-room docs/scripts only; candidate CSV deliberately not in git). Local backup tag backup/prepush-6ba0aba. Integrity of all 3 submissions verified. Pair lock: ZFX65qUt + vCB5vdBZ (tie-break decision, see FINAL_PRIVATE_RANKING_RECOMMENDATION.md). Owner still must select+save+refresh on Zindi.
+
+## TASK012 update — 2026-11-10
+
+TASK012 completed as research only on local main at 58fd180 (same as local origin/main ref). Full OOF rebuilt: 16,128 rows, 12,731 labels, 83 labelled origins; final 23 origins/3,545 labelled rows were forward evaluation. P_fix remains primary and B50 the hedge: full OOF RMSE 2391.716290/2391.761889; forward RMSE 11.1934/10.4333. Station alpha/shrinkage does not improve the forward primary control; residual challengers are rejected. Weather/spatial remain blocked. No submitted CSV or raw challenge file changed. Detailed artifacts are under reports/ml_pipeline/task012_vayudrishti_transfer/.
+
+Correction after final TASK012 run: dimensionless alpha lambda=1 was selected on development; shrunk station calibration RMSE10.8791 and unregularized station alpha10.6894, both behind B50 10.4333. Both beat P_fix11.1934 on the 23-origin forward slice, which has no target >=500. Neither alpha candidate is promoted. B50 paired delta vs P_fix is -0.7601 (4-origin moving-block95% interval -1.1878 to -0.2621;18/23 wins). The final report supersedes earlier provisional alpha notes.

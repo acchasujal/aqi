@@ -1,0 +1,46 @@
+{
+  "B50": {
+    "model": "B50",
+    "comparator": "P_fix",
+    "origins": 23,
+    "block_origins": 4,
+    "rmse_delta": -0.7600773323063894,
+    "lower95": -1.187779337913503,
+    "upper95": -0.2620656272018045,
+    "origin_wins": 18,
+    "seed": 20261108
+  },
+  "pred_global_alpha": {
+    "model": "pred_global_alpha",
+    "comparator": "P_fix",
+    "origins": 23,
+    "block_origins": 4,
+    "rmse_delta": 0.0,
+    "lower95": 0.0,
+    "upper95": 0.0,
+    "origin_wins": 0,
+    "seed": 20261108
+  },
+  "pred_station_alpha": {
+    "model": "pred_station_alpha",
+    "comparator": "P_fix",
+    "origins": 23,
+    "block_origins": 4,
+    "rmse_delta": -0.503980200412661,
+    "lower95": -0.7678231843633018,
+    "upper95": -0.08086476558488702,
+    "origin_wins": 18,
+    "seed": 20261108
+  },
+  "pred_shrunk_alpha": {
+    "model": "pred_shrunk_alpha",
+    "comparator": "P_fix",
+    "origins": 23,
+    "block_origins": 4,
+    "rmse_delta": -0.31428888949843703,
+    "lower95": -0.45100698659226723,
+    "upper95": -0.08389215162655358,
+    "origin_wins": 18,
+    "seed": 20261108
+  }
+}
