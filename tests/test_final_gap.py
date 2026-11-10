@@ -142,12 +142,19 @@ def test_submission_final_stage_rejects_initial_release_and_overwrite(tmp_path):
     from scripts.prepare_task008_submission import prepare
 
     data = Path(__file__).resolve().parents[1] / "data/raw/challenge"
-    with pytest.raises(ValueError, match="9 November Train snapshot"):
-        prepare(data, tmp_path / "final.csv", stage="final",
-                issue_time=pd.Timestamp("2026-11-10 12:00+05:30"),
-                release_time=pd.Timestamp("2026-11-10 09:00+05:30"))
+    nov9_dir = Path(__file__).resolve().parents[1] / "data/processed/task008_snapshots/e107dda18670583c333be0966530fc444c18fdb30c870156ac25688a2c152210"
+    if nov9_dir.exists():
+        with pytest.raises(ValueError, match="9 November Train snapshot"):
+            prepare(nov9_dir, tmp_path / "final.csv", stage="final",
+                    issue_time=pd.Timestamp("2026-11-10 12:00+05:30"),
+                    release_time=pd.Timestamp("2026-11-10 09:00+05:30"))
+    # Final release succeeds
+    res = prepare(data, tmp_path / "final.csv", stage="final",
+                  issue_time=pd.Timestamp("2026-11-10 12:00+05:30"),
+                  release_time=pd.Timestamp("2026-11-10 09:00+05:30"))
+    assert res["stage"] == "final"
     occupied = tmp_path / "old.csv"
     occupied.write_text("preserved", encoding="utf-8")
     with pytest.raises(FileExistsError, match="immutable"):
-        prepare(data, occupied, issue_time=pd.Timestamp("2026-11-08 12:00+05:30"))
+        prepare(data, occupied, issue_time=pd.Timestamp("2026-11-10 12:00+05:30"))
     assert occupied.read_text(encoding="utf-8") == "preserved"

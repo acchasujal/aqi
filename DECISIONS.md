@@ -341,3 +341,18 @@ Every technical decision must include:
 - **Alternatives considered:** Rebasing `feat/competition-ml-pipeline` onto `origin/main` (rejected: would rewrite shared commit history and risk regressions in Task 011-013 commits).
 - **Consequences / revisit trigger:** The feature branch now incorporates `main`'s evaluation tooling and tests while fully retaining its own superior Climatology-First pipeline. No final submissions are regenerated or uploaded during this task.
 
+## DEC-20261110-26 - Validate official 10 November 2026 final challenge release and active pipelines
+
+- **Date / owner:** 2026-11-10 / Competition ML Pipeline Team
+- **Decision:** Accept and verify the official 10 November 2026 final challenge release (`Train.csv` with 48,400 rows, SHA-256 `8adbcf55315f166d7dc3dc1d3e4d7400651f26c1d8b95ff387eef38f4e70a283`; `Test.csv` and `SampleSubmission.csv` with 2,592 rows). Confirm that active training, validation, and inference pipelines dynamically use these canonical files, with zero data leakage.
+- **Evidence:**
+  - `Train.csv` audited in `reports/TASK016_FINAL_DATA_AUDIT.md`: exactly 48,400 rows, SHA-256 `8adbcf55...`, 0 missing values, 0 duplicate station-hour records, max timestamp `2026-11-10 09:00:00+05:30` across all 4 stations. Incorporates 284 observations $\ge$ 7 Nov, including 201 public-window station-hours.
+  - `Test.csv` and `SampleSubmission.csv`: exactly 2,592 rows with identical IDs in order. Exactly 192 rows designated `scoring_block == "private"` spanning 11–12 Nov 2026 (48 hours $\times$ 4 stations).
+  - Physical lead times: 15.0h to first private target start, 62.0h to last private target start.
+  - Active pipelines (`src/mumbai_pm25/data.py`, `scripts/generate_task013_submission.py`, `scripts/train_predict.py`) dynamically read updated canonical paths without hardcoded row limits.
+  - Test suite passes: 201 of 201 tests passing (100% pass rate), including 12 dedicated regression tests in `tests/test_task016_data_and_pipeline.py`. Ruff diagnostics clean.
+- **Confidence:** High. Complete cryptographic and structural match to official final challenge specifications.
+- **Alternatives considered:** None; final datasets are mandated by competition rules.
+- **Consequences / revisit trigger:** All pipelines are certified ready for final submission generation. Final submission files will be produced on human command.
+
+

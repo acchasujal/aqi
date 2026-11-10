@@ -812,3 +812,29 @@ Merged TASK008/AirWindow with current main, preserving exact P_fix source select
 - **Known limitations / blockers:** None. Awaiting final operational direction for final submission selection.
 - **Next action:** Conclude merge commit on `feat/competition-ml-pipeline` and provide audit report to user.
 
+### 2026-11-10 — TASK 016: Verify Updated Competition Data and Active Pipeline Integration
+- **Task / issue:** Comprehensive verification of official 10 November 2026 challenge data release (`Train.csv`, `Test.csv`, `SampleSubmission.csv`, `Stations.csv`, `DataDictionary.txt`, `AdditionalHistory.zip`) and active pipeline compatibility.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / [pending commit]
+- **Files changed:** `reports/TASK016_FINAL_DATA_AUDIT.md` (new); `scripts/audit_task016.py` (new); `tests/test_task016_data_and_pipeline.py` (new); `scripts/run_task011.py`; `tests/test_final_gap.py`; `tests/test_independent_verification.py`; `DECISIONS.md`; `PROGRESS.md`.
+- **Work completed:**
+  1. Audited official datasets: verified `Train.csv` has exactly 48,400 rows and matches expected SHA-256 `8adbcf55315f166d7dc3dc1d3e4d7400651f26c1d8b95ff387eef38f4e70a283`.
+  2. Verified `Test.csv` and `SampleSubmission.csv` have exactly 2,592 rows with identical ID sequences and 1-hour durations in Asia/Kolkata (`+05:30`).
+  3. Identified the exact private evaluation window: 192 rows (`scoring_block == "private"`), covering 11–12 November 2026 across all four target stations.
+  4. Calculated exact per-station forecast lead times: physical lead from station cutoff (10 Nov 09:00 IST) to first private target start (11 Nov 00:00 IST) is 15.0 hours (spanning to 62.0h start / 63.0h end).
+  5. Audited active data paths: confirmed `src/mumbai_pm25/data.py`, `scripts/generate_task013_submission.py`, and `scripts/train_predict.py` dynamically read the updated canonical paths. Updated `scripts/run_task011.py` default path to `Train.csv`.
+  6. Adapted tests for final release: updated `test_final_gap.py` to test 9 Nov snapshot rejection on the preserved snapshot directory, and generalized `test_independent_verification.py` fold ID matching.
+  7. Implemented 12 comprehensive regression tests in `tests/test_task016_data_and_pipeline.py`.
+  8. Full test suite: 201 passed in 27.09s (100% pass rate). Ruff diagnostics clean across all new and modified modules.
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe scripts/audit_task016.py`
+  - `.\.venv\Scripts\python.exe -m pytest -ra` (201 passed in 27.09s)
+  - `.\.venv\Scripts\python.exe -m ruff check tests/test_task016_data_and_pipeline.py tests/test_final_gap.py tests/test_independent_verification.py scripts/audit_task016.py scripts/run_task011.py src/`
+  - `git diff --check`
+- **Tests and exact results:** 201 passed across full test suite. Zero failures.
+- **Experiment IDs / metrics:** All models verified operational. No final submission generated or uploaded.
+- **Decisions added or superseded:** DEC-20261110-26 adopted.
+- **Known limitations / blockers:** None. Active forecasting pipelines are verified and ready for final submission generation.
+- **Next action:** Final review, commit on `feat/competition-ml-pipeline`, and delivery of audit report to user.
+
+

@@ -61,9 +61,11 @@ Initial public: 22–23 October, active from launch on 26 October until the
 31 October update. These observations are excluded from the launch Train.csv.
 All 2,592 IDs remain required throughout the competition.
 
-9 November 2026 release
-Train contains 48,133 observed station-hours. The active public window
-is 7–8 November, with 171 valid observed targets out of 192.
-The active public and final private evaluation periods are excluded from Train.
-Missing targets are excluded from scoring. Test and SampleSubmission retain
-the original 2,592 IDs and row order.
+
+10 November 2026 final release
+Train contains 48,400 observed station-hours. The 7–8 November
+measurements are included as historical training observations.
+The final public window uses 201 verified station-hours from
+8–10 November available at the release cutoff. These observations are also
+included in Train. Test and SampleSubmission retain the
+original 2,592 IDs and row order. The final private period is 11–12 November.

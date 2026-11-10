@@ -119,7 +119,7 @@ def test_missing_targets_are_excluded_not_imputed(challenge_data):
         train, gap_hours=48, horizon_hours=48, step_days=21, holdout_hours=48
     )
     # Check a fold where missingness occurred
-    f_missing = next(f for f in folds if "20260903" in f.fold_id or "20260813" in f.fold_id)
+    f_missing = next(f for f in folds if any(k in f.fold_id for k in ["20260904", "20260814", "20260903", "20260813"]))
     target_hours = pd.date_range(f_missing.target_start, periods=48, freq="h")
 
     rows = []
