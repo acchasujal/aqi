@@ -1,0 +1,4 @@
+left,right,prediction_correlation,residual_correlation
+Candidate_C,Candidate_B,0.9516993263049024,0.9765544771241097
+Candidate_C,Candidate_D,0.9940008581727641,0.9961887246526074
+Candidate_B,Candidate_D,0.9795706888597987,0.9916093045237422

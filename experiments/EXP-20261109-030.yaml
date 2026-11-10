@@ -1,0 +1,33 @@
+experiment_id: EXP-20261109-030
+date: 2026-11-09
+status: completed_with_limitations
+question: Reconcile the 25-commit team candidate branch, audit supplied EXP030 A/B, and compare reproducible candidates on matched fixed-origin 48-hour folds.
+baseline: P_fix
+candidates: [Candidate_C, Candidate_B, Candidate_D, P_fix, EXP030_A, EXP030_B]
+primary_metric: full_target_raw_scale_RMSE
+fold_design: station-specific historical PM cutoffs producing first-target gaps 41-43 hours and complete 48-hour frozen-origin blocks; identical labelled rows and origins
+seasonal_calendar_ablation: [legacy_doy, exact_month_day_2024]
+label_policy: preserve every validation target unchanged; no clipping, deletion, or winsorisation
+inputs:
+  official_train: C:/Users/sujal/Downloads/Train (1).csv
+  exp030_a: C:/Users/sujal/Downloads/exp030_a_alpha25_nov9.csv
+  exp030_b: C:/Users/sujal/Downloads/exp030_b_adaptive_nov9.csv
+  task012_corrected_blend: C:/Users/sujal/Downloads/submission_task012_corrected_blend_test.csv
+  task009_branch: origin/feat/competition-ml-pipeline
+provenance_limits:
+  - TASK009 reports are read from the pinned fetched Git branch and remain unmerged.
+  - EXP030 manifests are unknown unless found beside the supplied CSVs or branch artifacts.
+  - CatBoost is unavailable in the current environment; Candidate B execution requires a compatible existing runtime.
+production_effect: none_pending_matched_evidence
+final_submission: forbidden_until_official_2026-11-10_refresh
+results:
+  matched_rows: 1475
+  origins: 9
+  P_fix_rmse: 27.394779411671724
+  median72_rmse: 28.4302750633167
+  legacy_doy_rmse: 27.91223108942631
+  exact_month_day_rmse: 27.394779411671724
+  exp030_a_b_identical_rows: 1472
+  exp030_a_b_prediction_correlation: 0.9550273950225391
+  catboost_candidate_b_d: not_run
+  exp030_validation_performance: unavailable_without_labels_and_manifests

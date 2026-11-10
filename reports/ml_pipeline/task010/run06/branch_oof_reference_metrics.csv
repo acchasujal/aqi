@@ -1,0 +1,4 @@
+model,rows,origins,rmse,mae,bias,source
+Candidate_C,1460,9,28.198386514958155,12.42862131555756,-3.4718979395941596,fetched branch OOF; nominal common 48h cutoff; not new 41-43h run
+Candidate_B,1460,9,29.18399159608028,12.492688212086566,-7.038093156178309,fetched branch OOF; nominal common 48h cutoff; not new 41-43h run
+Candidate_D,1460,9,28.386127189241762,12.231485495942062,-4.898376026227818,fetched branch OOF; nominal common 48h cutoff; not new 41-43h run

@@ -1,0 +1,115 @@
+{
+  "Train.csv": {
+    "sha256": "8adbcf55315f166d7dc3dc1d3e4d7400651f26c1d8b95ff387eef38f4e70a283",
+    "bytes": 6837802,
+    "retrieval_file_mtime_local": "2026-11-10T15:30:11.603467226+05:30",
+    "rows": 48400,
+    "columns": [
+      "timestamp_ist",
+      "mean",
+      "count",
+      "available_at",
+      "pm25",
+      "location_id",
+      "sensor_id",
+      "station_name",
+      "series_id",
+      "flag_high_1000"
+    ],
+    "missing_cells": 0,
+    "duplicate_station_interval_ends": 0,
+    "station_cutoffs": {
+      "11606": "2026-11-10T09:00:00+05:30",
+      "11611": "2026-11-10T09:00:00+05:30",
+      "3409510": "2026-11-10T09:00:00+05:30",
+      "3409511": "2026-11-10T09:00:00+05:30"
+    },
+    "mean_equals_pm25": true,
+    "previous_release_rows": 48133,
+    "previous_rows_unchanged": true,
+    "added_records": 267,
+    "added_by_date": {
+      "2026-11-07": 83,
+      "2026-11-08": 88,
+      "2026-11-09": 64,
+      "2026-11-10": 32
+    },
+    "available_at_minus_interval_end_hours": {
+      "min": 1.5871246763888889,
+      "median": 84.00888888888889,
+      "p90": 94.00805555555556,
+      "max": 381.6188888888889,
+      "interpretation": "available_at is not verified first-publication time"
+    },
+    "previous_release_full_rows_identical": true,
+    "previous_release_field_mismatch_counts": {
+      "mean": 0,
+      "count": 0,
+      "available_at": 0,
+      "pm25": 0,
+      "sensor_id": 0,
+      "station_name": 0,
+      "series_id": 0,
+      "flag_high_1000": 0
+    }
+  },
+  "Test.csv": {
+    "sha256": "cdb2b6c3035f6331848c565b4d3dd89ac5281efab07fa62bfabc2e7ff172db0a",
+    "bytes": 293836,
+    "retrieval_file_mtime_local": "2026-11-10T15:30:11.605216980+05:30",
+    "rows": 2592,
+    "columns": [
+      "ID",
+      "location_id",
+      "sensor_id",
+      "target_start_ist",
+      "target_end_ist",
+      "scoring_block",
+      "unit"
+    ],
+    "missing_cells": 0
+  },
+  "SampleSubmission.csv": {
+    "sha256": "5806d6109f381043e59fffb48a5d0af5d9de56fd4e0e956e4c5e7f2e6ae5dcd9",
+    "bytes": 77770,
+    "retrieval_file_mtime_local": "2026-11-10T15:30:11.606799126+05:30",
+    "rows": 2592,
+    "columns": [
+      "ID",
+      "Target"
+    ],
+    "missing_cells": 2592
+  },
+  "Stations.csv": {
+    "sha256": "383269fa04abf8f2eb49e5ec0bb5a77c2df11acb6aca996b7edf269a109ee9cf",
+    "bytes": 369,
+    "retrieval_file_mtime_local": "2026-11-10T15:30:11.607303858+05:30",
+    "rows": 4,
+    "columns": [
+      "location_id",
+      "station_name",
+      "selected_sensor",
+      "latitude",
+      "longitude",
+      "timezone"
+    ],
+    "missing_cells": 0
+  },
+  "DataDictionary.txt": {
+    "sha256": "fd05ea59917978574d5e89feded505510a646f0800ab78541247a6a5ad0ec4d3",
+    "bytes": 3499,
+    "retrieval_file_mtime_local": "2026-11-10T15:30:11.607303858+05:30"
+  },
+  "AdditionalHistory.zip": {
+    "sha256": "3233061ca4ac2af39e9f6e80e21d9261b1b8d2fd3b037e5d034bcec059a7e80e",
+    "bytes": 4817970,
+    "retrieval_file_mtime_local": "2026-11-10T15:30:11.613319874+05:30"
+  },
+  "test_sample_exact_id_order": true,
+  "retrieval_provenance": "Owner-supplied final Train (2).csv; local last-write timestamp is recorded, exact download URL/receipt unavailable",
+  "release_announcement_ist": "2026-11-10T12:27:00+05:30",
+  "source_url": "https://zindi.world/competitions/google-mumbai-data-challenge/data",
+  "exact_download_url_or_receipt": "Not supplied",
+  "source_file_local_modified_time_ist": "2026-11-10T15:22:42.717010498+05:30",
+  "verified_retrieval_time": "Unknown; filesystem modified time is not independently verified retrieval time"
+}

@@ -1,0 +1,25 @@
+4be5c105bb8a640bba4a080c06b892cbc113ad5d Add manifest file for balanced ensemble model submission
+5dfc76b311de4aa2bb165544dba841ae1112a8d8 feat: final verification of candidate E (2000 ceiling) across 9 folds and clean test pass
+8395ca1b7c07d818ce6a5744d2f507263652a231 feat(task010): candidate E audit, target clipping analysis, horizon resolution, and submission selection
+b2f667b2f70aae9baa9e206a3be1ac6d4c0dfba5 feat(task009): complete team integration, catboost benchmark, and final submission generation
+efa053a862a66b4035294d72faf29b961567df19 feat(integration): merge origin/main into feat/competition-ml-pipeline with updated data and full test pass
+a191dbaf89f3324e8d8fe77542bf8cc70a848b4e docs: update PROGRESS.md and adopt DEC-20261108-14 for sensitivity audit
+9cd782fae20c59f05003526a3b6b9dcc79bda05a feat: complete final sensitivity audit and readiness protocol for candidates C and B
+dac59cd3293a3dfb7544f05bf571b5f108739947 docs: update PROGRESS.md and adopt DEC-20261108-13 for final candidate selection
+39220f280f8b47e95dd358166a61a2afc42028ab feat: complete final model selection study and generate candidate C and D submissions
+251ccf8148c2e97af983a5560a39134de693440d docs: audit forecast feature semantics, correct station metadata, and verify label availability
+75ef39e89b7065f621badad82df21573a8b0b1e7 docs: update PROGRESS.md and adopt DEC-20261108-12 for generalization audit
+ae9a9cac95ffc17f1c0f4690485ae46fa4378c3b docs: finalize private window generalization assessment and candidate analysis
+22774f6bd5696195df3bd3f855f82a080fa57ea9 feat: reassess candidate diversity across multi-regime validation folds
+9f2ce683d77273ab2e30c5f22cb061b1aebe98ef test: enforce training label availability rule and strict cutoff bounds
+6e807d5038df14149cb1b748e5175b636180cb0a feat: implement adversarial validation decomposition across feature subsets
+ad227277ccae9c333c29d98e97bf227ee41e30be feat: add seasonal november validation and high-pollution robustness audit
+35203d253a7e2f4068ce606f99c7573c75069a4d fix: correct test forecast horizon calculation and audit timeline clocks
+cd45d000ecb391514c64339e097ae4d703301d1a feat: implement independent verification suite and generate reconciliation reports
+f3c7f42c561d19eb5b40736becbcab2dd4e209f8 feat: implement final private submission pipeline and generate candidate submissions
+df11ae6558fb0cd3f9c97dc839eb6bbaab30c333 feat: implement multi-model benchmarking, adversarial validation, and ensembling
+33e12aa9a21f93b02ad0615ebb6481a9f3f33d60 feat: implement supervised model families and target transformations
+6cdede5f9d284958177e1cc03a7f75e7883cc13b feat: implement modular feature engineering system and registry
+e416c11c8e236c3eb53caacd3027cbcb8a827636 feat: implement statistical forecasting baselines module
+41453fa444e987f77565346cb3c743404fb8267f feat: implement fixed-origin validation framework and data quality audit
+f30b74068110f168b28f760159c55c6a45abe73b fix: correct historical station series mapping and leap year alignment

@@ -1,0 +1,50 @@
+[
+  {
+    "candidate": "median72",
+    "comparator": "P_fix",
+    "rmse_delta": 1.0354956516449718,
+    "lower95": 0.2172158363872736,
+    "upper95": 1.8130288687898357,
+    "origin_wins": 2,
+    "origins": 9,
+    "block_origins": 3,
+    "repetitions": 5000,
+    "seed": 20261109
+  },
+  {
+    "candidate": "C_legacy_doy",
+    "comparator": "P_fix",
+    "rmse_delta": 0.5174516777545861,
+    "lower95": -0.03774682786363037,
+    "upper95": 1.016851713808684,
+    "origin_wins": 4,
+    "origins": 9,
+    "block_origins": 3,
+    "repetitions": 5000,
+    "seed": 20261109
+  },
+  {
+    "candidate": "C_exact_month_day",
+    "comparator": "P_fix",
+    "rmse_delta": 0.0,
+    "lower95": 0.0,
+    "upper95": 0.0,
+    "origin_wins": 0,
+    "origins": 9,
+    "block_origins": 3,
+    "repetitions": 5000,
+    "seed": 20261109
+  },
+  {
+    "candidate": "C_exact_month_day",
+    "comparator": "C_legacy_doy",
+    "rmse_delta": -0.5174516777545861,
+    "lower95": -1.016851713808684,
+    "upper95": 0.03774682786363037,
+    "origin_wins": 4,
+    "origins": 9,
+    "block_origins": 3,
+    "repetitions": 5000,
+    "seed": 20261109
+  }
+]

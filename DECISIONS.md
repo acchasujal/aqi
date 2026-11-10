@@ -305,3 +305,39 @@ Every technical decision must include:
 - **Alternatives considered:** Uploading test submission immediately to Zindi (rejected: user explicitly requested manual review only, and official final Train refresh is scheduled for 10 November 09:00 IST).
 - **Consequences:** Pipeline verified and confirmed ready for final refresh on 10 November 2026.
 
+## DEC-20261109-18 - Keep exact-calendar P_fix primary; gate the second model
+
+- **Date / owner:** 2026-11-09 / Codex
+- **Status:** Accepted for current release planning; final pair remains provisional.
+- **Context:** TASK010 audited the fetched 25-commit team branch and supplied 9 November Train/EXP030 files, then ran common midnight-aligned 48-hour folds with each station's actual 41–43h first-target PM gap.
+- **Decision:** Retain P_fix / exact month-day Candidate C as the primary. Do not promote Candidate B, D, E, or either EXP030 file from this run. Candidate B can remain a conditional hedge for the 10 November refresh only after compatible CatBoost execution and corrected-gap validation; if that gate cannot be met, use the existing documented P_fix/median72 fallback and disclose its weaker result.
+- **Evidence:** `reports/ml_pipeline/task010/TASK010_REPRODUCTION_REPORT.md`, `run06/model_metrics.csv`, `run06/paired_bootstrap.json`, `run06/branch_oof_model_metrics.csv`, `run06/candidate_e_artifact_audit.json`. P_fix/exact C RMSE 27.3948 on 1,475 rows; median72 28.4303; legacy_doy 27.9122. Exact-vs-legacy paired interval [-1.0169,+0.0377] crosses zero. Branch C/B/D figures are from a different fold schedule (1,460 rows); CatBoost B/D not rerun. EXP030 manifests/labels are unavailable. E output authenticates to its manifest after CRLF normalization, but private max 532.54 conflicts with the report's stated 116.72 maximum.
+- **Confidence:** High that the supplied current Train matches the fetched 9 November data and that P_fix is the best directly evaluated reproducible candidate here; medium for the calendar alignment advantage; low for the final second-model ranking/private score.
+- **Alternatives considered:** Promote B by its prior clean-range result; select EXP030 by forecast mean/divergence; promote E by its reported OOF score; choose median72 as equally accurate. Rejected because the first two lack corrected matched evidence/provenance, E has an unresolved output/report mismatch, and median72 loses primary RMSE.
+- **Consequences / revisit trigger:** The 9 November Train is preserved in ignored processed evidence only. The final inference gate rejects it as final and requires a later PM cutoff. Reopen second-model selection only with the actual 10 November official snapshot, verified CatBoost runtime/manifests, and identical station-specific folds. No final submission or platform action occurred.
+
+## DEC-20261110-19 - Keep P_fix primary and use a modest diur7 hedge
+
+- **Date / owner:** 2026-11-10 / Codex
+- **Decision:** Generate P_fix as the primary final file and P_fix + 25% diur7 as the second selectable file. Keep the second explicitly labelled as a hedge, not a full-target RMSE win.
+- **Evidence:** The frozen final Train is SHA-256 `8adbcf...e70a283`; 84 weekly target origins were scheduled, with 12,731 labelled rows on 83 nonempty origins. Full-target RMSE is 2391.716290 for P_fix, 2391.724402 at 10%, 2391.737515 at 25%, and 2391.761889 at 50%. 25% improves the clean `<250` diagnostic but worsens the primary full-target score slightly. Its recent-origin behavior is a small hedge; no private score is known. Results and limitations are recorded in `reports/ml_pipeline/task011/TASK011_FINAL_REPORT.md`.
+- **Confidence:** High in input hash, exact fold/row calculation, baseline arithmetic, overlay and deterministic output; medium-low that the hedge helps the private two-day window.
+- **Alternatives:** Choose two P_fix variants; use median72; promote an unverified EXP030 or Candidate B file. Rejected because the requested blend is more distinct but only modestly different, median72 is weaker in prior matched evidence, and EXP030/B do not have comparable final-release validation/manifests here.
+- **Consequences / revisit trigger:** Upload and select these two final files manually if the owner accepts the hedge; never claim the blend improved broad primary RMSE. Revisit only with matched, eligible private confirmation evidence.
+
+## DEC-20261110-25 - Safely integrate origin/main into feat/competition-ml-pipeline
+
+- **Date / owner:** 2026-11-10 / Competition ML Pipeline Team
+- **Decision:** Integrate incoming commits `00f766a` and `afd2827` from `origin/main` into `feat/competition-ml-pipeline` without rebasing or overwriting existing feature-branch artifacts. Preserve the Climatology-First architecture (`src/mumbai_pm25/climatology/`), the Task 012 Corrected Kernel Climatology Blend (pooled RMSE 27.232), Candidate C, Candidate E, and test submission `submission_task012_corrected_blend_test.csv` (SHA-256 `875881a4...`).
+- **Evidence:**
+  - Full merge base: commit `0735651dcec9af6ef7c53ec822ec6b8a8c088b53`.
+  - Incoming commits audited in `reports/TASK014_MAIN_INTEGRATION_AUDIT.md`:
+    - `00f766a`: Added Task 010 diagnostic scripts (`scripts/run_task010.py`, `tests/test_task010.py`, `reports/ml_pipeline/task010/`).
+    - `afd2827`: Added Task 011 baseline submission script (`scripts/run_task011.py`, `tests/test_task011.py`, `reports/ml_pipeline/task011/`), and `data/raw/challenge/Train (2).csv` (48,400 rows).
+  - Challenge raw files intact: `data/raw/challenge/Train.csv` untouched at 48,133 rows (SHA-256 `e107dda1...`); `Train (2).csv` kept as a non-conflicting secondary snapshot without pointing production inference code to it.
+  - Snapshot guard verification: removed accidental duplicate 9 Nov hash in `INITIAL_TRAIN_HASHES` of `scripts/prepare_task008_submission.py`, ensuring `test_final_gap.py` passes cleanly.
+  - Quality gates: 189 of 189 tests passed across full pytest test suite; `ruff check` cleanly passes on all integration scripts, source modules, and tests.
+- **Confidence:** High. Complete preservation of both pipelines and clean test verification.
+- **Alternatives considered:** Rebasing `feat/competition-ml-pipeline` onto `origin/main` (rejected: would rewrite shared commit history and risk regressions in Task 011-013 commits).
+- **Consequences / revisit trigger:** The feature branch now incorporates `main`'s evaluation tooling and tests while fully retaining its own superior Climatology-First pipeline. No final submissions are regenerated or uploaded during this task.
+
