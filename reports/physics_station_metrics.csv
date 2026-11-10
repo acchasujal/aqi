@@ -1,0 +1,29 @@
+location_id,model,rmse,mae,bias,count
+11606,72h Station Median,14.8108,11.6879,-6.3041,371
+11606,Candidate C (hist24_blend50),15.4695,12.0864,-6.0325,371
+11606,Corrected Kernel Blend 50/50 (Current Best),15.3958,12.0431,-6.1817,371
+11606,Dual-Scale Physics GAM,17.9319,14.3835,-4.8015,371
+11606,Micro-Meteorology LightGBM,13.5405,10.8924,-3.6833,371
+11606,Atmospheric Physics Composite,15.0827,11.8518,-5.268,371
+11606,Horizon-Stabilized Atmospheric Ensemble,15.1041,11.8204,-5.5421,371
+11611,72h Station Median,23.167,16.815,-11.4485,391
+11611,Candidate C (hist24_blend50),19.6564,14.5232,-4.3443,391
+11611,Corrected Kernel Blend 50/50 (Current Best),19.4118,14.26,-5.1925,391
+11611,Dual-Scale Physics GAM,24.3744,18.001,-9.5612,391
+11611,Micro-Meteorology LightGBM,19.3794,14.1825,-5.2428,391
+11611,Atmospheric Physics Composite,20.2547,14.7201,-6.5132,391
+11611,Horizon-Stabilized Atmospheric Ensemble,19.9235,14.5297,-6.1037,391
+3409510,72h Station Median,24.127,16.3128,-5.8558,358
+3409510,Candidate C (hist24_blend50),20.8834,15.4566,-0.1926,358
+3409510,Corrected Kernel Blend 50/50 (Current Best),20.8637,15.3707,-0.5278,358
+3409510,Dual-Scale Physics GAM,23.5997,15.0779,-3.4701,358
+3409510,Micro-Meteorology LightGBM,21.9654,16.4569,-0.8482,358
+3409510,Atmospheric Physics Composite,21.0312,14.7361,-1.4746,358
+3409510,Horizon-Stabilized Atmospheric Ensemble,20.8585,14.8855,-1.1429,358
+3409511,72h Station Median,52.215,18.3115,-14.058,366
+3409511,Candidate C (hist24_blend50),51.6208,18.9952,-5.975,366
+3409511,Corrected Kernel Blend 50/50 (Current Best),49.687,18.8184,-5.807,366
+3409511,Dual-Scale Physics GAM,54.3319,20.1071,-14.6489,366
+3409511,Micro-Meteorology LightGBM,50.0387,18.0719,-2.7976,366
+3409511,Atmospheric Physics Composite,50.3187,16.882,-7.8577,366
+3409511,Horizon-Stabilized Atmospheric Ensemble,50.0207,17.2636,-7.2032,366

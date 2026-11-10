@@ -1,0 +1,35 @@
+{
+  "file_name": "submission_ATMOSPHERIC_PRIMARY.csv",
+  "role": "ATMOSPHERIC_PRIMARY_PHYSICS_STACK",
+  "model_name": "Horizon-Stabilized Atmospheric Micro-Meteorology Ensemble",
+  "sha256": "bc2cfec793f68dad713d16e8436e300a6e674b2276d75778b369af2a2f9055ff",
+  "row_count": 2592,
+  "columns": [
+    "ID",
+    "Target"
+  ],
+  "git_commit": "ca96e4908beb626e491c815f7e496831c6a56341",
+  "git_tree_status": "modified",
+  "target_stats": {
+    "min": 40.1329,
+    "max": 84.8701,
+    "mean": 56.437,
+    "median": 54.6466,
+    "std": 9.4393
+  },
+  "private_stats": {
+    "count": 192,
+    "min": 47.3898,
+    "max": 84.0204,
+    "mean": 59.0036,
+    "median": 57.3725,
+    "std": 9.8936
+  },
+  "verified_checks": {
+    "exact_2592_rows": true,
+    "columns_ID_Target": true,
+    "all_finite": true,
+    "all_non_negative": true,
+    "zero_leakage": true
+  }
+}

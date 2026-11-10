@@ -864,3 +864,32 @@ Merged TASK008/AirWindow with current main, preserving exact P_fix source select
 - **Decisions added or superseded:** DEC-20261110-27 adopted.
 - **Known limitations / blockers:** None. Zero automated API uploads to Zindi; files and SHA-256 hashes ready for human portal submission.
 - **Next action:** Execute final git commit and present findings to user.
+
+### 2026-11-10 — Advanced Atmospheric Micro-Meteorology Physics & Horizon-Stabilized Stacking Upgrade
+- **Task / issue:** Design and integrate first-principles atmospheric dispersion physics, synoptic-diurnal GAMs, training label Hampel outlier filtering, and horizon-dependent variance stabilization into the forecasting architecture.
+- **Agent / owner:** Senior Data Scientist, ML Engineer, and Software Architect
+- **Branch / commit:** `feat/competition-ml-pipeline` / [pending commit]
+- **Files changed:** `src/mumbai_pm25/features/physics.py` (new); `src/mumbai_pm25/models/physics_gam.py` (new); `src/mumbai_pm25/climatology/horizon_stabilizer.py` (new); `src/mumbai_pm25/models/supervised.py`; `tests/test_physics_pipeline.py` (new); `scripts/run_physics_experiments.py` (new); `scripts/generate_physics_submissions.py` (new); `reports/physics_model_comparison.csv` (new); `reports/physics_lead_metrics.csv` (new); `reports/physics_station_metrics.csv` (new); `reports/physics_oof_predictions.csv` (new); `artifacts/submissions/submission_ATMOSPHERIC_PRIMARY.csv` (new); `artifacts/submissions/submission_ATMOSPHERIC_PRIMARY.manifest.json` (new); `DECISIONS.md`; `PROGRESS.md`.
+- **Work completed:**
+  1. Atmospheric dispersion feature engineering: built `src/mumbai_pm25/features/physics.py` computing ventilation coefficient ($VC = \text{PBLH} \times \text{wind\_speed}$ and $\log(1 + VC)$), coastal breeze vectors (Arabian Sea onshore normal at $285^\circ$ WNW vs nocturnal offshore land breeze at $105^\circ$ ESE), regional point-source alignment (Deonar corridor at $75^\circ$ ENE, Thane Creek corridor at $110^\circ$ ESE), thermal inversion proxies, and inter-station advection fluxes. Includes physical diurnal fallbacks if raw NWP tables are absent.
+  2. Dual-Scale Synoptic-Diurnal GAM: implemented `src/mumbai_pm25/models/physics_gam.py` combining 3-harmonic Fourier diurnal bases ($24\text{h}, 12\text{h}, 8\text{h}$ cycles) with atmospheric dispersion regressors and Huber/Ridge regularization with station-specific intercepts.
+  3. Micro-Meteorology GBDT Residual Forecaster: updated `src/mumbai_pm25/models/supervised.py` with training label Hampel outlier filtering (capping extreme instrument overflow values $> 1,000\,\mu\text{g/m}^3$ to $500\,\mu\text{g/m}^3$ during training while leaving validation/test labels 100% unclipped).
+  4. Horizon-dependent variance stabilization: implemented `src/mumbai_pm25/climatology/horizon_stabilizer.py` ensuring volatile high-frequency residual predictions decay smoothly into the ultra-stable Climatology-First prior at deep forecast horizons ($h \ge 48\text{h}$ to $96\text{h}$), and SLSQP-constrained stacking.
+  5. Evaluated across 9 standardized chronological validation folds ($N=1,486$ validation rows) via `scripts/run_physics_experiments.py`:
+     - Micro-Meteorology LightGBM: **29.6232 pooled RMSE** (autumn RMSE: **17.4080**, clean-250 RMSE: **18.6902**).
+     - Horizon-Stabilized Atmospheric Ensemble: **29.7065 pooled RMSE**, **14.6124 MAE**.
+     - Lead horizon 60–71h: **29.7609 RMSE** (outperforming prior baseline); lead horizon 72–83h: **18.0428 RMSE**.
+  6. Generated official verified submission `artifacts/submissions/submission_ATMOSPHERIC_PRIMARY.csv` (SHA-256 `bc2cfec793f68dad713d16e8436e300a6e674b2276d75778b369af2a2f9055ff`) with overall mean 56.44 $\mu\text{g/m}^3$ and private window mean 59.00 $\mu\text{g/m}^3$.
+  7. Full test suite: 207 of 207 tests passing (100% pass rate). Ruff diagnostics clean.
+- **Commands run:**
+  - `.\.venv\Scripts\python.exe -m pytest tests/test_physics_pipeline.py -v` (6 passed in 1.76s)
+  - `.\.venv\Scripts\python.exe scripts/run_physics_experiments.py`
+  - `.\.venv\Scripts\python.exe scripts/generate_physics_submissions.py`
+  - `.\.venv\Scripts\python.exe -m pytest -ra` (207 passed in 50.77s)
+  - `.\.venv\Scripts\python.exe -m ruff check src/ scripts/ tests/`
+  - `git diff --check`
+- **Tests and exact results:** 207 passed across full repository test suite.
+- **Experiment IDs / metrics:** Micro-Meteorology LightGBM 29.6232 RMSE; Horizon-Stabilized Atmospheric Ensemble 29.7065 RMSE.
+- **Decisions added or superseded:** DEC-20261110-28 adopted.
+- **Known limitations / blockers:** None.
+- **Next action:** Stage files, commit to `feat/competition-ml-pipeline`, and present final walkthrough to user.

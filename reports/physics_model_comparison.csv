@@ -1,0 +1,8 @@
+model,pooled_rmse,mae,bias,autumn_rmse,winter_rmse,clean_1000_rmse,clean_250_rmse,coverage_rows
+Corrected Kernel Blend 50/50 (Current Best),29.5171,15.0968,-4.467,18.2115,40.3887,29.5171,18.982,1486
+Micro-Meteorology LightGBM,29.6232,14.8669,-3.1925,17.408,41.069,29.6232,18.6902,1486
+Horizon-Stabilized Atmospheric Ensemble,29.7065,14.6124,-5.0392,17.9969,40.8559,29.7065,18.6628,1486
+Atmospheric Physics Composite,29.9153,14.5403,-5.3196,18.0062,41.2155,29.9153,18.6998,1486
+Candidate C (hist24_blend50),30.3775,15.2412,-4.1672,18.4147,41.7717,30.3775,19.0973,1486
+72h Station Median,31.7449,15.7826,-9.4595,20.6423,42.7425,31.7449,21.2104,1486
+Dual-Scale Physics GAM,33.1337,16.9124,-8.1585,20.5965,45.2394,33.1337,21.9271,1486

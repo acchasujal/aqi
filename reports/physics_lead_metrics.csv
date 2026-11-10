@@ -1,0 +1,5 @@
+lead_bucket,count,72h Station Median,Candidate C (hist24_blend50),Corrected Kernel Blend 50/50 (Current Best),Dual-Scale Physics GAM,Micro-Meteorology LightGBM,Atmospheric Physics Composite,Horizon-Stabilized Atmospheric Ensemble
+48-59h,380,26.8651,25.1034,24.2507,26.7846,26.0258,24.3774,24.2531
+60-71h,365,31.8877,31.4132,30.2938,33.9993,29.7609,30.7254,30.5083
+72-83h,370,18.6197,18.8358,18.6861,22.2848,18.0428,18.4007,18.3689
+84-95h,371,44.1701,41.5454,40.4507,45.055,40.3117,41.3448,40.9874

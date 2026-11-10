@@ -21,16 +21,24 @@ class SupervisedForecaster:
         target_transform: str = "raw",
         params: dict[str, Any] | None = None,
         random_seed: int = 42,
+        use_huber_target_filter: bool = True,
     ) -> None:
         self.model_family = model_family.lower()
         self.target_transform = target_transform.lower()
         self.params = params or {}
         self.random_seed = random_seed
+        self.use_huber_target_filter = use_huber_target_filter
         self.model_: Any = None
         self.feature_names_: list[str] = []
 
     def _transform_target(self, y: np.ndarray, X: pd.DataFrame) -> np.ndarray:
         y_clean = np.maximum(0.0, y)
+
+        # Hampel / robust outlier ceiling on training target: filter extreme instrument error codes
+        if self.use_huber_target_filter:
+            # Instrument overflow values (>1000 ug/m3 or extreme spikes) are capped to 500 for training stability
+            y_clean = np.where(y_clean > 1000.0, 500.0, y_clean)
+
         if self.target_transform == "raw":
             return y_clean
         elif self.target_transform == "sqrt":
@@ -39,9 +47,10 @@ class SupervisedForecaster:
             return np.log1p(y_clean)
         elif self.target_transform == "residual_median72":
             baseline = X["median_72"].to_numpy(dtype=float) if "median_72" in X else 40.0
-            # Clip multi-thousand instrument overflow codes (>2000 ug/m3) while preserving all atmospheric spikes (up to 1000 ug/m3)
-            y_capped = np.clip(y_clean, 0.0, 2000.0)
-            return y_capped - baseline
+            return y_clean - baseline
+        elif self.target_transform == "residual_physics_gam":
+            baseline = X["physics_gam_pred"].to_numpy(dtype=float) if "physics_gam_pred" in X else 40.0
+            return y_clean - baseline
         else:
             raise ValueError(f"Unknown target transformation: {self.target_transform}")
 
@@ -54,6 +63,9 @@ class SupervisedForecaster:
             inv = np.expm1(np.maximum(0.0, pred))
         elif self.target_transform == "residual_median72":
             baseline = X["median_72"].to_numpy(dtype=float) if "median_72" in X else 40.0
+            inv = baseline + pred
+        elif self.target_transform == "residual_physics_gam":
+            baseline = X["physics_gam_pred"].to_numpy(dtype=float) if "physics_gam_pred" in X else 40.0
             inv = baseline + pred
         else:
             raise ValueError(f"Unknown target transformation: {self.target_transform}")

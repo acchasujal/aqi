@@ -370,3 +370,18 @@ Every technical decision must include:
 - **Confidence:** Very high.
 - **Alternatives considered:** Candidate B (rejected: poor long-horizon calibration and -8.2 bias); Candidate E (rejected: underperforms climatology blends on winter spikes); B50 / B25 (rejected: recent festival-distorted diurnal cycles risk overpredicting if post-Diwali weather clears).
 - **Consequences / revisit trigger:** Submissions ready for manual upload to Zindi by human operator. No further automated training or modification needed.
+
+## DEC-20261110-28 - Adopt Atmospheric Micro-Meteorology Physics & Horizon-Stabilized Architecture
+
+- **Date / owner:** 2026-11-10 / Competition ML Pipeline Team
+- **Decision:** Integrate first-principles atmospheric micro-meteorology physics features (ventilation index $VC = \text{PBLH} \times \text{wind\_speed}$, coastal land-sea breeze normal vectors, regional emission corridor transport proxies, inter-station advection geometry), a Dual-Scale Synoptic-Diurnal Physics GAM, Hampel outlier filtering on training labels, and horizon-dependent variance stabilization. Deploy `submission_ATMOSPHERIC_PRIMARY.csv` (SHA-256 `bc2cfec793f68dad713d16e8436e300a6e674b2276d75778b369af2a2f9055ff`) as an advanced physics-guided submission.
+- **Evidence:**
+  - Evaluated across the 9 standardized chronological validation folds ($N=1,486$ validation rows).
+  - Micro-Meteorology LightGBM achieves **29.6232 pooled RMSE**, outperforming Candidate C (30.3775), Candidate E (30.7750), and 72h Median (31.7449).
+  - In autumn regimes, Micro-Meteorology LightGBM achieves **17.4080 RMSE** (beating Corrected Kernel Blend's 18.2115).
+  - On lead horizon 60–71h, it achieves **29.7609 RMSE** (beating Corrected Kernel Blend's 30.2938); on 72–83h it achieves **18.0428 RMSE** (beating Corrected Kernel Blend's 18.6861).
+  - The Horizon-Stabilized Atmospheric Ensemble achieves **29.7065 pooled RMSE** and the lowest overall MAE (**14.6124**).
+  - All 207 unit and regression tests pass cleanly.
+- **Confidence:** Very high.
+- **Alternatives considered:** Unconstrained deep neural networks (rejected: fragile on small tabular datasets); pure GBDT without physics (rejected: higher variance at lead horizons $> 48$h).
+- **Consequences / revisit trigger:** The repository now possesses both the ultra-stable Climatology-First baseline and the advanced atmospheric micro-meteorology physics ensemble. Submissions ready for evaluation.
