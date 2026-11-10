@@ -47,3 +47,7 @@ python scripts/train_predict.py --model ensemble_robust --model-run-time <actual
 ```
 
 Those are branch-code commands, not commands verified in the current main checkout. Do not upload automatically. If the B environment or validation gate fails, retain the P_fix primary and disclose that a supported second model was not established; do not substitute EXP030 or Candidate E without provenance and matched validation.
+
+## TASK011 final release execution (10 November)
+
+The owner-supplied `Train (2).csv` was hash-verified and copied into `data/processed/official_releases/20261110_final/`; raw challenge inputs remain untouched. The reproducible command is `.venv\Scripts\python.exe scripts/run_task011.py`. It freezes the other five official inputs, verifies the expected final hash/cutoffs, uses the actual run clock, scores 84 weekly 15-hour-gap origins and writes P_fix and P_fix+25% diur7 candidates with exact target-end released-observation overlay. Deliverables and limitations are in `reports/ml_pipeline/task011/TASK011_FINAL_REPORT.md`. The full raw RMSE narrowly favors P_fix; the 25% blend is only a recent-regime hedge. Upload and select exactly the two newly generated files manually, then verify the Zindi save state. Do not use leaderboard feedback to tune.

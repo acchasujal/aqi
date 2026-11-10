@@ -1,0 +1,23 @@
+experiment_id: EXP-20261110-011
+task: TASK011 final-data refresh and two-submission generation
+date_ist: 2026-11-10
+status: completed_with_limits
+train_sha256: 8adbcf55315f166d7dc3dc1d3e4d7400651f26c1d8b95ff387eef38f4e70a283
+validation: weekly fixed-origin 48-hour windows; first target starts 15 hours after simulated PM cutoff; Apr 2 2025-Nov 4 2026
+labelled_rows: 12731
+predeclared_candidates:
+  - P_fix
+  - 0.90*P_fix + 0.10*diur7; missing diur7 falls back to P_fix
+  - 0.75*P_fix + 0.25*diur7; missing diur7 falls back to P_fix
+  - 0.50*P_fix + 0.50*diur7; missing diur7 falls back to P_fix
+results:
+  P_fix_rmse: 2391.716290
+  diur10_rmse: 2391.724402
+  diur25_rmse: 2391.737515
+  diur50_rmse: 2391.761889
+primary: P_fix retained
+secondary: P_fix plus 25 percent diur7 retained only as a recent-regime hedge; no full-target improvement claim
+availability_assumption: PM labels assumed available at interval end; available_at is not verified first-publication time
+outputs:
+  - artifacts/submissions/task011_final_Pfix_20261110.csv
+  - artifacts/submissions/task011_final_Pfix_diur25_20261110.csv
