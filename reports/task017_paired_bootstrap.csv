@@ -1,0 +1,10 @@
+candidate_model,reference_model,mean_rmse_difference,ci_95_lower,ci_95_upper,probability_candidate_better,significant_at_95_pct
+Corrected Kernel Climatology Blend (50/50),Candidate C (hist24_blend50_median72),-0.7442,-1.7734,0.1372,0.8947,False
+Hybrid Blend (50% Corrected Kernel + 50% B50),Candidate C (hist24_blend50_median72),-0.5517,-1.1163,0.1979,0.9379,False
+P_fix + 50% diur7 (B50),Candidate C (hist24_blend50_median72),-0.0452,-1.7146,1.1061,0.4441,False
+P_fix + 25% diur7 (B25),Candidate C (hist24_blend50_median72),-0.1748,-0.9612,0.3799,0.6572,False
+Corrected Kernel Blend + 25% diur7,Candidate C (hist24_blend50_median72),-0.7089,-1.3637,0.2358,0.9373,False
+Corrected Kernel Blend + 50% diur7,Candidate C (hist24_blend50_median72),-0.3773,-1.7566,0.8644,0.724,False
+Candidate B (ensemble_robust),Candidate C (hist24_blend50_median72),0.9566,-0.4144,2.0608,0.0938,False
+Candidate E (ensemble_residual_blend),Candidate C (hist24_blend50_median72),0.1916,-1.4905,1.7259,0.3663,False
+72h Station Median,Candidate C (hist24_blend50_median72),1.5626,-0.0987,4.2053,0.0402,False

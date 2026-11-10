@@ -1,0 +1,36 @@
+{
+  "file_name": "submission_TASK017_SECONDARY_HEDGE.csv",
+  "role": "SECONDARY_HEDGE",
+  "model_name": "Candidate_C_Statistical_Seasonal_Blend",
+  "model_formula": "0.50 * recent_median72 + 0.50 * hist24_same_hour_mean (month_day_365 calendar matching)",
+  "sha256": "02e2bcf75560c34e10e08d7a76b3a467fdd908bbb416fba08ceb538e2482fa8b",
+  "row_count": 2592,
+  "columns": [
+    "ID",
+    "Target"
+  ],
+  "git_commit": "20b59fa954ce72e31559c3980bcd9580cf0fc094",
+  "git_tree_status": "modified",
+  "target_stats": {
+    "min": 38.5738,
+    "max": 115.8575,
+    "mean": 66.0576,
+    "median": 64.0201,
+    "std": 15.3462
+  },
+  "private_stats": {
+    "count": 192,
+    "min": 48.9014,
+    "max": 115.8575,
+    "mean": 70.4703,
+    "median": 68.3502,
+    "std": 17.4028
+  },
+  "verified_checks": {
+    "exact_2592_rows": true,
+    "columns_ID_Target": true,
+    "all_finite": true,
+    "all_non_negative": true,
+    "zero_leakage": true
+  }
+}

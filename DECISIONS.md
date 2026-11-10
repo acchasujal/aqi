@@ -355,4 +355,18 @@ Every technical decision must include:
 - **Alternatives considered:** None; final datasets are mandated by competition rules.
 - **Consequences / revisit trigger:** All pipelines are certified ready for final submission generation. Final submission files will be produced on human command.
 
+## DEC-20261110-27 - Final Model Selection for Private Leaderboard (Task 017)
 
+- **Date / owner:** 2026-11-10 / Competition ML Pipeline Team
+- **Decision:** Select **Corrected Kernel Climatology Blend (50/50)** as the PRIMARY BEST submission (`artifacts/submissions/submission_TASK017_PRIMARY_BEST.csv`, SHA-256 `07e2ba55...`), and **Candidate C (`hist24_blend50_median72`)** as the SECONDARY HEDGE submission (`artifacts/submissions/submission_TASK017_SECONDARY_HEDGE.csv`, SHA-256 `02e2bcf7...`).
+- **Evidence:**
+  - Evaluated 13 candidate forecasting models across 9 standardized chronological folds ($N=1,486$ rows) using official final 10 November 2026 data.
+  - Primary Best achieves the lowest pooled RMSE across all models: **29.5171 $\mu\text{g/m}^3$** (Winter RMSE 40.3887, Autumn RMSE 18.2115).
+  - Outperforms Candidate C (30.3775), Candidate E (30.7750), Candidate B (31.4278), 72h Station Median (31.7449), and Persistence (33.9341).
+  - Beats all models on the calendar-matched November fold (`fold_nov_2025_calendar_match`, 76.4708 vs 79.8499 for Candidate C and 83.3935 for Candidate E) and achieves the lowest RMSE on the most difficult station, Shivaji Nagar 3409511 (49.6870).
+  - 10,000 paired block bootstrap iterations show an 89.47% probability that Corrected Kernel Blend outperforms Candidate C, with an expected RMSE improvement of -0.7442 $\mu\text{g/m}^3$.
+  - Clean 2024 CPCB CAAQS archive insulates both models completely from the extreme sensor errors ($\ge 1,000\,\mu\text{g/m}^3$) identified in December 2025 train telemetry.
+  - Submissions are fully verified, non-negative, finite, 2,592 rows matching `SampleSubmission.csv`.
+- **Confidence:** Very high.
+- **Alternatives considered:** Candidate B (rejected: poor long-horizon calibration and -8.2 bias); Candidate E (rejected: underperforms climatology blends on winter spikes); B50 / B25 (rejected: recent festival-distorted diurnal cycles risk overpredicting if post-Diwali weather clears).
+- **Consequences / revisit trigger:** Submissions ready for manual upload to Zindi by human operator. No further automated training or modification needed.

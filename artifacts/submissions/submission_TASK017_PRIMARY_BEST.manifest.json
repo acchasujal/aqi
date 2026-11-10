@@ -1,0 +1,36 @@
+{
+  "file_name": "submission_TASK017_PRIMARY_BEST.csv",
+  "role": "PRIMARY_BEST",
+  "model_name": "Corrected_Kernel_Climatology_Blend",
+  "model_formula": "0.50 * recent_median72 + 0.50 * clean_2024_kernel_climatology (sigma_doy=10.0, sigma_hour=1.0)",
+  "sha256": "07e2ba553055087e3b12095195915f0e781a0a3ef1e6a32d45bde182fa901038",
+  "row_count": 2592,
+  "columns": [
+    "ID",
+    "Target"
+  ],
+  "git_commit": "20b59fa954ce72e31559c3980bcd9580cf0fc094",
+  "git_tree_status": "modified",
+  "target_stats": {
+    "min": 29.6299,
+    "max": 94.102,
+    "mean": 55.4366,
+    "median": 52.0367,
+    "std": 13.8016
+  },
+  "private_stats": {
+    "count": 192,
+    "min": 46.6802,
+    "max": 94.102,
+    "mean": 64.2279,
+    "median": 60.7479,
+    "std": 13.9288
+  },
+  "verified_checks": {
+    "exact_2592_rows": true,
+    "columns_ID_Target": true,
+    "all_finite": true,
+    "all_non_negative": true,
+    "zero_leakage": true
+  }
+}
