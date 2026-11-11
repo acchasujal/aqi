@@ -37,13 +37,26 @@ Underlying P_fix full-target, raw-scale RMSE is 757.9880 on 11,001 development r
 
 ## Provenance and limits
 
-Forecast source: current-snapshot TASK008 P_fix, issue 8 November 2026 15:58 IST, latest PM interval end 2 November 23:00 IST. Training hash: `fcee20ebf7bd9c4a4e2487bab0a4f81339d6c820a53862b14443031db1f18ad6`. Original prediction CSV hash: `3d79cffcca78cea1ad6f5e24d2568bf931bbba8c3b15fcd7db1728462050ab1d`. The live artifact exports only future forecast hours at issue time, with genuine timestamps and explicit model/source fingerprints. It contains no current private actual targets.
+Live forecast source: audited TASK011 final P_fix, issued 10 November 2026 15:47:52 IST from the 10 November final Train release (SHA-256 `8adbcf55315f166d7dc3dc1d3e4d7400651f26c1d8b95ff387eef38f4e70a283`), with PM history through 09:00 IST and a validity horizon through 21 November 00:00 IST. Forecast CSV SHA-256: `f450b68212463f64bab67adfb0d98e1c4cce7ee83ec118f2564d38d738e34c13`. The earlier 8 November TASK008 artifact is retained as a byte-identical fallback. The 1,848-case historical replay remains the separate TASK008 retrospective simulation described above; it is not evidence of live forecast performance. The live forecast contains no current private actual targets.
+
+## Schedule-baseline comparison
+
+AirWindow's forecast-ranked choice is compared with two simple strategies using paired later-observed PM2.5 means. “Usual cleanest” selects the local start time with the lowest mean observed concentration in earlier origins; for the held-out confirmation split it uses development outcomes only. “Latest window” uses the latest-starting complete candidate. The reported value is AirWindow minus baseline, so negative means the AirWindow-selected window had a lower later-observed mean in that retrospective sample.
+
+| Replay population | Baseline | Paired cases / origins | Mean delta (µg/m³) | 95% origin-cluster bootstrap interval |
+|---|---|---:|---:|---:|
+| Full replay, expanding-origin | Usual cleanest | 1,414 / 76 | -2.28 | [-5.72, 0.69] |
+| Full replay, expanding-origin | Latest window | 1,411 / 77 | -0.16 | [-2.34, 2.06] |
+| Held-out confirmation | Usual cleanest | 169 / 8 | -0.73 | [-2.64, 0.54] |
+| Held-out confirmation | Latest window | 170 / 8 | -1.01 | [-2.66, 0.16] |
+
+All four intervals span zero. This is retrospective evidence, not a guarantee of future performance or evidence of statistically established superiority. The confirmation origins were previously inspected by analysts; overlapping scenarios within origins are dependent. Paired coverage excludes cases missing either observed window outcome, and the replay retains those missing cases in its overall counts. The exact calculation and source replay hash are in `apps/airwindow/public/data/baseline_comparison.json` and are reproducible with `apps/airwindow/baseline_comparison.py`.
 
 The four stations are Borivali East, Malad West, Byculla and Shivaji Nagar. They do not support street/building exposure maps or cleanest-route claims. Hourly PM2.5 is not presented as official Indian AQI. No safe/healthy, medical, personal-dose or measured health-benefit claim is made. Official CPCB/government sources remain the place for health guidance.
 
 ## Google tools and availability
 
-The static React/Vite application uses bundled artifacts and deterministic logic, with no runtime external API requirement. Firebase Hosting Spark configuration and commands are prepared; deployment is blocked by absent authenticated CLI/project access, so no public hosting URL is claimed. The reproducibility notebook is Colab-compatible and demonstrates the evidence calculation; that does not imply execution on Google-hosted compute.
+The static React/Vite application uses bundled artifacts and deterministic logic, with no runtime external API requirement. Firebase Hosting is configured for static files only. The app README and completion record state whether deployment to the existing `airwindow-99085` project was verified; project plan and public availability are not inferred from local configuration. The reproducibility notebook is Colab-compatible and demonstrates the evidence calculation; that does not imply execution on Google-hosted compute.
 
 Source: [acchasujal/aqi - main branch](https://github.com/acchasujal/aqi/tree/main). Local run and build commands are in the app README. The human must still verify a public link and submit the creative form; this package is not a form-processing confirmation.
 

@@ -85,7 +85,7 @@ def styles() -> dict[str, ParagraphStyle]:
         "subhead": ParagraphStyle("Subhead", fontName="Helvetica-Bold", fontSize=11,
                                    leading=15, textColor=TEAL, spaceBefore=9, spaceAfter=5),
         "body": ParagraphStyle("Body", parent=base["BodyText"], fontName="Helvetica",
-                                fontSize=10, leading=14, textColor=INK, spaceAfter=9),
+                                fontSize=10, leading=14, textColor=INK, spaceAfter=6),
         "small": ParagraphStyle("Small", fontName="Helvetica", fontSize=8,
                                  leading=11, textColor=MUTED, spaceAfter=6),
         "label": ParagraphStyle("Label", fontName="Helvetica-Bold", fontSize=8,
@@ -112,7 +112,7 @@ def footer(canvas, doc) -> None:
     canvas.drawString(42, HEIGHT - 25, "AIRWINDOW MUMBAI / PRODUCT + EVIDENCE")
     canvas.setFont("Helvetica", 8)
     canvas.setFillColor(MUTED)
-    canvas.drawString(42, 24, "Independent challenge prototype | 9 November 2026 | IST")
+    canvas.drawString(42, 24, "Independent challenge prototype | 11 November 2026 | IST")
     canvas.drawRightString(WIDTH - 42, 24, str(doc.page))
     canvas.restoreState()
 
@@ -149,6 +149,7 @@ def make_pdf(output: Path, desktop: Path, replay_image: Path) -> None:
     manifest = json.loads((data / "manifest.json").read_text(encoding="utf-8"))
     summary = replay["summary"]
     diagnostics = json.loads((ROOT / "apps/airwindow/evidence/replay_diagnostics.json").read_text(encoding="utf-8"))
+    baselines = json.loads((data / "baseline_comparison.json").read_text(encoding="utf-8"))
     confirm = diagnostics["confirmation_metrics"]
     if replay["calibration"]["status"] != "not_calibrated":
         raise ValueError("Review PDF language before using a different calibration artifact")
@@ -195,8 +196,18 @@ def make_pdf(output: Path, desktop: Path, replay_image: Path) -> None:
     story += [p("03 / REPRODUCIBLE EVIDENCE", "label"),
               p("The evidence chain is inspectable.", "heading"),
               p("The declared scenario uses a 09:00 original booking, 08:00-18:00 feasible range, durations 1/2/3 hours, both target days, all four stations and every matched OOF origin. Numerical selection occurs before inspecting outcomes. Missing observations remain in coverage."),
-              p("Forecasts are genuine retrospective rolling-origin backtests with a frozen PM cutoff. They were generated on 8 November, using simulated historical origins and an interval-end availability proxy. They are not archived operational first-publication vintages."),
-              p("Underlying P_fix full-target raw-scale RMSE: 757.9880 on 11,001 development rows, 15.7963 on 1,400 later rows. Eight extreme labels drive 99.846% of development squared error; later rows have no such extremes. These populations are not interchangeable.", "small"),
+              p("OOF forecasts were generated retrospectively on 8 November from simulated origins with interval-end PM availability as a proxy. They are not archived real-time vintages."),
+              p("All-label P_fix RMSE: 757.99 on 11,001 development rows; 15.80 on 1,400 later rows. Eight extremes drive 99.846% of development squared error.", "small"),
+              p("AirWindow versus simple schedule baselines", "subhead"),
+              p("Paired later-observed mean PM2.5 (AirWindow minus baseline; negative favors AirWindow). Usual-cleanest timing is selected from earlier origins; held-out timing uses development outcomes only. Latest-window uses the latest-starting complete forecast candidate."),
+              table([
+                  ["Population / baseline", "Paired cases / origins", "Mean delta µg/m³", "95% origin-cluster interval"],
+                  ["Full replay · usual cleanest", f"{baselines['full_replay']['usual_cleanest']['paired_cases']:,} / {baselines['full_replay']['usual_cleanest']['origins']}", f"{baselines['full_replay']['usual_cleanest']['mean_delta']:.2f}", f"[{baselines['full_replay']['usual_cleanest']['cluster_bootstrap_95'][0]:.2f}, {baselines['full_replay']['usual_cleanest']['cluster_bootstrap_95'][1]:.2f}]"],
+                  ["Full replay · latest window", f"{baselines['full_replay']['latest_window']['paired_cases']:,} / {baselines['full_replay']['latest_window']['origins']}", f"{baselines['full_replay']['latest_window']['mean_delta']:.2f}", f"[{baselines['full_replay']['latest_window']['cluster_bootstrap_95'][0]:.2f}, {baselines['full_replay']['latest_window']['cluster_bootstrap_95'][1]:.2f}]"],
+                  ["Held-out · usual cleanest", f"{baselines['heldout']['usual_cleanest']['paired_cases']:,} / {baselines['heldout']['usual_cleanest']['origins']}", f"{baselines['heldout']['usual_cleanest']['mean_delta']:.2f}", f"[{baselines['heldout']['usual_cleanest']['cluster_bootstrap_95'][0]:.2f}, {baselines['heldout']['usual_cleanest']['cluster_bootstrap_95'][1]:.2f}]"],
+                  ["Held-out · latest window", f"{baselines['heldout']['latest_window']['paired_cases']:,} / {baselines['heldout']['latest_window']['origins']}", f"{baselines['heldout']['latest_window']['mean_delta']:.2f}", f"[{baselines['heldout']['latest_window']['cluster_bootstrap_95'][0]:.2f}, {baselines['heldout']['latest_window']['cluster_bootstrap_95'][1]:.2f}]"],
+              ], style, [133, 86, 75, CONTENT_WIDTH-294]),
+              p("All four intervals span zero: this retrospective sample does not establish superiority or guarantee future results. Confirmation origins had prior analyst exposure; cases within origins overlap. Missing outcomes are excluded from paired estimates but retained in replay coverage.", "small"),
               table([
                   ["Chronological split", "69 development origins; 8 later confirmation origins. Cases overlap within origins and are not independent samples."],
                   ["Later-origin diagnostic", f"{confirm['cases']} declared cases, {confirm['paired_outcome_cases']} paired outcomes, {confirm['selected_alternative_cases']} numerical alternatives; {confirm['lower_observed_fraction']*100:.2f}% lower afterwards."],
@@ -205,25 +216,25 @@ def make_pdf(output: Path, desktop: Path, replay_image: Path) -> None:
                   ["Lead limit", "OOF issue equals PM cutoff at 193-240h lead. The current live issue is later than the PM cutoff; matching PM age does not establish matching issue-lead calibration."],
               ], style, [124, CONTENT_WIDTH-124]), Spacer(1, 12),
               p("Current forecast provenance", "subhead"),
-              p(f"Model: P_fix / TASK008 provisional. Issue: {forecast['model_issue_time_ist']}. PM-history cutoff and latest station observation: {forecast['pm_history_cutoff_ist']}. No weather was used. Final official refresh remains pending."),
-              p(f"Training SHA-256: {manifest['training_data_sha256']}<br/>Prediction SHA-256: {manifest['prediction_sha256']}", "small"),
+              p(f"Model: P_fix / TASK011 final. Issue: {forecast['model_issue_time_ist']}. PM-history cutoff: {forecast['pm_history_cutoff_ist']}. Planning validity horizon ends {forecast['stations'][0]['forecasts'][-1]['target_end_ist']}. No weather was used; the prior TASK008 artifact is retained as fallback."),
               PageBreak()]
     story += [p("04 / ARCHITECTURE, TOOLS AND HANDOFF", "label"),
               p("A stable demo, without a live API.", "heading"),
               ArchitectureFlow(), Spacer(1, 13),
-              p("Google tools: Firebase Hosting Spark configuration and a Colab-compatible reproducibility notebook. The notebook is not a live application dependency."),
+              p("Google tools: Firebase Hosting serves the static app and a Colab-compatible reproducibility notebook supports replay verification. The notebook is not a live application dependency."),
+              p(f"Forecast training SHA-256: {manifest['forecast_training_data_sha256']}<br/>Prediction CSV SHA-256: {manifest['forecast_prediction_sha256']}", "small"),
               p("Deployment status", "subhead"),
-              p("The application runs locally and static deployment configuration is prepared. Firebase deployment is pending authenticated CLI/project access. No billing was enabled, and no public hosting URL or cloud-notebook execution is claimed."),
+              p("Static Hosting deployment to the existing airwindow-99085 project succeeded on 11 November 2026 at 21:09 IST. Public URL: https://airwindow-99085.web.app. Signed-out browser verification returned HTTP 200 and checked the forecast, replay (10.5 MB), baseline comparison and preserved fallback JSON against manifest SHA-256 values. Hosting only was deployed; no billing changes were made. The project billing plan was not independently verified. No cloud-notebook execution is claimed."),
               p("Working source and reproducibility", "subhead"),
               p('<link href="https://github.com/acchasujal/aqi/tree/main" color="#226D5A">Source: github.com/acchasujal/aqi - main branch</link><br/>Run/build instructions, tests and notebook: apps/airwindow/<br/>Method, red-team review, real screenshots and submission checklist: reports/creative_submission/'),
               p("Selected primary references", "subhead"),
               p('<link href="https://www.tropmet.res.in/project_details.php?position=7&amp;project_id=3">IITM SAFAR project</link> · <link href="https://developers.google.com/maps/documentation/air-quality/forecast">Google Air Quality API</link> · <link href="https://airqo.africa/products/ai-platform">AirQo AI Platform</link><br/><link href="https://www.london.gov.uk/programmes-strategies/environment-and-climate-change/pollution-and-air-quality/models-and-alerts-air-quality">London City Hall alerts</link> · <link href="https://www.breathelondon.org/sensors/join-the-breathe-london-network">Breathe London</link> · <link href="https://firebase.google.com/docs/hosting/usage-quotas-pricing">Firebase Hosting quotas</link>', "small"),
               p("Data and use limits", "subhead"),
-              p("Uses official challenge data and genuine model artifacts; no extra environmental dataset is required. Four stations do not support street/building predictions. No user interviews, measured health benefit, award guarantee, deployment or form-processing result is invented. Consult official CPCB/government guidance for health decisions."),
+              p("Uses official challenge data and genuine model artifacts; no extra environmental dataset is required. Four stations do not support street/building predictions. No user interviews, measured health benefit, award guarantee or form-processing result is claimed. Consult official CPCB/government guidance for health decisions."),
               p("Creative deadline: 13 November 2026, 18:29 GMT / 23:59 IST. Recheck the official form and submit through the human entrant; this package is not submission confirmation.", "small")]
     output.parent.mkdir(parents=True, exist_ok=True)
     doc = SimpleDocTemplate(str(output), pagesize=A4, rightMargin=42, leftMargin=42,
-                            topMargin=53, bottomMargin=47, title="AirWindow Mumbai 2.0",
+                            topMargin=53, bottomMargin=47, title="AirWindow Mumbai 2.1",
                             author="AirWindow Mumbai", subject="Auditable outdoor event scheduling")
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
     if output.stat().st_size >= 10_000_000:

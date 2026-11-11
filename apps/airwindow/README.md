@@ -2,7 +2,7 @@
 
 An activity scheduling prototype for school sports coordinators and outdoor-event organisers. Compare the original activity slot with every feasible consecutive one-, two- or three-hour window at one of the four actual Mumbai monitoring stations. Forecast differences, historical evidence and reasons to abstain stay visible.
 
-The React/Vite/TypeScript client reads real, versioned static artifacts. It does not train a model or call external air-quality APIs. The current artifact is a frozen provisional TASK008 P_fix forecast, issued **8 November 2026 at 15:58 IST**, with PM history through **2 November at 23:00 IST**. Each station has 296 future forecast hours, ending **21 November 00:00 IST**. The UI calculates expiry from the actual artifact horizon and disables new planning after it ends.
+The React/Vite/TypeScript client reads real, versioned static artifacts. It does not train a model or call external air-quality APIs. The current artifact is the frozen TASK011 final P_fix run, issued **10 November 2026 at 15:47:52 IST**, with PM history through **10 November at 09:00 IST**. Each station has 248 future forecast hours, ending **21 November 00:00 IST**. The UI shows issue, observation cutoff and validity horizon, and disables new planning after expiry. The former 8 November TASK008 forecast is preserved as `public/data/forecast_fallback_task008.json`.
 
 ## Run locally
 
@@ -21,7 +21,7 @@ npm.cmd run build
 npm.cmd run test:browser
 ```
 
-`npm test` runs twelve deterministic domain/boundary tests using Node's TypeScript stripping. `npm run build` checks TypeScript and creates `dist/`. The eight Playwright browser tests require the development server and an installed Google Chrome (`channel: chrome`); no browser download or live cloud service is required. They exercise actual artifacts, every main screen, changed-input invalidation, original-slot retention, abstention, impossible ranges, invalid/missing forecasts, missing historical outcomes, partial/full horizon expiry, mobile overflow and a printable brief. Test fixtures never populate production data.
+`npm test` runs deterministic domain/boundary tests using Node's TypeScript stripping. `npm run build` checks TypeScript and creates `dist/`. The eight Playwright browser tests require the development server and an installed Google Chrome (`channel: chrome`); no browser download or live cloud service is required. They exercise actual artifacts, every main screen, paired baseline metrics, changed-input invalidation, original-slot retention, abstention, impossible ranges, invalid/missing forecasts, missing historical outcomes, partial/full horizon expiry, mobile overflow and a printable brief. Test fixtures never populate production data.
 
 Browser captures are written to `reports/creative_submission/screenshots/` from the repository root. Playwright's temporary results remain under ignored `data/processed/airwindow-browser-tests/`.
 
@@ -29,7 +29,9 @@ Browser captures are written to `reports/creative_submission/screenshots/` from 
 
 - `public/data/forecast.json`: forecast schema **1.1.0**. It retains actual issue time and fractional issue-to-target horizons. Schema 1.0.0 and its validator remain supported. Every value has explicit IST intervals, PM cutoffs, model/source fingerprints and missing-value status.
 - `public/data/replay.json`: separate retrospective OOF simulation, schema **1.0.0**. It is lazy-loaded when comparison evidence or replay is opened, so its uncompressed size does not block the initial form.
+- `public/data/baseline_comparison.json`: reproducible expanding-origin and held-out schedule-baseline results derived from the replay artifact; pinned to its SHA-256 in the manifest.
 - `public/data/manifest.json`: artifact/input/source hashes and exact generation metadata.
+- `public/data/forecast_fallback_task008.json`: byte-preserved prior forecast snapshot for rollback.
 - `evidence/replay_diagnostics.json`: chronological decision diagnostics and contiguous-origin resampling results.
 - `contracts/` and the Python validators enforce forecast and replay boundaries. The browser also rejects invalid timestamps, horizons, units, station coordinates, values and completeness metadata.
 
@@ -51,20 +53,18 @@ Historical OOF simulations freeze PM history at recorded pseudo-origins; first-p
 
 Only the four actual stations are represented, with exact identities and coordinates. No spatial interpolation, street-level inference, medical advice, hourly-to-AQI conversion or personal exposure estimate is provided. Freshness shows the real PM age at issue; no arbitrary fresh/stale threshold is invented. See `docs/CLAIMS_AND_USER_SAFETY.md` and `docs/FORECAST_ARTIFACT_CONTRACT.md` from the repository root.
 
-## Firebase deployment preparation
+## Firebase Hosting
 
-`firebase.json` hosts only the static `dist/` output and configures security/cache headers. `.firebaserc.example` contains a placeholder, not a real project. Firebase CLI and authenticated project credentials were unavailable; **no site has been deployed and no billing has been enabled**.
+`firebase.json` hosts only the static `dist/` output and configures security/cache headers. The app is deployed to the existing `airwindow-99085` project at **https://airwindow-99085.web.app**. Hosting release `3b43a385b43dbc71` completed on 11 November 2026 at 21:09 IST. A fresh signed-out Chrome context verified the homepage and forecast, replay (10.5 MB), baseline comparison and preserved fallback JSON against the public manifest SHA-256 values. Deployment used Hosting only and did not change billing. The project billing plan was not independently verified.
 
-After the account owner supplies an existing authorised **Spark** project and verifies current terms/quotas, build and deploy from this directory:
+To reproduce the Hosting-only release from this directory:
 
 ```powershell
 npm.cmd run build
-firebase login
-firebase use --add
-firebase deploy --only hosting --project YOUR_EXISTING_SPARK_PROJECT_ID
+firebase.cmd deploy --only hosting --project airwindow-99085 --non-interactive
 ```
 
-Do not upgrade to Blaze or enable Maps/paid services. Verify the deployed link, artifact hashes, mobile workflow and print output before using it in the creative submission. The app works locally without Firebase or network APIs. Google Colab replay material is prepared separately under `notebooks/`; it is not a dependency of the live app.
+No billing-plan change, Maps or other paid service was enabled. The app works locally without Firebase or runtime network APIs. Google Colab replay material is prepared separately under `notebooks/`; it is not a dependency of the live app.
 
 The judging package, actual screenshots, 90-second demo script, red-team review, submission PDF and deployment checklist are under `reports/creative_submission/`.
 

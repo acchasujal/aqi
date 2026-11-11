@@ -1,7 +1,7 @@
 import { StrictMode, useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import type { ForecastArtifact, ForecastHour, ReplayArtifact, ReplayCase, Station, TimeWindow } from './types.ts';
-import { completeWindow, dateKey, dateLabel, enumerateWindows, isExpired, matchedValidation, differenceLabel, numberLabel, stampLabel, timeLabel, validateForecast, validateReplay, observationAge } from './domain.ts';
+import type { BaselineComparison, ForecastArtifact, ForecastHour, ReplayArtifact, ReplayCase, Station, TimeWindow } from './types.ts';
+import { completeWindow, dateKey, dateLabel, enumerateWindows, isExpired, matchedValidation, differenceLabel, numberLabel, stampLabel, timeLabel, validateForecast, validateReplay, validateBaselineComparison, observationAge } from './domain.ts';
 import './styles.css';
 
 type Page = 'plan' | 'replay' | 'evidence';
@@ -29,8 +29,10 @@ function App() {
   useEffect(() => { const timer = setInterval(() => setNow(Date.now()), 60_000); return () => clearInterval(timer); }, []);
   const [artifact, setArtifact] = useState<ForecastArtifact | null>(null);
   const [replay, setReplay] = useState<ReplayArtifact | null>(null);
+  const [baseline, setBaseline] = useState<BaselineComparison | null>(null);
   const [loadError, setLoadError] = useState('');
   const [replayError, setReplayError] = useState('');
+  const [baselineError, setBaselineError] = useState('');
   const [page, setPage] = useState<Page>('plan');
   const [plan, setPlan] = useState<Plan | null>(null);
   const [comparison, setComparison] = useState<Comparison | null>(null);
@@ -63,6 +65,17 @@ function App() {
     }).catch((error: Error) => { if (error.name !== 'AbortError') setReplayError(error.message); });
     return () => controller.abort();
   }, [page, comparison, replay, replayError]);
+
+  useEffect(() => {
+    if (page !== 'replay' || baseline || baselineError) return;
+    const controller = new AbortController();
+    fetch('./data/baseline_comparison.json', { signal: controller.signal }).then(r => {
+      if (!r.ok) throw new Error(`Baseline comparison could not be loaded (${r.status}).`);
+      return r.json();
+    }).then(raw => setBaseline(validateBaselineComparison(raw)))
+      .catch((error: Error) => { if (error.name !== 'AbortError') setBaselineError(error.message); });
+    return () => controller.abort();
+  }, [page, baseline, baselineError]);
 
   const station = artifact?.stations.find(s => s.station_id === plan?.stationId);
   const comparedStation = artifact?.stations.find(s => s.station_id === comparison?.plan.stationId);
@@ -125,9 +138,9 @@ function App() {
           <div className="hero-note"><span className="note-kicker">THE AIRWINDOW APPROACH</span><div className="small-orbit"><span/><span/><span/></div><p>A lower number<br/>is a starting point.<br/><strong>Evidence comes next.</strong></p><a href="#how-it-works" onClick={e => { e.preventDefault(); setPage('evidence'); }}>Why we sometimes abstain <span>↗</span></a></div>
         </section>
 
-        <div className="snapshot-bar no-print"><span className="snapshot-label"><Clock/> Forecast snapshot</span><span>Issued {stampLabel(artifact.model_issue_time_ist)}</span><span className="snapshot-divider"/><span>Four monitored stations · hourly PM2.5</span><span className="snapshot-tag">{expired ? 'Forecast period ended' : 'Frozen forecast snapshot'}</span></div>
+        <div className="snapshot-bar no-print"><span className="snapshot-label"><Clock/> Forecast snapshot</span><span>Issued {stampLabel(artifact.model_issue_time_ist)}</span><span>PM observations through {stampLabel(artifact.pm_history_cutoff_ist)}</span><span>Valid through {stampLabel(artifact.stations[0].forecasts.at(-1)!.target_end_ist)}</span><span className="snapshot-tag">{expired ? 'Forecast period ended' : 'Frozen · not live'}</span></div>
 
-        {expired && <div className="form-error no-print" role="status">This frozen forecast period has ended. New planning is disabled until a newer artifact is exported. <button className="text-button" onClick={() => setPage('replay')}>Explore historical replay ?</button></div>}
+        {expired && <div className="form-error no-print" role="status">This forecast horizon ended {stampLabel(artifact.stations[0].forecasts.at(-1)!.target_end_ist)}. New planning is disabled until a newer validated artifact is exported. <button className="text-button" onClick={() => setPage('replay')}>Explore historical replay</button></div>}
 
         {station && <section className="planner no-print" aria-labelledby="planner-heading"><div className="section-heading"><div><p className="eyebrow">01 / YOUR EVENT</p><h2 id="planner-heading">Start with the plan you already have.</h2></div><span className="quiet-tag">All times in IST · UTC+05:30</span></div>
           <form onSubmit={compare}>
@@ -156,7 +169,7 @@ function App() {
           {brief && <EventBrief artifact={artifact} station={comparedStation} comparison={comparison} onClose={() => setBrief(false)}/>}
         </div>}
         <section className="boundary-note no-print"><span>FOUR STATIONS. CLEAR LIMITS.</span><p>A monitoring station may not represent nearby streets, a school ground, or your exact location. This is an independent planning prototype. For health recommendations, consult <a href="https://cpcb.nic.in/" target="_blank" rel="noreferrer">official CPCB guidance ↗</a>.</p></section>
-      </> : page === 'replay' ? <ReplayView replay={replay} error={replayError} onRetry={() => setReplayError('')}/> : <EvidenceView artifact={artifact} replay={replay}/>}
+      </> : page === 'replay' ? <ReplayView replay={replay} baseline={baseline} baselineError={baselineError} error={replayError} onRetry={() => setReplayError('')}/> : <EvidenceView artifact={artifact} replay={replay}/>}
     </main>
     <footer className="site-footer no-print"><div><span className="footer-brand">AirWindow Mumbai</span><p>Better-timed plans. Clearly stated limits.</p></div><div><a href="https://github.com/acchasujal/aqi/tree/main" target="_blank" rel="noreferrer">Source & methodology ↗</a><span>Built for the Google Mumbai Data Challenge · 2026</span></div></footer>
   </>;
@@ -195,7 +208,7 @@ function EventBrief({ artifact, station, comparison, onClose }: { artifact: Fore
   return <section id="event-brief" className="event-brief"><div className="brief-toolbar no-print"><span>Your event brief</span><div><button className="text-button" onClick={onClose}>Close brief</button><button className="primary-button" onClick={() => window.print()}><Print/> Print / save PDF</button></div></div><div className="brief-paper"><div className="brief-masthead"><span className="footer-brand">AirWindow Mumbai</span><span>EVENT PLANNING BRIEF</span></div><h2>A plan, with its evidence attached.</h2><p className="brief-station">{STATION_SHORT[station.station_id]} · {dateLabel(comparison.original.start_ist)} · {comparison.plan.duration}-hour activity</p><div className="brief-status"><strong>{comparison.difference >= 0 ? 'NO CLEAR WINNER' : 'INSUFFICIENT EVIDENCE'}</strong><p>{comparison.difference >= 0 ? 'The original is already as well ranked as the alternatives.' : 'The alternative has a lower predicted concentration. AirWindow abstains from recommending a move because decision reliability has not been independently validated.'}</p></div><div className="brief-comparison"><div><span>Original schedule</span><h3>{timeLabel(comparison.original.start_ist)} – {timeLabel(comparison.original.end_ist)} IST</h3><p><strong>{numberLabel(comparison.original.mean_prediction)}</strong> µg/m³ forecast mean</p><small>Peak at {timeLabel(comparison.original.peak_start_ist)} IST: {numberLabel(comparison.original.max_prediction)} µg/m³</small></div><div><span>Best predicted alternative</span><h3>{timeLabel(comparison.best.start_ist)} – {timeLabel(comparison.best.end_ist)} IST</h3><p><strong>{numberLabel(comparison.best.mean_prediction)}</strong> µg/m³ forecast mean</p><small>Peak at {timeLabel(comparison.best.peak_start_ist)} IST: {numberLabel(comparison.best.max_prediction)} µg/m³</small></div></div><p className="brief-difference">Predicted difference: <strong>{comparison.difference < 0 ? '−' : comparison.difference > 0 ? '+' : ''}{differenceLabel(Math.abs(comparison.difference))} µg/m³</strong> · selected minus original</p><dl className="brief-meta"><div><dt>Forecast issued</dt><dd>{stampLabel(artifact.model_issue_time_ist)}</dd></div><div><dt>PM history cutoff</dt><dd>{stampLabel(artifact.pm_history_cutoff_ist)}</dd></div><div><dt>Latest PM observation</dt><dd>{stampLabel(station.last_observation_ist)}</dd></div><div><dt>Model</dt><dd>{artifact.model.id} · {artifact.model.version}</dd></div><div><dt>Station</dt><dd>{station.station_id} · {station.latitude.toFixed(5)}, {station.longitude.toFixed(5)}</dd></div><div><dt>Validation</dt><dd>{metric.matched ? `${numberLabel(metric.rmse)} µg/m³ full-target RMSE; ${metric.note}; not decision calibration` : `Matched station validation unavailable. ${metric.note}`}</dd></div><div><dt>Artifact</dt><dd>{artifact.artifact_id}</dd></div></dl><p className="brief-disclaimer">Monitoring-station forecasts may not represent nearby streets or the event location. No period is labelled safe or medically recommended. This comparison is not a personal exposure estimate. Refer to official CPCB/government guidance for health recommendations.</p><div className="brief-end">Independent Google Mumbai Data Challenge prototype · All times IST · Hourly PM2.5, µg/m³</div></div></section>;
 }
 
-function ReplayView({ replay, error, onRetry }: { replay: ReplayArtifact | null; error: string; onRetry: () => void }) {
+function ReplayView({ replay, baseline, baselineError, error, onRetry }: { replay: ReplayArtifact | null; baseline: BaselineComparison | null; baselineError: string; error: string; onRetry: () => void }) {
   const [stationId, setStationId] = useState('11606');
   const [duration, setDuration] = useState(2);
   const [caseId, setCaseId] = useState('');
@@ -204,10 +217,20 @@ function ReplayView({ replay, error, onRetry }: { replay: ReplayArtifact | null;
   return <section className="replay-page"><p className="eyebrow">HISTORICAL DECISION REPLAY</p><h1>Would the move<br/>have worked?</h1><p className="page-intro">Revisit historical forecast simulations and later observations. Generated retrospectively with history frozen at the recorded origin. Every eligible historical case counts, including the moves that did not work.</p><span className="retrospective-tag">Retrospective evaluation · released historical observations</span>
     {!replay ? <div className="empty-panel"><h2>{error ? 'Replay is unavailable.' : 'Loading historical replay'}</h2><p>{error || 'Loading genuine OOF forecasts…'}</p><p>No historical outcomes have been invented.</p>{error && <button className="primary-button" onClick={onRetry}>Retry replay</button>}</div> : <><div className="replay-summary"><div><span>Eligible historical cases</span><strong>{replay.summary.cases.toLocaleString('en-IN')}</strong><small>{replay.summary.origins} origins; {replay.summary.paired_outcome_cases} paired outcomes; {replay.summary.missing_outcome_cases} missing</small></div><div><span>Lower observed concentration</span><strong>{replay.summary.lower_observed_fraction === null ? 'Unavailable' : `${numberLabel(replay.summary.lower_observed_fraction * 100)}%`}</strong><small>{replay.summary.selected_alternative_cases} numerical alternatives with outcomes; descriptive rate</small></div><div><span>Median realised difference</span><strong>{numberLabel(replay.summary.median_realised_difference)} <small>µg/m³</small></strong><small>Selected minus original · negative is lower</small></div><div><span>Median hindsight gap</span><strong>{numberLabel(replay.summary.hindsight_gap_median)} <small>µg/m³</small></strong><small>Selected minus best actually observed feasible slot</small></div></div>
       <p className="replay-warning"><Shield/> No schedule changes were endorsed as calibrated recommendations. These are historical outcomes, not a calibrated probability for your next event. {replay.calibration.reason}</p>
+      <BaselineComparisonPanel comparison={baseline} error={baselineError}/>
       <div className="replay-controls"><label>Station<select aria-label="Station" value={stationId} onChange={e => { setStationId(e.target.value); setCaseId(''); }}>{Object.entries(STATION_SHORT).map(([id, label]) => <option key={id} value={id}>{label}</option>)}</select></label><label>Duration<select aria-label="Duration" value={duration} onChange={e => { setDuration(Number(e.target.value)); setCaseId(''); }}>{[1, 2, 3].map(d => <option key={d} value={d}>{d} {d === 1 ? 'hour' : 'hours'}</option>)}</select></label><label>Historical forecast case<select aria-label="Historical forecast case" value={item?.case_id || ''} onChange={e => setCaseId(e.target.value)}>{cases.map(c => <option key={c.case_id} value={c.case_id}>{dateLabel(c.original_start_ist)} · {timeLabel(c.original_start_ist)} · {c.split}</option>)}</select></label></div>
       {item ? <ReplayCaseView key={item.case_id} item={item}/> : <div className="empty-panel"><h2>No eligible case for this selection.</h2><p>Missing historical forecasts or observations are not filled.</p></div>}
       <details className="method-details"><summary>See the replay design and all station/duration results</summary><p>Predeclared school-event scenarios use the original 09:00 slot and feasible 08:00–18:00 range on each available target day. One-, two- and three-hour activities are evaluated. The selected window is chosen using forecasts only; observed outcomes are joined afterwards. Historical publication timing is proxied by interval end. Cases and outcomes are retained even when the selected alternative is worse.</p><div className="table-scroll"><table><thead><tr><th>Station</th><th>Duration</th><th>Split</th><th>Cases</th><th>Origins</th><th>Lower observed</th><th>Median difference</th></tr></thead><tbody>{replay.by_station_duration.map((r, i) => <tr key={i}><td>{STATION_SHORT[r.station_id || ''] || r.station_id}</td><td>{r.duration_hours}h</td><td>{r.split}</td><td>{r.cases}</td><td>{r.origins}</td><td>{r.lower_observed_fraction === null ? 'Unavailable' : `${numberLabel(r.lower_observed_fraction * 100)}%`}</td><td>{numberLabel(r.median_realised_difference)} µg/m³</td></tr>)}</tbody></table></div></details></>}
   </section>;
+}
+
+function BaselineComparisonPanel({ comparison, error }: { comparison: BaselineComparison | null; error: string }) {
+  if (error) return <section className="baseline-panel" role="status"><h2>Baseline comparison unavailable</h2><p>{error} Historical replay remains available.</p></section>;
+  if (!comparison) return <section className="baseline-panel" aria-live="polite"><h2>Comparing schedule baselines</h2><p>Loading the reproducible paired-origin comparison&#8230;</p></section>;
+  const fmt = (value: number | null) => numberLabel(value, 2);
+  const unit = '\u00b5g/m\u00b3';
+  const cell = (name: string, result: BaselineComparison['full_replay']['usual_cleanest']) => <article key={name}><h3>{name}</h3>{result.paired_cases === 0 ? <p>No paired observed cases available.</p> : <><p><strong>{result.mean_delta! < 0 ? '−' : '+'}{fmt(Math.abs(result.mean_delta!))} {unit}</strong><br/>mean observed difference: AirWindow minus baseline</p><p>{fmt(result.cluster_bootstrap_95[0])} to {fmt(result.cluster_bootstrap_95[1])} {unit} · 95% origin-cluster bootstrap</p><small>{result.paired_cases.toLocaleString('en-IN')} paired cases across {result.origins} origins · AirWindow {fmt(result.airwindow_mean)} vs baseline {fmt(result.baseline_mean)} {unit}</small><b className="baseline-verdict">{result.direction === 'interval_includes_zero' ? 'Interval spans zero; no established difference' : result.direction === 'interval_below_zero' ? 'Interval below zero in this retrospective sample' : 'Interval above zero in this retrospective sample'}</b></>}</article>;
+  return <section className="baseline-panel" aria-labelledby="baseline-heading"><div className="baseline-heading"><p className="eyebrow">MODEL VS SIMPLE SCHEDULES</p><h2 id="baseline-heading">How did the forecast-ranked choice compare?</h2><p>Paired later-observed mean PM2.5 for the same station, duration and case. Negative differences favor AirWindow.</p></div><div className="baseline-tabs"><section><h3>Full replay · {comparison.full_replay.cases.toLocaleString('en-IN')} declared cases</h3><p className="baseline-method">Usual-cleanest uses earlier origins only; latest-window is the latest-starting complete candidate.</p><div className="baseline-cards">{cell('Usual cleanest window', comparison.full_replay.usual_cleanest)}{cell('Latest feasible window', comparison.full_replay.latest_window)}</div><small>Usual-cleanest baseline supported in {comparison.full_replay.usual_cleanest_supported_cases.toLocaleString('en-IN')} cases; paired outcome coverage is shown per result.</small></section><section><h3>Held-out confirmation · {comparison.heldout.cases} declared cases</h3><p className="baseline-method">The usual-cleanest time is chosen from development outcomes only; confirmation outcomes do not select it.</p><div className="baseline-cards">{cell('Usual cleanest window', comparison.heldout.usual_cleanest)}{cell('Latest feasible window', comparison.heldout.latest_window)}</div></section></div><p className="baseline-caveat">Retrospective evidence, not a guarantee of future performance. Confirmation origins were previously inspected, cases within origins overlap, and these intervals do not establish statistical superiority. Missing observed outcomes remain outside paired estimates and are counted in the replay coverage above.</p></section>;
 }
 
 function ReplayCaseView({ item }: { item: ReplayCase }) {

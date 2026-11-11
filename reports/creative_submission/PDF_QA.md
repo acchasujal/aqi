@@ -55,3 +55,7 @@ The final `apps/airwindow/audit_release.py` verifies PDF/source hashes together 
 forecast/replay contracts and local notebook execution. No new PDF dependencies
 were installed. Native sandbox reads of the old PDF dependency folder initially
 failed with PermissionError; approved execution succeeded.
+
+## 11 November final submission refresh
+
+Rebuilt after final baseline and Hosting release verification: **5 A4 pages, 180,988 bytes**, SHA-256 e0ed7790244d1df0d949b16f04d7e388ee150dc8f9e54efe39e774770a7ba63. All five final rendered pages were visually inspected. The paired baseline table is readable, all four intervals cross zero, deployment URL and limits are explicit, and no clipping or overlap was found. The audit JSON pins final PDF and screenshot hashes.

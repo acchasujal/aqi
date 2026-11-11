@@ -74,3 +74,16 @@ export type ReplayArtifact = {
   reliability_profiles?: { station_id: string; duration_hours: number; lead_min_hours: number; lead_max_hours: number; pm_lead_min_hours: number; pm_lead_max_hours: number; cases: number; origins: number; median_absolute_difference_error: number | null; status: string }[];
   cases: ReplayCase[];
 };
+export type BaselineResult = {
+  paired_cases: number; origins: number; airwindow_mean: number | null; baseline_mean: number | null;
+  mean_delta: number | null; median_delta: number | null; cluster_bootstrap_95: [number | null, number | null];
+  direction: string;
+};
+export type BaselinePanel = {
+  cases: number; usual_cleanest_supported_cases: number;
+  usual_cleanest: BaselineResult; latest_window: BaselineResult;
+};
+export type BaselineComparison = {
+  schema_version: string; title: string; source_replay_sha256: string;
+  method: Record<string, string>; full_replay: BaselinePanel; heldout: BaselinePanel; limitations: string[];
+};

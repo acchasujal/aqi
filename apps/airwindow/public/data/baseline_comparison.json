@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0.0",
+  "title": "Retrospective event-window baselines",
+  "source_replay_sha256": "e99d60bfdade3db297f3553e80de0d6c4f08300e5b747978b59c54a134d32c10",
+  "method": {
+    "outcome": "paired mean observed PM2.5 for the same station, duration and replay case; lower is better",
+    "airwindow": "forecast-ranked window retained in the replay artifact, selected without using outcomes",
+    "usual_cleanest": "window start with the lowest mean observed PM2.5 in eligible earlier origins; confirmation uses development origins only",
+    "latest_window": "latest-starting complete forecast window in each case's pre-ranked feasible set",
+    "full_replay": "expanding-origin evaluation; baseline start is learned only from earlier origins",
+    "heldout": "confirmation split; usual-cleanest start learned from development outcomes only",
+    "interval": "percentile 95% cluster bootstrap of paired mean deltas, resampling whole forecast origins (2000 replicates, seed 20261111); negative favors AirWindow",
+    "missingness": "only paired cases with both subsequent observed means are scored; missing outcomes are excluded from the paired estimate and retained in coverage counts"
+  },
+  "full_replay": {
+    "cases": 1848,
+    "usual_cleanest_supported_cases": 1824,
+    "usual_cleanest": {
+      "paired_cases": 1414,
+      "origins": 76,
+      "airwindow_mean": 24.792108675153226,
+      "baseline_mean": 27.07355718607575,
+      "mean_delta": -2.2814485109225213,
+      "median_delta": 0.0,
+      "cluster_bootstrap_95": [
+        -5.718285414280261,
+        0.6910132255989707
+      ],
+      "direction": "interval_includes_zero"
+    },
+    "latest_window": {
+      "paired_cases": 1411,
+      "origins": 77,
+      "airwindow_mean": 24.951248031341052,
+      "baseline_mean": 25.109520040948105,
+      "mean_delta": -0.1582720096070558,
+      "median_delta": 0.0,
+      "cluster_bootstrap_95": [
+        -2.3410100067842605,
+        2.0621094171094168
+      ],
+      "direction": "interval_includes_zero"
+    }
+  },
+  "heldout": {
+    "cases": 192,
+    "usual_cleanest_supported_cases": 192,
+    "usual_cleanest": {
+      "paired_cases": 169,
+      "origins": 8,
+      "airwindow_mean": 24.242752301117687,
+      "baseline_mean": 24.974447731755422,
+      "mean_delta": -0.7316954306377383,
+      "median_delta": 0.0,
+      "cluster_bootstrap_95": [
+        -2.6400456621004564,
+        0.537616487455197
+      ],
+      "direction": "interval_includes_zero"
+    },
+    "latest_window": {
+      "paired_cases": 170,
+      "origins": 8,
+      "airwindow_mean": 24.187772875816993,
+      "baseline_mean": 25.194031862745096,
+      "mean_delta": -1.0062589869281047,
+      "median_delta": 0.0,
+      "cluster_bootstrap_95": [
+        -2.659286659108088,
+        0.16387225115740733
+      ],
+      "direction": "interval_includes_zero"
+    }
+  },
+  "heldout_usual_cleanest_start_by_station_duration": {
+    "11606:1": "16:00",
+    "11606:2": "15:00",
+    "11606:3": "15:00",
+    "11611:1": "17:00",
+    "11611:2": "16:00",
+    "11611:3": "15:00",
+    "3409510:1": "17:00",
+    "3409510:2": "16:00",
+    "3409510:3": "15:00",
+    "3409511:1": "16:00",
+    "3409511:2": "16:00",
+    "3409511:3": "15:00"
+  },
+  "limitations": [
+    "Retrospective evidence, not a guarantee of future performance.",
+    "The held-out confirmation origins were previously inspected by analysts and are not independent calibration.",
+    "A confidence interval spanning zero does not establish superiority; overlapping cases within origins are dependent.",
+    "A fixed usual-cleanest time is a simple schedule baseline and may not represent a coordinator's genuine routine."
+  ]
+}

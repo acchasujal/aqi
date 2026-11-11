@@ -1,19 +1,18 @@
 """Regression gates for combining main's historical APIs with reviewed P_fix."""
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
-from mumbai_pm25.data import load_data
 from mumbai_pm25.forecast import (
     predict_station_baseline,
-    predict_test_with_hist24_blend,
     recent_median72,
 )
-from mumbai_pm25.historical_archive import build_seasonal_features, load_2024_history
+from mumbai_pm25.historical_archive import build_seasonal_features
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -52,21 +51,27 @@ def test_partial_hour_cutoff_excludes_unfinished_interval_in_both_baselines():
     np.testing.assert_array_equal(predictions, np.full(48, expected))
 
 
-def test_merged_pfix_reproduces_archived_airwindow_predictions():
-    train, test, _, _ = load_data(ROOT / "data/raw/challenge")
-    archive = load_2024_history(ROOT / "data/raw/challenge/AdditionalHistory.zip")
-    selected = test.loc[test.target_start.isin([
-        pd.Timestamp("2026-11-11 00:00", tz="Asia/Kolkata"),
-        pd.Timestamp("2026-11-12 00:00", tz="Asia/Kolkata"),
-    ])]
-    artifact = json.loads((ROOT / "apps/airwindow/public/data/forecast.json").read_text())
-    reference = {(int(s["station_id"]), pd.Timestamp(h["target_start_ist"])): h["pm25_prediction"]
-                 for s in artifact["stations"] for h in s["forecasts"]}
-    prediction = predict_test_with_hist24_blend(
-        train, selected, archive,
-        issue_time=pd.Timestamp(artifact["model_issue_time_ist"]),
-        pm_history_cutoff=pd.Timestamp(artifact["pm_history_cutoff_ist"]),
-    )
-    expected = [reference[(int(r.location_id), r.target_start)]
-                for r in selected.itertuples()]
-    np.testing.assert_allclose(prediction.Target, expected, rtol=0, atol=1e-12)
+def test_refreshed_app_forecast_matches_audited_task011_rows():
+    artifact_path = ROOT / "apps/airwindow/public/data/forecast.json"
+    artifact = json.loads(artifact_path.read_text(encoding="utf-8"))
+    prediction_path = ROOT / "artifacts/submissions/task011_final_Pfix_20261110.csv"
+    rows_path = prediction_path.with_suffix(".rows.csv")
+    audit_path = prediction_path.with_suffix(".audit.json")
+    task_manifest_path = prediction_path.with_suffix(".manifest.txt")
+    rows = pd.read_csv(rows_path)
+    audit = json.loads(audit_path.read_text(encoding="utf-8"))
+    task_manifest = json.loads(task_manifest_path.read_text(encoding="utf-8"))
+    assert audit["output_sha256"] == hashlib.sha256(prediction_path.read_bytes()).hexdigest()
+    assert task_manifest["output_sha256"] == audit["output_sha256"]
+    assert artifact["model"]["training_data_sha256"] == task_manifest["input_sha256"]["Train.csv"]
+    assert artifact["model_issue_time_ist"] == task_manifest["model_run_time"]
+    assert artifact["pm_history_cutoff_ist"] == task_manifest["pm_history_cutoff"]
+    rows = rows.loc[pd.to_datetime(rows["target_start"], utc=True).dt.tz_convert("Asia/Kolkata")
+                    > pd.Timestamp(artifact["model_issue_time_ist"])]
+    expected = {(int(row.location_id), pd.Timestamp(row.target_start)): float(row.Target)
+                for row in rows.itertuples(index=False)}
+    actual = {(int(station["station_id"]), pd.Timestamp(hour["target_start_ist"])): hour["pm25_prediction"]
+              for station in artifact["stations"] for hour in station["forecasts"]}
+    assert actual.keys() == expected.keys()
+    for key, target in expected.items():
+        np.testing.assert_allclose(actual[key], target, rtol=0, atol=1e-12)

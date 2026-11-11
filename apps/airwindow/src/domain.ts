@@ -1,4 +1,4 @@
-import type { ForecastArtifact, ForecastHour, ReplayArtifact, Station, TimeWindow } from './types.ts';
+import type { BaselineComparison, ForecastArtifact, ForecastHour, ReplayArtifact, Station, TimeWindow } from './types.ts';
 
 const HOUR = 3_600_000;
 const IDS = ['11606', '11611', '3409510', '3409511'];
@@ -52,6 +52,23 @@ export function validateReplay(value: unknown): ReplayArtifact {
   const alternatives = paired.filter(c => c.selected_start_ist !== c.original_start_ist);
   if (r.summary.cases !== r.cases.length || r.summary.origins !== new Set(r.cases.map(c => c.fold_id)).size || r.summary.paired_outcome_cases !== paired.length || r.summary.missing_outcome_cases !== r.cases.length - paired.length || r.summary.selected_alternative_cases !== alternatives.length || r.summary.recommended_cases !== 0 || r.cases.some(c => c.decision_status === 'ROBUST IMPROVEMENT') || !equal(r.summary.lower_observed_fraction!, alternatives.filter(c => c.observed_difference! < 0).length / alternatives.length)) fail();
   return r;
+}
+
+export function validateBaselineComparison(value: unknown): BaselineComparison {
+  const c = value as BaselineComparison;
+  const fail = () => { throw new Error('Baseline comparison artifact is invalid. Rebuild it from the frozen replay.'); };
+  const finiteOrNull = (n: unknown) => n === null || (typeof n === 'number' && Number.isFinite(n));
+  if (!c || c.schema_version !== '1.0.0' || typeof c.source_replay_sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(c.source_replay_sha256) || !c.method || !Array.isArray(c.limitations) || c.limitations.length < 3) fail();
+  for (const panel of [c.full_replay, c.heldout]) {
+    if (!panel || !Number.isInteger(panel.cases) || panel.cases < 0 || !Number.isInteger(panel.usual_cleanest_supported_cases) || panel.usual_cleanest_supported_cases < 0 || panel.usual_cleanest_supported_cases > panel.cases) fail();
+    for (const result of [panel.usual_cleanest, panel.latest_window]) {
+      if (!result || !Number.isInteger(result.paired_cases) || result.paired_cases < 0 || !Number.isInteger(result.origins) || result.origins < 0 || !finiteOrNull(result.airwindow_mean) || !finiteOrNull(result.baseline_mean) || !finiteOrNull(result.mean_delta) || !finiteOrNull(result.median_delta) || !Array.isArray(result.cluster_bootstrap_95) || result.cluster_bootstrap_95.length !== 2 || !result.cluster_bootstrap_95.every(finiteOrNull) || !['interval_below_zero', 'interval_above_zero', 'interval_includes_zero', 'unavailable'].includes(result.direction)) fail();
+      if (result.paired_cases === 0 && (result.mean_delta !== null || result.cluster_bootstrap_95.some(v => v !== null))) fail();
+      if (result.paired_cases > 0 && (result.mean_delta === null || result.cluster_bootstrap_95.some(v => v === null) || result.origins < 2)) fail();
+    }
+  }
+  if (c.full_replay.cases !== 1848 || c.heldout.cases !== 192 || c.heldout.usual_cleanest_supported_cases !== c.heldout.cases) fail();
+  return c;
 }
 
 export function validateForecast(value: unknown): ForecastArtifact {

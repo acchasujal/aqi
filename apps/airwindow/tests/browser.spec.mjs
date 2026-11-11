@@ -13,6 +13,7 @@ test('real planner, abstention, evidence, replay, mobile and printable brief wor
   page.on('response', response => { if (response.status() >= 400) errors.push(`HTTP ${response.status()}: ${response.url()}`); });
   page.on('request', request => { if (request.url().endsWith('/data/replay.json')) replayRequests.push(request.url()); });
   await mkdir(screenshots, { recursive: true });
+  await page.clock.install({ time: new Date('2026-11-11T09:00:00+05:30') });
   await page.goto('/');
   await expect(page.getByRole('heading', { name: /Should you move/ })).toBeVisible();
   await expect(page.getByLabel('Monitoring station')).toHaveValue('11606');
@@ -42,6 +43,12 @@ test('real planner, abstention, evidence, replay, mobile and printable brief wor
   await page.getByRole('button', { name: 'Historical replay', exact: true }).click();
   await expect(page.getByRole('heading', { name: /Would the move/ })).toBeVisible();
   await expect(page.getByText('1,848', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /How did the forecast-ranked choice compare/ })).toBeVisible();
+  await expect(page.locator('.baseline-panel')).toContainText('Usual cleanest window');
+  await expect(page.locator('.baseline-panel')).toContainText('Latest feasible window');
+  await expect(page.locator('.baseline-panel')).toContainText('−0.73');
+  await expect(page.locator('.baseline-panel')).toContainText('-2.64 to 0.54');
+  await expect(page.locator('.baseline-panel')).toContainText('Interval spans zero');
   await expect(page.getByText(/No schedule changes were endorsed/)).toBeVisible();
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
   await page.screenshot({ path: path.join(screenshots, 'airwindow_desktop_replay.png') });
@@ -107,6 +114,7 @@ test('a partly elapsed horizon defaults to future activity dates and hours', asy
 });
 
 test('missing station forecasts and missing replay observations remain missing', async ({ page }) => {
+  await page.clock.install({ time: new Date('2026-11-11T09:00:00+05:30') });
   const forecast = JSON.parse(readFileSync(new URL('../public/data/forecast.json', import.meta.url), 'utf8'));
   const station = forecast.stations[0];
   for (const row of station.forecasts) { row.pm25_prediction = null; row.status = 'missing'; }
@@ -115,7 +123,7 @@ test('missing station forecasts and missing replay observations remain missing',
   station.data_status.missing_target_starts_ist = station.forecasts.map(h => h.target_start_ist);
   await page.route('**/data/forecast.json', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(forecast) }));
   await page.goto('/');
-  await page.getByLabel('Planning date').selectOption('2026-11-09');
+  await page.getByLabel('Planning date').selectOption('2026-11-11');
   await page.getByRole('button', { name: 'Compare time windows' }).click();
   await expect(page.getByRole('alert')).toContainText('original activity needs complete forecast hours');
   const replay = JSON.parse(readFileSync(new URL('../public/data/replay.json', import.meta.url), 'utf8'));
@@ -153,14 +161,15 @@ test('failed forecast URL and delayed or corrupt replay fail visibly without cra
 });
 
 test('a missing alternative hour excludes every window using it', async ({ page }) => {
+  await page.clock.install({ time: new Date('2026-11-11T06:00:00+05:30') });
   const forecast = JSON.parse(readFileSync(new URL('../public/data/forecast.json', import.meta.url), 'utf8'));
-  const missing = forecast.stations[0].forecasts.find(h => h.target_start_ist === '2026-11-09T15:00:00+05:30');
+  const missing = forecast.stations[0].forecasts.find(h => h.target_start_ist === '2026-11-11T15:00:00+05:30');
   missing.status = 'missing'; missing.pm25_prediction = null;
   const status = forecast.stations[0].data_status;
   status.available_forecast_hours -= 1;
   status.missing_target_starts_ist = forecast.stations[0].forecasts.filter(h => h.status === 'missing').map(h => h.target_start_ist);
   await page.route('**/data/forecast.json', r => r.fulfill({ json: forecast }));
-  await page.goto('/'); await page.getByLabel('Planning date').selectOption('2026-11-09');
+  await page.goto('/'); await page.getByLabel('Planning date').selectOption('2026-11-11');
   await page.getByRole('button', { name: 'Compare time windows' }).click();
   await expect(page.locator('.alternatives tbody tr')).toHaveCount(7);
   await expect(page.locator('.alternatives tbody')).not.toContainText('2:00 pm – 4:00 pm');

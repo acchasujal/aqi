@@ -5,7 +5,7 @@
   "prediction_audit_sha256": "df39f6684e9b393e101b0166f2f47493aff655c53e07aaa61c569ed85c56683f",
   "all_block_oof_sha256": "a5b6071dd9c75e1025d2d8810ad30121b361e07c5c31211f123f8d5240b47a49",
   "matched_oof_sha256": "8e2711d9f3bb2a740652608c8a18bdde0b0997a915843a15d042f51abb83fe32",
-  "forecast_sha256": "821c6b01078200baa61a754ff19b6af9a5ccee063f5cca51b5fa24f13f58f541",
+  "forecast_sha256": "573b324f1f01acab7dd9e640cd66c895298c7616d7ea98398e4b7f773e9454de",
   "replay_sha256": "e99d60bfdade3db297f3553e80de0d6c4f08300e5b747978b59c54a134d32c10",
   "calibration": "NOT CALIBRATED",
   "model_issue_time_ist": "2026-11-08T15:58:00+05:30",
@@ -48,5 +48,19 @@
     "definition": "All matched OOF origins, stations and both target days. Rank every complete forecast window before inspecting actual outcomes; retain cases with missing outcomes.",
     "scenario_cases_considered": 1848,
     "missing_original_or_feasible_forecast": 0
-  }
+  },
+  "baseline_comparison_sha256": "194eda6033cd0e5ca6343101c3f4e3d4c02812bb7a99bd5d5c6b523213a93706",
+  "baseline_source_replay_sha256": "e99d60bfdade3db297f3553e80de0d6c4f08300e5b747978b59c54a134d32c10",
+  "fallback_forecast_file": "forecast_fallback_task008.json",
+  "fallback_forecast_sha256": "821c6b01078200baa61a754ff19b6af9a5ccee063f5cca51b5fa24f13f58f541",
+  "forecast_issue_time_ist": "2026-11-10T15:47:52.944936+05:30",
+  "forecast_pm_history_cutoff_ist": "2026-11-10T09:00:00+05:30",
+  "forecast_generated_at_ist": "2026-11-11T20:58:04+05:30",
+  "forecast_source": "TASK011 final P_fix, issued 10 November 2026; preserved audited output; no rerun after source deadline",
+  "forecast_prediction_sha256": "f450b68212463f64bab67adfb0d98e1c4cce7ee83ec118f2564d38d738e34c13",
+  "forecast_prediction_audit_sha256": "6546aacbce2816fdfdf16500ecc4ffdd04afb38e7e67017936637261b168be1a",
+  "forecast_row_audit_sha256": "074c5911ea848674156f07e4be3a8fd4c84de321563d866fdc7ecd20d4e7615e",
+  "forecast_task_manifest_sha256": "ac24ba24fb6d8cb7263106941922ae365a71137e6d70f313ced684ba5ccabeed",
+  "forecast_training_data_sha256": "8adbcf55315f166d7dc3dc1d3e4d7400651f26c1d8b95ff387eef38f4e70a283",
+  "forecast_release_integrity_sha256": "5e0f3e1f1c6539da246db2a79a8cb4804edce8bddd84b961be55d313bb5d6a5e"
 }

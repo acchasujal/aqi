@@ -1,10 +1,11 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { completeWindow, enumerateWindows, isExpired, matchedValidation, validateForecast, validateReplay, observationAge } from '../src/domain.ts';
+import { completeWindow, enumerateWindows, isExpired, matchedValidation, validateForecast, validateReplay, validateBaselineComparison, observationAge } from '../src/domain.ts';
 
 const actual = JSON.parse(readFileSync(new URL('../public/data/forecast.json', import.meta.url), 'utf8'));
 const replay = JSON.parse(readFileSync(new URL('../public/data/replay.json', import.meta.url), 'utf8'));
+const baseline = JSON.parse(readFileSync(new URL('../public/data/baseline_comparison.json', import.meta.url), 'utf8'));
 
 test('real replay validates complete ranking, paired outcomes and declared coverage', () => {
   assert.equal(validateReplay(replay).cases.length, 1848);
@@ -29,6 +30,16 @@ test('replay rejects corrupt clocks, rankings, outcomes, coverage and invented c
 test('observation age is elapsed time, independent of a freshness threshold', () => {
   assert.equal(observationAge('2026-11-02T23:00:00+05:30', Date.parse('2026-11-09T12:00:00+05:30')), 157);
   assert.equal(observationAge(null), null);
+});
+
+test('baseline comparison validates coverage and finite clustered intervals', () => {
+  const result = validateBaselineComparison(baseline);
+  assert.equal(result.full_replay.cases, 1848);
+  assert.equal(result.heldout.cases, 192);
+  assert.equal(result.heldout.usual_cleanest.direction, 'interval_includes_zero');
+  const corrupt = structuredClone(baseline);
+  corrupt.heldout.latest_window.cluster_bootstrap_95[0] = NaN;
+  assert.throws(() => validateBaselineComparison(corrupt), /Baseline comparison artifact is invalid/);
 });
 const hour = (n, value) => ({ target_start_ist: `2030-01-01T${String(n).padStart(2, '0')}:00:00+05:30`, target_end_ist: `2030-01-01T${String(n+1).padStart(2, '0')}:00:00+05:30`, pm25_prediction: value, status: value === null ? 'missing' : 'available', unit: 'µg/m³', forecast_horizon_hours: n, prediction_interval: null });
 const station = (values) => ({ forecasts: values.map((v, i) => hour(i+8, v)) });

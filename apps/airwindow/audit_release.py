@@ -13,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
+from apps.airwindow.baseline_comparison import calculate as calculate_baseline
 from apps.airwindow.contract_validation import validate_artifact
 from apps.airwindow.replay_validation import validate_replay
 
@@ -29,6 +30,32 @@ def main() -> None:
         if sha256(path) != manifest[f"{name}_sha256"]:
             raise ValueError(f"{name} bytes differ from manifest")
         validator(json.loads(path.read_text(encoding="utf-8")))
+    if "fallback_forecast_file" in manifest:
+        fallback = data / manifest["fallback_forecast_file"]
+        if sha256(fallback) != manifest["fallback_forecast_sha256"]:
+            raise ValueError("fallback forecast bytes differ from manifest")
+        fallback_artifact = json.loads(fallback.read_text(encoding="utf-8"))
+        if fallback_artifact["model_issue_time_ist"] != "2026-11-08T15:58:00+05:30":
+            raise ValueError("fallback forecast is not the original TASK008 snapshot")
+    forecast = json.loads((data / "forecast.json").read_text(encoding="utf-8"))
+    for key, actual in (("forecast_issue_time_ist", forecast["model_issue_time_ist"]),
+                        ("forecast_pm_history_cutoff_ist", forecast["pm_history_cutoff_ist"]),
+                        ("forecast_generated_at_ist", forecast["generated_at_ist"])):
+        if key in manifest and manifest[key] != actual:
+            raise ValueError(f"forecast clock differs from manifest: {key}")
+    baseline_path = data / "baseline_comparison.json"
+    baseline = json.loads(baseline_path.read_text(encoding="utf-8"))
+    if sha256(baseline_path) != manifest["baseline_comparison_sha256"]:
+        raise ValueError("baseline comparison bytes differ from manifest")
+    if baseline["source_replay_sha256"] != manifest["replay_sha256"]:
+        raise ValueError("baseline comparison does not fingerprint the replay artifact")
+    if baseline["full_replay"]["cases"] != manifest["replay_summary"]["cases"]:
+        raise ValueError("baseline comparison coverage differs from replay manifest")
+    replay_raw = (data / "replay.json").read_bytes()
+    replay_obj = json.loads(replay_raw)
+    reproduced = calculate_baseline(replay_obj, hashlib.sha256(replay_raw).hexdigest())
+    if reproduced != baseline:
+        raise ValueError("baseline comparison metrics differ from deterministic replay calculation")
     folder = ROOT / "reports/creative_submission"
     audit = json.loads((folder / "AIRWINDOW_2_SUBMISSION.audit.json").read_text(encoding="utf-8"))
     pdf = folder / "AIRWINDOW_2_SUBMISSION.pdf"
@@ -46,6 +73,7 @@ def main() -> None:
                    cwd=ROOT, check=True, capture_output=True, text=True)
     print(json.dumps({"forecast_sha256": manifest["forecast_sha256"],
                       "replay_sha256": manifest["replay_sha256"],
+                      "baseline_comparison_sha256": manifest["baseline_comparison_sha256"],
                       "pdf_sha256": audit["sha256"], "pdf_bytes": audit["bytes"],
                       "notebook_code_cells_executed": len(source_cells),
                       "replay_summary": manifest["replay_summary"],

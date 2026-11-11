@@ -265,3 +265,14 @@ Decision: retain exact archive-identity P_fix for TASK008 and isolate historical
 - **Confidence:** High for byte-identical output under Python 3.12.10/pandas 3.1.1 and the frozen inputs.
 - **Alternatives considered:** Record only parsed-row equivalence; fixed gzip metadata provides an exact artifact-level check.
 - **Consequences / revisit trigger:** Use this SHA in future comparisons; input/source/fold changes require a fresh OOF manifest.
+
+## DEC-20261111-23 - Publish paired scheduling baselines and freshness-bounded snapshot
+
+- **Date / owner:** 2026-11-11 / Codex
+- **Status:** Accepted for creative application and retrospective evidence only.
+- **Context:** Final AirWindow execution added baseline comparison and reviewed forecast expiry/provenance before Hosting deployment.
+- **Decision:** Display paired selected-window outcomes against past-only usual-cleanest and latest-window baselines, with full replay and later confirmation split and origin-cluster bootstrap intervals. Keep all limitations explicit; do not imply superiority or future guarantee. Preserve TASK008 bytes as fallback and use the validated TASK011 final P_fix artifact only through its declared 21 November validity horizon.
+- **Evidence:** Reproducible artifact and calculation in `apps/airwindow/baseline_comparison.py` plus `public/data/baseline_comparison.json`; 2,000 seeded origin-cluster bootstrap samples. Four 95% intervals span zero. Release artifact schema/hash checks and browser tests pass.
+- **Confidence:** High in paired calculations and committed artifact integrity; limited in generalization because confirmation has eight origins, cases overlap, historical origins had analyst exposure, and forecast decision calibration is unavailable.
+- **Alternatives considered:** Show point estimates alone, infer superiority from negative deltas, extend stale snapshot validity, or rerun after source deadline. Rejected because these would hide uncertainty or misstate provenance.
+- **Consequences / revisit trigger:** UI, PDF and demo carry the same results and expiry clocks. Recompute comparisons only when replay bytes/method change. Refresh forecast only from a newly eligible complete pipeline output.
