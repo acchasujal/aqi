@@ -416,7 +416,7 @@ Merged TASK008/AirWindow with current main, preserving exact P_fix source select
 
 ## TASK AIRWINDOW21 - Final creative execution (2026-11-11)
 
-- **Branch / commit:** `feature/final-submission-upgrades` / commit pending; not pushed.
+- **Branch / commit:** `feature/final-submission-upgrades` / committed in this task; not pushed.
 - **Files:** Added reproducible replay baseline calculator/artifact, freshness-aware forecast export update with preserved TASK008 fallback, UI comparison and expiry behavior, browser/domain/Python tests, Hosting verifier, updated user and submission docs, final submission PDF and `AIRWINDOW21_FINAL_TASK_RECORD.md`.
 - **Baseline evidence:** Full replay usual-cleanest -2.2814 µg/m³ (1,414 pairs/76 origins; 95% cluster interval [-5.7183, 0.6910]); full latest -0.1583 (1,411/77; [-2.3410,2.0621]); held-out usual-cleanest -0.7317 (169/8; [-2.6400,0.5376]); held-out latest -1.0063 (170/8; [-2.6593,0.1639]). All intervals cross zero; no superiority claim.
 - **Forecast:** Uses validated TASK011 final P_fix issue at 10 Nov 15:47:52 IST, PM cutoff 10 Nov 09:00, declared horizon to 21 Nov 00:00. No late rerun/extension. TASK008 original bytes retained and hash-verified fallback.

@@ -1,7 +1,7 @@
 # AirWindow Mumbai 2.1 final execution record
 
 **Date:** 11 November 2026 IST
-**Branch:** `feature/final-submission-upgrades`
+**Branch:** `feature/final-submission-upgrades` (committed; not pushed)
 **Scope:** Retrospective schedule baselines, forecast provenance/freshness, application polish, verification, static Hosting and submission package. Original challenge data was not modified.
 
 ## Evidence and decisions
@@ -31,7 +31,8 @@ Updated five-page PDF: `AIRWINDOW_2_SUBMISSION.pdf`, 180,988 bytes (under 10 MB)
 - `npm.cmd run build`: passed.
 - Scoped Ruff: passed.
 - `npm.cmd run verify:hosting`: passed in signed-out Chrome; 4 JSON artifacts, including replay, matched deployed SHA-256 manifest.
-- `apps/airwindow/audit_release.py`: final hash/contract/replay/notebook audit to run after PDF metadata finalization.
+- `apps/airwindow/audit_release.py`: passed; verifies final artifact/PDF hashes and executes six notebook code cells locally.
+- `git diff --check` passed; `data/raw/challenge/` has no changes.
 - Remaining external actions: entrant checks current Zindi form requirements and submits personally; confirm Firebase billing plan in console. GitHub push is not authorized.
 
 - Final audit: pps/airwindow/audit_release.py passed, verified forecast/replay/baseline/PDF hashes and executed all six notebook code cells locally. git diff --check passed; data/raw/challenge/ has no changes.
