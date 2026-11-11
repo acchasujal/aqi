@@ -426,3 +426,11 @@ Merged TASK008/AirWindow with current main, preserving exact P_fix source select
 - **Risks / next:** Verify existing Firebase plan in Console without changing it; user checks matching Zindi username/email, eligibility and current form requirements and submits personally. No Git push without explicit approval. Raw challenge inputs remain untouched.
 
 - **Final audit:** pps/airwindow/audit_release.py passed and executed all six notebook code cells locally; final PDF hash/size and forecast/replay/baseline hashes verified. git diff --check passed; no files under data/raw/challenge/ changed.
+
+## Firebase Hosting automatic deployment integration (2026-11-11)
+
+- **Scope:** Complete user-requested push-to-main Hosting deploy setup for existing project `airwindow-99085` and repository `acchasujal/aqi`; no Firebase billing change.
+- **Completed:** Firebase CLI service account created and GitHub repository secret `FIREBASE_SERVICE_ACCOUNT_AIRWINDOW_99085` uploaded encrypted. Added `.github/workflows/firebase-hosting-merge.yml`; pushes to `main` use Node 24, install/build from `apps/airwindow`, then deploy only Hosting with that app directory as Firebase entry point. GitHub Actions workflow permission is contents-read only. No PR-preview or backend deploy workflow retained.
+- **Validation:** Secret name existence checked without reading its value; workflow YAML parsed and checked for app build path and Firebase entry point. Static Hosting deployment from local `main` separately succeeded and signed-out public artifact verification passed.
+- **Credential hygiene:** Two service-account keys were created during failed CLI setup attempts before the successful encrypted secret upload. Automatic review rejected deleting these unused credentials; review and remove the two unreferenced keys in Google Cloud Console ? IAM & Admin ? Service Accounts ? `github-action-1448039075` ? Keys, preserving the key referenced by the GitHub Actions secret. No key material was written to repository files.
+- **Publication:** The workflow must be pushed to `origin/main` before GitHub Actions can run. The pre-existing untracked root `package-lock.json` remains preserved.

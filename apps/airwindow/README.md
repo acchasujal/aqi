@@ -66,6 +66,8 @@ firebase.cmd deploy --only hosting --project airwindow-99085 --non-interactive
 
 No billing-plan change, Maps or other paid service was enabled. The app works locally without Firebase or runtime network APIs. Google Colab replay material is prepared separately under `notebooks/`; it is not a dependency of the live app.
 
+GitHub Actions are configured in the repository root at `.github/workflows/firebase-hosting-merge.yml`. Pushes to `main` build from this directory and deploy the live Hosting channel. The encrypted repository secret is `FIREBASE_SERVICE_ACCOUNT_AIRWINDOW_99085`. Once the workflow commit is pushed to `main`, subsequent `main` updates deploy automatically.
+
 The judging package, actual screenshots, 90-second demo script, red-team review, submission PDF and deployment checklist are under `reports/creative_submission/`.
 
 ## 9 November final audit
