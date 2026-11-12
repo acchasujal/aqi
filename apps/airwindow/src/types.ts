@@ -47,6 +47,7 @@ export type TimeWindow = {
   hours: ForecastHour[];
   rank: number;
 };
+export type UnavailablePeriod = { id: string; label: string; start_ist: string; end_ist: string };
 export type DecisionState = 'ROBUST IMPROVEMENT' | 'TENTATIVE IMPROVEMENT' | 'NO CLEAR WINNER' | 'INSUFFICIENT EVIDENCE';
 export type ReplayWindow = { start_ist: string; end_ist: string; mean_prediction: number; max_prediction: number; mean_observed: number | null; rank: number };
 export type ReplayCase = {

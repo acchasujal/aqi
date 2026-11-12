@@ -276,3 +276,13 @@ Decision: retain exact archive-identity P_fix for TASK008 and isolate historical
 - **Confidence:** High in paired calculations and committed artifact integrity; limited in generalization because confirmation has eight origins, cases overlap, historical origins had analyst exposure, and forecast decision calibration is unavailable.
 - **Alternatives considered:** Show point estimates alone, infer superiority from negative deltas, extend stale snapshot validity, or rerun after source deadline. Rejected because these would hide uncertainty or misstate provenance.
 - **Consequences / revisit trigger:** UI, PDF and demo carry the same results and expiry clocks. Recompute comparisons only when replay bytes/method change. Refresh forecast only from a newly eligible complete pipeline output.
+
+## DEC-20261112-24 — AirWindow unavailable-period scheduling policy
+
+- **Date / owner:** 2026-11-12 / Codex
+- **Status:** Accepted for the creative planner; forecast and replay artifacts remain unchanged.
+- **Decision:** Allow up to six labelled, same-date IST unavailable periods within the selected date's remaining forecast-hour domain. Treat intervals as half-open, so a window ending exactly when a block starts remains feasible. Count each complete forecast window once even when blocks overlap. Keep a conflicting original booking visible but outside the feasible ranking. If only the original remains, report no feasible alternative. The six-block cap keeps the printable brief on one A4 page.
+- **Evidence:** AirWindow domain tests and Chrome browser tests pass (17/17 and 14/14); build passes. Printed briefs with one and six active blocks each have one A4 page by `pdfinfo`. The existing unconstrained scheduler output is unchanged with an empty period list.
+- **Confidence:** High for deterministic interval arithmetic, UI/print behavior and retained provenance on the tested artifact; limited for untested browser or printer settings.
+- **Alternatives:** Silently remove overlapping blocks, discard a blocked original, or show a blocked window as the best alternative. Rejected because each would hide a scheduling constraint or misstate feasibility. Unlimited blocks were not selected because they could break the one-page brief.
+- **Consequences / revisit trigger:** Users can edit/remove blocks or change the date/station, which clears date-specific blocks. Revisit the six-block limit only with a revised printable layout and tests.

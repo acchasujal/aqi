@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { completeWindow, enumerateWindows, isExpired, matchedValidation, schoolSportsDayPlan, validateForecast, validateReplay, validateBaselineComparison, observationAge } from '../src/domain.ts';
+import { completeWindow, enumerateWindows, isExpired, matchedValidation, overlapsUnavailable, schoolSportsDayPlan, unavailablePeriodError, validateForecast, validateReplay, validateBaselineComparison, observationAge } from '../src/domain.ts';
 
 const actual = JSON.parse(readFileSync(new URL('../public/data/forecast.json', import.meta.url), 'utf8'));
 const replay = JSON.parse(readFileSync(new URL('../public/data/replay.json', import.meta.url), 'utf8'));
@@ -65,6 +65,35 @@ test('duration and range boundaries enumerate only feasible complete hours', () 
   assert.ok(windows.every(w => Date.parse(w.end_ist) <= Date.parse(hour(11, 30).target_end_ist)));
   assert.throws(() => enumerateWindows(s, hour(8, 40).target_start_ist, hour(8, 40).target_end_ist, 3), /does not fit/);
   assert.throws(() => enumerateWindows(s, hour(8, 40).target_start_ist, hour(11, 30).target_end_ist, 4), /one, two or three/);
+});
+
+const blocked = (id, start, end, label = 'Lunch break') => ({ id, label, start_ist: `2030-01-01T${start}:00+05:30`, end_ist: `2030-01-01T${end}:00+05:30` });
+
+test('unavailable periods filter overlaps once while preserving empty-input behavior and tie order', () => {
+  const s = station([10, 10, 10, 10, 10, 10]);
+  const earliest = hour(8, 10).target_start_ist, latest = hour(13, 10).target_end_ist;
+  const original = enumerateWindows(s, earliest, latest, 2);
+  assert.deepEqual(enumerateWindows(s, earliest, latest, 2, []), original);
+  assert.deepEqual(original.map(w => w.start_ist.slice(11, 16)), ['08:00', '09:00', '10:00', '11:00', '12:00']);
+  const periods = [blocked('a', '09:00', '11:00'), blocked('b', '10:00', '12:00')];
+  const feasible = enumerateWindows(s, earliest, latest, 2, periods);
+  assert.deepEqual(feasible.map(w => w.start_ist.slice(11, 16)), ['12:00']);
+  assert.deepEqual(feasible.map(w => w.rank), [1]);
+  assert.equal(original.length - feasible.length, 4);
+  assert.equal(overlapsUnavailable('2030-01-01T07:00:00+05:30', '2030-01-01T09:00:00+05:30', periods), false);
+  assert.equal(overlapsUnavailable('2030-01-01T12:00:00+05:30', '2030-01-01T13:00:00+05:30', periods), false);
+  assert.equal(enumerateWindows(s, earliest, latest, 2, [blocked('all', '08:00', '14:00')]).length, 0);
+});
+
+test('unavailable periods reject invalid times and never fill missing forecast hours', () => {
+  const s = station([20, null, 10, 5]);
+  const earliest = hour(8, 20).target_start_ist, latest = hour(11, 5).target_end_ist;
+  assert.equal(enumerateWindows(s, earliest, latest, 2, [blocked('a', '08:00', '09:00')]).length, 1);
+  assert.match(unavailablePeriodError(blocked('bad', '10:00', '10:00'), '2030-01-01', earliest, latest), /later than/);
+  assert.match(unavailablePeriodError(blocked('bad', '07:00', '08:00'), '2030-01-01', earliest, latest), /forecast hours/);
+  assert.match(unavailablePeriodError({ ...blocked('bad', '10:00', '11:00'), label: '' }, '2030-01-01', earliest, latest), /label/);
+  assert.match(unavailablePeriodError({ ...blocked('bad', '10:00', '11:00'), end_ist: '2030-01-02T11:00:00+05:30' }, '2030-01-01', earliest, latest), /selected IST date/);
+  assert.throws(() => enumerateWindows(s, earliest, latest, 2, [blocked('bad', '10:00', '10:00')]), /positive-length/);
 });
 
 test('school sports day demo selects a real two-hour window using the existing scheduler', () => {

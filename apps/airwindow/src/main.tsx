@@ -1,12 +1,12 @@
 import { StrictMode, useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import type { BaselineComparison, ForecastArtifact, ForecastHour, ReplayArtifact, ReplayCase, Station, TimeWindow } from './types.ts';
-import { completeWindow, dateKey, dateLabel, enumerateWindows, isExpired, matchedValidation, differenceLabel, numberLabel, schoolSportsDayPlan, stampLabel, timeLabel, validateForecast, validateReplay, validateBaselineComparison, observationAge } from './domain.ts';
+import type { BaselineComparison, ForecastArtifact, ForecastHour, ReplayArtifact, ReplayCase, Station, TimeWindow, UnavailablePeriod } from './types.ts';
+import { completeWindow, dateKey, dateLabel, enumerateWindows, isExpired, matchedValidation, differenceLabel, numberLabel, overlapsUnavailable, schoolSportsDayPlan, stampLabel, timeLabel, unavailablePeriodError, validateForecast, validateReplay, validateBaselineComparison, observationAge } from './domain.ts';
 import './styles.css';
 
 type Page = 'plan' | 'replay' | 'evidence';
 type Plan = { stationId: string; date: string; duration: number; original: string; earliest: string; latest: string };
-type Comparison = { plan: Plan; original: TimeWindow; windows: TimeWindow[]; best: TimeWindow; difference: number };
+type Comparison = { plan: Plan; original: TimeWindow; windows: TimeWindow[]; best: TimeWindow | null; difference: number | null; periods: UnavailablePeriod[]; completeCount: number; excludedCount: number; originalConflict: boolean };
 const STATION_SHORT: Record<string, string> = { '11606': 'Borivali East', '11611': 'Malad West', '3409510': 'Byculla', '3409511': 'Shivaji Nagar' };
 const Clock = () => <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>;
 const Arrow = () => <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>;
@@ -39,6 +39,8 @@ function App() {
   const [formError, setFormError] = useState('');
   const [brief, setBrief] = useState(false);
   const [demoMode, setDemoMode] = useState<'live' | 'historical' | null>(null);
+  const [periods, setPeriods] = useState<UnavailablePeriod[]>([]);
+  const nextPeriodId = useRef(0);
   const resultsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -82,6 +84,8 @@ function App() {
   const comparedStation = artifact?.stations.find(s => s.station_id === comparison?.plan.stationId);
   const dates = useMemo(() => station ? [...new Set(station.forecasts.filter(h => Date.parse(h.target_start_ist) > now).map(h => dateKey(h.target_start_ist)))] : [], [station, now]);
   const dayHours = station?.forecasts.filter(h => dateKey(h.target_start_ist) === plan?.date && Date.parse(h.target_start_ist) > Date.now()) || [];
+  const periodDomainStart = dayHours[0]?.target_start_ist || '';
+  const periodDomainEnd = dayHours.filter(h => dateKey(h.target_end_ist) === plan?.date).at(-1)?.target_end_ist || '';
   const expired = artifact ? isExpired(artifact, now) : false;
   const demoPlan = artifact ? schoolSportsDayPlan(artifact.stations, now) : null;
 
@@ -90,7 +94,7 @@ function App() {
     if (plan) runComparison(plan, false);
   }
 
-  function runComparison(candidate: Plan, demo: boolean) {
+  function runComparison(candidate: Plan, demo: boolean, selectedPeriods = periods) {
     const selectedStation = artifact?.stations.find(s => s.station_id === candidate.stationId);
     if (!selectedStation) return;
     try {
@@ -99,11 +103,17 @@ function App() {
       const original = completeWindow(selectedStation.forecasts, candidate.original, candidate.duration);
       if (!original) throw new Error('The original activity needs complete forecast hours. Choose another start or a shorter duration.');
       if (Date.parse(candidate.earliest) <= Date.now()) throw new Error('The feasible range begins in the past. Choose a future start or explore Historical replay.');
-      const windows = enumerateWindows(selectedStation, candidate.earliest, candidate.latest, candidate.duration);
-      if (!windows.length) throw new Error('No complete consecutive forecast windows fit this range. Missing hours are never filled.');
-      const best = windows[0];
+      const day = selectedStation.forecasts.filter(h => dateKey(h.target_start_ist) === candidate.date && Date.parse(h.target_start_ist) > Date.now() && dateKey(h.target_end_ist) === candidate.date);
+      for (const period of selectedPeriods) {
+        const issue = unavailablePeriodError(period, candidate.date, day[0]?.target_start_ist || '', day.at(-1)?.target_end_ist || '');
+        if (issue) throw new Error(issue);
+      }
+      const complete = enumerateWindows(selectedStation, candidate.earliest, candidate.latest, candidate.duration);
+      if (!complete.length) throw new Error('No complete consecutive forecast windows fit this range. Missing hours are never filled.');
+      const windows = selectedPeriods.length ? enumerateWindows(selectedStation, candidate.earliest, candidate.latest, candidate.duration, selectedPeriods) : complete;
+      const best = selectedPeriods.length && windows.length === 1 && windows[0].start_ist === original.start_ist ? null : windows[0] || null;
       const originalRank = windows.find(w => w.start_ist === original.start_ist)?.rank || 0;
-      setComparison({ plan: { ...candidate }, original: { ...original, rank: originalRank }, windows, best, difference: best.mean_prediction - original.mean_prediction });
+      setComparison({ plan: { ...candidate }, original: { ...original, rank: originalRank }, windows, best, difference: best ? best.mean_prediction - original.mean_prediction : null, periods: selectedPeriods.map(p => ({ ...p })), completeCount: complete.length, excludedCount: complete.length - windows.length, originalConflict: overlapsUnavailable(original.start_ist, original.end_ist, selectedPeriods) });
       setFormError('');
       setBrief(false);
       setDemoMode(demo ? 'live' : null);
@@ -119,8 +129,12 @@ function App() {
     if (!artifact) return;
     const selected = schoolSportsDayPlan(artifact.stations, Date.now());
     if (selected && !isExpired(artifact, Date.now())) {
+      const lunch: UnavailablePeriod = { id: `period-${nextPeriodId.current++}`, label: 'Lunch break (example)', start_ist: `${selected.date}T12:00:00+05:30`, end_ist: `${selected.date}T13:00:00+05:30` };
+      const selectedStation = artifact.stations.find(s => s.station_id === selected.stationId)!;
+      const example = Date.parse(lunch.start_ist) >= Date.parse(selected.earliest) && Date.parse(lunch.end_ist) <= Date.parse(selected.latest) && enumerateWindows(selectedStation, selected.earliest, selected.latest, 2, [lunch]).length > 0 ? [lunch] : [];
       setPlan(selected);
-      runComparison(selected, true);
+      setPeriods(example);
+      runComparison(selected, true, example);
     } else {
       setDemoMode('historical');
       setPage('replay');
@@ -133,15 +147,28 @@ function App() {
     setComparison(null); setBrief(false); setFormError(''); setDemoMode(null);
   }
 
+  function updatePeriod(id: string, change: Partial<UnavailablePeriod>) {
+    setPeriods(current => current.map(period => period.id === id ? { ...period, ...change } : period));
+    setComparison(null); setBrief(false); setFormError('');
+  }
+
+  function addPeriod() {
+    if (periods.length >= 6) { setFormError('Use up to six unavailable periods for one event.'); return; }
+    const hour = dayHours.find(h => h.target_start_ist.slice(11, 16) === '12:00' && dateKey(h.target_end_ist) === plan?.date) || dayHours.find(h => dateKey(h.target_end_ist) === plan?.date);
+    if (!hour) { setFormError('No valid unavailable period fits the remaining hours on this date.'); return; }
+    setPeriods([...periods, { id: `period-${nextPeriodId.current++}`, label: 'Unavailable period', start_ist: hour.target_start_ist, end_ist: hour.target_end_ist }]);
+    setComparison(null); setBrief(false); setFormError('');
+  }
+
   function changeStation(id: string) {
     const s = artifact?.stations.find(item => item.station_id === id);
-    if (s) { setPlan(defaultPlan(s)); setComparison(null); setFormError(''); setDemoMode(null); }
+    if (s) { setPlan(defaultPlan(s)); setPeriods([]); setComparison(null); setFormError(''); setBrief(false); setDemoMode(null); }
   }
   function changeDate(date: string) {
     if (!station || !plan) return;
     const dateStation = { ...station, forecasts: station.forecasts.filter(h => dateKey(h.target_start_ist) === date) };
     setPlan({ ...defaultPlan(dateStation), duration: plan.duration });
-    setComparison(null); setDemoMode(null);
+    setPeriods([]); setComparison(null); setFormError(''); setBrief(false); setDemoMode(null);
   }
 
   return <>
@@ -176,6 +203,13 @@ function App() {
               <label>Earliest feasible start<select value={plan.earliest} onChange={e => updatePlan({ earliest: e.target.value })}>{dayHours.map(h => <option key={h.target_start_ist} value={h.target_start_ist}>{timeLabel(h.target_start_ist)}</option>)}</select></label>
               <label>Latest feasible end<select value={plan.latest} onChange={e => updatePlan({ latest: e.target.value })}>{dayHours.map(h => <option key={h.target_end_ist} value={h.target_end_ist}>{timeLabel(h.target_end_ist)}{dateKey(h.target_end_ist) !== plan.date ? ' (+1 day)' : ''}</option>)}</select></label>
             </div>
+            <fieldset className="unavailable-fieldset"><legend>When is the ground unavailable?</legend><p>Add lunch, exams or maintenance periods on this planning date. Times are IST; changing the date or station clears these periods.</p>
+              {periods.map((period, index) => {
+                const issue = unavailablePeriodError(period, plan.date, periodDomainStart, periodDomainEnd);
+                return <div className="unavailable-block" key={period.id}><label>Reason<input aria-label={`Reason for unavailable period ${index + 1}`} type="text" maxLength={40} value={period.label} onChange={e => updatePeriod(period.id, { label: e.target.value })}/></label><label>Starts<input aria-label={`Start of unavailable period ${index + 1}`} type="time" step={900} min={periodDomainStart.slice(11, 16)} max={periodDomainEnd.slice(11, 16)} value={period.start_ist.slice(11, 16)} aria-invalid={!!issue} onChange={e => updatePeriod(period.id, { start_ist: `${plan.date}T${e.target.value}:00+05:30` })}/></label><label>Ends<input aria-label={`End of unavailable period ${index + 1}`} type="time" step={900} min={periodDomainStart.slice(11, 16)} max={periodDomainEnd.slice(11, 16)} value={period.end_ist.slice(11, 16)} aria-invalid={!!issue} onChange={e => updatePeriod(period.id, { end_ist: `${plan.date}T${e.target.value}:00+05:30` })}/></label><button className="text-button" type="button" onClick={() => { setPeriods(periods.filter(p => p.id !== period.id)); setComparison(null); setBrief(false); setFormError(''); }}>Remove</button>{issue && <p className="unavailable-error" role="alert">{issue}</p>}</div>;
+              })}
+              <button className="text-button add-unavailable" type="button" onClick={addPeriod} disabled={!periodDomainEnd || periods.length >= 6}>+ Add unavailable period</button>
+            </fieldset>
             <div className="form-bottom"><div className="station-detail"><span className="location-pin">◎</span><p><strong>{station.station_name}</strong><span>Station {station.station_id} · {station.latitude.toFixed(5)}° N, {station.longitude.toFixed(5)}° E<br/>Last PM observation: {stampLabel(station.last_observation_ist)}<br/>{numberLabel(observationAge(station.last_observation_ist))} hours old now; {numberLabel(station.freshness.observation_age_hours)} hours old at issue. No validated freshness threshold.</span></p></div><button className="primary-button" type="submit">Compare time windows <Arrow/></button></div>
             {formError && <p className="form-error" role="alert">{formError}</p>}
           </form>
@@ -185,12 +219,13 @@ function App() {
 
         {comparison && comparedStation && <div ref={resultsRef} tabIndex={-1} className="comparison-area">
           {demoMode === 'live' && <p className="demo-context no-print"><strong>Example event · School sports day</strong><span>Illustrative scheduling scenario using the genuine forecast; not a real school's booking.</span></p>}
-          <div className="section-heading no-print"><div><p className="eyebrow">02 / THE COMPARISON</p><h2>Your original. A possible alternative.</h2></div><button className="text-button" onClick={() => { setBrief(true); setTimeout(() => document.getElementById('event-brief')?.scrollIntoView({ behavior: 'smooth' }), 30); }}><Print/> Create event brief</button></div>
-          <div className="decision-banner no-print"><span className="decision-icon"><Shield/></span><div><span className="decision-label">{comparison.difference >= 0 ? 'NO CLEAR WINNER' : 'INSUFFICIENT EVIDENCE'}</span><h3>{comparison.difference >= 0 ? 'Your current slot is already as well ranked.' : 'A lower forecast. An unproven scheduling improvement.'}</h3><p>{comparison.difference >= 0 ? 'No feasible alternative has a lower predicted mean than your original schedule.' : `The best alternative is ${differenceLabel(-comparison.difference)} µg/m³ lower in the forecast. Independent, comparable decision calibration is unavailable, so AirWindow abstains from recommending a move.`}</p></div><span className="uncalibrated-tag">No calibrated probability</span></div>
-          <div className="comparison-grid no-print"><WindowCard title="Original schedule" window={comparison.original} original/><WindowCard title={comparison.best.start_ist === comparison.original.start_ist ? 'Best-ranked feasible window' : 'Best predicted alternative'} window={comparison.best} difference={comparison.difference}/></div>
-          <section className="trajectory-section no-print"><div className="section-heading"><div><p className="eyebrow">THE SHAPE OF THE DAY</p><h3>Hourly forecast, in context</h3></div><span className="chart-legend"><i/> Forecast PM2.5 <span>µg/m³</span></span></div><HourlyChart forecasts={comparedStation.forecasts.filter(h => dateKey(h.target_start_ist) === comparison.plan.date)} original={comparison.original} best={comparison.best}/><p className="chart-caption">Shading marks the original and best-ranked windows. These are forecast concentrations at the monitor, not personal exposure.</p></section>
-          <ReliabilityPanel artifact={artifact} station={comparedStation} comparison={comparison} replay={replay}/>
-          <section className="alternatives no-print"><div className="section-heading"><div><p className="eyebrow">KEEP YOUR OPTIONS OPEN</p><h3>All feasible windows</h3></div><span className="quiet-tag">{comparison.windows.length} complete {comparison.plan.duration}-hour windows</span></div><div className="table-scroll"><table><thead><tr><th>Rank</th><th>Activity window · IST</th><th>Forecast mean</th><th>Highest hour</th><th>Vs original</th></tr></thead><tbody>{comparison.windows.map(w => <tr key={w.start_ist} className={w.start_ist === comparison.original.start_ist ? 'original-row' : ''}><td><span className={w.rank === 1 ? 'rank rank-first' : 'rank'}>{w.rank.toString().padStart(2, '0')}</span></td><td>{timeLabel(w.start_ist)} – {timeLabel(w.end_ist)}{w.start_ist === comparison.original.start_ist && <span className="row-tag">Original</span>}</td><td>{numberLabel(w.mean_prediction)} <small>µg/m³</small></td><td>{numberLabel(w.max_prediction)} <small>µg/m³</small></td><td className={w.mean_prediction < comparison.original.mean_prediction ? 'lower-value' : ''}>{w.mean_prediction === comparison.original.mean_prediction ? '—' : `${w.mean_prediction < comparison.original.mean_prediction ? '−' : '+'}${differenceLabel(Math.abs(w.mean_prediction - comparison.original.mean_prediction))}`} <small>{w.mean_prediction === comparison.original.mean_prediction ? '' : 'µg/m³'}</small></td></tr>)}</tbody></table></div>{!comparison.original.rank && <p className="panel-note">Your original schedule is outside the feasible move range and remains visible above.</p>}</section>
+          <div className="section-heading no-print"><div><p className="eyebrow">02 / THE COMPARISON</p><h2>{comparison.best ? 'Your original. A possible alternative.' : 'Your original. No feasible alternative.'}</h2></div><button className="text-button" onClick={() => { setBrief(true); setTimeout(() => document.getElementById('event-brief')?.scrollIntoView({ behavior: 'smooth' }), 30); }}><Print/> Create event brief</button></div>
+          <div className="decision-banner no-print"><span className="decision-icon"><Shield/></span><div><span className="decision-label">{!comparison.best ? 'NO FEASIBLE ALTERNATIVE' : comparison.difference! >= 0 ? 'NO CLEAR WINNER' : 'INSUFFICIENT EVIDENCE'}</span><h3>{!comparison.best ? 'No feasible alternative fits your scheduling constraints.' : comparison.difference! >= 0 ? 'Your current slot is already as well ranked.' : 'A lower forecast. An unproven scheduling improvement.'}</h3><p>{!comparison.best ? 'The original booking remains visible. Adjust or remove unavailable periods to search again.' : comparison.difference! >= 0 ? 'No feasible alternative has a lower predicted mean than your original schedule.' : `The best alternative is ${differenceLabel(-comparison.difference!)} µg/m³ lower in the forecast. Independent, comparable decision calibration is unavailable, so AirWindow abstains from recommending a move.`}</p></div><span className="uncalibrated-tag">No calibrated probability</span></div>
+          <section className="constraint-results no-print" aria-label="Scheduling constraint results"><strong>{comparison.completeCount} complete forecast windows evaluated. {comparison.excludedCount} excluded by scheduling constraints. {comparison.windows.length} feasible {comparison.windows.length === 1 ? 'window remains' : 'windows remain'}.</strong><p>{comparison.periods.length ? comparison.periods.map(p => `${p.label}: ${timeLabel(p.start_ist)}–${timeLabel(p.end_ist)} IST`).join(' · ') : 'No unavailable periods were applied.'}</p>{comparison.originalConflict && <p className="constraint-conflict">Original schedule: Conflicts with unavailable period. It remains visible but is not ranked as feasible.</p>}</section>
+          <div className="comparison-grid no-print"><WindowCard title="Original schedule" window={comparison.original} original conflict={comparison.originalConflict}/>{comparison.best ? <WindowCard title={comparison.best.start_ist === comparison.original.start_ist ? 'Best-ranked feasible window' : 'Best predicted alternative'} window={comparison.best} difference={comparison.difference!}/> : <div className="empty-panel"><h3>No feasible alternative fits your scheduling constraints.</h3><p>Adjust the unavailable periods or scheduling range to explore other windows.</p></div>}</div>
+          <section className="trajectory-section no-print"><div className="section-heading"><div><p className="eyebrow">THE SHAPE OF THE DAY</p><h3>Hourly forecast, in context</h3></div><span className="chart-legend"><i/> Forecast PM2.5 <span>µg/m³</span></span></div><HourlyChart forecasts={comparedStation.forecasts.filter(h => dateKey(h.target_start_ist) === comparison.plan.date)} original={comparison.original} best={comparison.best || undefined}/><p className="chart-caption">Shading marks the original and {comparison.best ? 'best-ranked' : 'any feasible'} windows. These are forecast concentrations at the monitor, not personal exposure.</p></section>
+          {comparison.best && <ReliabilityPanel artifact={artifact} station={comparedStation} comparison={comparison} replay={replay}/>}
+          <section className="alternatives no-print"><div className="section-heading"><div><p className="eyebrow">KEEP YOUR OPTIONS OPEN</p><h3>All feasible windows</h3></div><span className="quiet-tag">{comparison.windows.length} complete {comparison.plan.duration}-hour windows</span></div>{comparison.windows.length ? <div className="table-scroll"><table><thead><tr><th>Rank</th><th>Activity window · IST</th><th>Forecast mean</th><th>Highest hour</th><th>Vs original</th></tr></thead><tbody>{comparison.windows.map(w => <tr key={w.start_ist} className={w.start_ist === comparison.original.start_ist ? 'original-row' : ''}><td><span className={w.rank === 1 ? 'rank rank-first' : 'rank'}>{w.rank.toString().padStart(2, '0')}</span></td><td>{timeLabel(w.start_ist)} – {timeLabel(w.end_ist)}{w.start_ist === comparison.original.start_ist && <span className="row-tag">Original</span>}</td><td>{numberLabel(w.mean_prediction)} <small>µg/m³</small></td><td>{numberLabel(w.max_prediction)} <small>µg/m³</small></td><td className={w.mean_prediction < comparison.original.mean_prediction ? 'lower-value' : ''}>{w.mean_prediction === comparison.original.mean_prediction ? '—' : `${w.mean_prediction < comparison.original.mean_prediction ? '−' : '+'}${differenceLabel(Math.abs(w.mean_prediction - comparison.original.mean_prediction))}`} <small>{w.mean_prediction === comparison.original.mean_prediction ? '' : 'µg/m³'}</small></td></tr>)}</tbody></table></div> : <p className="panel-note">No feasible alternative fits your scheduling constraints.</p>}{!comparison.original.rank && <p className="panel-note">Your original schedule is outside the feasible set and remains visible above.</p>}</section>
           {brief && <EventBrief artifact={artifact} station={comparedStation} comparison={comparison} onClose={() => setBrief(false)}/>}
         </div>}
         <section className="boundary-note no-print"><span>FOUR STATIONS. CLEAR LIMITS.</span><p>A monitoring station may not represent nearby streets, a school ground, or your exact location. This is an independent planning prototype. For health recommendations, consult <a href="https://cpcb.nic.in/" target="_blank" rel="noreferrer">official CPCB guidance ↗</a>.</p></section>
@@ -200,8 +235,8 @@ function App() {
   </>;
 }
 
-function WindowCard({ title, window, original = false, difference }: { title: string; window: TimeWindow; original?: boolean; difference?: number }) {
-  return <article className={`window-card ${original ? 'window-original' : 'window-alternative'}`}><div className="window-card-top"><span>{title}</span><span className="window-badge">{original ? 'YOUR PLAN' : `RANK ${window.rank.toString().padStart(2, '0')}`}</span></div><h3>{timeLabel(window.start_ist)}<span> — </span>{timeLabel(window.end_ist)}</h3><p className="window-date">{dateLabel(window.start_ist)} · IST</p><div className="window-value"><strong>{numberLabel(window.mean_prediction)}</strong><span>µg/m³<br/>predicted mean</span></div>{difference !== undefined && <p className="delta-line">{difference < 0 ? `↓ ${differenceLabel(-difference)} µg/m³ lower than original` : difference > 0 ? `↑ ${differenceLabel(difference)} µg/m³ above original` : 'Same predicted mean as original'}</p>}<div className="window-divider"/><div className="window-details"><span>Highest forecast hour<strong>{numberLabel(window.max_prediction)} µg/m³</strong></span><span>Peak interval starts<strong>{timeLabel(window.peak_start_ist)} IST</strong></span></div><div className="hour-chips">{window.hours.map(h => <span key={h.target_start_ist}>{timeLabel(h.target_start_ist)} <strong>{numberLabel(h.pm25_prediction)}</strong><small>µg/m³</small></span>)}</div></article>;
+function WindowCard({ title, window, original = false, conflict = false, difference }: { title: string; window: TimeWindow; original?: boolean; conflict?: boolean; difference?: number }) {
+  return <article className={`window-card ${original ? 'window-original' : 'window-alternative'}`}><div className="window-card-top"><span>{title}</span><span className="window-badge">{original ? 'YOUR PLAN' : `RANK ${window.rank.toString().padStart(2, '0')}`}</span></div>{conflict && <p className="constraint-conflict">Conflicts with unavailable period</p>}<h3>{timeLabel(window.start_ist)}<span> — </span>{timeLabel(window.end_ist)}</h3><p className="window-date">{dateLabel(window.start_ist)} · IST</p><div className="window-value"><strong>{numberLabel(window.mean_prediction)}</strong><span>µg/m³<br/>predicted mean</span></div>{difference !== undefined && <p className="delta-line">{difference < 0 ? `↓ ${differenceLabel(-difference)} µg/m³ lower than original` : difference > 0 ? `↑ ${differenceLabel(difference)} µg/m³ above original` : 'Same predicted mean as original'}</p>}<div className="window-divider"/><div className="window-details"><span>Highest forecast hour<strong>{numberLabel(window.max_prediction)} µg/m³</strong></span><span>Peak interval starts<strong>{timeLabel(window.peak_start_ist)} IST</strong></span></div><div className="hour-chips">{window.hours.map(h => <span key={h.target_start_ist}>{timeLabel(h.target_start_ist)} <strong>{numberLabel(h.pm25_prediction)}</strong><small>µg/m³</small></span>)}</div></article>;
 }
 
 function HourlyChart({ forecasts, original, best }: { forecasts: ForecastHour[]; original?: TimeWindow; best?: TimeWindow }) {
@@ -220,6 +255,7 @@ function HourlyChart({ forecasts, original, best }: { forecasts: ForecastHour[];
 }
 
 function ReliabilityPanel({ artifact, station, comparison, replay }: { artifact: ForecastArtifact; station: Station; comparison: Comparison; replay: ReplayArtifact | null }) {
+  if (!comparison.best) return null;
   const profiles = replay?.reliability_profiles?.filter(p => p.station_id === station.station_id && p.duration_hours === comparison.plan.duration) || [];
   const lead = (Date.parse(comparison.best.start_ist) - Date.parse(artifact.model_issue_time_ist)) / 3_600_000;
   const pmLead = (Date.parse(comparison.best.start_ist) - Date.parse(station.last_observation_ist || artifact.pm_history_cutoff_ist)) / 3_600_000;
@@ -229,8 +265,22 @@ function ReliabilityPanel({ artifact, station, comparison, replay }: { artifact:
 }
 
 function EventBrief({ artifact, station, comparison, onClose }: { artifact: ForecastArtifact; station: Station; comparison: Comparison; onClose: () => void }) {
-  const metric = matchedValidation(station, comparison.best, artifact.model_issue_time_ist);
-  return <section id="event-brief" className="event-brief"><div className="brief-toolbar no-print"><span>Your event brief</span><div><button className="text-button" onClick={onClose}>Close brief</button><button className="primary-button" onClick={() => window.print()}><Print/> Print / save PDF</button></div></div><div className="brief-paper"><div className="brief-masthead"><span className="footer-brand">AirWindow Mumbai</span><span>EVENT PLANNING BRIEF</span></div><h2>A plan, with its evidence attached.</h2><p className="brief-station">{STATION_SHORT[station.station_id]} · {dateLabel(comparison.original.start_ist)} · {comparison.plan.duration}-hour activity</p><div className="brief-status"><strong>{comparison.difference >= 0 ? 'NO CLEAR WINNER' : 'INSUFFICIENT EVIDENCE'}</strong><p>{comparison.difference >= 0 ? 'The original is already as well ranked as the alternatives.' : 'The alternative has a lower predicted concentration. AirWindow abstains from recommending a move because decision reliability has not been independently validated.'}</p></div><div className="brief-comparison"><div><span>Original schedule</span><h3>{timeLabel(comparison.original.start_ist)} – {timeLabel(comparison.original.end_ist)} IST</h3><p><strong>{numberLabel(comparison.original.mean_prediction)}</strong> µg/m³ forecast mean</p><small>Peak at {timeLabel(comparison.original.peak_start_ist)} IST: {numberLabel(comparison.original.max_prediction)} µg/m³</small></div><div><span>Best predicted alternative</span><h3>{timeLabel(comparison.best.start_ist)} – {timeLabel(comparison.best.end_ist)} IST</h3><p><strong>{numberLabel(comparison.best.mean_prediction)}</strong> µg/m³ forecast mean</p><small>Peak at {timeLabel(comparison.best.peak_start_ist)} IST: {numberLabel(comparison.best.max_prediction)} µg/m³</small></div></div><p className="brief-difference">Predicted difference: <strong>{comparison.difference < 0 ? '−' : comparison.difference > 0 ? '+' : ''}{differenceLabel(Math.abs(comparison.difference))} µg/m³</strong> · selected minus original</p><dl className="brief-meta"><div><dt>Forecast issued</dt><dd>{stampLabel(artifact.model_issue_time_ist)}</dd></div><div><dt>PM history cutoff</dt><dd>{stampLabel(artifact.pm_history_cutoff_ist)}</dd></div><div><dt>Latest PM observation</dt><dd>{stampLabel(station.last_observation_ist)}</dd></div><div><dt>Model</dt><dd>{artifact.model.id} · {artifact.model.version}</dd></div><div><dt>Station</dt><dd>{station.station_id} · {station.latitude.toFixed(5)}, {station.longitude.toFixed(5)}</dd></div><div><dt>Validation</dt><dd>{metric.matched ? `${numberLabel(metric.rmse)} µg/m³ full-target RMSE; ${metric.note}; not decision calibration` : `Matched station validation unavailable. ${metric.note}`}</dd></div><div><dt>Artifact</dt><dd>{artifact.artifact_id}</dd></div></dl><p className="brief-disclaimer">Monitoring-station forecasts may not represent nearby streets or the event location. No period is labelled safe or medically recommended. This comparison is not a personal exposure estimate. Refer to official CPCB/government guidance for health recommendations.</p><div className="brief-end">Independent Google Mumbai Data Challenge prototype · All times IST · Hourly PM2.5, µg/m³</div></div></section>;
+  const metric = comparison.best ? matchedValidation(station, comparison.best, artifact.model_issue_time_ist) : null;
+  return <section id="event-brief" className="event-brief">
+    <div className="brief-toolbar no-print"><span>Your event brief</span><div><button className="text-button" onClick={onClose}>Close brief</button><button className="primary-button" onClick={() => window.print()}><Print/> Print / save PDF</button></div></div>
+    <div className="brief-paper">
+      <div className="brief-masthead"><span className="footer-brand">AirWindow Mumbai</span><span>EVENT PLANNING BRIEF</span></div>
+      <h2>A plan, with its evidence attached.</h2>
+      <p className="brief-station">{STATION_SHORT[station.station_id]} · {dateLabel(comparison.original.start_ist)} · {comparison.plan.duration}-hour activity</p>
+      <div className="brief-status"><strong>{!comparison.best ? 'NO FEASIBLE ALTERNATIVE' : comparison.difference! >= 0 ? 'NO CLEAR WINNER' : 'INSUFFICIENT EVIDENCE'}</strong><p>{!comparison.best ? 'No feasible alternative fits the declared scheduling constraints. The original booking remains visible.' : comparison.difference! >= 0 ? 'The original is already as well ranked as the alternatives.' : 'The alternative has a lower predicted concentration. AirWindow abstains from recommending a move because decision reliability has not been independently validated.'}</p></div>
+      <div className="brief-comparison"><div><span>Original schedule</span><h3>{timeLabel(comparison.original.start_ist)} – {timeLabel(comparison.original.end_ist)} IST</h3><p><strong>{numberLabel(comparison.original.mean_prediction)}</strong> µg/m³ forecast mean</p><small>Peak at {timeLabel(comparison.original.peak_start_ist)} IST: {numberLabel(comparison.original.max_prediction)} µg/m³</small></div>{comparison.best ? <div><span>Best feasible alternative</span><h3>{timeLabel(comparison.best.start_ist)} – {timeLabel(comparison.best.end_ist)} IST</h3><p><strong>{numberLabel(comparison.best.mean_prediction)}</strong> µg/m³ forecast mean</p><small>Peak at {timeLabel(comparison.best.peak_start_ist)} IST: {numberLabel(comparison.best.max_prediction)} µg/m³</small></div> : <div><span>Feasible alternative</span><h3>None available</h3><p>Adjust unavailable periods and compare again.</p></div>}</div>
+      {comparison.best && <p className="brief-difference">Predicted difference: <strong>{comparison.difference! < 0 ? '−' : comparison.difference! > 0 ? '+' : ''}{differenceLabel(Math.abs(comparison.difference!))} µg/m³</strong> · selected minus original</p>}
+      <div className="brief-constraints"><strong>Ground availability</strong><p>{comparison.completeCount} complete forecast windows · {comparison.excludedCount} excluded · {comparison.windows.length} feasible.</p><p>{comparison.periods.length ? comparison.periods.map(period => `${period.label}: ${timeLabel(period.start_ist)}–${timeLabel(period.end_ist)} IST`).join(' · ') : 'No unavailable periods declared.'}</p><p>Original booking: {comparison.originalConflict ? 'Conflicts with unavailable period; retained for comparison.' : 'No conflict with unavailable periods.'}</p></div>
+      <dl className="brief-meta"><div><dt>Forecast issued</dt><dd>{stampLabel(artifact.model_issue_time_ist)}</dd></div><div><dt>PM history cutoff</dt><dd>{stampLabel(artifact.pm_history_cutoff_ist)}</dd></div><div><dt>Latest PM observation</dt><dd>{stampLabel(station.last_observation_ist)}</dd></div><div><dt>Model</dt><dd>{artifact.model.id} · {artifact.model.version}</dd></div><div><dt>Station</dt><dd>{station.station_id} · {station.latitude.toFixed(5)}, {station.longitude.toFixed(5)}</dd></div><div><dt>Validation</dt><dd>{metric ? metric.matched ? `${numberLabel(metric.rmse)} µg/m³ full-target RMSE; ${metric.note}; not decision calibration` : `Matched station validation unavailable. ${metric.note}` : 'No feasible alternative to validate.'}</dd></div><div><dt>Artifact</dt><dd>{artifact.artifact_id}</dd></div></dl>
+      <p className="brief-disclaimer">Monitoring-station forecasts may not represent nearby streets or the event location. No period is labelled safe or medically recommended. This comparison is not a personal exposure estimate. Refer to official CPCB/government guidance for health recommendations.</p>
+      <div className="brief-end">Independent Google Mumbai Data Challenge prototype · All times IST · Hourly PM2.5, µg/m³</div>
+    </div>
+  </section>;
 }
 
 function ReplayView({ replay, baseline, baselineError, error, demo, onRetry }: { replay: ReplayArtifact | null; baseline: BaselineComparison | null; baselineError: string; error: string; demo: boolean; onRetry: () => void }) {

@@ -1,4 +1,4 @@
-import type { BaselineComparison, ForecastArtifact, ForecastHour, ReplayArtifact, Station, TimeWindow } from './types.ts';
+import type { BaselineComparison, ForecastArtifact, ForecastHour, ReplayArtifact, Station, TimeWindow, UnavailablePeriod } from './types.ts';
 
 const HOUR = 3_600_000;
 const IDS = ['11606', '11611', '3409510', '3409511'];
@@ -125,13 +125,27 @@ export function completeWindow(forecasts: ForecastHour[], start: string, duratio
     max_prediction: peak.pm25_prediction!, peak_start_ist: peak.target_start_ist, hours, rank: 0 };
 }
 
-export function enumerateWindows(station: Station, earliest: string, latestEnd: string, duration: number): TimeWindow[] {
+export function overlapsUnavailable(start: string, end: string, periods: UnavailablePeriod[]): boolean {
+  return periods.some(period => Date.parse(start) < Date.parse(period.end_ist) && Date.parse(end) > Date.parse(period.start_ist));
+}
+
+export function unavailablePeriodError(period: UnavailablePeriod, date: string, domainStart: string, domainEnd: string): string | null {
+  if (!period.label.trim()) return 'Enter a label for each unavailable period.';
+  if (!validIst(domainStart) || !validIst(domainEnd)) return 'No usable forecast-hour range remains on this date.';
+  if (!validIst(period.start_ist) || !validIst(period.end_ist) || dateKey(period.start_ist) !== date || dateKey(period.end_ist) !== date) return 'Unavailable periods must start and end on the selected IST date.';
+  if (Date.parse(period.start_ist) >= Date.parse(period.end_ist)) return 'Unavailable period end must be later than its start.';
+  if (Date.parse(period.start_ist) < Date.parse(domainStart) || Date.parse(period.end_ist) > Date.parse(domainEnd)) return 'Unavailable periods must fit within the forecast hours remaining on this date.';
+  return null;
+}
+
+export function enumerateWindows(station: Station, earliest: string, latestEnd: string, duration: number, periods: UnavailablePeriod[] = []): TimeWindow[] {
   if (![1, 2, 3].includes(duration)) throw new Error('Choose a one, two or three hour activity.');
+  if (periods.some(period => !validIst(period.start_ist) || !validIst(period.end_ist) || Date.parse(period.start_ist) >= Date.parse(period.end_ist))) throw new Error('Unavailable periods require valid, positive-length IST intervals.');
   const left = Date.parse(earliest), right = Date.parse(latestEnd);
   if (!Number.isFinite(left) || !Number.isFinite(right) || right <= left) throw new Error('The feasible end must follow the earliest start.');
   if (right - left < duration * HOUR) throw new Error('The activity does not fit within your feasible range.');
   return station.forecasts.filter(h => Date.parse(h.target_start_ist) >= left && Date.parse(h.target_start_ist) + duration * HOUR <= right)
-    .map(h => completeWindow(station.forecasts, h.target_start_ist, duration)).filter((w): w is TimeWindow => w !== null)
+    .map(h => completeWindow(station.forecasts, h.target_start_ist, duration)).filter((w): w is TimeWindow => w !== null && !overlapsUnavailable(w.start_ist, w.end_ist, periods))
     .sort((a, b) => a.mean_prediction - b.mean_prediction || Date.parse(a.start_ist) - Date.parse(b.start_ist)).map((w, i) => ({ ...w, rank: i + 1 }));
 }
 
