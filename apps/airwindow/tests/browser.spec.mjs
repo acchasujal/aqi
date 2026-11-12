@@ -42,6 +42,14 @@ test('real planner, abstention, evidence, replay, mobile and printable brief wor
   await expect(page.getByRole('heading', { name: /Your original/ })).toBeVisible();
   await page.getByRole('button', { name: 'Historical replay', exact: true }).click();
   await expect(page.getByRole('heading', { name: /Would the move/ })).toBeVisible();
+  await expect(page.getByText(/Forecast-ranked schedules are not calibrated recommendations/)).toBeVisible();
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await page.screenshot({ path: path.join(screenshots, 'airwindow_desktop_replay.png') });
+  await page.locator('.replay-case').evaluate(el => el.scrollIntoView({ block: 'start', behavior: 'instant' }));
+  await expect(page.getByText('HIGHER AFTERWARDS', { exact: true })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Reveal subsequent observations' }).click();
+  await expect(page.getByText('HIGHER AFTERWARDS', { exact: true })).toBeVisible();
+  await expect(page.getByText(/No schedule changes were endorsed/)).toBeVisible();
   await expect(page.getByText('1,848', { exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: /How did the forecast-ranked choice compare/ })).toBeVisible();
   await expect(page.locator('.baseline-panel')).toContainText('Usual cleanest window');
@@ -49,13 +57,6 @@ test('real planner, abstention, evidence, replay, mobile and printable brief wor
   await expect(page.locator('.baseline-panel')).toContainText('−0.73');
   await expect(page.locator('.baseline-panel')).toContainText('-2.64 to 0.54');
   await expect(page.locator('.baseline-panel')).toContainText('Interval spans zero');
-  await expect(page.getByText(/No schedule changes were endorsed/)).toBeVisible();
-  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
-  await page.screenshot({ path: path.join(screenshots, 'airwindow_desktop_replay.png') });
-  await page.locator('.replay-case').evaluate(el => el.scrollIntoView({ block: 'start', behavior: 'instant' }));
-  await expect(page.getByText('HIGHER AFTERWARDS', { exact: true })).toHaveCount(0);
-  await page.getByRole('button', { name: 'Reveal subsequent observations' }).click();
-  await expect(page.getByText('HIGHER AFTERWARDS', { exact: true })).toBeVisible();
   await page.screenshot({ path: path.join(screenshots, 'airwindow_desktop_replay_detail.png') });
   await page.getByLabel('Station', { exact: true }).selectOption('11611');
   await expect(page.getByRole('heading', { name: /Malad West/ })).toBeVisible();
@@ -113,6 +114,54 @@ test('a partly elapsed horizon defaults to future activity dates and hours', asy
   expect(starts.every(value => value.includes('19 Nov 2026'))).toBe(true);
 });
 
+test('historical replay keeps every outcome behind reveal and resets on selection changes', async ({ page }) => {
+  const replay = JSON.parse(readFileSync(new URL('../public/data/replay.json', import.meta.url), 'utf8'));
+  const initial = replay.cases.filter(c => c.station_id === '11606' && c.duration_hours === 2).at(-1);
+  const observed = initial.original.mean_observed.toLocaleString('en-IN', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Historical replay', exact: true }).click();
+  const hidden = async () => {
+    await expect(page.getByRole('button', { name: 'Reveal subsequent observations' })).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.locator('.replay-summary, .baseline-panel, .outcome-verdict, .replay-case .observed-color')).toHaveCount(0);
+    await expect(page.locator('.replay-case [title^="Observed"]')).toHaveCount(0);
+    await expect(page.locator('.replay-case')).not.toContainText('Later observed mean');
+    await expect(page.locator('.replay-case')).not.toContainText('Retrospective decision classification');
+    await expect(page.locator('.replay-case')).not.toContainText('Hindsight gap');
+    await expect(page.locator('.replay-case')).not.toContainText('OBSERVED COMPARISON');
+    await expect(page.locator('.replay-page')).not.toContainText('Median realised difference');
+    await expect(page.locator('.replay-page')).not.toContainText('No schedule changes were endorsed');
+    const html = await page.locator('.replay-page').evaluate(el => el.outerHTML);
+    expect(html).not.toMatch(/(?:title|aria-label)="[^"]*(?:Observed |Hindsight gap|Later observed mean)/i);
+    const accessibility = await page.locator('.replay-page').ariaSnapshot();
+    expect(accessibility).not.toMatch(/Later observed mean|Hindsight gap|Median realised difference|Retrospective decision classification/);
+  };
+  await hidden();
+  await expect(page.locator('.replay-outcome')).not.toContainText(observed);
+  await page.locator('.replay-case summary').click();
+  await expect(page.locator('.replay-case table')).not.toContainText('Later observed mean');
+  await page.getByRole('button', { name: 'Reveal subsequent observations' }).click();
+  await expect(page.locator('.replay-outcome')).toContainText(observed);
+  await expect(page.locator('.replay-case .observed-color')).toHaveCount(12);
+  await expect(page.locator('.replay-case [title^="Observed"]')).toHaveCount(10);
+  await expect(page.locator('.replay-case table')).toContainText('Later observed mean');
+  await expect(page.locator('.outcome-verdict')).toContainText('HIGHER AFTERWARDS');
+  await expect(page.locator('.replay-summary')).toBeVisible();
+  await expect(page.locator('.baseline-panel')).toBeVisible();
+  await page.getByRole('button', { name: 'Hide subsequent observations' }).click();
+  await hidden();
+  await expect(page.locator('.replay-outcome')).not.toContainText(observed);
+  await page.getByRole('button', { name: 'Reveal subsequent observations' }).click();
+  const otherCase = replay.cases.find(c => c.station_id === '11606' && c.duration_hours === 2 && c.case_id !== initial.case_id);
+  await page.getByLabel('Historical forecast case').selectOption(otherCase.case_id);
+  await hidden();
+  await page.getByRole('button', { name: 'Reveal subsequent observations' }).click();
+  await page.getByLabel('Station', { exact: true }).selectOption('11611');
+  await hidden();
+  await page.getByRole('button', { name: 'Reveal subsequent observations' }).click();
+  await page.getByLabel('Duration').selectOption('3');
+  await hidden();
+});
+
 test('missing station forecasts and missing replay observations remain missing', async ({ page }) => {
   await page.clock.install({ time: new Date('2026-11-11T09:00:00+05:30') });
   const forecast = JSON.parse(readFileSync(new URL('../public/data/forecast.json', import.meta.url), 'utf8'));
@@ -131,10 +180,16 @@ test('missing station forecasts and missing replay observations remain missing',
   expect(missing).toBeTruthy();
   await page.getByRole('button', { name: 'Historical replay', exact: true }).click();
   await page.getByLabel('Historical forecast case').selectOption(missing.case_id);
+  await expect(page.locator('.replay-outcome')).not.toContainText('Unavailable');
+  await expect(page.locator('.outcome-verdict, .replay-case .observed-color')).toHaveCount(0);
   await page.getByRole('button', { name: 'Reveal subsequent observations' }).click();
   await expect(page.getByText('OBSERVED COMPARISON UNAVAILABLE', { exact: true })).toBeVisible();
   await expect(page.getByText(/missing values are never zero-filled/)).toBeVisible();
+  await expect(page.locator('.replay-outcome')).toContainText('Unavailable');
   expect(await page.locator('.paired-bars i:nth-child(2)').count()).toBeLessThan(10);
+  await page.getByRole('button', { name: 'Hide subsequent observations' }).click();
+  await expect(page.locator('.replay-outcome')).not.toContainText('Unavailable');
+  await expect(page.locator('.outcome-verdict, .replay-case .observed-color')).toHaveCount(0);
 });
 
 test('failed forecast URL and delayed or corrupt replay fail visibly without crashing', async ({ page }) => {
@@ -156,7 +211,7 @@ test('failed forecast URL and delayed or corrupt replay fail visibly without cra
   await expect(page.getByText(/Replay artifact is invalid/)).toBeVisible();
   await page.unroute('**/data/replay.json');
   await page.getByRole('button', { name: 'Retry replay' }).click();
-  await expect(page.getByText('1,848', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Reveal subsequent observations' })).toBeVisible();
   expect(errors).toEqual([]);
 });
 
