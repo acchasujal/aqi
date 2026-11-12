@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { completeWindow, enumerateWindows, isExpired, matchedValidation, overlapsUnavailable, schoolSportsDayPlan, unavailablePeriodError, validateForecast, validateReplay, validateBaselineComparison, observationAge } from '../src/domain.ts';
+import { completeWindow, enumerateWindows, isExpired, matchedValidation, overlapsUnavailable, schoolSportsDayPlan, stationMapPositions, unavailablePeriodError, validateForecast, validateReplay, validateBaselineComparison, observationAge } from '../src/domain.ts';
 
 const actual = JSON.parse(readFileSync(new URL('../public/data/forecast.json', import.meta.url), 'utf8'));
 const replay = JSON.parse(readFileSync(new URL('../public/data/replay.json', import.meta.url), 'utf8'));
@@ -46,6 +46,25 @@ const station = (values) => ({ forecasts: values.map((v, i) => hour(i+8, v)) });
 
 test('actual generated artifact passes browser boundary validation', () => {
   assert.equal(validateForecast(actual).stations.length, 4);
+});
+
+test('station locator projects only real artifact coordinates north-up at one distance scale', () => {
+  const points = stationMapPositions(actual.stations);
+  assert.deepEqual(Object.keys(points), actual.stations.map(s => s.station_id));
+  const latitudes = actual.stations.map(s => s.latitude), longitudes = actual.stations.map(s => s.longitude);
+  const centerLat = (Math.min(...latitudes) + Math.max(...latitudes)) / 2;
+  const centerLon = (Math.min(...longitudes) + Math.max(...longitudes)) / 2;
+  const eastScale = Math.cos(centerLat * Math.PI / 180);
+  const scale = 340 / Math.max(Math.max(...latitudes) - Math.min(...latitudes), (Math.max(...longitudes) - Math.min(...longitudes)) * eastScale, 0.01);
+  for (const station of actual.stations) {
+    const point = points[station.station_id];
+    assert.ok(Math.abs(point.x - (200 + (station.longitude - centerLon) * eastScale * scale)) < 1e-9);
+    assert.ok(Math.abs(point.y - (200 - (station.latitude - centerLat) * scale)) < 1e-9);
+    assert.ok(point.x > 0 && point.x < 400 && point.y > 0 && point.y < 400);
+  }
+  assert.ok(points['11606'].y < points['11611'].y);
+  assert.ok(points['3409511'].x > points['3409510'].x);
+  assert.deepEqual(stationMapPositions([]), {});
 });
 
 test('complete consecutive activity has exact mean maximum and peak', () => {

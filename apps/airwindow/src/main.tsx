@@ -1,7 +1,7 @@
 import { StrictMode, useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import type { BaselineComparison, ForecastArtifact, ForecastHour, ReplayArtifact, ReplayCase, Station, TimeWindow, UnavailablePeriod } from './types.ts';
-import { completeWindow, dateKey, dateLabel, enumerateWindows, isExpired, matchedValidation, differenceLabel, numberLabel, overlapsUnavailable, schoolSportsDayPlan, stampLabel, timeLabel, unavailablePeriodError, validateForecast, validateReplay, validateBaselineComparison, observationAge } from './domain.ts';
+import { completeWindow, dateKey, dateLabel, enumerateWindows, isExpired, matchedValidation, differenceLabel, numberLabel, overlapsUnavailable, schoolSportsDayPlan, stampLabel, stationMapPositions, timeLabel, unavailablePeriodError, validateForecast, validateReplay, validateBaselineComparison, observationAge } from './domain.ts';
 import './styles.css';
 
 type Page = 'plan' | 'replay' | 'evidence';
@@ -203,6 +203,7 @@ function App() {
               <label>Earliest feasible start<select value={plan.earliest} onChange={e => updatePlan({ earliest: e.target.value })}>{dayHours.map(h => <option key={h.target_start_ist} value={h.target_start_ist}>{timeLabel(h.target_start_ist)}</option>)}</select></label>
               <label>Latest feasible end<select value={plan.latest} onChange={e => updatePlan({ latest: e.target.value })}>{dayHours.map(h => <option key={h.target_end_ist} value={h.target_end_ist}>{timeLabel(h.target_end_ist)}{dateKey(h.target_end_ist) !== plan.date ? ' (+1 day)' : ''}</option>)}</select></label>
             </div>
+            <StationMap stations={artifact.stations} selected={station} now={now} expired={expired} onSelect={changeStation}/>
             <fieldset className="unavailable-fieldset"><legend>When is the ground unavailable?</legend><p>Add lunch, exams or maintenance periods on this planning date. Times are IST; changing the date or station clears these periods.</p>
               {periods.map((period, index) => {
                 const issue = unavailablePeriodError(period, plan.date, periodDomainStart, periodDomainEnd);
@@ -233,6 +234,21 @@ function App() {
     </main>
     <footer className="site-footer no-print"><div><span className="footer-brand">AirWindow Mumbai</span><p>Better-timed plans. Clearly stated limits.</p></div><div><a href="https://github.com/acchasujal/aqi/tree/main" target="_blank" rel="noreferrer">Source & methodology ↗</a><span>Built for the Google Mumbai Data Challenge · 2026</span></div></footer>
   </>;
+}
+
+function StationMap({ stations, selected, now, expired, onSelect }: { stations: Station[]; selected: Station; now: number; expired: boolean; onSelect: (id: string) => void }) {
+  const positions = stationMapPositions(stations);
+  return <section className="station-map">
+    <div className="station-map-heading"><div><p className="eyebrow">FOUR ACTUAL MONITORS</p><h3 id="station-map-heading">Explore Mumbai's monitoring stations</h3></div><span className="quiet-tag">Geographic station locator</span></div>
+    <div className="station-map-layout">
+      <div className="station-map-plot" role="group" aria-label="Mumbai station locator">
+        <svg viewBox="0 0 400 400" aria-hidden="true" focusable="false"><rect x="1" y="1" width="398" height="398" rx="3" className="map-frame"/><path d="M100 1v398M200 1v398M300 1v398M1 100h398M1 200h398M1 300h398" className="map-grid"/><path d="M345 56V25m0 0-7 10m7-10 7 10" className="map-north"/><text x="345" y="18" textAnchor="middle" className="map-north-label">N</text></svg>
+        {stations.map((station, index) => <button key={station.station_id} type="button" className={`station-marker ${station.station_id === selected.station_id ? 'station-marker-selected' : ''}`} style={{ left: `${positions[station.station_id].x / 4}%`, top: `${positions[station.station_id].y / 4}%` }} data-station-id={station.station_id} data-latitude={station.latitude} data-longitude={station.longitude} data-map-x={positions[station.station_id].x} data-map-y={positions[station.station_id].y} aria-label={`${station.station_name}, station ${station.station_id}`} aria-pressed={station.station_id === selected.station_id} onClick={() => onSelect(station.station_id)}>{index + 1}</button>)}
+      </div>
+      <div className="station-map-info" aria-live="polite"><span className="station-map-kicker">SELECTED MONITORING STATION</span><h4>{selected.station_name}</h4><p>Station {selected.station_id} · {selected.latitude.toFixed(5)}° N, {selected.longitude.toFixed(5)}° E</p><dl><div><dt>Latest PM2.5 observation</dt><dd>{stampLabel(selected.last_observation_ist)}</dd></div><div><dt>Observation age</dt><dd>{numberLabel(observationAge(selected.last_observation_ist, now))} hours as of now</dd></div><div><dt>Forecast hours available</dt><dd>{selected.data_status.available_forecast_hours} of {selected.data_status.expected_forecast_hours}</dd></div><div><dt>Snapshot status</dt><dd>{expired ? 'Forecast period ended · explore historical replay' : 'Frozen forecast snapshot · not live'}</dd></div></dl><div className="station-map-legend"><strong>Map key</strong><p>Numbered markers show monitoring locations only; north is up. The selected marker is highlighted.</p><ol>{stations.map((station, index) => <li key={station.station_id}><span>{index + 1}</span>{station.station_name}</li>)}</ol></div></div>
+    </div>
+    <p className="station-map-disclaimer">Markers represent four monitoring stations. Forecasts describe station-level conditions, not pollution at individual schools or streets.</p>
+  </section>;
 }
 
 function WindowCard({ title, window, original = false, conflict = false, difference }: { title: string; window: TimeWindow; original?: boolean; conflict?: boolean; difference?: number }) {

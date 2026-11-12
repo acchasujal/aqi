@@ -5,6 +5,64 @@ import { readFileSync } from 'node:fs';
 
 const screenshots = path.resolve(process.env.AIRWINDOW_SCREENSHOT_DIR || '../../reports/creative_submission/screenshots');
 
+test('station locator uses authentic coordinates and stays in sync with the planner', async ({ page }) => {
+  await page.clock.install({ time: new Date('2026-11-11T09:00:00+05:30') });
+  await page.goto('/');
+  const forecast = JSON.parse(readFileSync(new URL('../public/data/forecast.json', import.meta.url), 'utf8'));
+  const markers = page.locator('.station-marker');
+  await expect(markers).toHaveCount(4);
+  for (const station of forecast.stations) {
+    const marker = page.locator(`.station-marker[data-station-id="${station.station_id}"]`);
+    await expect(marker).toHaveAttribute('data-latitude', String(station.latitude));
+    await expect(marker).toHaveAttribute('data-longitude', String(station.longitude));
+  }
+  const plotted = await markers.evaluateAll(nodes => nodes.map(node => ({ id: node.dataset.stationId, x: Number(node.dataset.mapX), y: Number(node.dataset.mapY) })));
+  expect(plotted.find(point => point.id === '11606').y).toBeLessThan(plotted.find(point => point.id === '11611').y);
+  expect(plotted.find(point => point.id === '3409511').x).toBeGreaterThan(plotted.find(point => point.id === '3409510').x);
+  await expect(page.locator('.station-map-info')).toContainText('Borivali East');
+  await expect(page.locator('.station-map-info')).toContainText('248 of 248');
+  await expect(page.locator('.station-map-info')).toContainText('Frozen forecast snapshot');
+  await page.locator('.station-map').scrollIntoViewIfNeeded();
+  await mkdir(screenshots, { recursive: true });
+  await page.screenshot({ path: path.join(screenshots, 'airwindow_station_map_desktop.png') });
+  await page.getByRole('button', { name: 'Compare time windows' }).click();
+  await expect(page.locator('.comparison-area')).toBeVisible();
+  await page.getByRole('button', { name: 'Add unavailable period' }).click();
+  await markers.filter({ hasText: '3' }).click();
+  await expect(page.getByLabel('Monitoring station')).toHaveValue('3409510');
+  await expect(page.locator('.station-map-info')).toContainText('Byculla');
+  await expect(page.locator('.station-marker[data-station-id="3409510"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.comparison-area')).toHaveCount(0);
+  await expect(page.getByLabel('Reason for unavailable period 1')).toHaveCount(0);
+  await page.getByLabel('Monitoring station').selectOption('3409511');
+  await expect(page.locator('.station-marker[data-station-id="3409511"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.station-map-info')).toContainText('Shivaji Nagar');
+  await page.getByRole('button', { name: 'Compare time windows' }).click();
+  await expect(page.locator('.comparison-area')).toBeVisible();
+});
+
+test('station locator remains usable at 320px by keyboard when forecast is expired', async ({ page }) => {
+  const externalMapRequests = [];
+  page.on('request', request => { if (/maps\.googleapis\.com|maps\.gstatic\.com/.test(request.url())) externalMapRequests.push(request.url()); });
+  await page.clock.install({ time: new Date('2026-11-22T12:00:00+05:30') });
+  await page.setViewportSize({ width: 320, height: 720 });
+  await page.goto('/');
+  await expect(page.locator('.station-map-info')).toContainText('Forecast period ended');
+  const marker = page.locator('.station-marker[data-station-id="11611"]');
+  await marker.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByLabel('Monitoring station')).toHaveValue('11611');
+  await expect(marker).toHaveAttribute('aria-pressed', 'true');
+  const box = await marker.boundingBox();
+  expect(box.width).toBeGreaterThanOrEqual(44);
+  expect(box.height).toBeGreaterThanOrEqual(44);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await expect(page.getByRole('button', { name: 'Explore a historical school sports day' })).toBeVisible();
+  await mkdir(screenshots, { recursive: true });
+  await page.screenshot({ path: path.join(screenshots, 'airwindow_station_map_mobile_320.png'), fullPage: true });
+  expect(externalMapRequests).toEqual([]);
+});
+
 test('real planner, abstention, evidence, replay, mobile and printable brief work', async ({ page }) => {
   const errors = [];
   const replayRequests = [];

@@ -171,6 +171,19 @@ export function schoolSportsDayPlan(stations: Station[], now: number): { station
   return fallback;
 }
 
+// Equirectangular station locator: north is up and longitude is scaled by
+// cosine(latitude), so x and y share one distance scale at Mumbai's latitude.
+export function stationMapPositions(stations: Station[]): Record<string, { x: number; y: number }> {
+  if (!stations.length) return {};
+  const latitudes = stations.map(s => s.latitude), longitudes = stations.map(s => s.longitude);
+  const centerLat = (Math.min(...latitudes) + Math.max(...latitudes)) / 2;
+  const centerLon = (Math.min(...longitudes) + Math.max(...longitudes)) / 2;
+  const eastScale = Math.cos(centerLat * Math.PI / 180);
+  const span = Math.max(Math.max(...latitudes) - Math.min(...latitudes), (Math.max(...longitudes) - Math.min(...longitudes)) * eastScale, 0.01);
+  const pixelsPerDegree = 340 / span;
+  return Object.fromEntries(stations.map(s => [s.station_id, { x: 200 + (s.longitude - centerLon) * eastScale * pixelsPerDegree, y: 200 - (s.latitude - centerLat) * pixelsPerDegree }]));
+}
+
 export function istDate(value: string): string { return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(value)); }
 export function dateKey(value: string): string { return value.slice(0, 10); }
 export function localTimestamp(date: string, hour: string): string { return `${date}T${hour}:00+05:30`; }
