@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { completeWindow, enumerateWindows, isExpired, matchedValidation, validateForecast, validateReplay, validateBaselineComparison, observationAge } from '../src/domain.ts';
+import { completeWindow, enumerateWindows, isExpired, matchedValidation, schoolSportsDayPlan, validateForecast, validateReplay, validateBaselineComparison, observationAge } from '../src/domain.ts';
 
 const actual = JSON.parse(readFileSync(new URL('../public/data/forecast.json', import.meta.url), 'utf8'));
 const replay = JSON.parse(readFileSync(new URL('../public/data/replay.json', import.meta.url), 'utf8'));
@@ -65,6 +65,34 @@ test('duration and range boundaries enumerate only feasible complete hours', () 
   assert.ok(windows.every(w => Date.parse(w.end_ist) <= Date.parse(hour(11, 30).target_end_ist)));
   assert.throws(() => enumerateWindows(s, hour(8, 40).target_start_ist, hour(8, 40).target_end_ist, 3), /does not fit/);
   assert.throws(() => enumerateWindows(s, hour(8, 40).target_start_ist, hour(11, 30).target_end_ist, 4), /one, two or three/);
+});
+
+test('school sports day demo selects a real two-hour window using the existing scheduler', () => {
+  const now = Date.parse('2026-11-11T09:00:00+05:30');
+  const plan = schoolSportsDayPlan(actual.stations, now);
+  assert.deepEqual(plan, schoolSportsDayPlan(actual.stations, now));
+  assert.equal(plan.duration, 2);
+  assert.equal(plan.original.slice(11, 16), '10:00');
+  assert.equal(plan.latest.slice(11, 16), '18:00');
+  assert.equal(plan.latest.slice(0, 10), plan.date);
+  assert.ok(Date.parse(plan.earliest) > now);
+  const selected = actual.stations.find(s => s.station_id === plan.stationId);
+  const original = completeWindow(selected.forecasts, plan.original, plan.duration);
+  const windows = enumerateWindows(selected, plan.earliest, plan.latest, plan.duration);
+  assert.ok(original);
+  assert.ok(windows.length >= 2);
+  assert.ok(windows.some(w => w.start_ist === original.start_ist));
+  assert.equal(original.mean_prediction, original.hours.reduce((sum, h) => sum + h.pm25_prediction, 0) / 2);
+});
+
+test('sports day selection excludes missing hours and expires without substituting forecasts', () => {
+  const s = { station_id: '11606', ...station([20, 30, null, 10, 15, 25]) };
+  const now = Date.parse('2030-01-01T07:00:00+05:30');
+  const plan = schoolSportsDayPlan([s], now);
+  assert.equal(plan.original.slice(11, 16), '11:00');
+  assert.equal(completeWindow(s.forecasts, hour(9, 30).target_start_ist, 2), null);
+  assert.ok(enumerateWindows(s, plan.earliest, plan.latest, 2).every(w => w.hours.every(h => h.pm25_prediction !== null)));
+  assert.equal(schoolSportsDayPlan([s], Date.parse('2030-01-01T14:00:00+05:30')), null);
 });
 
 test('missing observations are never treated as zero or bridged', () => {

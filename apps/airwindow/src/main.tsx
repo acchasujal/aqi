@@ -1,7 +1,7 @@
 import { StrictMode, useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import type { BaselineComparison, ForecastArtifact, ForecastHour, ReplayArtifact, ReplayCase, Station, TimeWindow } from './types.ts';
-import { completeWindow, dateKey, dateLabel, enumerateWindows, isExpired, matchedValidation, differenceLabel, numberLabel, stampLabel, timeLabel, validateForecast, validateReplay, validateBaselineComparison, observationAge } from './domain.ts';
+import { completeWindow, dateKey, dateLabel, enumerateWindows, isExpired, matchedValidation, differenceLabel, numberLabel, schoolSportsDayPlan, stampLabel, timeLabel, validateForecast, validateReplay, validateBaselineComparison, observationAge } from './domain.ts';
 import './styles.css';
 
 type Page = 'plan' | 'replay' | 'evidence';
@@ -38,6 +38,7 @@ function App() {
   const [comparison, setComparison] = useState<Comparison | null>(null);
   const [formError, setFormError] = useState('');
   const [brief, setBrief] = useState(false);
+  const [demoMode, setDemoMode] = useState<'live' | 'historical' | null>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -82,51 +83,72 @@ function App() {
   const dates = useMemo(() => station ? [...new Set(station.forecasts.filter(h => Date.parse(h.target_start_ist) > now).map(h => dateKey(h.target_start_ist)))] : [], [station, now]);
   const dayHours = station?.forecasts.filter(h => dateKey(h.target_start_ist) === plan?.date && Date.parse(h.target_start_ist) > Date.now()) || [];
   const expired = artifact ? isExpired(artifact, now) : false;
+  const demoPlan = artifact ? schoolSportsDayPlan(artifact.stations, now) : null;
 
   function compare(event?: React.FormEvent) {
     event?.preventDefault();
-    if (!plan || !station) return;
+    if (plan) runComparison(plan, false);
+  }
+
+  function runComparison(candidate: Plan, demo: boolean) {
+    const selectedStation = artifact?.stations.find(s => s.station_id === candidate.stationId);
+    if (!selectedStation) return;
     try {
-      if (expired) throw new Error('This forecast period has ended. Use Historical replay or load a newer artifact.');
-      if (Date.parse(plan.original) <= Date.now()) throw new Error('The original activity start has already passed. Choose a future slot or explore Historical replay.');
-      const original = completeWindow(station.forecasts, plan.original, plan.duration);
+      if (artifact && isExpired(artifact, Date.now())) throw new Error('This forecast period has ended. Use Historical replay or load a newer artifact.');
+      if (Date.parse(candidate.original) <= Date.now()) throw new Error('The original activity start has already passed. Choose a future slot or explore Historical replay.');
+      const original = completeWindow(selectedStation.forecasts, candidate.original, candidate.duration);
       if (!original) throw new Error('The original activity needs complete forecast hours. Choose another start or a shorter duration.');
-      if (Date.parse(plan.earliest) <= Date.now()) throw new Error('The feasible range begins in the past. Choose a future start or explore Historical replay.');
-      const windows = enumerateWindows(station, plan.earliest, plan.latest, plan.duration);
+      if (Date.parse(candidate.earliest) <= Date.now()) throw new Error('The feasible range begins in the past. Choose a future start or explore Historical replay.');
+      const windows = enumerateWindows(selectedStation, candidate.earliest, candidate.latest, candidate.duration);
       if (!windows.length) throw new Error('No complete consecutive forecast windows fit this range. Missing hours are never filled.');
       const best = windows[0];
       const originalRank = windows.find(w => w.start_ist === original.start_ist)?.rank || 0;
-      setComparison({ plan: { ...plan }, original: { ...original, rank: originalRank }, windows, best, difference: best.mean_prediction - original.mean_prediction });
+      setComparison({ plan: { ...candidate }, original: { ...original, rank: originalRank }, windows, best, difference: best.mean_prediction - original.mean_prediction });
       setFormError('');
       setBrief(false);
+      setDemoMode(demo ? 'live' : null);
       setTimeout(() => { resultsRef.current?.focus({ preventScroll: true }); resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 30);
     } catch (error) {
       setFormError(error instanceof Error ? error.message : 'Could not compare this activity.');
       setComparison(null);
+      setDemoMode(null);
+    }
+  }
+
+  function startDemo() {
+    if (!artifact) return;
+    const selected = schoolSportsDayPlan(artifact.stations, Date.now());
+    if (selected && !isExpired(artifact, Date.now())) {
+      setPlan(selected);
+      runComparison(selected, true);
+    } else {
+      setDemoMode('historical');
+      setPage('replay');
+      setBrief(false);
     }
   }
 
   function updatePlan(change: Partial<Plan>) {
     if (plan) setPlan({ ...plan, ...change });
-    setComparison(null); setBrief(false); setFormError('');
+    setComparison(null); setBrief(false); setFormError(''); setDemoMode(null);
   }
 
   function changeStation(id: string) {
     const s = artifact?.stations.find(item => item.station_id === id);
-    if (s) { setPlan(defaultPlan(s)); setComparison(null); setFormError(''); }
+    if (s) { setPlan(defaultPlan(s)); setComparison(null); setFormError(''); setDemoMode(null); }
   }
   function changeDate(date: string) {
     if (!station || !plan) return;
     const dateStation = { ...station, forecasts: station.forecasts.filter(h => dateKey(h.target_start_ist) === date) };
     setPlan({ ...defaultPlan(dateStation), duration: plan.duration });
-    setComparison(null);
+    setComparison(null); setDemoMode(null);
   }
 
   return <>
     <a className="skip-link" href="#main">Skip to content</a>
     <header className="site-header no-print"><div className="header-inner">
-      <a className="brand" href="#" onClick={e => { e.preventDefault(); setPage('plan'); }} aria-label="AirWindow home"><span className="brand-mark"><i/><i/><i/></span><span>AirWindow<span className="brand-city">MUMBAI</span></span><span className="version-pill">2.1</span></a>
-      <nav aria-label="Main navigation">{(['plan', 'replay', 'evidence'] as Page[]).map(p => <button key={p} className={page === p ? 'nav-active' : ''} aria-current={page === p ? 'page' : undefined} onClick={() => { setPage(p); setBrief(false); }}>{p === 'plan' ? 'Plan an activity' : p === 'replay' ? 'Historical replay' : 'Evidence & sources'}</button>)}</nav>
+      <a className="brand" href="#" onClick={e => { e.preventDefault(); setPage('plan'); setDemoMode(null); }} aria-label="AirWindow home"><span className="brand-mark"><i/><i/><i/></span><span>AirWindow<span className="brand-city">MUMBAI</span></span><span className="version-pill">2.1</span></a>
+      <nav aria-label="Main navigation">{(['plan', 'replay', 'evidence'] as Page[]).map(p => <button key={p} className={page === p ? 'nav-active' : ''} aria-current={page === p ? 'page' : undefined} onClick={() => { setPage(p); setBrief(false); setDemoMode(null); }}>{p === 'plan' ? 'Plan an activity' : p === 'replay' ? 'Historical replay' : 'Evidence & sources'}</button>)}</nav>
       <span className="header-caption"><span className="status-dot"/> Independent challenge prototype</span>
     </div></header>
 
@@ -139,6 +161,8 @@ function App() {
         </section>
 
         <div className="snapshot-bar no-print"><span className="snapshot-label"><Clock/> Forecast snapshot</span><span>Issued {stampLabel(artifact.model_issue_time_ist)}</span><span>PM observations through {stampLabel(artifact.pm_history_cutoff_ist)}</span><span>Valid through {stampLabel(artifact.stations[0].forecasts.at(-1)!.target_end_ist)}</span><span className="snapshot-tag">{expired ? 'Forecast period ended' : 'Frozen · not live'}</span></div>
+
+        <section className="demo-invite no-print" aria-label="Guided school sports day demo"><div><p className="eyebrow">SEE AIRWINDOW IN ACTION</p><p>See how AirWindow compares a school's existing sports-day schedule with other available time windows.</p></div><button className="primary-button" type="button" onClick={startDemo}>{demoPlan && !expired ? 'Try a school sports day' : 'Explore a historical school sports day'} <Arrow/></button></section>
 
         {expired && <div className="form-error no-print" role="status">This forecast horizon ended {stampLabel(artifact.stations[0].forecasts.at(-1)!.target_end_ist)}. New planning is disabled until a newer validated artifact is exported. <button className="text-button" onClick={() => setPage('replay')}>Explore historical replay</button></div>}
 
@@ -160,6 +184,7 @@ function App() {
         {!comparison && <section className="how-strip no-print"><div className="how-number">01</div><div><h3>Keep the original in view.</h3><p>We compare complete, consecutive forecast hours with your existing schedule.</p></div><div className="how-number">02</div><div><h3>Let evidence have a say.</h3><p>A better-ranked forecast is never presented as a guarantee or a health recommendation.</p></div></section>}
 
         {comparison && comparedStation && <div ref={resultsRef} tabIndex={-1} className="comparison-area">
+          {demoMode === 'live' && <p className="demo-context no-print"><strong>Example event · School sports day</strong><span>Illustrative scheduling scenario using the genuine forecast; not a real school's booking.</span></p>}
           <div className="section-heading no-print"><div><p className="eyebrow">02 / THE COMPARISON</p><h2>Your original. A possible alternative.</h2></div><button className="text-button" onClick={() => { setBrief(true); setTimeout(() => document.getElementById('event-brief')?.scrollIntoView({ behavior: 'smooth' }), 30); }}><Print/> Create event brief</button></div>
           <div className="decision-banner no-print"><span className="decision-icon"><Shield/></span><div><span className="decision-label">{comparison.difference >= 0 ? 'NO CLEAR WINNER' : 'INSUFFICIENT EVIDENCE'}</span><h3>{comparison.difference >= 0 ? 'Your current slot is already as well ranked.' : 'A lower forecast. An unproven scheduling improvement.'}</h3><p>{comparison.difference >= 0 ? 'No feasible alternative has a lower predicted mean than your original schedule.' : `The best alternative is ${differenceLabel(-comparison.difference)} µg/m³ lower in the forecast. Independent, comparable decision calibration is unavailable, so AirWindow abstains from recommending a move.`}</p></div><span className="uncalibrated-tag">No calibrated probability</span></div>
           <div className="comparison-grid no-print"><WindowCard title="Original schedule" window={comparison.original} original/><WindowCard title={comparison.best.start_ist === comparison.original.start_ist ? 'Best-ranked feasible window' : 'Best predicted alternative'} window={comparison.best} difference={comparison.difference}/></div>
@@ -169,7 +194,7 @@ function App() {
           {brief && <EventBrief artifact={artifact} station={comparedStation} comparison={comparison} onClose={() => setBrief(false)}/>}
         </div>}
         <section className="boundary-note no-print"><span>FOUR STATIONS. CLEAR LIMITS.</span><p>A monitoring station may not represent nearby streets, a school ground, or your exact location. This is an independent planning prototype. For health recommendations, consult <a href="https://cpcb.nic.in/" target="_blank" rel="noreferrer">official CPCB guidance ↗</a>.</p></section>
-      </> : page === 'replay' ? <ReplayView replay={replay} baseline={baseline} baselineError={baselineError} error={replayError} onRetry={() => setReplayError('')}/> : <EvidenceView artifact={artifact} replay={replay}/>}
+      </> : page === 'replay' ? <ReplayView replay={replay} baseline={baseline} baselineError={baselineError} error={replayError} demo={demoMode === 'historical'} onRetry={() => setReplayError('')}/> : <EvidenceView artifact={artifact} replay={replay}/>}
     </main>
     <footer className="site-footer no-print"><div><span className="footer-brand">AirWindow Mumbai</span><p>Better-timed plans. Clearly stated limits.</p></div><div><a href="https://github.com/acchasujal/aqi/tree/main" target="_blank" rel="noreferrer">Source & methodology ↗</a><span>Built for the Google Mumbai Data Challenge · 2026</span></div></footer>
   </>;
@@ -208,20 +233,27 @@ function EventBrief({ artifact, station, comparison, onClose }: { artifact: Fore
   return <section id="event-brief" className="event-brief"><div className="brief-toolbar no-print"><span>Your event brief</span><div><button className="text-button" onClick={onClose}>Close brief</button><button className="primary-button" onClick={() => window.print()}><Print/> Print / save PDF</button></div></div><div className="brief-paper"><div className="brief-masthead"><span className="footer-brand">AirWindow Mumbai</span><span>EVENT PLANNING BRIEF</span></div><h2>A plan, with its evidence attached.</h2><p className="brief-station">{STATION_SHORT[station.station_id]} · {dateLabel(comparison.original.start_ist)} · {comparison.plan.duration}-hour activity</p><div className="brief-status"><strong>{comparison.difference >= 0 ? 'NO CLEAR WINNER' : 'INSUFFICIENT EVIDENCE'}</strong><p>{comparison.difference >= 0 ? 'The original is already as well ranked as the alternatives.' : 'The alternative has a lower predicted concentration. AirWindow abstains from recommending a move because decision reliability has not been independently validated.'}</p></div><div className="brief-comparison"><div><span>Original schedule</span><h3>{timeLabel(comparison.original.start_ist)} – {timeLabel(comparison.original.end_ist)} IST</h3><p><strong>{numberLabel(comparison.original.mean_prediction)}</strong> µg/m³ forecast mean</p><small>Peak at {timeLabel(comparison.original.peak_start_ist)} IST: {numberLabel(comparison.original.max_prediction)} µg/m³</small></div><div><span>Best predicted alternative</span><h3>{timeLabel(comparison.best.start_ist)} – {timeLabel(comparison.best.end_ist)} IST</h3><p><strong>{numberLabel(comparison.best.mean_prediction)}</strong> µg/m³ forecast mean</p><small>Peak at {timeLabel(comparison.best.peak_start_ist)} IST: {numberLabel(comparison.best.max_prediction)} µg/m³</small></div></div><p className="brief-difference">Predicted difference: <strong>{comparison.difference < 0 ? '−' : comparison.difference > 0 ? '+' : ''}{differenceLabel(Math.abs(comparison.difference))} µg/m³</strong> · selected minus original</p><dl className="brief-meta"><div><dt>Forecast issued</dt><dd>{stampLabel(artifact.model_issue_time_ist)}</dd></div><div><dt>PM history cutoff</dt><dd>{stampLabel(artifact.pm_history_cutoff_ist)}</dd></div><div><dt>Latest PM observation</dt><dd>{stampLabel(station.last_observation_ist)}</dd></div><div><dt>Model</dt><dd>{artifact.model.id} · {artifact.model.version}</dd></div><div><dt>Station</dt><dd>{station.station_id} · {station.latitude.toFixed(5)}, {station.longitude.toFixed(5)}</dd></div><div><dt>Validation</dt><dd>{metric.matched ? `${numberLabel(metric.rmse)} µg/m³ full-target RMSE; ${metric.note}; not decision calibration` : `Matched station validation unavailable. ${metric.note}`}</dd></div><div><dt>Artifact</dt><dd>{artifact.artifact_id}</dd></div></dl><p className="brief-disclaimer">Monitoring-station forecasts may not represent nearby streets or the event location. No period is labelled safe or medically recommended. This comparison is not a personal exposure estimate. Refer to official CPCB/government guidance for health recommendations.</p><div className="brief-end">Independent Google Mumbai Data Challenge prototype · All times IST · Hourly PM2.5, µg/m³</div></div></section>;
 }
 
-function ReplayView({ replay, baseline, baselineError, error, onRetry }: { replay: ReplayArtifact | null; baseline: BaselineComparison | null; baselineError: string; error: string; onRetry: () => void }) {
+function ReplayView({ replay, baseline, baselineError, error, demo, onRetry }: { replay: ReplayArtifact | null; baseline: BaselineComparison | null; baselineError: string; error: string; demo: boolean; onRetry: () => void }) {
   const [stationId, setStationId] = useState('11606');
   const [duration, setDuration] = useState(2);
   const [caseId, setCaseId] = useState('');
   const [revealedCaseId, setRevealedCaseId] = useState<string | null>(null);
+  const caseRef = useRef<HTMLElement>(null);
   const cases = replay?.cases.filter(c => c.station_id === stationId && c.duration_hours === duration) || [];
-  const item = cases.find(c => c.case_id === caseId) || cases.at(-1);
+  const item = cases.find(c => c.case_id === caseId) || (demo ? cases.filter(c => c.observed_difference !== null).at(-1) : undefined) || cases.at(-1);
   const revealed = !!item && revealedCaseId === item.case_id;
+  useEffect(() => {
+    if (!demo || !item) return;
+    const timer = setTimeout(() => { caseRef.current?.focus({ preventScroll: true }); caseRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 30);
+    return () => clearTimeout(timer);
+  }, [demo, replay]);
   return <section className="replay-page"><p className="eyebrow">HISTORICAL DECISION REPLAY</p><h1>Would the move<br/>have worked?</h1><p className="page-intro">Revisit historical forecast simulations and later observations. Generated retrospectively with history frozen at the recorded origin. Reveal each case to inspect what happened afterwards.</p><span className="retrospective-tag">Retrospective evaluation · released historical observations</span>
+    {demo && <p className="demo-context"><strong>Example event · School sports day</strong><span>Genuine historical forecast simulation. Subsequent observations are hidden until you reveal them.</span></p>}
     {!replay ? <div className="empty-panel"><h2>{error ? 'Replay is unavailable.' : 'Loading historical replay'}</h2><p>{error || 'Loading genuine OOF forecasts…'}</p><p>No historical outcomes have been invented.</p>{error && <button className="primary-button" onClick={onRetry}>Retry replay</button>}</div> : <>{revealed && <div className="replay-summary"><div><span>Eligible historical cases</span><strong>{replay.summary.cases.toLocaleString('en-IN')}</strong><small>{replay.summary.origins} origins; {replay.summary.paired_outcome_cases} paired outcomes; {replay.summary.missing_outcome_cases} missing</small></div><div><span>Lower observed concentration</span><strong>{replay.summary.lower_observed_fraction === null ? 'Unavailable' : `${numberLabel(replay.summary.lower_observed_fraction * 100)}%`}</strong><small>{replay.summary.selected_alternative_cases} numerical alternatives with outcomes; descriptive rate</small></div><div><span>Median realised difference</span><strong>{numberLabel(replay.summary.median_realised_difference)} <small>µg/m³</small></strong><small>Selected minus original · negative is lower</small></div><div><span>Median hindsight gap</span><strong>{numberLabel(replay.summary.hindsight_gap_median)} <small>µg/m³</small></strong><small>Selected minus best actually observed feasible slot</small></div></div>}
       <p className="replay-warning"><Shield/> Forecast-ranked schedules are not calibrated recommendations. {revealed && <>No schedule changes were endorsed as calibrated recommendations. These are historical outcomes, not a calibrated probability for your next event. {replay.calibration.reason}</>}</p>
       {revealed && <BaselineComparisonPanel comparison={baseline} error={baselineError}/>}
       <div className="replay-controls"><label>Station<select aria-label="Station" value={stationId} onChange={e => { setStationId(e.target.value); setCaseId(''); setRevealedCaseId(null); }}>{Object.entries(STATION_SHORT).map(([id, label]) => <option key={id} value={id}>{label}</option>)}</select></label><label>Duration<select aria-label="Duration" value={duration} onChange={e => { setDuration(Number(e.target.value)); setCaseId(''); setRevealedCaseId(null); }}>{[1, 2, 3].map(d => <option key={d} value={d}>{d} {d === 1 ? 'hour' : 'hours'}</option>)}</select></label><label>Historical forecast case<select aria-label="Historical forecast case" value={item?.case_id || ''} onChange={e => { setCaseId(e.target.value); setRevealedCaseId(null); }}>{cases.map(c => <option key={c.case_id} value={c.case_id}>{dateLabel(c.original_start_ist)} · {timeLabel(c.original_start_ist)} · {c.split}</option>)}</select></label></div>
-      {item ? <ReplayCaseView key={item.case_id} item={item} revealed={revealed} onToggle={() => setRevealedCaseId(revealed ? null : item.case_id)}/> : <div className="empty-panel"><h2>No eligible case for this selection.</h2><p>Missing historical forecasts are not filled.</p></div>}
+      {item ? <ReplayCaseView key={item.case_id} item={item} revealed={revealed} focusRef={caseRef} onToggle={() => setRevealedCaseId(revealed ? null : item.case_id)}/> : <div className="empty-panel"><h2>No eligible case for this selection.</h2><p>Missing historical forecasts are not filled.</p></div>}
       {revealed && <details className="method-details"><summary>See the replay design and all station/duration results</summary><p>Predeclared school-event scenarios use the original 09:00 slot and feasible 08:00–18:00 range on each available target day. One-, two- and three-hour activities are evaluated. The selected window is chosen using forecasts only; observed outcomes are joined afterwards. Historical publication timing is proxied by interval end. Cases and outcomes are retained even when the selected alternative is worse.</p><div className="table-scroll"><table><thead><tr><th>Station</th><th>Duration</th><th>Split</th><th>Cases</th><th>Origins</th><th>Lower observed</th><th>Median difference</th></tr></thead><tbody>{replay.by_station_duration.map((r, i) => <tr key={i}><td>{STATION_SHORT[r.station_id || ''] || r.station_id}</td><td>{r.duration_hours}h</td><td>{r.split}</td><td>{r.cases}</td><td>{r.origins}</td><td>{r.lower_observed_fraction === null ? 'Unavailable' : `${numberLabel(r.lower_observed_fraction * 100)}%`}</td><td>{numberLabel(r.median_realised_difference)} µg/m³</td></tr>)}</tbody></table></div></details>}</>}
   </section>;
 }
@@ -235,9 +267,9 @@ function BaselineComparisonPanel({ comparison, error }: { comparison: BaselineCo
   return <section className="baseline-panel" aria-labelledby="baseline-heading"><div className="baseline-heading"><p className="eyebrow">MODEL VS SIMPLE SCHEDULES</p><h2 id="baseline-heading">How did the forecast-ranked choice compare?</h2><p>Paired later-observed mean PM2.5 for the same station, duration and case. Negative differences favor AirWindow.</p></div><div className="baseline-tabs"><section><h3>Full replay · {comparison.full_replay.cases.toLocaleString('en-IN')} declared cases</h3><p className="baseline-method">Usual-cleanest uses earlier origins only; latest-window is the latest-starting complete candidate.</p><div className="baseline-cards">{cell('Usual cleanest window', comparison.full_replay.usual_cleanest)}{cell('Latest feasible window', comparison.full_replay.latest_window)}</div><small>Usual-cleanest baseline supported in {comparison.full_replay.usual_cleanest_supported_cases.toLocaleString('en-IN')} cases; paired outcome coverage is shown per result.</small></section><section><h3>Held-out confirmation · {comparison.heldout.cases} declared cases</h3><p className="baseline-method">The usual-cleanest time is chosen from development outcomes only; confirmation outcomes do not select it.</p><div className="baseline-cards">{cell('Usual cleanest window', comparison.heldout.usual_cleanest)}{cell('Latest feasible window', comparison.heldout.latest_window)}</div></section></div><p className="baseline-caveat">Retrospective evidence, not a guarantee of future performance. Confirmation origins were previously inspected, cases within origins overlap, and these intervals do not establish statistical superiority. Missing observed outcomes remain outside paired estimates and are counted in the replay coverage above.</p></section>;
 }
 
-function ReplayCaseView({ item, revealed, onToggle }: { item: ReplayCase; revealed: boolean; onToggle: () => void }) {
+function ReplayCaseView({ item, revealed, focusRef, onToggle }: { item: ReplayCase; revealed: boolean; focusRef: React.Ref<HTMLElement>; onToggle: () => void }) {
   const max = Math.max(...item.hours.flatMap(h => revealed ? [h.prediction, h.observed] : [h.prediction]).filter((v): v is number => v !== null && Number.isFinite(v)), 1);
-  return <section className="replay-case"><div className="section-heading"><div><p className="eyebrow">HISTORICAL FORECAST SIMULATION</p><h2>{STATION_SHORT[item.station_id]} · {dateLabel(item.original_start_ist)}</h2></div><span className="quiet-tag">{item.split} origin</span></div><div className="replay-clock"><span>Simulated issue/origin <strong>{stampLabel(item.issue_time_ist)}</strong></span><span>PM cutoff <strong>{stampLabel(item.pm_history_cutoff_ist)}</strong></span></div><div className="replay-outcome"><div><span>Original forecast{revealed ? ' / actual' : ''}</span><h3>{timeLabel(item.original_start_ist)} – {timeLabel(item.original_end_ist)} IST</h3><p><strong>{numberLabel(item.original.mean_prediction)}</strong><span>forecast</span>{revealed && <><strong className="observed-color">{numberLabel(item.original.mean_observed)}</strong><span>observed µg/m³</span></>}</p></div><Arrow/><div><span>Selected forecast{revealed ? ' / actual' : ''}</span><h3>{timeLabel(item.selected_start_ist)} – {timeLabel(item.selected_end_ist)} IST</h3><p><strong>{numberLabel(item.selected.mean_prediction)}</strong><span>forecast</span>{revealed && <><strong className="observed-color">{numberLabel(item.selected.mean_observed)}</strong><span>observed µg/m³</span></>}</p></div></div><button className="primary-button reveal-button" aria-expanded={revealed} onClick={onToggle}>{revealed ? 'Hide subsequent observations' : 'Reveal subsequent observations'}</button>{revealed && <div className="outcome-verdict" role="status"><span>{item.observed_difference === null ? 'OBSERVED COMPARISON UNAVAILABLE' : item.observed_difference < 0 ? 'LOWER AFTERWARDS' : item.observed_difference > 0 ? 'HIGHER AFTERWARDS' : 'NO OBSERVED DIFFERENCE'}</span>{item.observed_difference === null ? <p>Complete subsequent observations are unavailable for this paired comparison. This case remains in the record; missing values are never zero-filled.</p> : <p>The selected slot was <strong>{numberLabel(Math.abs(item.observed_difference))} µg/m³ {item.observed_difference < 0 ? 'lower' : item.observed_difference > 0 ? 'higher' : 'different'}</strong> in subsequently observed mean PM2.5. This is a retrospective outcome, not a measured health benefit.</p>}</div>}<div className="replay-hour-grid">{item.hours.map(h => <div key={h.target_start_ist}><span>{timeLabel(h.target_start_ist)}</span><div className="paired-bars"><i style={{ height: `${Math.max(h.prediction / max * 100, 1)}%` }} title={`Forecast ${numberLabel(h.prediction)} µg/m³`}/>{revealed && h.observed !== null && <i style={{ height: `${Math.max(h.observed / max * 100, 1)}%` }} title={`Observed ${numberLabel(h.observed)} µg/m³`}/>}</div><small><b>{numberLabel(h.prediction)}</b> forecast{revealed && <><br/><b className="observed-color">{numberLabel(h.observed)}</b> observed</>}<br/>µg/m³</small></div>)}</div><p className="chart-caption"><span className="mini-key forecast-key"/> Forecast at simulated origin {revealed && <><span className="mini-key observed-key"/> Observation recorded later</>} · All hourly intervals in IST</p><p className="panel-note">Origin {item.fold_id}{revealed && <> · Retrospective decision classification: {item.decision_status.replaceAll('_', ' ')} · Hindsight gap: {numberLabel(item.hindsight_gap)} µg/m³</>}</p><details className="method-details"><summary>All {item.windows.length} complete feasible forecast windows</summary><p>Ranked using forecasts only. Original: {timeLabel(item.original_start_ist)}–{timeLabel(item.original_end_ist)} IST. Selected (original retained on ties): {timeLabel(item.selected_start_ist)}–{timeLabel(item.selected_end_ist)} IST.</p><div className="table-scroll"><table><thead><tr><th>Forecast rank</th><th>Window · IST</th><th>Predicted mean</th><th>Maximum</th>{revealed && <th>Later observed mean</th>}</tr></thead><tbody>{item.windows.map(w => <tr key={w.start_ist}><td>{w.rank}{w.start_ist === item.selected_start_ist ? ' · Selected' : ''}</td><td>{timeLabel(w.start_ist)}–{timeLabel(w.end_ist)}{w.start_ist === item.original_start_ist ? ' · Original' : ''}</td><td>{numberLabel(w.mean_prediction)} µg/m³</td><td>{numberLabel(w.max_prediction)} µg/m³</td>{revealed && <td>{numberLabel(w.mean_observed)} µg/m³</td>}</tr>)}</tbody></table></div></details></section>;
+  return <section ref={focusRef} tabIndex={-1} className="replay-case"><div className="section-heading"><div><p className="eyebrow">HISTORICAL FORECAST SIMULATION</p><h2>{STATION_SHORT[item.station_id]} · {dateLabel(item.original_start_ist)}</h2></div><span className="quiet-tag">{item.split} origin</span></div><div className="replay-clock"><span>Simulated issue/origin <strong>{stampLabel(item.issue_time_ist)}</strong></span><span>PM cutoff <strong>{stampLabel(item.pm_history_cutoff_ist)}</strong></span></div><div className="replay-outcome"><div><span>Original forecast{revealed ? ' / actual' : ''}</span><h3>{timeLabel(item.original_start_ist)} – {timeLabel(item.original_end_ist)} IST</h3><p><strong>{numberLabel(item.original.mean_prediction)}</strong><span>forecast</span>{revealed && <><strong className="observed-color">{numberLabel(item.original.mean_observed)}</strong><span>observed µg/m³</span></>}</p></div><Arrow/><div><span>Selected forecast{revealed ? ' / actual' : ''}</span><h3>{timeLabel(item.selected_start_ist)} – {timeLabel(item.selected_end_ist)} IST</h3><p><strong>{numberLabel(item.selected.mean_prediction)}</strong><span>forecast</span>{revealed && <><strong className="observed-color">{numberLabel(item.selected.mean_observed)}</strong><span>observed µg/m³</span></>}</p></div></div><button className="primary-button reveal-button" aria-expanded={revealed} onClick={onToggle}>{revealed ? 'Hide subsequent observations' : 'Reveal subsequent observations'}</button>{revealed && <div className="outcome-verdict" role="status"><span>{item.observed_difference === null ? 'OBSERVED COMPARISON UNAVAILABLE' : item.observed_difference < 0 ? 'LOWER AFTERWARDS' : item.observed_difference > 0 ? 'HIGHER AFTERWARDS' : 'NO OBSERVED DIFFERENCE'}</span>{item.observed_difference === null ? <p>Complete subsequent observations are unavailable for this paired comparison. This case remains in the record; missing values are never zero-filled.</p> : <p>The selected slot was <strong>{numberLabel(Math.abs(item.observed_difference))} µg/m³ {item.observed_difference < 0 ? 'lower' : item.observed_difference > 0 ? 'higher' : 'different'}</strong> in subsequently observed mean PM2.5. This is a retrospective outcome, not a measured health benefit.</p>}</div>}<div className="replay-hour-grid">{item.hours.map(h => <div key={h.target_start_ist}><span>{timeLabel(h.target_start_ist)}</span><div className="paired-bars"><i style={{ height: `${Math.max(h.prediction / max * 100, 1)}%` }} title={`Forecast ${numberLabel(h.prediction)} µg/m³`}/>{revealed && h.observed !== null && <i style={{ height: `${Math.max(h.observed / max * 100, 1)}%` }} title={`Observed ${numberLabel(h.observed)} µg/m³`}/>}</div><small><b>{numberLabel(h.prediction)}</b> forecast{revealed && <><br/><b className="observed-color">{numberLabel(h.observed)}</b> observed</>}<br/>µg/m³</small></div>)}</div><p className="chart-caption"><span className="mini-key forecast-key"/> Forecast at simulated origin {revealed && <><span className="mini-key observed-key"/> Observation recorded later</>} · All hourly intervals in IST</p><p className="panel-note">Origin {item.fold_id}{revealed && <> · Retrospective decision classification: {item.decision_status.replaceAll('_', ' ')} · Hindsight gap: {numberLabel(item.hindsight_gap)} µg/m³</>}</p><details className="method-details"><summary>All {item.windows.length} complete feasible forecast windows</summary><p>Ranked using forecasts only. Original: {timeLabel(item.original_start_ist)}–{timeLabel(item.original_end_ist)} IST. Selected (original retained on ties): {timeLabel(item.selected_start_ist)}–{timeLabel(item.selected_end_ist)} IST.</p><div className="table-scroll"><table><thead><tr><th>Forecast rank</th><th>Window · IST</th><th>Predicted mean</th><th>Maximum</th>{revealed && <th>Later observed mean</th>}</tr></thead><tbody>{item.windows.map(w => <tr key={w.start_ist}><td>{w.rank}{w.start_ist === item.selected_start_ist ? ' · Selected' : ''}</td><td>{timeLabel(w.start_ist)}–{timeLabel(w.end_ist)}{w.start_ist === item.original_start_ist ? ' · Original' : ''}</td><td>{numberLabel(w.mean_prediction)} µg/m³</td><td>{numberLabel(w.max_prediction)} µg/m³</td>{revealed && <td>{numberLabel(w.mean_observed)} µg/m³</td>}</tr>)}</tbody></table></div></details></section>;
 }
 
 function EvidenceView({ artifact, replay }: { artifact: ForecastArtifact; replay: ReplayArtifact | null }) {

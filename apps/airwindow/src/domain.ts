@@ -135,6 +135,28 @@ export function enumerateWindows(station: Station, earliest: string, latestEnd: 
     .sort((a, b) => a.mean_prediction - b.mean_prediction || Date.parse(a.start_ist) - Date.parse(b.start_ist)).map((w, i) => ({ ...w, rank: i + 1 }));
 }
 
+// Choose a real, complete daytime comparison from the loaded artifact. Prefer
+// 10:00 IST when it is still in the future; never fill missing forecast hours.
+export function schoolSportsDayPlan(stations: Station[], now: number): { stationId: string; date: string; duration: number; original: string; earliest: string; latest: string } | null {
+  const dates = [...new Set(stations.flatMap(s => s.forecasts.map(h => dateKey(h.target_start_ist))))].sort();
+  let fallback: ReturnType<typeof schoolSportsDayPlan> = null;
+  for (const date of dates) {
+    for (const station of stations) {
+      const day = station.forecasts.filter(h => dateKey(h.target_start_ist) === date && dateKey(h.target_end_ist) === date && h.target_start_ist.slice(11, 16) >= '08:00' && h.target_start_ist.slice(11, 16) < '18:00' && h.target_end_ist.slice(11, 16) <= '18:00' && Date.parse(h.target_start_ist) > now);
+      if (day.length < 2) continue;
+      const earliest = day[0].target_start_ist;
+      const latest = day.at(-1)!.target_end_ist;
+      const windows = enumerateWindows(station, earliest, latest, 2);
+      if (windows.length < 2) continue;
+      const original = [...windows].sort((a, b) => Math.abs(Number(a.start_ist.slice(11, 13)) - 10) - Math.abs(Number(b.start_ist.slice(11, 13)) - 10) || a.start_ist.localeCompare(b.start_ist))[0];
+      const plan = { stationId: station.station_id, date, duration: 2, original: original.start_ist, earliest, latest };
+      if (original.start_ist.slice(11, 16) === '10:00') return plan;
+      fallback ??= plan;
+    }
+  }
+  return fallback;
+}
+
 export function istDate(value: string): string { return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(value)); }
 export function dateKey(value: string): string { return value.slice(0, 10); }
 export function localTimestamp(date: string, hour: string): string { return `${date}T${hour}:00+05:30`; }

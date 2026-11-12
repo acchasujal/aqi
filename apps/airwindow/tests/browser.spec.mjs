@@ -114,6 +114,68 @@ test('a partly elapsed horizon defaults to future activity dates and hours', asy
   expect(starts.every(value => value.includes('19 Nov 2026'))).toBe(true);
 });
 
+test('one-click school sports day uses genuine future forecasts and keeps manual planning editable', async ({ page }) => {
+  await page.clock.install({ time: new Date('2026-11-11T09:00:00+05:30') });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Try a school sports day' }).click();
+  await expect(page.getByText('Example event · School sports day')).toBeVisible();
+  await expect(page.getByLabel('Activity duration')).toHaveValue('2');
+  const originalStart = await page.getByLabel('Original start').inputValue();
+  expect(originalStart.slice(11, 16)).toBe('10:00');
+  const forecast = JSON.parse(readFileSync(new URL('../public/data/forecast.json', import.meta.url), 'utf8'));
+  const stationId = await page.getByLabel('Monitoring station').inputValue();
+  const hours = forecast.stations.find(s => s.station_id === stationId).forecasts;
+  const first = hours.find(h => h.target_start_ist === originalStart);
+  const second = hours.find(h => Date.parse(h.target_start_ist) === Date.parse(originalStart) + 3_600_000);
+  const expectedMean = ((first.pm25_prediction + second.pm25_prediction) / 2).toLocaleString('en-IN', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  await expect(page.locator('.window-original .window-value strong')).toHaveText(expectedMean);
+  await expect.poll(() => page.evaluate(() => document.activeElement?.classList.contains('comparison-area'))).toBe(true);
+  await mkdir(screenshots, { recursive: true });
+  await page.screenshot({ path: path.join(screenshots, 'airwindow_guided_live_demo.png') });
+  await page.getByLabel('Original start').selectOption({ index: 3 });
+  await expect(page.getByText('Example event · School sports day')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Compare time windows' }).click();
+  await expect(page.locator('.comparison-area')).toBeVisible();
+});
+
+test('expired or unusable forecast opens authentic hidden-outcome sports day replay by keyboard', async ({ page }) => {
+  await page.clock.install({ time: new Date('2026-11-22T12:00:00+05:30') });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  const demo = page.getByRole('button', { name: 'Explore a historical school sports day' });
+  await expect(demo).toBeVisible();
+  await demo.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByText('Example event · School sports day')).toBeVisible();
+  await expect(page.getByLabel('Duration')).toHaveValue('2');
+  await expect(page.getByRole('button', { name: 'Reveal subsequent observations' })).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.locator('.replay-case .observed-color, .outcome-verdict')).toHaveCount(0);
+  await expect.poll(() => page.evaluate(() => document.activeElement?.classList.contains('replay-case'))).toBe(true);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await mkdir(screenshots, { recursive: true });
+  await page.screenshot({ path: path.join(screenshots, 'airwindow_guided_historical_demo.png') });
+  await page.getByRole('button', { name: 'Reveal subsequent observations' }).click();
+  await expect(page.locator('.replay-case .observed-color')).not.toHaveCount(0);
+  await page.getByRole('button', { name: 'Plan an activity', exact: true }).click();
+  await expect(page.getByRole('heading', { name: /Should you move/ })).toBeVisible();
+  await expect(page.getByLabel('Monitoring station')).toBeVisible();
+});
+
+test('no complete future two-hour windows offers historical demo without inventing a forecast', async ({ page }) => {
+  await page.clock.install({ time: new Date('2026-11-11T09:00:00+05:30') });
+  const forecast = JSON.parse(readFileSync(new URL('../public/data/forecast.json', import.meta.url), 'utf8'));
+  for (const station of forecast.stations) {
+    station.forecasts.forEach((h, i) => { if (i % 2) { h.pm25_prediction = null; h.status = 'missing'; } });
+    station.data_status.available_forecast_hours = station.forecasts.filter(h => h.status === 'available').length;
+    station.data_status.missing_target_starts_ist = station.forecasts.filter(h => h.status === 'missing').map(h => h.target_start_ist);
+  }
+  await page.route('**/data/forecast.json', route => route.fulfill({ json: forecast }));
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: 'Explore a historical school sports day' })).toBeVisible();
+  await page.getByRole('button', { name: 'Explore a historical school sports day' }).click();
+  await expect(page.getByRole('button', { name: 'Reveal subsequent observations' })).toHaveAttribute('aria-expanded', 'false');
+});
+
 test('historical replay keeps every outcome behind reveal and resets on selection changes', async ({ page }) => {
   const replay = JSON.parse(readFileSync(new URL('../public/data/replay.json', import.meta.url), 'utf8'));
   const initial = replay.cases.filter(c => c.station_id === '11606' && c.duration_hours === 2).at(-1);
