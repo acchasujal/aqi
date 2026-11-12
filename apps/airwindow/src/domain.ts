@@ -54,6 +54,22 @@ export function validateReplay(value: unknown): ReplayArtifact {
   return r;
 }
 
+export function replayOutcomeCounts(cases: ReplayArtifact['cases']) {
+  const counts = { lower: 0, higher: 0, equal: 0, missing: 0, changedWithOutcomes: 0, lowerChanged: 0 };
+  for (const item of cases) {
+    const difference = item.observed_difference;
+    if (difference === null) { counts.missing++; continue; }
+    if (difference < 0) counts.lower++;
+    else if (difference > 0) counts.higher++;
+    else counts.equal++;
+    if (item.selected_start_ist !== item.original_start_ist) {
+      counts.changedWithOutcomes++;
+      if (difference < 0) counts.lowerChanged++;
+    }
+  }
+  return counts;
+}
+
 export function validateBaselineComparison(value: unknown): BaselineComparison {
   const c = value as BaselineComparison;
   const fail = () => { throw new Error('Baseline comparison artifact is invalid. Rebuild it from the frozen replay.'); };

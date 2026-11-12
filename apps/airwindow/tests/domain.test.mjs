@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { completeWindow, enumerateWindows, isExpired, matchedValidation, overlapsUnavailable, schoolSportsDayPlan, stationMapPositions, unavailablePeriodError, validateForecast, validateReplay, validateBaselineComparison, observationAge } from '../src/domain.ts';
+import { completeWindow, enumerateWindows, isExpired, matchedValidation, overlapsUnavailable, replayOutcomeCounts, schoolSportsDayPlan, stationMapPositions, unavailablePeriodError, validateForecast, validateReplay, validateBaselineComparison, observationAge } from '../src/domain.ts';
 
 const actual = JSON.parse(readFileSync(new URL('../public/data/forecast.json', import.meta.url), 'utf8'));
 const replay = JSON.parse(readFileSync(new URL('../public/data/replay.json', import.meta.url), 'utf8'));
@@ -9,6 +9,16 @@ const baseline = JSON.parse(readFileSync(new URL('../public/data/baseline_compar
 
 test('real replay validates complete ranking, paired outcomes and declared coverage', () => {
   assert.equal(validateReplay(replay).cases.length, 1848);
+});
+
+test('historical outcome categories reconcile and use the alternative-only denominator', () => {
+  const counts = replayOutcomeCounts(validateReplay(replay).cases);
+  assert.equal(counts.lower + counts.higher + counts.equal + counts.missing, replay.cases.length);
+  assert.equal(counts.lower + counts.higher + counts.equal, replay.summary.paired_outcome_cases);
+  assert.equal(counts.missing, replay.summary.missing_outcome_cases);
+  assert.equal(counts.changedWithOutcomes, replay.summary.selected_alternative_cases);
+  assert.ok(Math.abs(counts.lowerChanged / counts.changedWithOutcomes - replay.summary.lower_observed_fraction) < 1e-12);
+  assert.deepEqual(counts, { lower: 822, higher: 455, equal: 192, missing: 379, changedWithOutcomes: 1291, lowerChanged: 822 });
 });
 
 test('replay rejects corrupt clocks, rankings, outcomes, coverage and invented calibration', () => {

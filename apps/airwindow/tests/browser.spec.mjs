@@ -104,17 +104,20 @@ test('real planner, abstention, evidence, replay, mobile and printable brief wor
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
   await page.screenshot({ path: path.join(screenshots, 'airwindow_desktop_replay.png') });
   await page.locator('.replay-case').evaluate(el => el.scrollIntoView({ block: 'start', behavior: 'instant' }));
-  await expect(page.getByText('HIGHER AFTERWARDS', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('HIGHER OBSERVED PM2.5', { exact: true })).toHaveCount(0);
   await page.getByRole('button', { name: 'Reveal subsequent observations' }).click();
-  await expect(page.getByText('HIGHER AFTERWARDS', { exact: true })).toBeVisible();
+  await expect(page.getByText('HIGHER OBSERVED PM2.5', { exact: true })).toBeVisible();
   await expect(page.getByText(/No schedule changes were endorsed/)).toBeVisible();
-  await expect(page.getByText('1,848', { exact: true })).toBeVisible();
+  await expect(page.locator('.replay-evidence')).toContainText('1,848');
   await expect(page.getByRole('heading', { name: /How did the forecast-ranked choice compare/ })).toBeVisible();
   await expect(page.locator('.baseline-panel')).toContainText('Usual cleanest window');
   await expect(page.locator('.baseline-panel')).toContainText('Latest feasible window');
   await expect(page.locator('.baseline-panel')).toContainText('−0.73');
   await expect(page.locator('.baseline-panel')).toContainText('-2.64 to 0.54');
   await expect(page.locator('.baseline-panel')).toContainText('Interval spans zero');
+  await page.locator('.replay-evidence').scrollIntoViewIfNeeded();
+  await page.screenshot({ path: path.join(screenshots, 'airwindow_desktop_replay_evidence.png') });
+  await page.locator('.replay-case').scrollIntoViewIfNeeded();
   await page.screenshot({ path: path.join(screenshots, 'airwindow_desktop_replay_detail.png') });
   await page.getByLabel('Station', { exact: true }).selectOption('11611');
   await expect(page.getByRole('heading', { name: /Malad West/ })).toBeVisible();
@@ -329,7 +332,7 @@ test('historical replay keeps every outcome behind reveal and resets on selectio
   await page.getByRole('button', { name: 'Historical replay', exact: true }).click();
   const hidden = async () => {
     await expect(page.getByRole('button', { name: 'Reveal subsequent observations' })).toHaveAttribute('aria-expanded', 'false');
-    await expect(page.locator('.replay-summary, .baseline-panel, .outcome-verdict, .replay-case .observed-color')).toHaveCount(0);
+    await expect(page.locator('.replay-evidence, .baseline-panel, .outcome-verdict, .replay-case .observed-color')).toHaveCount(0);
     await expect(page.locator('.replay-case [title^="Observed"]')).toHaveCount(0);
     await expect(page.locator('.replay-case')).not.toContainText('Later observed mean');
     await expect(page.locator('.replay-case')).not.toContainText('Retrospective decision classification');
@@ -348,11 +351,11 @@ test('historical replay keeps every outcome behind reveal and resets on selectio
   await expect(page.locator('.replay-case table')).not.toContainText('Later observed mean');
   await page.getByRole('button', { name: 'Reveal subsequent observations' }).click();
   await expect(page.locator('.replay-outcome')).toContainText(observed);
-  await expect(page.locator('.replay-case .observed-color')).toHaveCount(12);
-  await expect(page.locator('.replay-case [title^="Observed"]')).toHaveCount(10);
+  await expect(page.locator('.replay-case .observed-color')).toHaveCount(2);
+  await expect(page.locator('.replay-window-chart-observed')).toHaveCount(2);
   await expect(page.locator('.replay-case table')).toContainText('Later observed mean');
-  await expect(page.locator('.outcome-verdict')).toContainText('HIGHER AFTERWARDS');
-  await expect(page.locator('.replay-summary')).toBeVisible();
+  await expect(page.locator('.outcome-verdict')).toContainText('HIGHER OBSERVED PM2.5');
+  await expect(page.locator('.replay-evidence')).toBeVisible();
   await expect(page.locator('.baseline-panel')).toBeVisible();
   await page.getByRole('button', { name: 'Hide subsequent observations' }).click();
   await hidden();
@@ -367,6 +370,63 @@ test('historical replay keeps every outcome behind reveal and resets on selectio
   await page.getByRole('button', { name: 'Reveal subsequent observations' }).click();
   await page.getByLabel('Duration').selectOption('3');
   await hidden();
+});
+
+test('historical outcome evidence reconciles, filters both directions, and keeps each new case hidden', async ({ page }) => {
+  const replay = JSON.parse(readFileSync(new URL('../public/data/replay.json', import.meta.url), 'utf8'));
+  await page.setViewportSize({ width: 320, height: 720 });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Historical replay', exact: true }).click();
+  const filter = page.getByLabel('Historical outcome filter · uses later observations');
+  await expect(filter).toHaveValue('all');
+  await expect(page.locator('.replay-evidence')).toHaveCount(0);
+  await expect(page.locator('.replay-window-chart-observed')).toHaveCount(0);
+  await expect(page.locator('.replay-case')).toContainText('Predicted difference');
+  await page.getByRole('button', { name: 'Reveal subsequent observations' }).click();
+  const evidence = page.locator('.replay-evidence');
+  await expect(evidence).toContainText('1,848');
+  await expect(evidence).toContainText('1,469');
+  await expect(evidence).toContainText('379');
+  await expect(evidence).toContainText('822');
+  await expect(evidence).toContainText('647');
+  await expect(evidence).toContainText('63.7%');
+  await expect(evidence).toContainText('1,291 evaluable cases');
+  await expect(evidence.locator('.replay-distribution > div')).toHaveCount(4);
+  await expect(evidence).toContainText('not a randomized intervention');
+  await expect(evidence).toContainText('statistically significant superiority');
+  const chart = page.locator('.replay-window-chart');
+  await expect(chart.locator('.replay-window-chart-group')).toHaveCount(2);
+  await expect(chart.locator('.replay-window-chart-observed')).toHaveCount(2);
+  await expect(chart).toContainText('µg/m³ · shared scale 0–');
+  await mkdir(screenshots, { recursive: true });
+  await evidence.scrollIntoViewIfNeeded();
+  await page.screenshot({ path: path.join(screenshots, 'airwindow_replay_outcome_mobile_revealed.png'), fullPage: true });
+  const caseSelect = page.getByLabel('Historical forecast case');
+  for (const [value, matches] of [
+    ['lower', difference => difference !== null && difference < 0],
+    ['higher_equal', difference => difference !== null && difference >= 0],
+    ['missing', difference => difference === null],
+  ]) {
+    await filter.focus();
+    await filter.selectOption(value);
+    await expect(page.getByRole('button', { name: 'Reveal subsequent observations' })).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.locator('.outcome-verdict, .replay-evidence, .replay-window-chart-observed')).toHaveCount(0);
+    const options = await caseSelect.locator('option').evaluateAll(nodes => nodes.map(node => node.value));
+    expect(options.length).toBeGreaterThan(0);
+    expect(options.every(id => matches(replay.cases.find(item => item.case_id === id).observed_difference))).toBe(true);
+    await page.getByRole('button', { name: 'Reveal subsequent observations' }).click();
+    await expect(page.locator('.outcome-verdict')).toBeVisible();
+    if (value === 'lower') await expect(page.locator('.outcome-verdict')).toContainText('LOWER OBSERVED PM2.5');
+    if (value === 'higher_equal') await expect(page.locator('.outcome-verdict')).toContainText(/HIGHER OBSERVED PM2.5|NO OBSERVED DIFFERENCE/);
+    if (value === 'missing') await expect(page.locator('.outcome-verdict')).toContainText('INSUFFICIENT OBSERVATIONS');
+  }
+  await filter.selectOption('all');
+  await expect(page.getByRole('button', { name: 'Reveal subsequent observations' })).toHaveAttribute('aria-expanded', 'false');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await mkdir(screenshots, { recursive: true });
+  await page.locator('.replay-outcome-filter').scrollIntoViewIfNeeded();
+  await page.evaluate(() => { if (document.activeElement instanceof HTMLElement) document.activeElement.blur(); });
+  await page.screenshot({ path: path.join(screenshots, 'airwindow_replay_outcome_mobile_320.png'), fullPage: true });
 });
 
 test('missing station forecasts and missing replay observations remain missing', async ({ page }) => {
@@ -390,10 +450,10 @@ test('missing station forecasts and missing replay observations remain missing',
   await expect(page.locator('.replay-outcome')).not.toContainText('Unavailable');
   await expect(page.locator('.outcome-verdict, .replay-case .observed-color')).toHaveCount(0);
   await page.getByRole('button', { name: 'Reveal subsequent observations' }).click();
-  await expect(page.getByText('OBSERVED COMPARISON UNAVAILABLE', { exact: true })).toBeVisible();
+  await expect(page.getByText('INSUFFICIENT OBSERVATIONS', { exact: true })).toBeVisible();
   await expect(page.getByText(/missing values are never zero-filled/)).toBeVisible();
   await expect(page.locator('.replay-outcome')).toContainText('Unavailable');
-  expect(await page.locator('.paired-bars i:nth-child(2)').count()).toBeLessThan(10);
+  await expect(page.locator('.replay-window-chart-row').filter({ hasText: 'Unavailable' })).toHaveCount(2);
   await page.getByRole('button', { name: 'Hide subsequent observations' }).click();
   await expect(page.locator('.replay-outcome')).not.toContainText('Unavailable');
   await expect(page.locator('.outcome-verdict, .replay-case .observed-color')).toHaveCount(0);
