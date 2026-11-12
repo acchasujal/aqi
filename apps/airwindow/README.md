@@ -1,6 +1,6 @@
 # AirWindow Mumbai 2.1
 
-An activity scheduling prototype for school sports coordinators and outdoor-event organisers. Compare the original activity slot with every feasible consecutive one-, two- or three-hour window at one of the four actual Mumbai monitoring stations. Forecast differences, historical evidence and reasons to abstain stay visible.
+An activity scheduling prototype for school sports coordinators and outdoor-event organisers. Compare the original activity slot with every feasible consecutive one-, two- or three-hour window at one of the four actual Mumbai monitoring stations. A station is a measurement proxy and may not represent the school ground or event venue. Forecast differences, historical evidence and reasons to abstain stay visible.
 
 The React/Vite/TypeScript client reads real, versioned static artifacts. It does not train a model or call external air-quality APIs. The current artifact is the frozen TASK011 final P_fix run, issued **10 November 2026 at 15:47:52 IST**, with PM history through **10 November at 09:00 IST**. Each station has 248 future forecast hours, ending **21 November 00:00 IST**. The UI shows issue, observation cutoff and validity horizon, and disables new planning after expiry. The former 8 November TASK008 forecast is preserved as `public/data/forecast_fallback_task008.json`.
 
@@ -21,7 +21,7 @@ npm.cmd run build
 npm.cmd run test:browser
 ```
 
-`npm test` runs deterministic domain/boundary tests using Node's TypeScript stripping. `npm run build` checks TypeScript and creates `dist/`. The eight Playwright browser tests require the development server and an installed Google Chrome (`channel: chrome`); no browser download or live cloud service is required. They exercise actual artifacts, every main screen, paired baseline metrics, changed-input invalidation, original-slot retention, abstention, impossible ranges, invalid/missing forecasts, missing historical outcomes, partial/full horizon expiry, mobile overflow and a printable brief. Test fixtures never populate production data.
+`npm test` runs deterministic domain/boundary tests using Node's TypeScript stripping. `npm run build` checks TypeScript and creates `dist/`. The nine Playwright browser tests require the development server and an installed Google Chrome (`channel: chrome`); no browser download or live cloud service is required. They exercise actual artifacts, every main screen, paired baseline metrics, changed-input invalidation, original-slot retention, abstention, impossible ranges, invalid/missing forecasts, missing historical outcomes, partial/full horizon expiry, mobile overflow and a printable brief. Test fixtures never populate production data.
 
 Browser captures are written to `reports/creative_submission/screenshots/` from the repository root. Playwright's temporary results remain under ignored `data/processed/airwindow-browser-tests/`.
 
@@ -43,7 +43,7 @@ To regenerate using the real upstream TASK008 provisional CSV, companion audit/r
 
 The builder requires the ignored `run01/all_block_rows.csv.gz` feature/prediction cache as well as labelled matched OOF. If that cache is absent, reproduce the upstream experiment with its documented command before export. Ranking uses complete forecast windows before actual outcomes are joined; historical missing outcomes remain in coverage counts. No private/hidden target labels are present in the app.
 
-The shipped replay contains 1,848 predefined scenarios across 77 forecast origins: 1,469 paired observed outcomes and 379 cases without complete paired outcomes. The 63.67% lower-observed outcome rate describes 1,291 numerical alternatives with known paired outcomes. It is **not a calibrated probability or measured health benefit**. No changes are endorsed as calibrated recommendations. See the generated diagnostics for strict hindsight coverage and station/duration results.
+The shipped replay contains 1,848 predefined scenarios across 77 forecast origins: 1,469 paired observed outcomes and 379 cases without complete paired outcomes. Aggregate statistics, baseline comparisons and each selected case's later observations appear only after the case is revealed. Historical outcome filters are explicitly labelled as hindsight exploration and reset case details to forecast-only. The 63.67% lower-observed outcome rate describes 1,291 numerical alternatives with known paired outcomes. It is **not a calibrated probability or measured health benefit**. No changes are endorsed as calibrated recommendations. Schedule-baseline reports include pooled mean and median deltas, case/origin counts, origin-cluster bootstrap intervals, origin-level direction counts, and an equal-origin Student-t sensitivity interval. See the generated diagnostics for strict hindsight coverage and station/duration results.
 
 ## Reliability and product limits
 
@@ -51,7 +51,7 @@ The deterministic Python engine separates window ranking, paired historical erro
 
 Historical OOF simulations freeze PM history at recorded pseudo-origins; first-publication timing is an explicitly unverified interval-end proxy. These simulations were generated retrospectively, not archived real-time published forecasts. Live issue/PM clocks differ from the historical 193–240h issue-lead experiment. The UI and event brief show relevant station RMSE as unavailable when exact clocks/leads do not match, rather than selecting an arbitrary favourable metric.
 
-Only the four actual stations are represented, with exact identities and coordinates. No spatial interpolation, street-level inference, medical advice, hourly-to-AQI conversion or personal exposure estimate is provided. Freshness shows the real PM age at issue; no arbitrary fresh/stale threshold is invented. See `docs/CLAIMS_AND_USER_SAFETY.md` and `docs/FORECAST_ARTIFACT_CONTRACT.md` from the repository root.
+Only the four actual stations are represented, with exact identities and coordinates. They are measurement proxies and may not represent any school ground or venue; no nearest-station or representativeness claim is made. No spatial interpolation, street-level inference, medical advice, hourly-to-AQI conversion or personal exposure estimate is provided. Freshness shows the real PM age at issue; no arbitrary fresh/stale threshold is invented. See `docs/CLAIMS_AND_USER_SAFETY.md` and `docs/FORECAST_ARTIFACT_CONTRACT.md` from the repository root.
 
 ## Firebase Hosting
 
@@ -64,7 +64,7 @@ npm.cmd run build
 firebase.cmd deploy --only hosting --project airwindow-99085 --non-interactive
 ```
 
-No billing-plan change, Maps or other paid service was enabled. The app works locally without Firebase or runtime network APIs. Google Colab replay material is prepared separately under `notebooks/`; it is not a dependency of the live app.
+No billing-plan change, Maps or other paid service was enabled; the existing project billing tier has not been independently checked. The app works locally without Firebase or runtime network APIs. Google Colab-compatible replay material is under `notebooks/`; all six cells were executed locally, but a hosted Colab session has not been verified. It is not a dependency of the live app.
 
 GitHub Actions are configured in the repository root at `.github/workflows/firebase-hosting-merge.yml`. Pushes to `main` build from this directory and deploy the live Hosting channel. The encrypted repository secret is `FIREBASE_SERVICE_ACCOUNT_AIRWINDOW_99085`. Once the workflow commit is pushed to `main`, subsequent `main` updates deploy automatically.
 

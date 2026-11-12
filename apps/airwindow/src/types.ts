@@ -79,6 +79,11 @@ export type BaselineResult = {
   paired_cases: number; origins: number; airwindow_mean: number | null; baseline_mean: number | null;
   mean_delta: number | null; median_delta: number | null; cluster_bootstrap_95: [number | null, number | null];
   direction: string;
+  origin_level: {
+    tie_tolerance: number; favor_airwindow: number; favor_baseline: number; ties: number;
+    equal_origin_mean_delta: number | null; student_t_95: [number | null, number | null];
+    exact_sign_test_two_sided_p: number | null;
+  };
 };
 export type BaselinePanel = {
   cases: number; usual_cleanest_supported_cases: number;

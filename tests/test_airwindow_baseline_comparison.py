@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 
+from apps.airwindow.audit_release import same_metrics
 from apps.airwindow.baseline_comparison import calculate
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -17,9 +18,17 @@ def test_baseline_results_reproduce_committed_artifact() -> None:
     replay = _replay()
     replay_path = ROOT / "apps/airwindow/public/data/replay.json"
     expected = json.loads((ROOT / "apps/airwindow/public/data/baseline_comparison.json").read_text(encoding="utf-8"))
-    assert calculate(replay, hashlib.sha256(replay_path.read_bytes()).hexdigest()) == expected
+    assert same_metrics(calculate(replay, hashlib.sha256(replay_path.read_bytes()).hexdigest()), expected)
     assert expected["full_replay"]["usual_cleanest"]["paired_cases"] == 1414
     assert expected["heldout"]["latest_window"]["cluster_bootstrap_95"] == [-2.659286659108088, 0.16387225115740733]
+    usual = expected["heldout"]["usual_cleanest"]["origin_level"]
+    latest = expected["heldout"]["latest_window"]["origin_level"]
+    assert (usual["favor_airwindow"], usual["favor_baseline"], usual["ties"]) == (4, 4, 0)
+    assert (latest["favor_airwindow"], latest["favor_baseline"], latest["ties"]) == (5, 3, 0)
+    assert usual["tie_tolerance"] == 0.01
+    assert usual["student_t_95"][0] < 0 < usual["student_t_95"][1]
+    assert latest["student_t_95"][0] < 0 < latest["student_t_95"][1]
+    assert usual["exact_sign_test_two_sided_p"] == 1.0
 
 
 def test_heldout_cleanest_time_is_selected_from_development_only() -> None:

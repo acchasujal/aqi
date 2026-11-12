@@ -42,14 +42,19 @@ test('observation age is elapsed time, independent of a freshness threshold', ()
   assert.equal(observationAge(null), null);
 });
 
-test('baseline comparison validates coverage and finite clustered intervals', () => {
+test('baseline comparison validates pooled and per-origin sensitivity results', () => {
   const result = validateBaselineComparison(baseline);
   assert.equal(result.full_replay.cases, 1848);
   assert.equal(result.heldout.cases, 192);
   assert.equal(result.heldout.usual_cleanest.direction, 'interval_includes_zero');
+  assert.equal(result.heldout.usual_cleanest.origin_level.favor_airwindow + result.heldout.usual_cleanest.origin_level.favor_baseline + result.heldout.usual_cleanest.origin_level.ties, 8);
+  assert.equal(result.heldout.usual_cleanest.origin_level.tie_tolerance, 0.01);
   const corrupt = structuredClone(baseline);
   corrupt.heldout.latest_window.cluster_bootstrap_95[0] = NaN;
   assert.throws(() => validateBaselineComparison(corrupt), /Baseline comparison artifact is invalid/);
+  const badOriginCounts = structuredClone(baseline);
+  badOriginCounts.full_replay.latest_window.origin_level.ties += 1;
+  assert.throws(() => validateBaselineComparison(badOriginCounts), /Baseline comparison artifact is invalid/);
 });
 const hour = (n, value) => ({ target_start_ist: `2030-01-01T${String(n).padStart(2, '0')}:00:00+05:30`, target_end_ist: `2030-01-01T${String(n+1).padStart(2, '0')}:00:00+05:30`, pm25_prediction: value, status: value === null ? 'missing' : 'available', unit: 'µg/m³', forecast_horizon_hours: n, prediction_interval: null });
 const station = (values) => ({ forecasts: values.map((v, i) => hour(i+8, v)) });

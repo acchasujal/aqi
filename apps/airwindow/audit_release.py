@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import subprocess
 import sys
 from pathlib import Path
@@ -20,6 +21,21 @@ from apps.airwindow.replay_validation import validate_replay
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def same_metrics(actual: object, expected: object) -> bool:
+    """Preserve exact structure while tolerating 1e-12 floating-point drift."""
+    if isinstance(expected, dict):
+        return isinstance(actual, dict) and actual.keys() == expected.keys() and all(
+            same_metrics(actual[key], expected[key]) for key in expected
+        )
+    if isinstance(expected, list):
+        return isinstance(actual, list) and len(actual) == len(expected) and all(
+            same_metrics(value, reference) for value, reference in zip(actual, expected, strict=True)
+        )
+    if isinstance(expected, float):
+        return isinstance(actual, float) and math.isclose(actual, expected, rel_tol=0, abs_tol=1e-12)
+    return actual == expected
 
 
 def main() -> None:
@@ -54,7 +70,7 @@ def main() -> None:
     replay_raw = (data / "replay.json").read_bytes()
     replay_obj = json.loads(replay_raw)
     reproduced = calculate_baseline(replay_obj, hashlib.sha256(replay_raw).hexdigest())
-    if reproduced != baseline:
+    if not same_metrics(reproduced, baseline):
         raise ValueError("baseline comparison metrics differ from deterministic replay calculation")
     folder = ROOT / "reports/creative_submission"
     audit = json.loads((folder / "AIRWINDOW_2_SUBMISSION.audit.json").read_text(encoding="utf-8"))

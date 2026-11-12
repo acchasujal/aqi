@@ -112,7 +112,7 @@ def footer(canvas, doc) -> None:
     canvas.drawString(42, HEIGHT - 25, "AIRWINDOW MUMBAI / PRODUCT + EVIDENCE")
     canvas.setFont("Helvetica", 8)
     canvas.setFillColor(MUTED)
-    canvas.drawString(42, 24, "Independent challenge prototype | 11 November 2026 | IST")
+    canvas.drawString(42, 24, "Independent challenge prototype | 12 November 2026 | IST")
     canvas.drawRightString(WIDTH - 42, 24, str(doc.page))
     canvas.restoreState()
 
@@ -177,12 +177,12 @@ def make_pdf(output: Path, desktop: Path, replay_image: Path) -> None:
               p("<b>ROBUST IMPROVEMENT</b> is reserved for independently validated decision reliability. <b>TENTATIVE IMPROVEMENT</b> identifies an unproven numerical alternative. <b>NO CLEAR WINNER</b> permits ties or indistinguishable options. <b>INSUFFICIENT EVIDENCE</b> makes missing comparable support explicit."),
               p("Why this is distinctive", "subhead"),
               p("IITM/SAFAR, Google Air View+, Google Air Quality API, London alerts and AirQo already provide forecasts, local information or decision support. AirWindow's narrower contribution is the original-event constraint, paired historical decision replay and honest abstention. This is a product hypothesis, not a first-in-Mumbai claim."),
-              p("The four supported stations are Borivali East, Malad West, Byculla and Shivaji Nagar. A monitor may not represent nearby streets. No route, heatmap, medical, safe-window or personal-exposure claim is made.", "small"),
+              p("The four supported stations are Borivali East, Malad West, Byculla and Shivaji Nagar. Each is a measurement proxy and may not represent the school ground or event venue. No route, heatmap, medical, safe-window or personal-exposure claim is made.", "small"),
               PageBreak()]
     story += [p("02 / HISTORICAL DECISION REPLAY", "label"),
               p("Show the forecast.<br/>Then show what happened.", "heading"),
               screenshot(replay_image, 240), Spacer(1, 9),
-              p("Real application replay. This displayed numerical choice was worse afterwards. Subsequent observations are retrospective outcomes, kept separate from the live artifact; the table below includes all declared cases.", "small"),
+              p("Real application replay. Aggregate retrospective evidence is visible on entry; selected-case outcomes are revealed explicitly. Subsequent observations remain separate from the live artifact; the table below includes all declared cases.", "small"),
               table([
                   ["All declared cases", f"{summary['cases']:,} cases across {summary['origins']} forecast origins"],
                   ["Observed coverage", f"{summary['paired_outcome_cases']:,} paired original/selected outcomes; {summary['missing_outcome_cases']:,} missing outcomes retained"],
@@ -193,6 +193,8 @@ def make_pdf(output: Path, desktop: Path, replay_image: Path) -> None:
               ], style, [124, CONTENT_WIDTH-124]), Spacer(1, 8),
               p("These are descriptive retrospective outcomes, not a probability for today's event, a measured health benefit or a calibrated recommendation. Calibrated recommendations: zero.", "callout"),
               PageBreak()]
+    heldout_usual = baselines["heldout"]["usual_cleanest"]["origin_level"]
+    heldout_latest = baselines["heldout"]["latest_window"]["origin_level"]
     story += [p("03 / REPRODUCIBLE EVIDENCE", "label"),
               p("The evidence chain is inspectable.", "heading"),
               p("The declared scenario uses a 09:00 original booking, 08:00-18:00 feasible range, durations 1/2/3 hours, both target days, all four stations and every matched OOF origin. Numerical selection occurs before inspecting outcomes. Missing observations remain in coverage."),
@@ -201,13 +203,13 @@ def make_pdf(output: Path, desktop: Path, replay_image: Path) -> None:
               p("AirWindow versus simple schedule baselines", "subhead"),
               p("Paired later-observed mean PM2.5 (AirWindow minus baseline; negative favors AirWindow). Usual-cleanest timing is selected from earlier origins; held-out timing uses development outcomes only. Latest-window uses the latest-starting complete forecast candidate."),
               table([
-                  ["Population / baseline", "Paired cases / origins", "Mean delta µg/m³", "95% origin-cluster interval"],
-                  ["Full replay · usual cleanest", f"{baselines['full_replay']['usual_cleanest']['paired_cases']:,} / {baselines['full_replay']['usual_cleanest']['origins']}", f"{baselines['full_replay']['usual_cleanest']['mean_delta']:.2f}", f"[{baselines['full_replay']['usual_cleanest']['cluster_bootstrap_95'][0]:.2f}, {baselines['full_replay']['usual_cleanest']['cluster_bootstrap_95'][1]:.2f}]"],
-                  ["Full replay · latest window", f"{baselines['full_replay']['latest_window']['paired_cases']:,} / {baselines['full_replay']['latest_window']['origins']}", f"{baselines['full_replay']['latest_window']['mean_delta']:.2f}", f"[{baselines['full_replay']['latest_window']['cluster_bootstrap_95'][0]:.2f}, {baselines['full_replay']['latest_window']['cluster_bootstrap_95'][1]:.2f}]"],
-                  ["Held-out · usual cleanest", f"{baselines['heldout']['usual_cleanest']['paired_cases']:,} / {baselines['heldout']['usual_cleanest']['origins']}", f"{baselines['heldout']['usual_cleanest']['mean_delta']:.2f}", f"[{baselines['heldout']['usual_cleanest']['cluster_bootstrap_95'][0]:.2f}, {baselines['heldout']['usual_cleanest']['cluster_bootstrap_95'][1]:.2f}]"],
-                  ["Held-out · latest window", f"{baselines['heldout']['latest_window']['paired_cases']:,} / {baselines['heldout']['latest_window']['origins']}", f"{baselines['heldout']['latest_window']['mean_delta']:.2f}", f"[{baselines['heldout']['latest_window']['cluster_bootstrap_95'][0]:.2f}, {baselines['heldout']['latest_window']['cluster_bootstrap_95'][1]:.2f}]"],
+                  ["Population / baseline", "Paired cases / origins", "Mean; median delta ug/m^3", "95% origin-cluster interval"],
+                  ["Full replay / usual cleanest", f"{baselines['full_replay']['usual_cleanest']['paired_cases']:,} / {baselines['full_replay']['usual_cleanest']['origins']}", f"{baselines['full_replay']['usual_cleanest']['mean_delta']:.2f}; {baselines['full_replay']['usual_cleanest']['median_delta']:.2f}", f"[{baselines['full_replay']['usual_cleanest']['cluster_bootstrap_95'][0]:.2f}, {baselines['full_replay']['usual_cleanest']['cluster_bootstrap_95'][1]:.2f}]"],
+                  ["Full replay / latest window", f"{baselines['full_replay']['latest_window']['paired_cases']:,} / {baselines['full_replay']['latest_window']['origins']}", f"{baselines['full_replay']['latest_window']['mean_delta']:.2f}; {baselines['full_replay']['latest_window']['median_delta']:.2f}", f"[{baselines['full_replay']['latest_window']['cluster_bootstrap_95'][0]:.2f}, {baselines['full_replay']['latest_window']['cluster_bootstrap_95'][1]:.2f}]"],
+                  ["Held-out / usual cleanest", f"{baselines['heldout']['usual_cleanest']['paired_cases']:,} / {baselines['heldout']['usual_cleanest']['origins']}", f"{baselines['heldout']['usual_cleanest']['mean_delta']:.2f}; {baselines['heldout']['usual_cleanest']['median_delta']:.2f}", f"[{baselines['heldout']['usual_cleanest']['cluster_bootstrap_95'][0]:.2f}, {baselines['heldout']['usual_cleanest']['cluster_bootstrap_95'][1]:.2f}]"],
+                  ["Held-out / latest window", f"{baselines['heldout']['latest_window']['paired_cases']:,} / {baselines['heldout']['latest_window']['origins']}", f"{baselines['heldout']['latest_window']['mean_delta']:.2f}; {baselines['heldout']['latest_window']['median_delta']:.2f}", f"[{baselines['heldout']['latest_window']['cluster_bootstrap_95'][0]:.2f}, {baselines['heldout']['latest_window']['cluster_bootstrap_95'][1]:.2f}]"],
               ], style, [133, 86, 75, CONTENT_WIDTH-294]),
-              p("All four intervals span zero: this retrospective sample does not establish superiority or guarantee future results. Confirmation origins had prior analyst exposure; cases within origins overlap. Missing outcomes are excluded from paired estimates but retained in replay coverage.", "small"),
+              p(f"All four cluster-bootstrap intervals include zero. Held-out origins have only n=8 and were previously inspected by analysts. By per-origin mean paired difference (tie tolerance 0.01 ug/m^3), usual-cleanest origins favour AirWindow/baseline/tie: {heldout_usual['favor_airwindow']}/{heldout_usual['favor_baseline']}/{heldout_usual['ties']}; latest-window: {heldout_latest['favor_airwindow']}/{heldout_latest['favor_baseline']}/{heldout_latest['ties']}. Equal-origin Student-t sensitivity intervals are [{heldout_usual['student_t_95'][0]:.2f}, {heldout_usual['student_t_95'][1]:.2f}] and [{heldout_latest['student_t_95'][0]:.2f}, {heldout_latest['student_t_95'][1]:.2f}] ug/m^3; both include zero. Exact sign-test p={heldout_usual['exact_sign_test_two_sided_p']:.3f} and {heldout_latest['exact_sign_test_two_sided_p']:.3f}. Neither method establishes superiority. Cases within origins overlap; paired missing outcomes remain counted in replay coverage.", "small"),
               table([
                   ["Chronological split", "69 development origins; 8 later confirmation origins. Cases overlap within origins and are not independent samples."],
                   ["Later-origin diagnostic", f"{confirm['cases']} declared cases, {confirm['paired_outcome_cases']} paired outcomes, {confirm['selected_alternative_cases']} numerical alternatives; {confirm['lower_observed_fraction']*100:.2f}% lower afterwards."],
@@ -221,16 +223,16 @@ def make_pdf(output: Path, desktop: Path, replay_image: Path) -> None:
     story += [p("04 / ARCHITECTURE, TOOLS AND HANDOFF", "label"),
               p("A stable demo, without a live API.", "heading"),
               ArchitectureFlow(), Spacer(1, 13),
-              p("Google tools: Firebase Hosting serves the static app and a Colab-compatible reproducibility notebook supports replay verification. The notebook is not a live application dependency."),
+              p("Google tools: Firebase Hosting serves the verified static app at https://airwindow-99085.web.app. The Colab-compatible decision replay notebook was executed locally, not in a verified Google-hosted session; neither is a live application dependency."),
               p(f"Forecast training SHA-256: {manifest['forecast_training_data_sha256']}<br/>Prediction CSV SHA-256: {manifest['forecast_prediction_sha256']}", "small"),
               p("Deployment status", "subhead"),
-              p("Static Hosting deployment to the existing airwindow-99085 project succeeded on 11 November 2026 at 21:09 IST. Public URL: https://airwindow-99085.web.app. Signed-out browser verification returned HTTP 200 and checked the forecast, replay (10.5 MB), baseline comparison and preserved fallback JSON against manifest SHA-256 values. Hosting only was deployed; no billing changes were made. The project billing plan was not independently verified. No cloud-notebook execution is claimed."),
+              p("Static Hosting deployment to the existing airwindow-99085 project succeeded on 11 November 2026 at 21:09 IST. Public URL: https://airwindow-99085.web.app. Signed-out browser verification returned HTTP 200 and checked the forecast, replay (10.5 MB), baseline comparison and preserved fallback JSON against manifest SHA-256 values. Hosting only was deployed; no billing changes were made. The project billing plan was not independently verified. The notebook was executed locally; no cloud execution is claimed."),
               p("Working source and reproducibility", "subhead"),
               p('<link href="https://github.com/acchasujal/aqi/tree/main" color="#226D5A">Source: github.com/acchasujal/aqi - main branch</link><br/>Run/build instructions, tests and notebook: apps/airwindow/<br/>Method, red-team review, real screenshots and submission checklist: reports/creative_submission/'),
               p("Selected primary references", "subhead"),
               p('<link href="https://www.tropmet.res.in/project_details.php?position=7&amp;project_id=3">IITM SAFAR project</link> · <link href="https://developers.google.com/maps/documentation/air-quality/forecast">Google Air Quality API</link> · <link href="https://airqo.africa/products/ai-platform">AirQo AI Platform</link><br/><link href="https://www.london.gov.uk/programmes-strategies/environment-and-climate-change/pollution-and-air-quality/models-and-alerts-air-quality">London City Hall alerts</link> · <link href="https://www.breathelondon.org/sensors/join-the-breathe-london-network">Breathe London</link> · <link href="https://firebase.google.com/docs/hosting/usage-quotas-pricing">Firebase Hosting quotas</link>', "small"),
               p("Data and use limits", "subhead"),
-              p("Uses official challenge data and genuine model artifacts; no extra environmental dataset is required. Four stations do not support street/building predictions. No user interviews, measured health benefit, award guarantee or form-processing result is claimed. Consult official CPCB/government guidance for health decisions."),
+              p("Uses official challenge data and genuine model artifacts; no additional monitoring station was integrated because identity, hourly coverage, provenance and reuse terms were not established. The four supported stations are measurement proxies, not venue-level evidence. No user interviews, measured health benefit, award guarantee or form-processing result is claimed. Consult official CPCB/government guidance for health decisions."),
               p("Creative deadline: 13 November 2026, 18:29 GMT / 23:59 IST. Recheck the official form and submit through the human entrant; this package is not submission confirmation.", "small")]
     output.parent.mkdir(parents=True, exist_ok=True)
     doc = SimpleDocTemplate(str(output), pagesize=A4, rightMargin=42, leftMargin=42,

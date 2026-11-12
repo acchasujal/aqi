@@ -1,23 +1,23 @@
 {
   "file": "AIRWINDOW_2_SUBMISSION.pdf",
-  "bytes": 180988,
+  "bytes": 181990,
   "pages": 5,
-  "sha256": "fe0ed7790244d1df0d949b16f04d7e388ee150dc8f9e54efe39e774770a7ba63",
+  "sha256": "492cad71d9d420b7bef22ad3f8c06751d338315511912f4739d904b5730d352b",
   "render_directory": "data/processed/airwindow_pdf_render",
   "text_characters_per_page": [
     679,
-    1782,
-    1097,
-    2609,
-    2246
+    1822,
+    1119,
+    2908,
+    2448
   ],
   "source_screenshots": [
     "reports\\creative_submission\\screenshots\\airwindow_desktop_plan.png",
-    "reports\\creative_submission\\screenshots\\airwindow_desktop_comparison.png"
+    "reports\\creative_submission\\screenshots\\airwindow_desktop_replay.png"
   ],
   "source_screenshot_sha256": {
-    "reports\\creative_submission\\screenshots\\airwindow_desktop_plan.png": "8e2de8bf6e3fa00dea80c228e317234935d0e1add95af454880d8eba4ab8b964",
-    "reports\\creative_submission\\screenshots\\airwindow_desktop_comparison.png": "2a4082a9b7be233a498251ce22f89c2879ab3822323683da88cd8ba2b4fd7318"
+    "reports\\creative_submission\\screenshots\\airwindow_desktop_plan.png": "2020c4ad40223d65149b3e39ff0390d8352a37620029ace58177cb57315077be",
+    "reports\\creative_submission\\screenshots\\airwindow_desktop_replay.png": "2ba091fe25bfa1a37627d53a78a2a65c9d2e37638c93a7bfbd6591ab2facb696"
   },
-  "visual_inspection": "All five final rendered pages reviewed; layout, text fit, baseline values, public URL and disclosure are legible with no clipping or overlap"
+  "visual_inspection": "Reviewed all five final page renders (893x1263): no clipping, overlap, or broken glyphs; baseline table has four rows and readable sensitivity note."
 }

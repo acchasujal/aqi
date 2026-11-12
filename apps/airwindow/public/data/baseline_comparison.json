@@ -10,6 +10,7 @@
     "full_replay": "expanding-origin evaluation; baseline start is learned only from earlier origins",
     "heldout": "confirmation split; usual-cleanest start learned from development outcomes only",
     "interval": "percentile 95% cluster bootstrap of paired mean deltas, resampling whole forecast origins (2000 replicates, seed 20261111); negative favors AirWindow",
+    "origin_level": "Each origin's statistic is its mean paired case delta (AirWindow minus baseline); origins with means below -0.01 µg/m³ favor AirWindow, above +0.01 favor the baseline, otherwise tie. Equal-origin Student-t interval uses origin means (df = origins - 1); exact two-sided sign test excludes ties. Sensitivity analyses, not superiority tests.",
     "missingness": "only paired cases with both subsequent observed means are scored; missing outcomes are excluded from the paired estimate and retained in coverage counts"
   },
   "full_replay": {
@@ -26,7 +27,19 @@
         -5.718285414280261,
         0.6910132255989707
       ],
-      "direction": "interval_includes_zero"
+      "direction": "interval_includes_zero",
+      "origin_level": {
+        "tie_tolerance": 0.01,
+        "favor_airwindow": 42,
+        "favor_baseline": 34,
+        "ties": 0,
+        "equal_origin_mean_delta": -4.196415665478131,
+        "student_t_95": [
+          -9.68121982674477,
+          1.2883884957885083
+        ],
+        "exact_sign_test_two_sided_p": 0.42219110499231566
+      }
     },
     "latest_window": {
       "paired_cases": 1411,
@@ -39,7 +52,19 @@
         -2.3410100067842605,
         2.0621094171094168
       ],
-      "direction": "interval_includes_zero"
+      "direction": "interval_includes_zero",
+      "origin_level": {
+        "tie_tolerance": 0.01,
+        "favor_airwindow": 43,
+        "favor_baseline": 32,
+        "ties": 2,
+        "equal_origin_mean_delta": -0.39639205501318364,
+        "student_t_95": [
+          -2.521391863047401,
+          1.728607753021034
+        ],
+        "exact_sign_test_two_sided_p": 0.24804574189252784
+      }
     }
   },
   "heldout": {
@@ -56,7 +81,19 @@
         -2.6400456621004564,
         0.537616487455197
       ],
-      "direction": "interval_includes_zero"
+      "direction": "interval_includes_zero",
+      "origin_level": {
+        "tie_tolerance": 0.01,
+        "favor_airwindow": 4,
+        "favor_baseline": 4,
+        "ties": 0,
+        "equal_origin_mean_delta": -1.2783685722552913,
+        "student_t_95": [
+          -3.7913613914409092,
+          1.2346242469303268
+        ],
+        "exact_sign_test_two_sided_p": 1.0
+      }
     },
     "latest_window": {
       "paired_cases": 170,
@@ -69,7 +106,19 @@
         -2.659286659108088,
         0.16387225115740733
       ],
-      "direction": "interval_includes_zero"
+      "direction": "interval_includes_zero",
+      "origin_level": {
+        "tie_tolerance": 0.01,
+        "favor_airwindow": 5,
+        "favor_baseline": 3,
+        "ties": 0,
+        "equal_origin_mean_delta": -1.4165584575844228,
+        "student_t_95": [
+          -3.552999181666941,
+          0.7198822664980951
+        ],
+        "exact_sign_test_two_sided_p": 0.7265625
+      }
     }
   },
   "heldout_usual_cleanest_start_by_station_duration": {

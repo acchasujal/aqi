@@ -1,4 +1,4 @@
-# AirWindow 2.0 - Architecture
+# AirWindow Mumbai 2.1 - Architecture
 
 ```mermaid
 flowchart TD

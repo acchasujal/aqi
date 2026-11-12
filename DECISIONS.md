@@ -2,6 +2,14 @@
 
 This is an append-only decision log. Do not rewrite old decisions. If a decision is reversed, add a new entry that references the old ID.
 
+## DECISION AIRWINDOW21-P1 (2026-11-12)
+
+- **Decision:** Keep the frozen 77-origin replay support, four-station footprint, and current 1–3-hour event durations. Do not add stations, extend event durations, or claim scheduled refresh/user research from this pass.
+- **Evidence:** Existing locked origin support covers 77 of 83 schedules; four early 2025 origins fail the predeclared common-OOF minimum-training-row gate, while two origins have no paired labels. External station listings did not establish a verified identity crosswalk, raw hourly coverage, first-publication clock, reuse terms, or model support. An eight-hour comparison may be illustrated, but there is no safety or validation evidence for longer real event durations. No usability sessions were conducted and the frozen forecast pipeline is issue-specific, not a general refresh system.
+- **Confidence:** High for preserving the existing replay and for not overstating evidence; medium on the reason each external listing is unusable because source exports and exact terms were not independently audited.
+- **Alternatives considered:** Add apparent Mumbai monitor listings or infer longer-event value from the 248-hour forecast horizon. Rejected because monitor provenance/coverage and event decision validity are not established by those facts.
+- **Consequences / revisit trigger:** Current UI and submission state these limits. Revisit with a sourced station crosswalk, prediction-time/terms audit, matched model validation, or a funded and consented usability protocol.
+
 ## Decision record format
 
 - **ID:** DEC-YYYYMMDD-NN
@@ -286,3 +294,13 @@ Decision: retain exact archive-identity P_fix for TASK008 and isolate historical
 - **Confidence:** High for deterministic interval arithmetic, UI/print behavior and retained provenance on the tested artifact; limited for untested browser or printer settings.
 - **Alternatives:** Silently remove overlapping blocks, discard a blocked original, or show a blocked window as the best alternative. Rejected because each would hide a scheduling constraint or misstate feasibility. Unlimited blocks were not selected because they could break the one-page brief.
 - **Consequences / revisit trigger:** Users can edit/remove blocks or change the date/station, which clears date-specific blocks. Revisit the six-block limit only with a revised printable layout and tests.
+
+## DEC-20261112-25 — Preserve the replay reveal boundary during main integration
+
+- **Date / owner:** 2026-11-12 / Codex
+- **Status:** Accepted for the merged AirWindow UI.
+- **Decision:** Keep case outcomes, aggregate outcome evidence and paired baseline comparisons behind the existing reveal control. Retain the incoming origin-level baseline statistics, artifact validation and provenance text once revealed. Historical outcome filters remain explicitly labelled as hindsight exploration and reset new case details to forecast-only.
+- **Evidence:** The prior P0 reveal regression and merged 17-case browser suite verify forecast-first rendering, hide/reset behavior, the new outcome filters and the incoming baseline sensitivity panel. The merged release audit verifies the baseline and PDF artifacts.
+- **Confidence:** High for the tested UI boundary and artifact integrity; historical outcome and baseline comparisons remain retrospective and do not establish future benefit.
+- **Alternatives considered:** Show aggregate outcomes immediately, as in incoming commit `e624754`. Rejected for the merged UI because it would reverse the existing forecast-first reveal behavior and its regression coverage.
+- **Consequences / revisit trigger:** Keep app documentation aligned with reveal-gated evidence. Reconsider only with an explicit product decision and updated leakage/accessibility tests.
