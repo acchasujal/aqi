@@ -1,6 +1,6 @@
-# AirWindow 2.0 submission PDF verification
+# AirWindow Mumbai 2.1 submission PDF verification
 
-**Publication status:** complete after the final five-test browser/date-boundary pass and screenshot freeze. The PDF was rebuilt, all five pages rendered and visually reviewed, and both source capture hashes verified.
+**Publication status:** The dated records below describe earlier package snapshots. The 12 November 2026 update at the end of this file supersedes their file hash, screenshots, and deployment-status statements.
 
 **Final document:** `AIRWINDOW_2_SUBMISSION.pdf`, **5 A4 pages**, **157,195 bytes** (below 10 MB).
 
@@ -59,3 +59,11 @@ failed with PermissionError; approved execution succeeded.
 ## 11 November final submission refresh
 
 Rebuilt after final baseline and Hosting release verification: **5 A4 pages, 180,988 bytes**, SHA-256 e0ed7790244d1df0d949b16f04d7e388ee150dc8f9e54efe39e774770a7ba63. All five final rendered pages were visually inspected. The paired baseline table is readable, all four intervals cross zero, deployment URL and limits are explicit, and no clipping or overlap was found. The audit JSON pins final PDF and screenshot hashes.
+
+## 12 November 2026 AirWindow 2.1 final improvement update
+
+This section supersedes earlier package hashes, screenshots, and deployment-status statements. Rebuilt the five-page package from the current plan and replay aggregate captures. All five rendered pages were reviewed after the final rebuild. The comparison table shows mean and median deltas, all four population/baseline rows, origin-cluster intervals, held-out origin direction counts, equal-origin Student-t intervals, and exact sign-test results. Every displayed cluster and Student-t interval includes zero; no superiority claim is made. The replay image shows aggregate retrospective evidence on entry while selected-case outcomes remain behind explicit reveal.
+
+The current package is **181,990 bytes**, SHA-256 `492cad71d9d420b7bef22ad3f8c06751d338315511912f4739d904b5730d352b`. Current source captures: `airwindow_desktop_plan.png` SHA-256 `2020c4ad40223d65149b3e39ff0390d8352a37620029ace58177cb57315077be`; `airwindow_desktop_replay.png` SHA-256 `2ba091fe25bfa1a37627d53a78a2a65c9d2e37638c93a7bfbd6591ab2facb696`. Pages are 893 x 1,263 pixels. `audit_release.py` passed and independently reports the same PDF hash and size.
+
+The current handoff records the verified Firebase Hosting release at `https://airwindow-99085.web.app`; Hosting was the only deployed product. The project billing tier remains unverified. The notebook was executed locally, not in a verified hosted Colab session. No usability study was conducted, and no new station data was integrated.

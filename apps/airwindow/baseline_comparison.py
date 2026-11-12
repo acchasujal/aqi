@@ -10,11 +10,14 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from scipy.stats import binomtest, t
+
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_REPLAY = ROOT / "apps/airwindow/public/data/replay.json"
 DEFAULT_OUTPUT = ROOT / "apps/airwindow/public/data/baseline_comparison.json"
 BOOTSTRAPS = 2_000
 SEED = 20261111
+ORIGIN_TIE_TOLERANCE = 0.01
 
 
 def _cleanest_start(history: list[dict[str, Any]], station: str, duration: int) -> str | None:
@@ -50,12 +53,29 @@ def _case_deltas(cases: list[dict[str, Any]], baseline: str) -> dict[str, Any]:
     if not pairs:
         return {"paired_cases": 0, "origins": 0, "airwindow_mean": None,
                 "baseline_mean": None, "mean_delta": None, "median_delta": None,
-                "cluster_bootstrap_95": [None, None], "direction": "unavailable"}
+                "cluster_bootstrap_95": [None, None], "direction": "unavailable",
+                "origin_level": {"tie_tolerance": ORIGIN_TIE_TOLERANCE,
+                                 "favor_airwindow": 0, "favor_baseline": 0, "ties": 0,
+                                 "equal_origin_mean_delta": None, "student_t_95": [None, None],
+                                 "exact_sign_test_two_sided_p": None}}
 
     clusters: dict[str, list[float]] = defaultdict(list)
     for origin, aw, base in pairs:
         clusters[origin].append(aw - base)
     origin_ids = sorted(clusters)
+    origin_means = [statistics.fmean(clusters[origin]) for origin in origin_ids]
+    favor_airwindow = sum(value < -ORIGIN_TIE_TOLERANCE for value in origin_means)
+    favor_baseline = sum(value > ORIGIN_TIE_TOLERANCE for value in origin_means)
+    ties = len(origin_means) - favor_airwindow - favor_baseline
+    non_ties = favor_airwindow + favor_baseline
+    equal_origin_mean = statistics.fmean(origin_means)
+    if len(origin_means) >= 2:
+        sem = statistics.stdev(origin_means) / math.sqrt(len(origin_means))
+        critical = float(t.ppf(0.975, df=len(origin_means) - 1))
+        t_interval = [equal_origin_mean - critical * sem, equal_origin_mean + critical * sem]
+    else:
+        t_interval = [None, None]
+    sign_p = float(binomtest(favor_airwindow, non_ties, p=0.5, alternative="two-sided").pvalue) if non_ties else None
     point = sum(delta for _, aw, base in pairs for delta in [aw - base]) / len(pairs)
     rng = __import__("random").Random(SEED)
     boot = []
@@ -73,6 +93,15 @@ def _case_deltas(cases: list[dict[str, Any]], baseline: str) -> dict[str, Any]:
         "mean_delta": point,
         "median_delta": statistics.median(aw - base for _, aw, base in pairs),
         "cluster_bootstrap_95": [lo, hi], "direction": direction,
+        "origin_level": {
+            "tie_tolerance": ORIGIN_TIE_TOLERANCE,
+            "favor_airwindow": favor_airwindow,
+            "favor_baseline": favor_baseline,
+            "ties": ties,
+            "equal_origin_mean_delta": equal_origin_mean,
+            "student_t_95": t_interval,
+            "exact_sign_test_two_sided_p": sign_p,
+        },
     }
 
 
@@ -141,6 +170,7 @@ def calculate(replay: dict[str, Any], source_sha256: str | None = None) -> dict[
             "full_replay": "expanding-origin evaluation; baseline start is learned only from earlier origins",
             "heldout": "confirmation split; usual-cleanest start learned from development outcomes only",
             "interval": f"percentile 95% cluster bootstrap of paired mean deltas, resampling whole forecast origins ({BOOTSTRAPS} replicates, seed {SEED}); negative favors AirWindow",
+            "origin_level": f"Each origin's statistic is its mean paired case delta (AirWindow minus baseline); origins with means below -{ORIGIN_TIE_TOLERANCE} µg/m³ favor AirWindow, above +{ORIGIN_TIE_TOLERANCE} favor the baseline, otherwise tie. Equal-origin Student-t interval uses origin means (df = origins - 1); exact two-sided sign test excludes ties. Sensitivity analyses, not superiority tests.",
             "missingness": "only paired cases with both subsequent observed means are scored; missing outcomes are excluded from the paired estimate and retained in coverage counts",
         },
         "full_replay": panel(full_cases, full_supported),

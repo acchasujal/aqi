@@ -1,5 +1,7 @@
 # AirWindow 2.0 integration verification — 8 November 2026
 
+> Historical 8 November snapshot. Deployment, evidence and final package status were subsequently updated; use `AIRWINDOW21_FINAL_TASK_RECORD.md` and the 12 November improvement record for current verified status.
+
 Work uses existing `feature/task008-final-gap-execution` at ML evidence commit `186463680a5a5180a0cc970da348c20fa34f73bd`. The user explicitly requested parallel execution on an existing branch and a push. Frontend, artifact/evidence and narrative/package work used disjoint file ownership; root owns shared records and final integration. No new branch, main push or PR #4 merge.
 
 ## Completed Python and provenance checks

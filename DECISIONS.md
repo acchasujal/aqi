@@ -2,6 +2,14 @@
 
 This is an append-only decision log. Do not rewrite old decisions. If a decision is reversed, add a new entry that references the old ID.
 
+## DECISION AIRWINDOW21-P1 (2026-11-12)
+
+- **Decision:** Keep the frozen 77-origin replay support, four-station footprint, and current 1–3-hour event durations. Do not add stations, extend event durations, or claim scheduled refresh/user research from this pass.
+- **Evidence:** Existing locked origin support covers 77 of 83 schedules; four early 2025 origins fail the predeclared common-OOF minimum-training-row gate, while two origins have no paired labels. External station listings did not establish a verified identity crosswalk, raw hourly coverage, first-publication clock, reuse terms, or model support. An eight-hour comparison may be illustrated, but there is no safety or validation evidence for longer real event durations. No usability sessions were conducted and the frozen forecast pipeline is issue-specific, not a general refresh system.
+- **Confidence:** High for preserving the existing replay and for not overstating evidence; medium on the reason each external listing is unusable because source exports and exact terms were not independently audited.
+- **Alternatives considered:** Add apparent Mumbai monitor listings or infer longer-event value from the 248-hour forecast horizon. Rejected because monitor provenance/coverage and event decision validity are not established by those facts.
+- **Consequences / revisit trigger:** Current UI and submission state these limits. Revisit with a sourced station crosswalk, prediction-time/terms audit, matched model validation, or a funded and consented usability protocol.
+
 ## Decision record format
 
 - **ID:** DEC-YYYYMMDD-NN

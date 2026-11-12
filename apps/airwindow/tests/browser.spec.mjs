@@ -49,26 +49,35 @@ test('real planner, abstention, evidence, replay, mobile and printable brief wor
   await expect(page.getByText('HIGHER AFTERWARDS', { exact: true })).toHaveCount(0);
   await page.getByRole('button', { name: 'Reveal subsequent observations' }).click();
   await expect(page.getByText('HIGHER AFTERWARDS', { exact: true })).toBeVisible();
-  await expect(page.getByText(/No schedule changes were endorsed/)).toBeVisible();
+  await expect(page.locator('.replay-warning')).toContainText('not a live recommendation probability');
   await expect(page.getByText('1,848', { exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: /How did the forecast-ranked choice compare/ })).toBeVisible();
   await expect(page.locator('.baseline-panel')).toContainText('Usual cleanest window');
   await expect(page.locator('.baseline-panel')).toContainText('Latest feasible window');
   await expect(page.locator('.baseline-panel')).toContainText('−0.73');
   await expect(page.locator('.baseline-panel')).toContainText('-2.64 to 0.54');
-  await expect(page.locator('.baseline-panel')).toContainText('Interval spans zero');
+  await expect(page.locator('.baseline-panel')).toContainText('Cluster-bootstrap interval includes zero');
+  await expect(page.locator('.baseline-panel')).toContainText('median paired difference');
+  await expect(page.locator('.baseline-panel')).toContainText('paired cases across 8 origins');
+  await expect(page.locator('.baseline-panel')).toContainText('Student-t sensitivity interval');
+  await expect(page.locator('.baseline-panel')).toContainText('previously inspected by analysts');
+  await expect(page.locator('.baseline-panel')).toContainText('favour AirWindow');
   await page.screenshot({ path: path.join(screenshots, 'airwindow_desktop_replay_detail.png') });
   await page.getByLabel('Station', { exact: true }).selectOption('11611');
   await expect(page.getByRole('heading', { name: /Malad West/ })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Reveal subsequent observations' })).toBeVisible();
   await page.getByRole('button', { name: 'Evidence & sources' }).click();
   await expect(page.getByRole('heading', { name: /Know what/ })).toBeVisible();
+  await expect(page.locator('.google-tools')).toContainText('Firebase Hosting');
+  await expect(page.locator('.google-tools')).toContainText('Google-hosted Colab session has not been verified');
   await page.screenshot({ path: path.join(screenshots, 'airwindow_desktop_evidence.png'), fullPage: true });
   await page.getByRole('button', { name: 'Plan an activity', exact: true }).click();
   await page.setViewportSize({ width: 390, height: 844 });
   await page.evaluate(() => window.scrollTo(0, 0));
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({ path: path.join(screenshots, 'airwindow_mobile_plan.png'), fullPage: true });
+  await expect(page.locator('.snapshot-bar')).toContainText('Valid through');
+  await expect(page.locator('.station-proxy')).toContainText('may not represent your school ground or event venue');
   await page.getByRole('button', { name: 'Compare time windows' }).click();
   await expect(page.getByText('INSUFFICIENT EVIDENCE', { exact: true }).first()).toBeVisible();
   expect(errors).toEqual([]);
@@ -122,18 +131,20 @@ test('historical replay keeps every outcome behind reveal and resets on selectio
   await page.getByRole('button', { name: 'Historical replay', exact: true }).click();
   const hidden = async () => {
     await expect(page.getByRole('button', { name: 'Reveal subsequent observations' })).toHaveAttribute('aria-expanded', 'false');
-    await expect(page.locator('.replay-summary, .baseline-panel, .outcome-verdict, .replay-case .observed-color')).toHaveCount(0);
+    await expect(page.locator('.replay-summary')).toBeVisible();
+    await expect(page.locator('.baseline-panel')).toBeVisible();
+    await expect(page.locator('.replay-warning')).toContainText('not a live recommendation probability');
+    await expect(page.locator('.outcome-verdict, .replay-case .observed-color')).toHaveCount(0);
     await expect(page.locator('.replay-case [title^="Observed"]')).toHaveCount(0);
     await expect(page.locator('.replay-case')).not.toContainText('Later observed mean');
     await expect(page.locator('.replay-case')).not.toContainText('Retrospective decision classification');
     await expect(page.locator('.replay-case')).not.toContainText('Hindsight gap');
     await expect(page.locator('.replay-case')).not.toContainText('OBSERVED COMPARISON');
-    await expect(page.locator('.replay-page')).not.toContainText('Median realised difference');
-    await expect(page.locator('.replay-page')).not.toContainText('No schedule changes were endorsed');
+    await expect(page.locator('.replay-page')).toContainText('Median realised difference');
     const html = await page.locator('.replay-page').evaluate(el => el.outerHTML);
     expect(html).not.toMatch(/(?:title|aria-label)="[^"]*(?:Observed |Hindsight gap|Later observed mean)/i);
     const accessibility = await page.locator('.replay-page').ariaSnapshot();
-    expect(accessibility).not.toMatch(/Later observed mean|Hindsight gap|Median realised difference|Retrospective decision classification/);
+    expect(accessibility).not.toMatch(/Later observed mean|Hindsight gap|Retrospective decision classification/);
   };
   await hidden();
   await expect(page.locator('.replay-outcome')).not.toContainText(observed);
@@ -240,7 +251,7 @@ test('keyboard journey, narrow screens, 200 percent equivalent reflow and candid
   await page.getByRole('button', { name: 'Compare time windows' }).focus();
   await page.keyboard.press('Enter');
   await expect(page.locator('.comparison-area')).toBeFocused();
-  for (const width of [720, 390, 320]) {
+  for (const width of [1280, 768, 720, 390, 375, 320]) {
     await page.setViewportSize({ width, height: 900 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await page.getByRole('button', { name: 'Evidence & sources' }).click();
@@ -252,5 +263,11 @@ test('keyboard journey, narrow screens, 200 percent equivalent reflow and candid
     await expect(page.locator('.replay-case table')).toContainText('Selected');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await page.getByRole('button', { name: 'Plan an activity', exact: true }).click();
+    await expect(page.locator('.snapshot-bar')).toContainText('Valid through');
+    const snapshotBox = await page.locator('.snapshot-bar').boundingBox();
+    const validityBox = await page.locator('.snapshot-bar > span:nth-child(4)').boundingBox();
+    expect(validityBox).not.toBeNull();
+    expect(validityBox.x).toBeGreaterThanOrEqual(snapshotBox.x);
+    expect(validityBox.x + validityBox.width).toBeLessThanOrEqual(snapshotBox.x + snapshotBox.width + 1);
   }
 });

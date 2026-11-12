@@ -49,7 +49,7 @@
     "scenario_cases_considered": 1848,
     "missing_original_or_feasible_forecast": 0
   },
-  "baseline_comparison_sha256": "194eda6033cd0e5ca6343101c3f4e3d4c02812bb7a99bd5d5c6b523213a93706",
+  "baseline_comparison_sha256": "07b8bd793a33a6f6c8e5d40a3794159dc670cd58c34a765c5e2a37a9c5c665f8",
   "baseline_source_replay_sha256": "e99d60bfdade3db297f3553e80de0d6c4f08300e5b747978b59c54a134d32c10",
   "fallback_forecast_file": "forecast_fallback_task008.json",
   "fallback_forecast_sha256": "821c6b01078200baa61a754ff19b6af9a5ccee063f5cca51b5fa24f13f58f541",

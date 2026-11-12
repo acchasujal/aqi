@@ -1,4 +1,4 @@
-# AirWindow 2.0 - Repository implementation and ownership
+# AirWindow Mumbai 2.1 - Repository implementation and ownership
 
 ## Scope and branch
 

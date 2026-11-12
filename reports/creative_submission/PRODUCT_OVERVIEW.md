@@ -1,6 +1,6 @@
-# AirWindow Mumbai 2.0
+# AirWindow Mumbai 2.1
 
-**Should you move your outdoor event?** AirWindow helps a school sports coordinator compare an existing booking with feasible one-, two- or three-hour alternatives at four monitored Mumbai stations, then see whether the forecast evidence is strong enough to justify a change.
+**Should you move your outdoor event?** AirWindow helps school sports coordinators and outdoor-event organisers compare an existing booking with feasible one-, two- or three-hour alternatives at four monitored Mumbai stations, then see whether forecast and historical evidence support further consideration. The verified static application is live at <https://airwindow-99085.web.app/>.
 
 The product combines a constraint-aware scheduler, original-versus-alternative comparison, honest reliability/abstention, genuine Historical Decision Replay and a printable event brief. Its contribution is a reproducible decision workflow. It does not claim to be Mumbai's first air-quality forecast or map; see `RED_TEAM_REPORT.md` for the prior-art comparison.
 
@@ -43,20 +43,20 @@ Live forecast source: audited TASK011 final P_fix, issued 10 November 2026 15:47
 
 AirWindow's forecast-ranked choice is compared with two simple strategies using paired later-observed PM2.5 means. “Usual cleanest” selects the local start time with the lowest mean observed concentration in earlier origins; for the held-out confirmation split it uses development outcomes only. “Latest window” uses the latest-starting complete candidate. The reported value is AirWindow minus baseline, so negative means the AirWindow-selected window had a lower later-observed mean in that retrospective sample.
 
-| Replay population | Baseline | Paired cases / origins | Mean delta (µg/m³) | 95% origin-cluster bootstrap interval |
+| Replay population | Baseline | Paired cases / origins | Mean and median delta | 95% origin-cluster bootstrap interval |
 |---|---|---:|---:|---:|
-| Full replay, expanding-origin | Usual cleanest | 1,414 / 76 | -2.28 | [-5.72, 0.69] |
-| Full replay, expanding-origin | Latest window | 1,411 / 77 | -0.16 | [-2.34, 2.06] |
-| Held-out confirmation | Usual cleanest | 169 / 8 | -0.73 | [-2.64, 0.54] |
-| Held-out confirmation | Latest window | 170 / 8 | -1.01 | [-2.66, 0.16] |
+| Full replay, expanding-origin | Usual cleanest | 1,414 / 76 | -2.28; 0.00 | [-5.72, 0.69] |
+| Full replay, expanding-origin | Latest window | 1,411 / 77 | -0.16; 0.00 | [-2.34, 2.06] |
+| Held-out confirmation | Usual cleanest | 169 / 8 | -0.73; 0.00 | [-2.64, 0.54] |
+| Held-out confirmation | Latest window | 170 / 8 | -1.01; 0.00 | [-2.66, 0.16] |
 
-All four intervals span zero. This is retrospective evidence, not a guarantee of future performance or evidence of statistically established superiority. The confirmation origins were previously inspected by analysts; overlapping scenarios within origins are dependent. Paired coverage excludes cases missing either observed window outcome, and the replay retains those missing cases in its overall counts. The exact calculation and source replay hash are in `apps/airwindow/public/data/baseline_comparison.json` and are reproducible with `apps/airwindow/baseline_comparison.py`.
+All four pooled intervals span zero. Per-origin mean paired deltas use a 0.01 ug/m^3 tie tolerance. Held-out usual-cleanest origins split 4 favouring AirWindow / 4 the baseline / 0 ties; latest-window origins split 5 / 3 / 0. Equal-origin Student-t intervals are [-3.79, 1.23] and [-3.55, 0.72] ug/m^3; both include zero. Exact two-sided sign-test p-values are 1.000 and 0.727. These small-sample checks are exploratory and do not establish superiority. The held-out sample has only eight origins and was previously inspected by analysts; overlapping scenarios within origins are dependent. Paired coverage excludes cases missing either observed window outcome, and the replay retains those missing cases in its overall counts. The exact calculation and source replay hash are in `apps/airwindow/public/data/baseline_comparison.json` and are reproducible with `apps/airwindow/baseline_comparison.py`.
 
-The four stations are Borivali East, Malad West, Byculla and Shivaji Nagar. They do not support street/building exposure maps or cleanest-route claims. Hourly PM2.5 is not presented as official Indian AQI. No safe/healthy, medical, personal-dose or measured health-benefit claim is made. Official CPCB/government sources remain the place for health guidance.
+The four stations are Borivali East, Malad West, Byculla and Shivaji Nagar. Each is a measurement proxy and may not represent a particular school ground or event venue; no station is described as nearest or most representative. They do not support street/building exposure maps or cleanest-route claims. Hourly PM2.5 is not presented as official Indian AQI. No safe/healthy, medical, personal-dose or measured health-benefit claim is made. Official CPCB/government sources remain the place for health guidance.
 
 ## Google tools and availability
 
-The static React/Vite application uses bundled artifacts and deterministic logic, with no runtime external API requirement. Firebase Hosting is configured for static files only. The app README and completion record state whether deployment to the existing `airwindow-99085` project was verified; project plan and public availability are not inferred from local configuration. The reproducibility notebook is Colab-compatible and demonstrates the evidence calculation; that does not imply execution on Google-hosted compute.
+The static React/Vite application uses bundled artifacts and deterministic logic, with no runtime external API requirement. Firebase Hosting serves the verified public static app at https://airwindow-99085.web.app/. The existing Firebase billing tier has not been independently verified. The reproducibility notebook is Colab-compatible and demonstrates the evidence calculation; its code cells were run locally, not in a verified Google-hosted Colab session. Neither Firebase Hosting nor Colab is a runtime dependency.
 
 Source: [acchasujal/aqi - main branch](https://github.com/acchasujal/aqi/tree/main). Local run and build commands are in the app README. The human must still verify a public link and submit the creative form; this package is not a form-processing confirmation.
 

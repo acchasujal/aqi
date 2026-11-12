@@ -1,4 +1,6 @@
-# AirWindow 2.0 - Judging evidence and demo
+# AirWindow Mumbai 2.1 - Judging evidence and demo
+
+Current public static deployment: https://airwindow-99085.web.app/. Verified release and artifact status are recorded in `reports/creative_submission/AIRWINDOW21_FINAL_TASK_RECORD.md`.
 
 ## Official criteria
 
