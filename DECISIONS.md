@@ -304,3 +304,13 @@ Decision: retain exact archive-identity P_fix for TASK008 and isolate historical
 - **Confidence:** High for the tested UI boundary and artifact integrity; historical outcome and baseline comparisons remain retrospective and do not establish future benefit.
 - **Alternatives considered:** Show aggregate outcomes immediately, as in incoming commit `e624754`. Rejected for the merged UI because it would reverse the existing forecast-first reveal behavior and its regression coverage.
 - **Consequences / revisit trigger:** Keep app documentation aligned with reveal-gated evidence. Reconsider only with an explicit product decision and updated leakage/accessibility tests.
+
+## DEC-20261113-26 — OpenAQ Stage 1 is discovery evidence, not independent verification
+
+- **Date / owner:** 2026-11-13 / Codex
+- **Status:** Accepted for the Stage 1 audit only; no production data integration.
+- **Decision:** Treat the four AirWindow/OpenAQ station series as the same CPCB source. Screen additional OpenAQ locations for future study, but do not use OpenAQ redistribution of those four series as independent forecast verification. Keep AirNow Mumbai conditional pending physical-site, quality and licensing review.
+- **Evidence:** Live OpenAQ v3 returned matching location and PM2.5 sensor IDs, coordinates and CPCB provider for all four; 708–710 aligned hourly comparisons per station have 98.73–99.86% of values within 0.2 µg/m³. A bounded October–November 2026 audit found 43 locations, 57 PM2.5 sensors and 24 with at least 75% sampled hourly coverage; a May 2025 replay-period sample found 91.80–94.89% coverage for the four existing sensors. See `reports/creative_submission/openaq_stage1/`.
+- **Confidence:** High for common provenance of the four named sensor IDs; moderate for the sampled-period coverage screen. Rare larger value differences and other replay months remain uninvestigated.
+- **Alternatives:** Immediately use OpenAQ for independent verification or add new stations. Rejected because most sensors list CPCB as provider, and new sites have not passed AirWindow contract, methodology or claims review.
+- **Consequences / revisit trigger:** Stage 2 may test compatible observations and additional stations only after source attribution, interval semantics, historical coverage, freshness and quality are independently checked.

@@ -1,0 +1,5372 @@
+{
+  "status": "LIVE_BOUNDED_DISCOVERY",
+  "generated_at_utc": "2026-11-13T08:42:17.338152+00:00",
+  "date_from_utc": "2026-10-01T00:00:00Z",
+  "date_to_utc": "2026-11-11T00:00:00Z",
+  "results": [
+    {
+      "location_id": 11606,
+      "location_name": "Borivali East, Mumbai - IITM",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "coordinates": {
+        "latitude": 19.23241,
+        "longitude": 72.86895
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-11-13T12:30:00Z",
+        "local": "2020-11-13T18:00:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T04:45:00Z",
+        "local": "2026-11-13T10:15:00+05:30"
+      },
+      "sensor": {
+        "id": 12236418,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:00:00Z",
+          "local": "2026-11-13T12:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 48151,
+          "observedInterval": "12037:45:00",
+          "percentComplete": 1203775.0,
+          "percentCoverage": 1203775.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          },
+          "value": 45.9,
+          "coordinates": {
+            "latitude": 19.23241,
+            "longitude": 72.86895
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 99999.01,
+          "avg": 80.74888888888889,
+          "sd": 5.218791633233803
+        }
+      }
+    },
+    {
+      "location_id": 11611,
+      "location_name": "Malad West, Mumbai - IITM",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "coordinates": {
+        "latitude": 19.19709,
+        "longitude": 72.82204
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-11-13T12:15:00Z",
+        "local": "2020-11-13T17:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T05:45:00Z",
+        "local": "2026-11-13T11:15:00+05:30"
+      },
+      "sensor": {
+        "id": 12236426,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:00:00Z",
+          "local": "2026-11-13T12:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 48596,
+          "observedInterval": "12149:00:00",
+          "percentComplete": 1214900.0,
+          "percentCoverage": 1214900.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          },
+          "value": 45.4,
+          "coordinates": {
+            "latitude": 19.19709,
+            "longitude": 72.82204
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 724.93,
+          "avg": 59.13444444444443,
+          "sd": 3.442205365427495
+        }
+      }
+    },
+    {
+      "location_id": 3409510,
+      "location_name": "Byculla, Mumbai - BMC",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8559,
+        "name": "Brihanmumbai Municipal Corporation"
+      },
+      "coordinates": {
+        "latitude": 18.9767,
+        "longitude": 72.838
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 12238567,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:15:00Z",
+          "local": "2026-11-13T12:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 46759,
+          "observedInterval": "11689:45:00",
+          "percentComplete": 1168975.0,
+          "percentCoverage": 1168975.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          },
+          "value": 35.76,
+          "coordinates": {
+            "latitude": 18.9767,
+            "longitude": 72.838
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 2190.85,
+          "avg": 63.837,
+          "sd": 2.9338183311173207
+        }
+      }
+    },
+    {
+      "location_id": 3409511,
+      "location_name": "Shivaji Nagar, Mumbai - BMC",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8559,
+        "name": "Brihanmumbai Municipal Corporation"
+      },
+      "coordinates": {
+        "latitude": 19.060498,
+        "longitude": 72.923356
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 12238576,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:15:00Z",
+          "local": "2026-11-13T12:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 47897,
+          "observedInterval": "11974:15:00",
+          "percentComplete": 1197425.0,
+          "percentCoverage": 1197425.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          },
+          "value": 57.01,
+          "coordinates": {
+            "latitude": 19.060498,
+            "longitude": 72.923356
+          }
+        },
+        "summary": {
+          "min": -53.67,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 321766.53,
+          "avg": 120.28999999999999,
+          "sd": 8.29698439193422
+        }
+      }
+    },
+    {
+      "location_id": 11606,
+      "location_name": "Borivali East, Mumbai - IITM",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "coordinates": {
+        "latitude": 19.23241,
+        "longitude": 72.86895
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-11-13T12:30:00Z",
+        "local": "2020-11-13T18:00:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T04:45:00Z",
+        "local": "2026-11-13T10:15:00+05:30"
+      },
+      "sensor": {
+        "id": 39428,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2020-11-13T12:30:00Z",
+          "local": "2020-11-13T18:00:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-07-08T07:15:00Z",
+          "local": "2022-07-08T12:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 7646,
+          "observedInterval": "1911:30:00",
+          "percentComplete": 191150.0,
+          "percentCoverage": 191150.0,
+          "datetimeFrom": {
+            "utc": "2020-11-13T12:30:00Z",
+            "local": "2020-11-13T18:00:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-07-08T07:15:00Z",
+            "local": "2022-07-08T12:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-07-08T07:15:00Z",
+            "local": "2022-07-08T12:45:00+05:30"
+          },
+          "value": 0.0,
+          "coordinates": {
+            "latitude": 19.23241,
+            "longitude": 72.86895
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 999.99,
+          "avg": 51.10497645827887,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 11611,
+      "location_name": "Malad West, Mumbai - IITM",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "coordinates": {
+        "latitude": 19.19709,
+        "longitude": 72.82204
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-11-13T12:15:00Z",
+        "local": "2020-11-13T17:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T05:45:00Z",
+        "local": "2026-11-13T11:15:00+05:30"
+      },
+      "sensor": {
+        "id": 39454,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2020-11-13T12:15:00Z",
+          "local": "2020-11-13T17:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-16T15:45:00Z",
+          "local": "2022-10-16T21:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 6287,
+          "observedInterval": "1571:45:00",
+          "percentComplete": 157175.0,
+          "percentCoverage": 157175.0,
+          "datetimeFrom": {
+            "utc": "2020-11-13T12:15:00Z",
+            "local": "2020-11-13T17:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-16T15:45:00Z",
+            "local": "2022-10-16T21:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-16T15:45:00Z",
+            "local": "2022-10-16T21:15:00+05:30"
+          },
+          "value": 3.99,
+          "coordinates": {
+            "latitude": 19.19709,
+            "longitude": 72.82204
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 999.99,
+          "avg": 51.792988706855475,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 6956,
+      "location_name": "Powai, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.1375,
+        "longitude": 72.915056
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-18T23:15:00Z",
+        "local": "2019-06-19T04:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 20079,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2019-06-18T23:15:00Z",
+          "local": "2019-06-19T04:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-16T13:15:00Z",
+          "local": "2022-10-16T18:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 29418,
+          "observedInterval": "7354:30:00",
+          "percentComplete": 735450.0,
+          "percentCoverage": 735450.0,
+          "datetimeFrom": {
+            "utc": "2019-06-18T23:15:00Z",
+            "local": "2019-06-19T04:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-16T13:15:00Z",
+            "local": "2022-10-16T18:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-16T13:15:00Z",
+            "local": "2022-10-16T18:45:00+05:30"
+          },
+          "value": 28.0,
+          "coordinates": {
+            "latitude": 19.1375,
+            "longitude": 72.915056
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 985.0,
+          "avg": 62.37996226799922,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 6956,
+      "location_name": "Powai, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.1375,
+        "longitude": 72.915056
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-18T23:15:00Z",
+        "local": "2019-06-19T04:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 12235896,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:15:00Z",
+          "local": "2026-11-13T12:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 37943,
+          "observedInterval": "9485:45:00",
+          "percentComplete": 948575.0,
+          "percentCoverage": 948575.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          },
+          "value": 42.6,
+          "coordinates": {
+            "latitude": 19.1375,
+            "longitude": 72.915056
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 1477.5,
+          "avg": 27.675555555555558,
+          "sd": 1.3916097792764228
+        }
+      }
+    },
+    {
+      "location_id": 6959,
+      "location_name": "Siddharth Nagar-Worli, Mumbai - IITM",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "coordinates": {
+        "latitude": 19.000083,
+        "longitude": 72.813993
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-20T12:00:00Z",
+        "local": "2019-06-20T17:30:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-12T02:00:00Z",
+        "local": "2026-11-12T07:30:00+05:30"
+      },
+      "sensor": {
+        "id": 20033,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2019-06-20T12:00:00Z",
+          "local": "2019-06-20T17:30:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-31T02:00:00Z",
+          "local": "2022-10-31T07:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 28788,
+          "observedInterval": "7197:00:00",
+          "percentComplete": 719700.0,
+          "percentCoverage": 719700.0,
+          "datetimeFrom": {
+            "utc": "2019-06-20T12:00:00Z",
+            "local": "2019-06-20T17:30:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-31T02:00:00Z",
+            "local": "2022-10-31T07:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-31T02:00:00Z",
+            "local": "2022-10-31T07:30:00+05:30"
+          },
+          "value": 66.0,
+          "coordinates": {
+            "latitude": 19.000083,
+            "longitude": 72.813993
+          }
+        },
+        "summary": {
+          "min": -15.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 985.0,
+          "avg": 78.94297852957102,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 6959,
+      "location_name": "Siddharth Nagar-Worli, Mumbai - IITM",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "coordinates": {
+        "latitude": 19.000083,
+        "longitude": 72.813993
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-20T12:00:00Z",
+        "local": "2019-06-20T17:30:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-12T02:00:00Z",
+        "local": "2026-11-12T07:30:00+05:30"
+      },
+      "sensor": {
+        "id": 12236435,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-12T02:00:00Z",
+          "local": "2026-11-12T07:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 44815,
+          "observedInterval": "11203:45:00",
+          "percentComplete": 1120375.0,
+          "percentCoverage": 1120375.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-12T02:00:00Z",
+            "local": "2026-11-12T07:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-12T02:00:00Z",
+            "local": "2026-11-12T07:30:00+05:30"
+          },
+          "value": 51.9,
+          "coordinates": {
+            "latitude": 19.000083,
+            "longitude": 72.813993
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 999.99,
+          "avg": 74.03888888888889,
+          "sd": 10.511761798628777
+        }
+      }
+    },
+    {
+      "location_id": 11602,
+      "location_name": "Bandra Kurla Complex, Mumbai - IITM",
+      "provider": {
+        "id": 163,
+        "name": "caaqm"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "coordinates": {
+        "latitude": 19.053536000000005,
+        "longitude": 72.84643
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-11-13T12:15:00Z",
+        "local": "2020-11-13T17:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2022-10-16T15:45:00Z",
+        "local": "2022-10-16T21:15:00+05:30"
+      },
+      "sensor": {
+        "id": 39404,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2020-11-13T12:15:00Z",
+          "local": "2020-11-13T17:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-16T15:45:00Z",
+          "local": "2022-10-16T21:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 1,
+          "expectedInterval": "00:15:00",
+          "observedCount": 7479,
+          "observedInterval": "1869:45:00",
+          "percentComplete": 747900.0,
+          "percentCoverage": 186975.0,
+          "datetimeFrom": {
+            "utc": "2020-11-13T12:15:00Z",
+            "local": "2020-11-13T17:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-16T15:45:00Z",
+            "local": "2022-10-16T21:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-16T15:45:00Z",
+            "local": "2022-10-16T21:15:00+05:30"
+          },
+          "value": 26.81,
+          "coordinates": {
+            "latitude": 19.053536000000005,
+            "longitude": 72.84643
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 544.75,
+          "avg": 61.08193341355798,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 11604,
+      "location_name": "Deonar, Mumbai - IITM",
+      "provider": {
+        "id": 163,
+        "name": "caaqm"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "coordinates": {
+        "latitude": 19.04946,
+        "longitude": 72.923
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-11-13T12:15:00Z",
+        "local": "2020-11-13T17:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2022-10-16T15:45:00Z",
+        "local": "2022-10-16T21:15:00+05:30"
+      },
+      "sensor": {
+        "id": 39416,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2020-11-13T12:15:00Z",
+          "local": "2020-11-13T17:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-16T15:45:00Z",
+          "local": "2022-10-16T21:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 1,
+          "expectedInterval": "00:15:00",
+          "observedCount": 7710,
+          "observedInterval": "1927:30:00",
+          "percentComplete": 771000.0,
+          "percentCoverage": 192750.0,
+          "datetimeFrom": {
+            "utc": "2020-11-13T12:15:00Z",
+            "local": "2020-11-13T17:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-16T15:45:00Z",
+            "local": "2022-10-16T21:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-16T15:45:00Z",
+            "local": "2022-10-16T21:15:00+05:30"
+          },
+          "value": 75.1,
+          "coordinates": {
+            "latitude": 19.04946,
+            "longitude": 72.923
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 369.91,
+          "avg": 61.31303501945522,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 60661,
+      "location_name": "Siddharth Nagar-Worli, Mumbai - IITM",
+      "provider": {
+        "id": 163,
+        "name": "caaqm"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "coordinates": {
+        "latitude": 19.000083,
+        "longitude": 72.813993
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2021-01-12T14:00:00Z",
+        "local": "2021-01-12T19:30:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2022-10-16T16:00:00Z",
+        "local": "2022-10-16T21:30:00+05:30"
+      },
+      "sensor": {
+        "id": 389761,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2021-01-12T14:00:00Z",
+          "local": "2021-01-12T19:30:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-16T16:00:00Z",
+          "local": "2022-10-16T21:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 1,
+          "expectedInterval": "00:15:00",
+          "observedCount": 6839,
+          "observedInterval": "1709:45:00",
+          "percentComplete": 683900.0,
+          "percentCoverage": 170975.0,
+          "datetimeFrom": {
+            "utc": "2021-01-12T14:00:00Z",
+            "local": "2021-01-12T19:30:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-16T16:00:00Z",
+            "local": "2022-10-16T21:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-16T16:00:00Z",
+            "local": "2022-10-16T21:30:00+05:30"
+          },
+          "value": 62.24,
+          "coordinates": {
+            "latitude": 19.000083,
+            "longitude": 72.813993
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 611.83,
+          "avg": 36.134125350794996,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 3409323,
+      "location_name": "Worli, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 18.9936162,
+        "longitude": 72.8128113
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:30:00Z",
+        "local": "2026-11-13T12:00:00+05:30"
+      },
+      "sensor": {
+        "id": 12235914,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:30:00Z",
+          "local": "2026-11-13T13:00:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 38025,
+          "observedInterval": "9506:15:00",
+          "percentComplete": 950625.0,
+          "percentCoverage": 950625.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:30:00Z",
+            "local": "2026-11-13T13:00:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:30:00Z",
+            "local": "2026-11-13T13:00:00+05:30"
+          },
+          "value": 34.0,
+          "coordinates": {
+            "latitude": 18.9936162,
+            "longitude": 72.8128113
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 357.0,
+          "avg": 44.92111111111112,
+          "sd": 1.2911375260254443
+        }
+      }
+    },
+    {
+      "location_id": 3409328,
+      "location_name": "Bandra Kurla Complex, Mumbai - IITM",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "coordinates": {
+        "latitude": 19.0627,
+        "longitude": 72.84614
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 1,
+          "name": "N/A"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-04-07T13:00:00Z",
+        "local": "2025-04-07T18:30:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T05:45:00Z",
+        "local": "2026-11-13T11:15:00+05:30"
+      },
+      "sensor": {
+        "id": 12708246,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-04-07T13:00:00Z",
+          "local": "2025-04-07T18:30:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:00:00Z",
+          "local": "2026-11-13T12:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 31696,
+          "observedInterval": "7924:00:00",
+          "percentComplete": 792400.0,
+          "percentCoverage": 792400.0,
+          "datetimeFrom": {
+            "utc": "2025-04-07T13:00:00Z",
+            "local": "2025-04-07T18:30:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          },
+          "value": 72.43,
+          "coordinates": {
+            "latitude": 19.0627,
+            "longitude": 72.84614
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 7749.94,
+          "avg": 63.012,
+          "sd": 0.7434514106516974
+        }
+      }
+    },
+    {
+      "location_id": 3409329,
+      "location_name": "Deonar, Mumbai - IITM",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "coordinates": {
+        "latitude": 19.04946,
+        "longitude": 72.923
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 12236385,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:15:00Z",
+          "local": "2026-11-13T12:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 41825,
+          "observedInterval": "10456:15:00",
+          "percentComplete": 1045625.0,
+          "percentCoverage": 1045625.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          },
+          "value": 69.7,
+          "coordinates": {
+            "latitude": 19.04946,
+            "longitude": 72.923
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 585.71,
+          "avg": 145.42111111111112,
+          "sd": 29.478679348151132
+        }
+      }
+    },
+    {
+      "location_id": 3409482,
+      "location_name": "Bandra Kurla Complex, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.065931,
+        "longitude": 72.862131
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      },
+      "sensor": {
+        "id": 12238375,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:00:00Z",
+          "local": "2026-11-13T12:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 44983,
+          "observedInterval": "11245:45:00",
+          "percentComplete": 1124575.0,
+          "percentCoverage": 1124575.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          },
+          "value": 56.42,
+          "coordinates": {
+            "latitude": 19.065931,
+            "longitude": 72.862131
+          }
+        },
+        "summary": {
+          "min": -30.79,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 710695.0,
+          "avg": 75.30666666666667,
+          "sd": 4.063677521654494
+        }
+      }
+    },
+    {
+      "location_id": 2598,
+      "location_name": "Navi Mumbai Municipal Corporation Airoli",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "coordinates": {
+        "latitude": 19.1494,
+        "longitude": 72.9986
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2016-03-21T18:30:00Z",
+        "local": "2016-03-22T00:00:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2020-04-09T00:15:00Z",
+        "local": "2020-04-09T05:45:00+05:30"
+      },
+      "sensor": {
+        "id": 5404,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2016-03-21T18:30:00Z",
+          "local": "2016-03-22T00:00:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2017-10-04T04:15:00Z",
+          "local": "2017-10-04T09:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 1,
+          "expectedInterval": "00:15:00",
+          "observedCount": 19736,
+          "observedInterval": "4934:00:00",
+          "percentComplete": 1973600.0,
+          "percentCoverage": 493400.0,
+          "datetimeFrom": {
+            "utc": "2016-03-21T18:30:00Z",
+            "local": "2016-03-22T00:00:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2017-10-04T04:15:00Z",
+            "local": "2017-10-04T09:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2017-10-04T04:15:00Z",
+            "local": "2017-10-04T09:45:00+05:30"
+          },
+          "value": 20.4,
+          "coordinates": {
+            "latitude": 19.1494,
+            "longitude": 72.9986
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 906.69,
+          "avg": 32.99699331171448,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 5593,
+      "location_name": "Pimpleshwar Mandir, Thane - MPCB",
+      "provider": {
+        "id": 163,
+        "name": "caaqm"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "coordinates": {
+        "latitude": 19.192056,
+        "longitude": 72.9585188
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2018-03-09T05:30:00Z",
+        "local": "2018-03-09T11:00:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2022-10-16T11:45:00Z",
+        "local": "2022-10-16T17:15:00+05:30"
+      },
+      "sensor": {
+        "id": 14806,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2018-03-09T05:30:00Z",
+          "local": "2018-03-09T11:00:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-05-22T07:45:00Z",
+          "local": "2022-05-22T13:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 1,
+          "expectedInterval": "01:00:00",
+          "observedCount": 6624,
+          "observedInterval": "6624:00:00",
+          "percentComplete": 662400.0,
+          "percentCoverage": 662400.0,
+          "datetimeFrom": {
+            "utc": "2018-03-09T05:30:00Z",
+            "local": "2018-03-09T11:00:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-05-22T07:45:00Z",
+            "local": "2022-05-22T13:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-05-22T07:45:00Z",
+            "local": "2022-05-22T13:15:00+05:30"
+          },
+          "value": 16.45,
+          "coordinates": {
+            "latitude": 19.192056,
+            "longitude": 72.9585188
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 268.39,
+          "avg": 32.3198067632851,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 6927,
+      "location_name": "Colaba, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 18.91,
+        "longitude": 72.82
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-28T05:30:00Z",
+        "local": "2019-06-28T11:00:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 20143,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2019-06-28T05:30:00Z",
+          "local": "2019-06-28T11:00:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-31T01:45:00Z",
+          "local": "2022-10-31T07:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 26618,
+          "observedInterval": "6654:30:00",
+          "percentComplete": 665450.0,
+          "percentCoverage": 665450.0,
+          "datetimeFrom": {
+            "utc": "2019-06-28T05:30:00Z",
+            "local": "2019-06-28T11:00:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-31T01:45:00Z",
+            "local": "2022-10-31T07:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-31T01:45:00Z",
+            "local": "2022-10-31T07:15:00+05:30"
+          },
+          "value": 72.16,
+          "coordinates": {
+            "latitude": 18.91,
+            "longitude": 72.82
+          }
+        },
+        "summary": {
+          "min": -6.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 985.0,
+          "avg": 61.52438951085724,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 6927,
+      "location_name": "Colaba, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 18.91,
+        "longitude": 72.82
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-28T05:30:00Z",
+        "local": "2019-06-28T11:00:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 12235926,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T06:45:00Z",
+          "local": "2026-11-13T12:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 38292,
+          "observedInterval": "9573:00:00",
+          "percentComplete": 957300.0,
+          "percentCoverage": 957300.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T06:45:00Z",
+            "local": "2026-11-13T12:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T06:45:00Z",
+            "local": "2026-11-13T12:15:00+05:30"
+          },
+          "value": 49.0,
+          "coordinates": {
+            "latitude": 18.91,
+            "longitude": 72.82
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 1025.0,
+          "avg": 17.825555555555557,
+          "sd": 0.7775781489842534
+        }
+      }
+    },
+    {
+      "location_id": 6943,
+      "location_name": "Mahape, Navi Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.1135051,
+        "longitude": 73.008978
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-27T05:30:00Z",
+        "local": "2019-06-27T11:00:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      },
+      "sensor": {
+        "id": 20046,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2019-06-27T05:45:00Z",
+          "local": "2019-06-27T11:15:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-16T15:45:00Z",
+          "local": "2022-10-16T21:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 24731,
+          "observedInterval": "6182:45:00",
+          "percentComplete": 618275.0,
+          "percentCoverage": 618275.0,
+          "datetimeFrom": {
+            "utc": "2019-06-27T05:45:00Z",
+            "local": "2019-06-27T11:15:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-16T15:45:00Z",
+            "local": "2022-10-16T21:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-16T15:45:00Z",
+            "local": "2022-10-16T21:15:00+05:30"
+          },
+          "value": 40.0,
+          "coordinates": {
+            "latitude": 19.1135051,
+            "longitude": 73.008978
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 985.0,
+          "avg": 63.80397153370266,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 6943,
+      "location_name": "Mahape, Navi Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.1135051,
+        "longitude": 73.008978
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-27T05:30:00Z",
+        "local": "2019-06-27T11:00:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      },
+      "sensor": {
+        "id": 12235905,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:00:00Z",
+          "local": "2026-11-13T12:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 41649,
+          "observedInterval": "10412:15:00",
+          "percentComplete": 1041225.0,
+          "percentCoverage": 1041225.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          },
+          "value": 28.8,
+          "coordinates": {
+            "latitude": 19.1135051,
+            "longitude": 73.008978
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 985.0,
+          "avg": 58.00777777777778,
+          "sd": 7.381141134299255
+        }
+      }
+    },
+    {
+      "location_id": 6945,
+      "location_name": "Kurla, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.0863,
+        "longitude": 72.8888
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-19T00:00:00Z",
+        "local": "2019-06-19T05:30:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      },
+      "sensor": {
+        "id": 19978,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2019-06-19T00:00:00Z",
+          "local": "2019-06-19T05:30:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-31T02:00:00Z",
+          "local": "2022-10-31T07:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 29589,
+          "observedInterval": "7397:15:00",
+          "percentComplete": 739725.0,
+          "percentCoverage": 739725.0,
+          "datetimeFrom": {
+            "utc": "2019-06-19T00:00:00Z",
+            "local": "2019-06-19T05:30:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-31T02:00:00Z",
+            "local": "2022-10-31T07:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-31T02:00:00Z",
+            "local": "2022-10-31T07:30:00+05:30"
+          },
+          "value": 72.0,
+          "coordinates": {
+            "latitude": 19.0863,
+            "longitude": 72.8888
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 985.0,
+          "avg": 96.62714013769293,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 6945,
+      "location_name": "Kurla, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.0863,
+        "longitude": 72.8888
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-19T00:00:00Z",
+        "local": "2019-06-19T05:30:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      },
+      "sensor": {
+        "id": 12235834,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:00:00Z",
+          "local": "2026-11-13T12:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 41859,
+          "observedInterval": "10464:45:00",
+          "percentComplete": 1046475.0,
+          "percentCoverage": 1046475.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          },
+          "value": 42.2,
+          "coordinates": {
+            "latitude": 19.0863,
+            "longitude": 72.8888
+          }
+        },
+        "summary": {
+          "min": 2.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 394.0,
+          "avg": 57.66222222222221,
+          "sd": 3.036386741580271
+        }
+      }
+    },
+    {
+      "location_id": 6948,
+      "location_name": "Chhatrapati Shivaji Intl. Airport (T2), Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.10078,
+        "longitude": 72.87462
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-18T23:15:00Z",
+        "local": "2019-06-19T04:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-10-12T06:00:00Z",
+        "local": "2026-10-12T11:30:00+05:30"
+      },
+      "sensor": {
+        "id": 19981,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2019-06-18T23:15:00Z",
+          "local": "2019-06-19T04:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-31T01:45:00Z",
+          "local": "2022-10-31T07:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 28316,
+          "observedInterval": "7079:00:00",
+          "percentComplete": 707900.0,
+          "percentCoverage": 707900.0,
+          "datetimeFrom": {
+            "utc": "2019-06-18T23:15:00Z",
+            "local": "2019-06-19T04:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-31T01:45:00Z",
+            "local": "2022-10-31T07:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-31T01:45:00Z",
+            "local": "2022-10-31T07:15:00+05:30"
+          },
+          "value": 44.0,
+          "coordinates": {
+            "latitude": 19.10078,
+            "longitude": 72.87462
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 990.0,
+          "avg": 110.30542661392853,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 6948,
+      "location_name": "Chhatrapati Shivaji Intl. Airport (T2), Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.10078,
+        "longitude": 72.87462
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-18T23:15:00Z",
+        "local": "2019-06-19T04:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-10-12T06:00:00Z",
+        "local": "2026-10-12T11:30:00+05:30"
+      },
+      "sensor": {
+        "id": 12235860,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-10-10T15:15:00Z",
+          "local": "2026-10-10T20:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 38013,
+          "observedInterval": "9503:15:00",
+          "percentComplete": 950325.0,
+          "percentCoverage": 950325.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-10-10T15:15:00Z",
+            "local": "2026-10-10T20:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-10-10T15:15:00Z",
+            "local": "2026-10-10T20:45:00+05:30"
+          },
+          "value": 38.0,
+          "coordinates": {
+            "latitude": 19.10078,
+            "longitude": 72.87462
+          }
+        },
+        "summary": {
+          "min": 1.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 985.0,
+          "avg": 43.70666666666667,
+          "sd": 2.4604471138392694
+        }
+      }
+    },
+    {
+      "location_id": 6965,
+      "location_name": "Borivali East, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.227474,
+        "longitude": 72.864394
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 1,
+          "name": "N/A"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-20T16:00:00Z",
+        "local": "2019-06-20T21:30:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      },
+      "sensor": {
+        "id": 20087,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2019-06-20T16:00:00Z",
+          "local": "2019-06-20T21:30:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-31T02:00:00Z",
+          "local": "2022-10-31T07:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 15826,
+          "observedInterval": "3956:30:00",
+          "percentComplete": 395650.0,
+          "percentCoverage": 395650.0,
+          "datetimeFrom": {
+            "utc": "2019-06-20T16:00:00Z",
+            "local": "2019-06-20T21:30:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-31T02:00:00Z",
+            "local": "2022-10-31T07:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-31T02:00:00Z",
+            "local": "2022-10-31T07:30:00+05:30"
+          },
+          "value": 57.0,
+          "coordinates": {
+            "latitude": 19.227474,
+            "longitude": 72.864394
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 985.0,
+          "avg": 62.000238647094164,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 6965,
+      "location_name": "Borivali East, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.227474,
+        "longitude": 72.864394
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 1,
+          "name": "N/A"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-20T16:00:00Z",
+        "local": "2019-06-20T21:30:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      },
+      "sensor": {
+        "id": 12252658,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-20T08:30:00Z",
+          "local": "2025-02-20T14:00:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:00:00Z",
+          "local": "2026-11-13T12:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 36517,
+          "observedInterval": "9129:15:00",
+          "percentComplete": 912925.0,
+          "percentCoverage": 912925.0,
+          "datetimeFrom": {
+            "utc": "2025-02-20T08:30:00Z",
+            "local": "2025-02-20T14:00:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          },
+          "value": 40.84,
+          "coordinates": {
+            "latitude": 19.227474,
+            "longitude": 72.864394
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 985.0,
+          "avg": 28.97857142857143,
+          "sd": 4.386629034431144
+        }
+      }
+    },
+    {
+      "location_id": 6967,
+      "location_name": "Sion, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.047,
+        "longitude": 72.8746
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-27T05:15:00Z",
+        "local": "2019-06-27T10:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:30:00Z",
+        "local": "2026-11-13T12:00:00+05:30"
+      },
+      "sensor": {
+        "id": 20096,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2019-06-27T05:15:00Z",
+          "local": "2019-06-27T10:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-31T01:45:00Z",
+          "local": "2022-10-31T07:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 28702,
+          "observedInterval": "7175:30:00",
+          "percentComplete": 717550.0,
+          "percentCoverage": 717550.0,
+          "datetimeFrom": {
+            "utc": "2019-06-27T05:15:00Z",
+            "local": "2019-06-27T10:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-31T01:45:00Z",
+            "local": "2022-10-31T07:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-31T01:45:00Z",
+            "local": "2022-10-31T07:15:00+05:30"
+          },
+          "value": 56.7,
+          "coordinates": {
+            "latitude": 19.047,
+            "longitude": 72.8746
+          }
+        },
+        "summary": {
+          "min": -15.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 985.0,
+          "avg": 64.09489826492923,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 6967,
+      "location_name": "Sion, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.047,
+        "longitude": 72.8746
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-27T05:15:00Z",
+        "local": "2019-06-27T10:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:30:00Z",
+        "local": "2026-11-13T12:00:00+05:30"
+      },
+      "sensor": {
+        "id": 12243930,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-19T09:30:00Z",
+          "local": "2025-02-19T15:00:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:30:00Z",
+          "local": "2026-11-13T13:00:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 39119,
+          "observedInterval": "9779:45:00",
+          "percentComplete": 977975.0,
+          "percentCoverage": 977975.0,
+          "datetimeFrom": {
+            "utc": "2025-02-19T09:30:00Z",
+            "local": "2025-02-19T15:00:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:30:00Z",
+            "local": "2026-11-13T13:00:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:30:00Z",
+            "local": "2026-11-13T13:00:00+05:30"
+          },
+          "value": 32.5,
+          "coordinates": {
+            "latitude": 19.047,
+            "longitude": 72.8746
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 994.7,
+          "avg": 316.005,
+          "sd": 18.72999999999998
+        }
+      }
+    },
+    {
+      "location_id": 6987,
+      "location_name": "Vile Parle West, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.10861,
+        "longitude": 72.83622
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-18T23:00:00Z",
+        "local": "2019-06-19T04:30:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-05-30T09:30:00Z",
+        "local": "2026-05-30T15:00:00+05:30"
+      },
+      "sensor": {
+        "id": 20251,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2019-06-18T23:00:00Z",
+          "local": "2019-06-19T04:30:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-31T01:45:00Z",
+          "local": "2022-10-31T07:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 24866,
+          "observedInterval": "6216:30:00",
+          "percentComplete": 621650.0,
+          "percentCoverage": 621650.0,
+          "datetimeFrom": {
+            "utc": "2019-06-18T23:00:00Z",
+            "local": "2019-06-19T04:30:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-31T01:45:00Z",
+            "local": "2022-10-31T07:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-31T01:45:00Z",
+            "local": "2022-10-31T07:15:00+05:30"
+          },
+          "value": 56.6,
+          "coordinates": {
+            "latitude": 19.10861,
+            "longitude": 72.83622
+          }
+        },
+        "summary": {
+          "min": -744.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 991.0,
+          "avg": 114.82807528351974,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 6987,
+      "location_name": "Vile Parle West, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.10861,
+        "longitude": 72.83622
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2019-06-18T23:00:00Z",
+        "local": "2019-06-19T04:30:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-05-30T09:30:00Z",
+        "local": "2026-05-30T15:00:00+05:30"
+      },
+      "sensor": {
+        "id": 12235851,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-05-30T09:30:00Z",
+          "local": "2026-05-30T15:00:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 27697,
+          "observedInterval": "6924:15:00",
+          "percentComplete": 692425.0,
+          "percentCoverage": 692425.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-05-30T09:30:00Z",
+            "local": "2026-05-30T15:00:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-05-30T09:30:00Z",
+            "local": "2026-05-30T15:00:00+05:30"
+          },
+          "value": 987.0,
+          "coordinates": {
+            "latitude": 19.10861,
+            "longitude": 72.83622
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 1477.5,
+          "avg": 66.81888888888888,
+          "sd": 12.516928980828775
+        }
+      }
+    },
+    {
+      "location_id": 7850,
+      "location_name": "Bandra, Mumbai - MPCB",
+      "provider": {
+        "id": 163,
+        "name": "caaqm"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "coordinates": {
+        "latitude": 19.0627,
+        "longitude": 72.84614
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-01-09T00:15:00Z",
+        "local": "2020-01-09T05:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2021-12-24T04:45:00Z",
+        "local": "2021-12-24T10:15:00+05:30"
+      },
+      "sensor": {
+        "id": 36447,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2020-01-09T00:15:00Z",
+          "local": "2020-01-09T05:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2021-12-24T04:45:00Z",
+          "local": "2021-12-24T10:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 1,
+          "expectedInterval": "00:15:00",
+          "observedCount": 16390,
+          "observedInterval": "4097:30:00",
+          "percentComplete": 1639000.0,
+          "percentCoverage": 409750.0,
+          "datetimeFrom": {
+            "utc": "2020-01-09T00:15:00Z",
+            "local": "2020-01-09T05:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2021-12-24T04:45:00Z",
+            "local": "2021-12-24T10:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2021-12-24T04:45:00Z",
+            "local": "2021-12-24T10:15:00+05:30"
+          },
+          "value": 38.0,
+          "coordinates": {
+            "latitude": 19.0627,
+            "longitude": 72.84614
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 2056.06,
+          "avg": 28.083610738255082,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 8039,
+      "location_name": "Mumbai",
+      "provider": {
+        "id": 119,
+        "name": "AirNow"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "coordinates": {
+        "latitude": 19.07283,
+        "longitude": 72.88261
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": "India",
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2016-11-09T19:00:00Z",
+        "local": "2016-11-10T00:30:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T04:30:00Z",
+        "local": "2026-11-13T10:00:00+05:30"
+      },
+      "sensor": {
+        "id": 23320,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2016-11-09T19:00:00Z",
+          "local": "2016-11-10T00:30:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T04:30:00Z",
+          "local": "2026-11-13T10:00:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 1,
+          "expectedInterval": "01:00:00",
+          "observedCount": 69168,
+          "observedInterval": "69168:00:00",
+          "percentComplete": 6916800.0,
+          "percentCoverage": 6916800.0,
+          "datetimeFrom": {
+            "utc": "2016-11-09T19:00:00Z",
+            "local": "2016-11-10T00:30:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T04:30:00Z",
+            "local": "2026-11-13T10:00:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T04:30:00Z",
+            "local": "2026-11-13T10:00:00+05:30"
+          },
+          "value": 16.0,
+          "coordinates": {
+            "latitude": 19.07283,
+            "longitude": 72.88261
+          }
+        },
+        "summary": {
+          "min": -999.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 982.0,
+          "avg": 19.875,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 11612,
+      "location_name": "Sector-19A Nerul, Navi Mumbai - IITM",
+      "provider": {
+        "id": 163,
+        "name": "caaqm"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "coordinates": {
+        "latitude": 19.044,
+        "longitude": 73.03250000000001
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-11-13T12:00:00Z",
+        "local": "2020-11-13T17:30:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2022-10-16T16:00:00Z",
+        "local": "2022-10-16T21:30:00+05:30"
+      },
+      "sensor": {
+        "id": 39460,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2020-11-13T12:00:00Z",
+          "local": "2020-11-13T17:30:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-16T16:00:00Z",
+          "local": "2022-10-16T21:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 1,
+          "expectedInterval": "00:15:00",
+          "observedCount": 7931,
+          "observedInterval": "1982:45:00",
+          "percentComplete": 793100.0,
+          "percentCoverage": 198275.0,
+          "datetimeFrom": {
+            "utc": "2020-11-13T12:00:00Z",
+            "local": "2020-11-13T17:30:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-16T16:00:00Z",
+            "local": "2022-10-16T21:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-16T16:00:00Z",
+            "local": "2022-10-16T21:30:00+05:30"
+          },
+          "value": 70.84,
+          "coordinates": {
+            "latitude": 19.044,
+            "longitude": 73.03250000000001
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 493.24,
+          "avg": 48.02438071625342,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 12024,
+      "location_name": "Chakala-Andheri East, Mumbai - IITM",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "coordinates": {
+        "latitude": 19.11074,
+        "longitude": 72.86084
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-12-08T09:00:00Z",
+        "local": "2020-12-08T14:30:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 40571,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2020-12-08T09:00:00Z",
+          "local": "2020-12-08T14:30:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-16T13:00:00Z",
+          "local": "2022-10-16T18:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 7372,
+          "observedInterval": "1843:00:00",
+          "percentComplete": 184300.0,
+          "percentCoverage": 184300.0,
+          "datetimeFrom": {
+            "utc": "2020-12-08T09:00:00Z",
+            "local": "2020-12-08T14:30:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-16T13:00:00Z",
+            "local": "2022-10-16T18:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-16T13:00:00Z",
+            "local": "2022-10-16T18:30:00+05:30"
+          },
+          "value": 32.74,
+          "coordinates": {
+            "latitude": 19.11074,
+            "longitude": 72.86084
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 901.21,
+          "avg": 60.05116195891419,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 12024,
+      "location_name": "Chakala-Andheri East, Mumbai - IITM",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "coordinates": {
+        "latitude": 19.11074,
+        "longitude": 72.86084
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-12-08T09:00:00Z",
+        "local": "2020-12-08T14:30:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 12442196,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-03-11T08:00:00Z",
+          "local": "2025-03-11T13:30:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:15:00Z",
+          "local": "2026-11-13T12:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 45216,
+          "observedInterval": "11304:00:00",
+          "percentComplete": 1130400.0,
+          "percentCoverage": 1130400.0,
+          "datetimeFrom": {
+            "utc": "2025-03-11T08:00:00Z",
+            "local": "2025-03-11T13:30:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          },
+          "value": 56.4,
+          "coordinates": {
+            "latitude": 19.11074,
+            "longitude": 72.86084
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 99999.01,
+          "avg": 0.0,
+          "sd": 0.0
+        }
+      }
+    },
+    {
+      "location_id": 12039,
+      "location_name": "Khindipada-Bhandup West, Mumbai - IITM",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "coordinates": {
+        "latitude": 19.164394,
+        "longitude": 72.928297
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-12-16T12:45:00Z",
+        "local": "2020-12-16T18:15:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 40608,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2020-12-16T12:45:00Z",
+          "local": "2020-12-16T18:15:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-09-22T05:30:00Z",
+          "local": "2022-09-22T11:00:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 1425,
+          "observedInterval": "356:15:00",
+          "percentComplete": 35625.0,
+          "percentCoverage": 35625.0,
+          "datetimeFrom": {
+            "utc": "2020-12-16T12:45:00Z",
+            "local": "2020-12-16T18:15:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-09-22T05:30:00Z",
+            "local": "2022-09-22T11:00:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-09-22T05:30:00Z",
+            "local": "2022-09-22T11:00:00+05:30"
+          },
+          "value": 5.21,
+          "coordinates": {
+            "latitude": 19.164394,
+            "longitude": 72.928297
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 999.99,
+          "avg": 71.98709473684208,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 12039,
+      "location_name": "Khindipada-Bhandup West, Mumbai - IITM",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "coordinates": {
+        "latitude": 19.164394,
+        "longitude": 72.928297
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-12-16T12:45:00Z",
+        "local": "2020-12-16T18:15:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 12236394,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:15:00Z",
+          "local": "2026-11-13T12:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 24361,
+          "observedInterval": "6090:15:00",
+          "percentComplete": 609025.0,
+          "percentCoverage": 609025.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          },
+          "value": 62.3,
+          "coordinates": {
+            "latitude": 19.164394,
+            "longitude": 72.928297
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 524.78,
+          "avg": 27.924444444444447,
+          "sd": 0.6298434549773276
+        }
+      }
+    },
+    {
+      "location_id": 12040,
+      "location_name": "Mulund West, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.175,
+        "longitude": 72.9419
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-12-16T12:30:00Z",
+        "local": "2020-12-16T18:00:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      },
+      "sensor": {
+        "id": 40641,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2020-12-16T12:30:00Z",
+          "local": "2020-12-16T18:00:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-16T15:45:00Z",
+          "local": "2022-10-16T21:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 7017,
+          "observedInterval": "1754:15:00",
+          "percentComplete": 175425.0,
+          "percentCoverage": 175425.0,
+          "datetimeFrom": {
+            "utc": "2020-12-16T12:30:00Z",
+            "local": "2020-12-16T18:00:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-16T15:45:00Z",
+            "local": "2022-10-16T21:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-16T15:45:00Z",
+            "local": "2022-10-16T21:15:00+05:30"
+          },
+          "value": 47.69,
+          "coordinates": {
+            "latitude": 19.175,
+            "longitude": 72.9419
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 1000.0,
+          "avg": 64.71365255807326,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 12040,
+      "location_name": "Mulund West, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.175,
+        "longitude": 72.9419
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-12-16T12:30:00Z",
+        "local": "2020-12-16T18:00:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      },
+      "sensor": {
+        "id": 12236481,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:00:00Z",
+          "local": "2026-11-13T12:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 42324,
+          "observedInterval": "10581:00:00",
+          "percentComplete": 1058100.0,
+          "percentCoverage": 1058100.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          },
+          "value": 52.8,
+          "coordinates": {
+            "latitude": 19.175,
+            "longitude": 72.9419
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 1000.0,
+          "avg": 29.486666666666665,
+          "sd": 3.8072398138283847
+        }
+      }
+    },
+    {
+      "location_id": 12044,
+      "location_name": "Kandivali East, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.2058,
+        "longitude": 72.8682
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-12-16T12:30:00Z",
+        "local": "2020-12-16T18:00:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-04-18T05:45:00Z",
+        "local": "2026-04-18T11:15:00+05:30"
+      },
+      "sensor": {
+        "id": 40650,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2020-12-16T12:30:00Z",
+          "local": "2020-12-16T18:00:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2022-10-16T15:45:00Z",
+          "local": "2022-10-16T21:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 6491,
+          "observedInterval": "1622:45:00",
+          "percentComplete": 162275.0,
+          "percentCoverage": 162275.0,
+          "datetimeFrom": {
+            "utc": "2020-12-16T12:30:00Z",
+            "local": "2020-12-16T18:00:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2022-10-16T15:45:00Z",
+            "local": "2022-10-16T21:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2022-10-16T15:45:00Z",
+            "local": "2022-10-16T21:15:00+05:30"
+          },
+          "value": 47.5,
+          "coordinates": {
+            "latitude": 19.2058,
+            "longitude": 72.8682
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 985.0,
+          "avg": 117.71503620397469,
+          "sd": null
+        }
+      }
+    },
+    {
+      "location_id": 12044,
+      "location_name": "Kandivali East, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.2058,
+        "longitude": 72.8682
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2020-12-16T12:30:00Z",
+        "local": "2020-12-16T18:00:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-04-18T05:45:00Z",
+        "local": "2026-04-18T11:15:00+05:30"
+      },
+      "sensor": {
+        "id": 12236472,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-04-18T05:45:00Z",
+          "local": "2026-04-18T11:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 24858,
+          "observedInterval": "6214:30:00",
+          "percentComplete": 621450.0,
+          "percentCoverage": 621450.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-04-18T05:45:00Z",
+            "local": "2026-04-18T11:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-04-18T05:45:00Z",
+            "local": "2026-04-18T11:15:00+05:30"
+          },
+          "value": 985.0,
+          "coordinates": {
+            "latitude": 19.2058,
+            "longitude": 72.8682
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 990.0,
+          "avg": 54.01,
+          "sd": 2.203741137248201
+        }
+      }
+    },
+    {
+      "location_id": 3409322,
+      "location_name": "Pimpleshwar Mandir, Thane - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.192056,
+        "longitude": 72.9585188
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      },
+      "sensor": {
+        "id": 12235644,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:00:00Z",
+          "local": "2026-11-13T12:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 19562,
+          "observedInterval": "4890:30:00",
+          "percentComplete": 489050.0,
+          "percentCoverage": 489050.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          },
+          "value": 14.56,
+          "coordinates": {
+            "latitude": 19.192056,
+            "longitude": 72.9585188
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 359.06,
+          "avg": 39.45799999999999,
+          "sd": 2.2919123504667893
+        }
+      }
+    },
+    {
+      "location_id": 3409469,
+      "location_name": "Kasarvadavali, Thane - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.26777,
+        "longitude": 72.97182
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 12238258,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:15:00Z",
+          "local": "2026-11-13T12:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 48103,
+          "observedInterval": "12025:45:00",
+          "percentComplete": 1202575.0,
+          "percentCoverage": 1202575.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          },
+          "value": 45.05,
+          "coordinates": {
+            "latitude": 19.26777,
+            "longitude": 72.97182
+          }
+        },
+        "summary": {
+          "min": -36.14,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 805.88,
+          "avg": 56.18888888888888,
+          "sd": 2.976161304618943
+        }
+      }
+    },
+    {
+      "location_id": 3409472,
+      "location_name": "Upvan Fort, Thane - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.222279,
+        "longitude": 72.957979
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:30:00Z",
+        "local": "2026-11-13T12:00:00+05:30"
+      },
+      "sensor": {
+        "id": 12238285,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:30:00Z",
+          "local": "2026-11-13T13:00:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 47980,
+          "observedInterval": "11995:00:00",
+          "percentComplete": 1199500.0,
+          "percentCoverage": 1199500.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:30:00Z",
+            "local": "2026-11-13T13:00:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:30:00Z",
+            "local": "2026-11-13T13:00:00+05:30"
+          },
+          "value": 71.87,
+          "coordinates": {
+            "latitude": 19.222279,
+            "longitude": 72.957979
+          }
+        },
+        "summary": {
+          "min": -31.5,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 832927.81,
+          "avg": 33.27666666666667,
+          "sd": 3.519694589023313
+        }
+      }
+    },
+    {
+      "location_id": 3409476,
+      "location_name": "CBD Belapur, Belapur - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.0243902,
+        "longitude": 73.0406721
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      },
+      "sensor": {
+        "id": 12238321,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:00:00Z",
+          "local": "2026-11-13T12:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 47182,
+          "observedInterval": "11795:30:00",
+          "percentComplete": 1179550.0,
+          "percentCoverage": 1179550.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          },
+          "value": 62.46,
+          "coordinates": {
+            "latitude": 19.0243902,
+            "longitude": 73.0406721
+          }
+        },
+        "summary": {
+          "min": -8.15,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 6196.19,
+          "avg": 68.39333333333333,
+          "sd": 3.1952542934796275
+        }
+      }
+    },
+    {
+      "location_id": 3409477,
+      "location_name": "Kopripada-Vashi, Navi Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.090337,
+        "longitude": 73.014232
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 12238330,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:15:00Z",
+          "local": "2026-11-13T12:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 45829,
+          "observedInterval": "11457:15:00",
+          "percentComplete": 1145725.0,
+          "percentCoverage": 1145725.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          },
+          "value": 57.45,
+          "coordinates": {
+            "latitude": 19.090337,
+            "longitude": 73.014232
+          }
+        },
+        "summary": {
+          "min": -17.69,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 5807.59,
+          "avg": 64.52666666666666,
+          "sd": 4.6813993634382545
+        }
+      }
+    },
+    {
+      "location_id": 3409478,
+      "location_name": "Bhayandar West, Mira-Bhayandar - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.296481,
+        "longitude": 72.840923
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T05:45:00Z",
+        "local": "2026-11-13T11:15:00+05:30"
+      },
+      "sensor": {
+        "id": 12238339,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T06:45:00Z",
+          "local": "2026-11-13T12:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 42532,
+          "observedInterval": "10633:00:00",
+          "percentComplete": 1063300.0,
+          "percentCoverage": 1063300.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T06:45:00Z",
+            "local": "2026-11-13T12:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T06:45:00Z",
+            "local": "2026-11-13T12:15:00+05:30"
+          },
+          "value": 48.19,
+          "coordinates": {
+            "latitude": 19.296481,
+            "longitude": 72.840923
+          }
+        },
+        "summary": {
+          "min": -18.95,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 766.1,
+          "avg": 96.7822222222222,
+          "sd": 15.749099797907322
+        }
+      }
+    },
+    {
+      "location_id": 3409479,
+      "location_name": "Mindspace-Malad West, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.1878657,
+        "longitude": 72.8304069
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      },
+      "sensor": {
+        "id": 12238348,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:15:00Z",
+          "local": "2026-11-13T12:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 45845,
+          "observedInterval": "11461:15:00",
+          "percentComplete": 1146125.0,
+          "percentCoverage": 1146125.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          },
+          "value": 30.85,
+          "coordinates": {
+            "latitude": 19.1878657,
+            "longitude": 72.8304069
+          }
+        },
+        "summary": {
+          "min": -21.19,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 99999.01,
+          "avg": 72.74555555555555,
+          "sd": 3.820667844471407
+        }
+      }
+    },
+    {
+      "location_id": 3409483,
+      "location_name": "Chembur, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.0364585,
+        "longitude": 72.8954371
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      },
+      "sensor": {
+        "id": 12238384,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:00:00Z",
+          "local": "2026-11-13T12:30:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 45625,
+          "observedInterval": "11406:15:00",
+          "percentComplete": 1140625.0,
+          "percentCoverage": 1140625.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:00:00Z",
+            "local": "2026-11-13T12:30:00+05:30"
+          },
+          "value": 68.66,
+          "coordinates": {
+            "latitude": 19.0364585,
+            "longitude": 72.8954371
+          }
+        },
+        "summary": {
+          "min": -22.17,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 948.2,
+          "avg": 52.55111111111111,
+          "sd": 1.9195210629506285
+        }
+      }
+    },
+    {
+      "location_id": 3409486,
+      "location_name": "Kherwadi_Bandra East, Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.0632143,
+        "longitude": 72.8456324
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 12238411,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:15:00Z",
+          "local": "2026-11-13T12:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 46771,
+          "observedInterval": "11692:45:00",
+          "percentComplete": 1169275.0,
+          "percentCoverage": 1169275.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          },
+          "value": 35.96,
+          "coordinates": {
+            "latitude": 19.0632143,
+            "longitude": 72.8456324
+          }
+        },
+        "summary": {
+          "min": -8.06,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 7746.21,
+          "avg": 83.85444444444445,
+          "sd": 9.924439670720854
+        }
+      }
+    },
+    {
+      "location_id": 3409487,
+      "location_name": "Sanpada, Navi Mumbai - MPCB",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "coordinates": {
+        "latitude": 19.0575752,
+        "longitude": 73.0151367
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 1,
+          "name": "N/A"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-19T10:00:00Z",
+        "local": "2025-02-19T15:30:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 12243949,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-19T10:00:00Z",
+          "local": "2025-02-19T15:30:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:15:00Z",
+          "local": "2026-11-13T12:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 44422,
+          "observedInterval": "11105:30:00",
+          "percentComplete": 1110550.0,
+          "percentCoverage": 1110550.0,
+          "datetimeFrom": {
+            "utc": "2025-02-19T10:00:00Z",
+            "local": "2025-02-19T15:30:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          },
+          "value": 42.02,
+          "coordinates": {
+            "latitude": 19.0575752,
+            "longitude": 73.0151367
+          }
+        },
+        "summary": {
+          "min": -7.15,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 829.64,
+          "avg": 23.93,
+          "sd": 0.0
+        }
+      }
+    },
+    {
+      "location_id": 3409512,
+      "location_name": "Kandivali West, Mumbai - BMC",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8559,
+        "name": "Brihanmumbai Municipal Corporation"
+      },
+      "coordinates": {
+        "latitude": 19.215859,
+        "longitude": 72.831718
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 12238585,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T06:45:00Z",
+          "local": "2026-11-13T12:15:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 37193,
+          "observedInterval": "9298:15:00",
+          "percentComplete": 929825.0,
+          "percentCoverage": 929825.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T06:45:00Z",
+            "local": "2026-11-13T12:15:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T06:45:00Z",
+            "local": "2026-11-13T12:15:00+05:30"
+          },
+          "value": 39.23,
+          "coordinates": {
+            "latitude": 19.215859,
+            "longitude": 72.831718
+          }
+        },
+        "summary": {
+          "min": -3.27,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 672.74,
+          "avg": 0.0,
+          "sd": 0.0
+        }
+      }
+    },
+    {
+      "location_id": 3409513,
+      "location_name": "Sewri, Mumbai - BMC",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8559,
+        "name": "Brihanmumbai Municipal Corporation"
+      },
+      "coordinates": {
+        "latitude": 19.000084,
+        "longitude": 72.85673
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:45:00Z",
+        "local": "2025-02-19T02:15:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 12238594,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:45:00Z",
+          "local": "2025-02-19T02:15:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:15:00Z",
+          "local": "2026-11-13T12:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 28582,
+          "observedInterval": "7145:30:00",
+          "percentComplete": 714550.0,
+          "percentCoverage": 714550.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:45:00Z",
+            "local": "2025-02-19T02:15:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          },
+          "value": 46.7,
+          "coordinates": {
+            "latitude": 19.000084,
+            "longitude": 72.85673
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 381490.28,
+          "avg": 75.43571428571428,
+          "sd": 5.6695292489555005
+        }
+      }
+    },
+    {
+      "location_id": 3409514,
+      "location_name": "Ghatkopar, Mumbai - BMC",
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "owner": {
+        "id": 8559,
+        "name": "Brihanmumbai Municipal Corporation"
+      },
+      "coordinates": {
+        "latitude": 19.083694,
+        "longitude": 72.920967
+      },
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "locality": null,
+      "location_instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "location_datetime_first": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "location_datetime_last": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      },
+      "sensor": {
+        "id": 12238603,
+        "name": "pm25 \u00b5g/m\u00b3",
+        "parameter": {
+          "id": 2,
+          "name": "pm25",
+          "units": "\u00b5g/m\u00b3",
+          "displayName": "PM2.5"
+        },
+        "datetimeFirst": {
+          "utc": "2025-02-18T20:15:00Z",
+          "local": "2025-02-19T01:45:00+05:30"
+        },
+        "datetimeLast": {
+          "utc": "2026-11-13T07:15:00Z",
+          "local": "2026-11-13T12:45:00+05:30"
+        },
+        "coverage": {
+          "expectedCount": 4,
+          "expectedInterval": "01:00:00",
+          "observedCount": 47372,
+          "observedInterval": "11843:00:00",
+          "percentComplete": 1184300.0,
+          "percentCoverage": 1184300.0,
+          "datetimeFrom": {
+            "utc": "2025-02-18T20:15:00Z",
+            "local": "2025-02-19T01:45:00+05:30"
+          },
+          "datetimeTo": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          }
+        },
+        "latest": {
+          "datetime": {
+            "utc": "2026-11-13T07:15:00Z",
+            "local": "2026-11-13T12:45:00+05:30"
+          },
+          "value": 64.03,
+          "coordinates": {
+            "latitude": 19.083694,
+            "longitude": 72.920967
+          }
+        },
+        "summary": {
+          "min": 0.0,
+          "q02": null,
+          "q25": null,
+          "median": null,
+          "q75": null,
+          "q98": null,
+          "max": 485.18,
+          "avg": 54.49181818181819,
+          "sd": 7.420507823837695
+        }
+      }
+    }
+  ]
+}

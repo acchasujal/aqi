@@ -43,3 +43,10 @@ Thumbs.db
 # and manifests remain versioned under the corresponding report directories.
 /reports/ml_pipeline/exp024/run*/oof.csv.gz
 /reports/ml_pipeline/exp025/run*/matched_oof.csv.gz
+
+# OpenAQ Stage 1 cached API pages and raw sensor records; summaries are tracked.
+/reports/creative_submission/openaq_stage1/raw/
+/reports/creative_submission/openaq_stage1/**/raw/
+# The May replay spot-check shares the same location/sensor catalogs as the main audit.
+/reports/creative_submission/openaq_stage1/historical_2025_05/MUMBAI_LOCATION_CATALOG.json
+/reports/creative_submission/openaq_stage1/historical_2025_05/PM25_SENSOR_CATALOG.json
