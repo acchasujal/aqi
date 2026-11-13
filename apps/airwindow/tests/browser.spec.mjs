@@ -5,6 +5,39 @@ import { readFileSync } from 'node:fs';
 
 const screenshots = path.resolve(process.env.AIRWINDOW_SCREENSHOT_DIR || '../../reports/creative_submission/screenshots');
 
+test('external research shows derived evidence without changing operational stations', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 720 });
+  const openaqRequests = [];
+  page.on('request', request => { if (request.url().includes('api.openaq.org')) openaqRequests.push(request.url()); });
+  await page.goto('/');
+  for (const name of ['Plan an activity', 'Historical replay', 'Evidence & sources', 'External Observation Research']) {
+    await expect(page.getByRole('button', { name })).toBeInViewport();
+  }
+  await page.getByRole('button', { name: 'External Observation Research' }).click();
+  await expect(page.getByRole('heading', { name: 'External Observation Research' })).toBeVisible();
+  await expect(page.getByText('57', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText(/not independent validation/i)).toBeVisible();
+  await expect(page.getByText(/Prospective verification unavailable/i)).toBeVisible();
+  await page.getByLabel('Inspect a sensor').selectOption('23320');
+  await expect(page.locator('.research-sensor')).toContainText('AirNow');
+  await expect(page.locator('.research-month')).toHaveCount(19);
+  await mkdir(screenshots, { recursive: true });
+  await page.screenshot({ path: path.join(screenshots, 'external_research_mobile.png'), fullPage: true });
+  expect(openaqRequests).toEqual([]);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.getByRole('button', { name: 'Plan an activity' }).click();
+  await expect(page.locator('.station-marker')).toHaveCount(4);
+});
+
+test('missing research artifact leaves the planner usable', async ({ page }) => {
+  await page.route('**/data/external_observation_research.json', route => route.fulfill({ status: 404, body: 'missing' }));
+  await page.goto('/');
+  await page.getByRole('button', { name: 'External Observation Research' }).click();
+  await expect(page.getByText(/Research summary unavailable/)).toBeVisible();
+  await page.getByRole('button', { name: 'Plan an activity' }).click();
+  await expect(page.getByRole('heading', { name: /Should you move/ })).toBeVisible();
+});
+
 test('station locator uses authentic coordinates and stays in sync with the planner', async ({ page }) => {
   await page.clock.install({ time: new Date('2026-11-11T09:00:00+05:30') });
   await page.goto('/');

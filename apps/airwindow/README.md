@@ -4,6 +4,8 @@ An activity scheduling prototype for school sports coordinators and outdoor-even
 
 The React/Vite/TypeScript client reads real, versioned static artifacts. It does not train a model or call external air-quality APIs. The current artifact is the frozen TASK011 final P_fix run, issued **10 November 2026 at 15:47:52 IST**, with PM history through **10 November at 09:00 IST**. Each station has 248 future forecast hours, ending **21 November 00:00 IST**. The UI shows issue, observation cutoff and validity horizon, and disables new planning after expiry. The former 8 November TASK008 forecast is preserved as `public/data/forecast_fallback_task008.json`.
 
+The **External Observation Research** navigation page reads `public/data/external_observation_research.json`, a derived aggregate from the local OpenAQ v3 audits. It presents sensor inventory, monthly coverage, quality and discrepancy evidence, explicitly separate from the four-station operational planner. No raw OpenAQ hours, API key or runtime OpenAQ request enters the client. If the research JSON is missing or invalid, the planner continues to work. See `reports/creative_submission/milestone_2/MILESTONE_2_RESEARCH.md` and `REFRESH_RUNBOOK.md` for the source boundary, local refresh, validation and rollback procedure. The live deployed product is at <https://airwindow-99085.web.app/>; this branch's research page is **not deployed**.
+
 ## Run locally
 
 Node 24 and npm were used on Windows ARM64. From this directory:

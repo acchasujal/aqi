@@ -304,3 +304,33 @@ Decision: retain exact archive-identity P_fix for TASK008 and isolate historical
 - **Confidence:** High for the tested UI boundary and artifact integrity; historical outcome and baseline comparisons remain retrospective and do not establish future benefit.
 - **Alternatives considered:** Show aggregate outcomes immediately, as in incoming commit `e624754`. Rejected for the merged UI because it would reverse the existing forecast-first reveal behavior and its regression coverage.
 - **Consequences / revisit trigger:** Keep app documentation aligned with reveal-gated evidence. Reconsider only with an explicit product decision and updated leakage/accessibility tests.
+
+## DEC-20261113-26 — OpenAQ Stage 1 is discovery evidence, not independent verification
+
+- **Date / owner:** 2026-11-13 / Codex
+- **Status:** Accepted for the Stage 1 audit only; no production data integration.
+- **Decision:** Treat the four AirWindow/OpenAQ station series as the same CPCB source. Screen additional OpenAQ locations for future study, but do not use OpenAQ redistribution of those four series as independent forecast verification. Keep AirNow Mumbai conditional pending physical-site, quality and licensing review.
+- **Evidence:** Live OpenAQ v3 returned matching location and PM2.5 sensor IDs, coordinates and CPCB provider for all four; 708–710 aligned hourly comparisons per station have 98.73–99.86% of values within 0.2 µg/m³. A bounded October–November 2026 audit found 43 locations, 57 PM2.5 sensors and 24 with at least 75% sampled hourly coverage; a May 2025 replay-period sample found 91.80–94.89% coverage for the four existing sensors. See `reports/creative_submission/openaq_stage1/`.
+- **Confidence:** High for common provenance of the four named sensor IDs; moderate for the sampled-period coverage screen. Rare larger value differences and other replay months remain uninvestigated.
+- **Alternatives:** Immediately use OpenAQ for independent verification or add new stations. Rejected because most sensors list CPCB as provider, and new sites have not passed AirWindow contract, methodology or claims review.
+- **Consequences / revisit trigger:** Stage 2 may test compatible observations and additional stations only after source attribution, interval semantics, historical coverage, freshness and quality are independently checked.
+
+## DEC-20261113-27 — Qualify OpenAQ only for bounded historical research
+
+- **Date / owner:** 2026-11-13 / Codex
+- **Status:** Accepted as a Stage 1.5 research screen; no frontend or forecast integration.
+- **Decision:** Screen each of 57 separate PM2.5 sensor series across all 19 AirWindow replay calendar months using IST hourly starts, actual API periods and explicit missingness. Five series pass the internal-research rule, 30 remain conditional and 22 ended before replay and are rejected. No CPCB-distributed OpenAQ series is labelled independent verification. Public redistribution remains on hold pending upstream terms; AirNow Mumbai remains conditional due sparse replay-wide coverage and unresolved physical/operator identity.
+- **Evidence:** `reports/creative_submission/openaq_stage1_5/MONTHLY_SENSOR_COVERAGE.csv` has 1,083 sensor-month rows with zero API failures/truncations. The four local station series have 10,113–10,836 aligned Train/OpenAQ comparisons; 384 differences exceed 0.2 µg/m³, including flagged extreme source-version changes. The original interval-end alignment has much smaller median error than ±1-hour shifts. `replay.json` is retrospective OOF, not archived real-time vintages; only later November forecast artifacts are versioned.
+- **Confidence:** High for sampled historical coverage, ID/provenance matching and the existence of flagged discrepancies. Moderate for exact source revision causes and instrument methodology; low for historical first-publication latency and upstream redistribution permission.
+- **Alternatives:** Treat all high-coverage CPCB copies as independent truth, merge nearby Worli/Deonar series, or silently replace extreme Train values. Rejected because source identity, censoring/flags and chronology would be misrepresented.
+- **Consequences / revisit trigger:** Stage 2 can prototype a research-only source-labelled observation store for accepted sensor-months after provider terms and per-sensor methods are cleared. Production station support and prospective forecast verification require separate evidence and immutable pre-target forecast vintages.
+
+## DEC-20261113-28 — Publish only derived OpenAQ research evidence in AirWindow
+
+- **Date / owner:** 2026-11-13 / Codex
+- **Status:** Accepted for this local Milestone 2 implementation; no deployment or production station change.
+- **Decision:** Keep OpenAQ raw and row-level normalized observations in ignored local research runs. Expose only source-labelled inventory, monthly coverage, sensor quality, agreement and discrepancy-classification aggregates through a versioned static JSON page. Require a successful source audit and boundary validation before replacing the last good derived artifact. Continue to treat all 384 discrepancies as unresolved or hypothesis-level, and do not report prospective forecast skill without genuine archived vintages.
+- **Evidence:** Stage 1.5 audited 57 series over 19 replay months with 1,083 rows and no final API failures. Milestone 2 matches 42,212 Train/OpenAQ hours; 24 discrepant current hours are flagged, 95 have partial current aggregation, and 265 have no such clue. The static JSON has no hourly values or API key and preserves the original four operational station IDs. The research report and manifest record source limits and hashes.
+- **Confidence:** High for dataset counts, exact-hour matching, static-publication boundary and deterministic classification; limited for historical revision causes, first-publication latency, physical AirNow identity and upstream reuse rights.
+- **Alternatives:** Publish raw OpenAQ series, add high-coverage stations as operational forecast sites, or relabel retrospective replay as prospective verification. Rejected because upstream rights, forecast availability and contemporaneous vintage evidence are insufficient.
+- **Consequences / revisit trigger:** Resolve upstream redistribution terms and establish immutable contemporaneous forecast-vintage archiving before any raw-data publication or prospective verification claim. A new sensor catalog requires explicit review rather than silent expansion.

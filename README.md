@@ -2,7 +2,7 @@
 
 Research and modelling repository for hourly PM2.5 forecasting at four Mumbai CPCB CAAQMS stations.
 
-> **Project status (baseline planning):** data audit completed from the initial challenge release; history-only baselines and an initial LightGBM comparison reported; weather-vintage experiment, complete raw-target model selection, final rule interpretation and final training refresh remain open. Do not treat the proposed blend as a proven final winner.
+> **Current repository status (2026-11-13):** the main competition work has concluded; this branch develops AirWindow's external-observation research from the versioned OpenAQ audits. Earlier baseline planning below is preserved as project history, not a current model-selection recommendation. The AirWindow forecast is a frozen November 2026 artifact, not a live feed.
 
 ## Start here (humans and AI agents)
 
@@ -88,6 +88,8 @@ The initial reproducible baseline pipeline, rolling validation and audit command
 AirWindow Mumbai 2.1 is a separate React/Vite/TypeScript planning product for school sports coordinators and outdoor-event organisers. It compares an existing booking with feasible one-, two- or three-hour windows at four genuine Mumbai monitoring stations, then exposes forecast limits and reasons to abstain. Historical replay separates aggregate retrospective evidence from each case's later observations, which remain hidden until revealed. The event brief is printable. The verified static application is deployed at <https://airwindow-99085.web.app/>. See [`apps/airwindow/README.md`](apps/airwindow/README.md), [`reports/creative_submission/PRODUCT_OVERVIEW.md`](reports/creative_submission/PRODUCT_OVERVIEW.md), the product and safety docs below, and [`docs/CREATIVE_TRACK_REPO_PLAN.md`](docs/CREATIVE_TRACK_REPO_PLAN.md).
 
 AirWindow consumes a validated, versioned P_fix forecast artifact and a separate replay artifact generated from TASK008 OOF predictions. The browser does not train or change the model. It shows the four actual stations, ranks complete contiguous one-, two- or three-hour windows, and retains the original schedule and honest missing-data/freshness information. Decision reliability remains uncalibrated: no robust recommendations, calibrated probabilities or prediction intervals are shown.
+
+The OpenAQ research branch adds an **External Observation Research** page using derived static coverage and provenance summaries. It does not add operational stations or make the frozen forecast live. See the [Milestone 2 research report](reports/creative_submission/milestone_2/MILESTONE_2_RESEARCH.md) and [refresh runbook](reports/creative_submission/milestone_2/REFRESH_RUNBOOK.md). The [historical decision replay notebook](https://colab.research.google.com/github/acchasujal/aqi/blob/main/apps/airwindow/notebooks/Decision_Replay.ipynb) is Colab-compatible and has been executed locally; hosted Colab execution is unverified.
 
 Read:
 

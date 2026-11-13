@@ -1,0 +1,7606 @@
+{
+  "status": "LIVE_BOUNDED_DISCOVERY",
+  "generated_at_utc": "2026-11-13T08:42:17.338152+00:00",
+  "date_from_utc": "2026-10-01T00:00:00Z",
+  "date_to_utc": "2026-11-11T00:00:00Z",
+  "results": [
+    {
+      "id": 2598,
+      "name": "Navi Mumbai Municipal Corporation Airoli",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 5400,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 5408,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 5404,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 13523,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.1494,
+        "longitude": 72.9986
+      },
+      "licenses": null,
+      "bounds": [
+        72.9986,
+        19.1494,
+        72.9986,
+        19.1494
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2016-03-21T18:30:00Z",
+        "local": "2016-03-22T00:00:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2020-04-09T00:15:00Z",
+        "local": "2020-04-09T05:45:00+05:30"
+      }
+    },
+    {
+      "id": 5593,
+      "name": "Pimpleshwar Mandir, Thane - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "provider": {
+        "id": 163,
+        "name": "caaqm"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 14830,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 14802,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 15198,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 14801,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 14806,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 14804,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.192056,
+        "longitude": 72.9585188
+      },
+      "licenses": null,
+      "bounds": [
+        72.9585188,
+        19.192056,
+        72.9585188,
+        19.192056
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2018-03-09T05:30:00Z",
+        "local": "2018-03-09T11:00:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2022-10-16T11:45:00Z",
+        "local": "2022-10-16T17:15:00+05:30"
+      }
+    },
+    {
+      "id": 6927,
+      "name": "Colaba, Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12235921,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 20137,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 12235922,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 19892,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 12235923,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341960,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 20139,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12235924,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 20142,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12235925,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 20143,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12235926,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12235927,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12235928,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 20144,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        },
+        {
+          "id": 12235929,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341961,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341962,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 18.91,
+        "longitude": 72.82
+      },
+      "licenses": null,
+      "bounds": [
+        72.82,
+        18.91,
+        72.82,
+        18.91
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2019-06-28T05:30:00Z",
+        "local": "2019-06-28T11:00:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      }
+    },
+    {
+      "id": 6943,
+      "name": "Mahape, Navi Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12235900,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 20128,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 12235901,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12235902,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 20069,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 14340937,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 19961,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12235903,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 20068,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12235904,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 20046,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12235905,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12235906,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12235907,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 20023,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        },
+        {
+          "id": 12235908,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341952,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341953,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.1135051,
+        "longitude": 73.008978
+      },
+      "licenses": null,
+      "bounds": [
+        73.008978,
+        19.1135051,
+        73.008978,
+        19.1135051
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2019-06-27T05:30:00Z",
+        "local": "2019-06-27T11:00:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      }
+    },
+    {
+      "id": 6945,
+      "name": "Kurla, Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 19993,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 12235829,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12235830,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 20076,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 12235831,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14340922,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 19968,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12235832,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 19975,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12235833,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 19978,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12235834,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12235835,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12289836,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 19987,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        },
+        {
+          "id": 12235836,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14340923,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14340924,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.0863,
+        "longitude": 72.8888
+      },
+      "licenses": null,
+      "bounds": [
+        72.8888,
+        19.0863,
+        72.8888,
+        19.0863
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2019-06-19T00:00:00Z",
+        "local": "2019-06-19T05:30:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      }
+    },
+    {
+      "id": 6948,
+      "name": "Chhatrapati Shivaji Intl. Airport (T2), Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 19976,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 12235855,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12235856,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 19977,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 12235857,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14340928,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 19979,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12235858,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12235859,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 19980,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12235860,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 19981,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12235861,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 19982,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        },
+        {
+          "id": 12235862,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12235863,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14340929,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14340930,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.10078,
+        "longitude": 72.87462
+      },
+      "licenses": null,
+      "bounds": [
+        72.87462,
+        19.10078,
+        72.87462,
+        19.10078
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2019-06-18T23:15:00Z",
+        "local": "2019-06-19T04:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-10-12T06:00:00Z",
+        "local": "2026-10-12T11:30:00+05:30"
+      }
+    },
+    {
+      "id": 6956,
+      "name": "Powai, Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12235891,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 20125,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 12235892,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 20083,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 12235893,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14340934,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 20054,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12235894,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 20010,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12235895,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 20079,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12235896,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12235897,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 20101,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        },
+        {
+          "id": 12235898,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12235899,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14340935,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14340936,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.1375,
+        "longitude": 72.915056
+      },
+      "licenses": null,
+      "bounds": [
+        72.915056,
+        19.1375,
+        72.915056,
+        19.1375
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2019-06-18T23:15:00Z",
+        "local": "2019-06-19T04:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      }
+    },
+    {
+      "id": 6959,
+      "name": "Siddharth Nagar-Worli, Mumbai - IITM",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 20029,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 12236430,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12236431,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 20030,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 12236432,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14342065,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12236433,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 20031,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12236434,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 20032,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 20033,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12236435,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12236436,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 20034,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        },
+        {
+          "id": 12236437,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14342066,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14342067,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.000083,
+        "longitude": 72.813993
+      },
+      "licenses": null,
+      "bounds": [
+        72.813993,
+        19.000083,
+        72.813993,
+        19.000083
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2019-06-20T12:00:00Z",
+        "local": "2019-06-20T17:30:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-12T02:00:00Z",
+        "local": "2026-11-12T07:30:00+05:30"
+      }
+    },
+    {
+      "id": 6965,
+      "name": "Borivali East, Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 1,
+          "name": "N/A"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 20075,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 12252653,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12252654,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12252655,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 20081,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 14341949,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12252656,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 20084,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12252657,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 20085,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 20087,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12252658,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12252659,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12252660,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 20090,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        },
+        {
+          "id": 12252661,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341950,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341951,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.227474,
+        "longitude": 72.864394
+      },
+      "licenses": null,
+      "bounds": [
+        72.864394,
+        19.227474,
+        72.864394,
+        19.227474
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2019-06-20T16:00:00Z",
+        "local": "2019-06-20T21:30:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      }
+    },
+    {
+      "id": 6967,
+      "name": "Sion, Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12243925,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 20109,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 12243926,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12243927,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 20107,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 14340938,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 20098,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12243928,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12243929,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 20097,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12243930,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 20096,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12243931,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12243932,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 20095,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        },
+        {
+          "id": 12243933,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14340939,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14340940,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.047,
+        "longitude": 72.8746
+      },
+      "licenses": null,
+      "bounds": [
+        72.8746,
+        19.047,
+        72.8746,
+        19.047
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2019-06-27T05:15:00Z",
+        "local": "2019-06-27T10:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:30:00Z",
+        "local": "2026-11-13T12:00:00+05:30"
+      }
+    },
+    {
+      "id": 6987,
+      "name": "Vile Parle West, Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 20236,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 12235846,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12235847,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12235848,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 20239,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 14340925,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12235849,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 20240,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12235850,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 20243,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 20251,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12235851,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12235852,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 20254,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        },
+        {
+          "id": 12235853,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12235854,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14340926,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14340927,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.10861,
+        "longitude": 72.83622
+      },
+      "licenses": null,
+      "bounds": [
+        72.83622,
+        19.10861,
+        72.83622,
+        19.10861
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2019-06-18T23:00:00Z",
+        "local": "2019-06-19T04:30:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-05-30T09:30:00Z",
+        "local": "2026-05-30T15:00:00+05:30"
+      }
+    },
+    {
+      "id": 7850,
+      "name": "Bandra, Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "provider": {
+        "id": 163,
+        "name": "caaqm"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 36455,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 36453,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 36451,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 22798,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 36447,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 36446,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.0627,
+        "longitude": 72.84614
+      },
+      "licenses": null,
+      "bounds": [
+        72.84614,
+        19.0627,
+        72.84614,
+        19.0627
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2020-01-09T00:15:00Z",
+        "local": "2020-01-09T05:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2021-12-24T04:45:00Z",
+        "local": "2021-12-24T10:15:00+05:30"
+      }
+    },
+    {
+      "id": 8039,
+      "name": "Mumbai",
+      "locality": "India",
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "provider": {
+        "id": 119,
+        "name": "AirNow"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 23320,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.07283,
+        "longitude": 72.88261
+      },
+      "licenses": [
+        {
+          "id": 33,
+          "name": "US Public Domain",
+          "attribution": {
+            "name": "Unknown Governmental Organization",
+            "url": null
+          },
+          "dateFrom": "2016-01-30",
+          "dateTo": null
+        }
+      ],
+      "bounds": [
+        72.88261,
+        19.07283,
+        72.88261,
+        19.07283
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2016-11-09T19:00:00Z",
+        "local": "2016-11-10T00:30:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T04:30:00Z",
+        "local": "2026-11-13T10:00:00+05:30"
+      }
+    },
+    {
+      "id": 11602,
+      "name": "Bandra Kurla Complex, Mumbai - IITM",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "provider": {
+        "id": 163,
+        "name": "caaqm"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 39408,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 39406,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 39409,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 39405,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 39404,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 39407,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.053536000000005,
+        "longitude": 72.84643
+      },
+      "licenses": null,
+      "bounds": [
+        72.84643,
+        19.053536000000005,
+        72.84643,
+        19.053536000000005
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2020-11-13T12:15:00Z",
+        "local": "2020-11-13T17:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2022-10-16T15:45:00Z",
+        "local": "2022-10-16T21:15:00+05:30"
+      }
+    },
+    {
+      "id": 11604,
+      "name": "Deonar, Mumbai - IITM",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "provider": {
+        "id": 163,
+        "name": "caaqm"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 39420,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 39418,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 39421,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 39417,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 39416,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 39419,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.04946,
+        "longitude": 72.923
+      },
+      "licenses": null,
+      "bounds": [
+        72.923,
+        19.04946,
+        72.923,
+        19.04946
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2020-11-13T12:15:00Z",
+        "local": "2020-11-13T17:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2022-10-16T15:45:00Z",
+        "local": "2022-10-16T21:15:00+05:30"
+      }
+    },
+    {
+      "id": 11606,
+      "name": "Borivali East, Mumbai - IITM",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 39431,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 12236413,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12236414,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12236415,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 39430,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 14341020,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12236416,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 39432,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12236417,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 39429,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 39428,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12236418,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12236419,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12236420,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14342059,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14342060,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.23241,
+        "longitude": 72.86895
+      },
+      "licenses": null,
+      "bounds": [
+        72.86895,
+        19.23241,
+        72.86895,
+        19.23241
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2020-11-13T12:30:00Z",
+        "local": "2020-11-13T18:00:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T04:45:00Z",
+        "local": "2026-11-13T10:15:00+05:30"
+      }
+    },
+    {
+      "id": 11611,
+      "name": "Malad West, Mumbai - IITM",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12236421,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 39458,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 12236422,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 39456,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 12236423,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341021,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 39459,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12236424,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12236425,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 39455,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 39454,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12236426,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12236427,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12236428,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 39457,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        },
+        {
+          "id": 12236429,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14342063,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14342064,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.19709,
+        "longitude": 72.82204
+      },
+      "licenses": null,
+      "bounds": [
+        72.82204,
+        19.19709,
+        72.82204,
+        19.19709
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2020-11-13T12:15:00Z",
+        "local": "2020-11-13T17:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T05:45:00Z",
+        "local": "2026-11-13T11:15:00+05:30"
+      }
+    },
+    {
+      "id": 11612,
+      "name": "Sector-19A Nerul, Navi Mumbai - IITM",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "provider": {
+        "id": 163,
+        "name": "caaqm"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 39464,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 39462,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 39465,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 39461,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 39460,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 39463,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.044,
+        "longitude": 73.03250000000001
+      },
+      "licenses": null,
+      "bounds": [
+        73.03250000000001,
+        19.044,
+        73.03250000000001,
+        19.044
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2020-11-13T12:00:00Z",
+        "local": "2020-11-13T17:30:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2022-10-16T16:00:00Z",
+        "local": "2022-10-16T21:30:00+05:30"
+      }
+    },
+    {
+      "id": 12024,
+      "name": "Chakala-Andheri East, Mumbai - IITM",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12236406,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 40569,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 12236407,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12236408,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 40574,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 14341017,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12236409,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 40570,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 40572,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12442195,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 40571,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12442196,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12236410,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12236411,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 40573,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        },
+        {
+          "id": 12236412,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341018,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341019,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.11074,
+        "longitude": 72.86084
+      },
+      "licenses": null,
+      "bounds": [
+        72.86084,
+        19.11074,
+        72.86084,
+        19.11074
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2020-12-08T09:00:00Z",
+        "local": "2020-12-08T14:30:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      }
+    },
+    {
+      "id": 12039,
+      "name": "Khindipada-Bhandup West, Mumbai - IITM",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 40636,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 12236389,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12236390,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12236391,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 40639,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 14342056,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12236392,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 40634,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12236393,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 40615,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 40608,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12236394,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12236395,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 40617,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        },
+        {
+          "id": 12236396,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12236397,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14342057,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14342058,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.164394,
+        "longitude": 72.928297
+      },
+      "licenses": null,
+      "bounds": [
+        72.928297,
+        19.164394,
+        72.928297,
+        19.164394
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2020-12-16T12:45:00Z",
+        "local": "2020-12-16T18:15:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      }
+    },
+    {
+      "id": 12040,
+      "name": "Mulund West, Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 40609,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 12236476,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12236477,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 40612,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 12236478,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14342082,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12236479,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 40644,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 40628,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12236480,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12236481,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 40641,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12236482,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12236483,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 40640,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        },
+        {
+          "id": 12236484,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14342083,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14342084,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.175,
+        "longitude": 72.9419
+      },
+      "licenses": null,
+      "bounds": [
+        72.9419,
+        19.175,
+        72.9419,
+        19.175
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2020-12-16T12:30:00Z",
+        "local": "2020-12-16T18:00:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      }
+    },
+    {
+      "id": 12044,
+      "name": "Kandivali East, Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        },
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12236467,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 40616,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 12236468,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12236469,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 40624,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 14341025,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 40627,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12236470,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 40652,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12236471,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 40650,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12236472,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12236473,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 40620,
+          "name": "so2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 6,
+            "name": "so2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "SO\u2082 mass"
+          }
+        },
+        {
+          "id": 12236474,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12236475,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14342080,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14342081,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.2058,
+        "longitude": 72.8682
+      },
+      "licenses": null,
+      "bounds": [
+        72.8682,
+        19.2058,
+        72.8682,
+        19.2058
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2020-12-16T12:30:00Z",
+        "local": "2020-12-16T18:00:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-04-18T05:45:00Z",
+        "local": "2026-04-18T11:15:00+05:30"
+      }
+    },
+    {
+      "id": 60661,
+      "name": "Siddharth Nagar-Worli, Mumbai - IITM",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 4,
+        "name": "Unknown Governmental Organization"
+      },
+      "provider": {
+        "id": 163,
+        "name": "caaqm"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 389760,
+          "name": "co \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 4,
+            "name": "co",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "CO mass"
+          }
+        },
+        {
+          "id": 389767,
+          "name": "no2 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 5,
+            "name": "no2",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "NO\u2082 mass"
+          }
+        },
+        {
+          "id": 389777,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 389771,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 389761,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.000083,
+        "longitude": 72.813993
+      },
+      "licenses": null,
+      "bounds": [
+        72.813993,
+        19.000083,
+        72.813993,
+        19.000083
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2021-01-12T14:00:00Z",
+        "local": "2021-01-12T19:30:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2022-10-16T16:00:00Z",
+        "local": "2022-10-16T21:30:00+05:30"
+      }
+    },
+    {
+      "id": 3409322,
+      "name": "Pimpleshwar Mandir, Thane - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12235639,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12235640,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12235641,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341878,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12235642,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12235643,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12235644,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12235645,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12235646,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12235647,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341879,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341880,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.192056,
+        "longitude": 72.9585188
+      },
+      "licenses": null,
+      "bounds": [
+        72.9585188,
+        19.192056,
+        72.9585188,
+        19.192056
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      }
+    },
+    {
+      "id": 3409323,
+      "name": "Worli, Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12235909,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12235910,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12235911,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341954,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12235912,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12235913,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12235914,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12235915,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12235916,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12235917,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341955,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341956,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 18.9936162,
+        "longitude": 72.8128113
+      },
+      "licenses": null,
+      "bounds": [
+        72.8128113,
+        18.9936162,
+        72.8128113,
+        18.9936162
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:30:00Z",
+        "local": "2026-11-13T12:00:00+05:30"
+      }
+    },
+    {
+      "id": 3409328,
+      "name": "Bandra Kurla Complex, Mumbai - IITM",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": false,
+      "instruments": [
+        {
+          "id": 1,
+          "name": "N/A"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12708241,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12708242,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12708243,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14342047,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12708244,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12708245,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12708246,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12708247,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12708248,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12708249,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14342048,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14342049,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.0627,
+        "longitude": 72.84614
+      },
+      "licenses": null,
+      "bounds": [
+        72.84614,
+        19.0627,
+        72.84614,
+        19.0627
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-04-07T13:00:00Z",
+        "local": "2025-04-07T18:30:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T05:45:00Z",
+        "local": "2026-11-13T11:15:00+05:30"
+      }
+    },
+    {
+      "id": 3409329,
+      "name": "Deonar, Mumbai - IITM",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12236380,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12236381,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12236382,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341011,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12236383,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12236384,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12236385,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12236386,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12236387,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12236388,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341012,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341013,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.04946,
+        "longitude": 72.923
+      },
+      "licenses": null,
+      "bounds": [
+        72.923,
+        19.04946,
+        72.923,
+        19.04946
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      }
+    },
+    {
+      "id": 3409330,
+      "name": "Sector-19A Nerul, Navi Mumbai - IITM",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8546,
+        "name": "Indian Institute of Tropical Meteorology"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": false,
+      "instruments": [
+        {
+          "id": 1,
+          "name": "N/A"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 14230325,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 14230326,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14342061,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 14230327,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 14230328,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 14230329,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14342062,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.044,
+        "longitude": 73.0325
+      },
+      "licenses": null,
+      "bounds": [
+        73.0325,
+        19.044,
+        73.0325,
+        19.044
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-09-28T00:00:00Z",
+        "local": "2025-09-28T05:30:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2025-09-28T00:00:00Z",
+        "local": "2025-09-28T05:30:00+05:30"
+      }
+    },
+    {
+      "id": 3409469,
+      "name": "Kasarvadavali, Thane - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12238253,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12238254,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12238255,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341537,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12238256,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12238257,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12238258,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12238259,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12238260,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12238261,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341538,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341539,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.26777,
+        "longitude": 72.97182
+      },
+      "licenses": null,
+      "bounds": [
+        72.97182,
+        19.26777,
+        72.97182,
+        19.26777
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      }
+    },
+    {
+      "id": 3409472,
+      "name": "Upvan Fort, Thane - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12238280,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12238281,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12238282,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341546,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12238283,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12238284,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12238285,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12238286,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12238287,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12238288,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341547,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341548,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.222279,
+        "longitude": 72.957979
+      },
+      "licenses": null,
+      "bounds": [
+        72.957979,
+        19.222279,
+        72.957979,
+        19.222279
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:30:00Z",
+        "local": "2026-11-13T12:00:00+05:30"
+      }
+    },
+    {
+      "id": 3409476,
+      "name": "CBD Belapur, Belapur - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12238316,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12238317,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12238318,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341555,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12238319,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12238320,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12238321,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12238322,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12238323,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12238324,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341556,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341557,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.0243902,
+        "longitude": 73.0406721
+      },
+      "licenses": null,
+      "bounds": [
+        73.0406721,
+        19.0243902,
+        73.0406721,
+        19.0243902
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      }
+    },
+    {
+      "id": 3409477,
+      "name": "Kopripada-Vashi, Navi Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12238325,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12238326,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12238327,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341558,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12238328,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12238329,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12238330,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12238331,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12238332,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12238333,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341559,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341560,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.090337,
+        "longitude": 73.014232
+      },
+      "licenses": null,
+      "bounds": [
+        73.014232,
+        19.090337,
+        73.014232,
+        19.090337
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      }
+    },
+    {
+      "id": 3409478,
+      "name": "Bhayandar West, Mira-Bhayandar - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12238334,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12238335,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12238336,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341561,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12238337,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12238338,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12238339,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12238340,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12238341,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12238342,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341562,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341563,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.296481,
+        "longitude": 72.840923
+      },
+      "licenses": null,
+      "bounds": [
+        72.840923,
+        19.296481,
+        72.840923,
+        19.296481
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T05:45:00Z",
+        "local": "2026-11-13T11:15:00+05:30"
+      }
+    },
+    {
+      "id": 3409479,
+      "name": "Mindspace-Malad West, Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12238343,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12238344,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12238345,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341564,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12238346,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12238347,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12238348,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12238349,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12238350,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12238351,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341565,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341566,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.1878657,
+        "longitude": 72.8304069
+      },
+      "licenses": null,
+      "bounds": [
+        72.8304069,
+        19.1878657,
+        72.8304069,
+        19.1878657
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      }
+    },
+    {
+      "id": 3409482,
+      "name": "Bandra Kurla Complex, Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12238370,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12238371,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12238372,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341573,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12238373,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12238374,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12238375,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12238376,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12238377,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12238378,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341574,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341575,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.065931,
+        "longitude": 72.862131
+      },
+      "licenses": null,
+      "bounds": [
+        72.862131,
+        19.065931,
+        72.862131,
+        19.065931
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      }
+    },
+    {
+      "id": 3409483,
+      "name": "Chembur, Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12238379,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12238380,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12238381,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341576,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12238382,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12238383,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12238384,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12238385,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12238386,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12238387,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341577,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341578,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.0364585,
+        "longitude": 72.8954371
+      },
+      "licenses": null,
+      "bounds": [
+        72.8954371,
+        19.0364585,
+        72.8954371,
+        19.0364585
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:00:00Z",
+        "local": "2026-11-13T11:30:00+05:30"
+      }
+    },
+    {
+      "id": 3409486,
+      "name": "Kherwadi_Bandra East, Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12238406,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12238407,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12238408,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341585,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12238409,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12238410,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12238411,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12238412,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12238413,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12238414,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341586,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341587,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.0632143,
+        "longitude": 72.8456324
+      },
+      "licenses": null,
+      "bounds": [
+        72.8456324,
+        19.0632143,
+        72.8456324,
+        19.0632143
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      }
+    },
+    {
+      "id": 3409487,
+      "name": "Sanpada, Navi Mumbai - MPCB",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8532,
+        "name": "Maharashtra Pollution Control Board"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": false,
+      "instruments": [
+        {
+          "id": 1,
+          "name": "N/A"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12243944,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12243945,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12243946,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341588,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12243947,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12243948,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12243949,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12243950,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12243951,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12243952,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341589,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341590,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.0575752,
+        "longitude": 73.0151367
+      },
+      "licenses": null,
+      "bounds": [
+        73.0151367,
+        19.0575752,
+        73.0151367,
+        19.0575752
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-19T10:00:00Z",
+        "local": "2025-02-19T15:30:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      }
+    },
+    {
+      "id": 3409510,
+      "name": "Byculla, Mumbai - BMC",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8559,
+        "name": "Brihanmumbai Municipal Corporation"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12238562,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12238563,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12238564,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341639,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12238565,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12238566,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12238567,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12238568,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12238569,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12238570,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341640,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341641,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 18.9767,
+        "longitude": 72.838
+      },
+      "licenses": null,
+      "bounds": [
+        72.838,
+        18.9767,
+        72.838,
+        18.9767
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      }
+    },
+    {
+      "id": 3409511,
+      "name": "Shivaji Nagar, Mumbai - BMC",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8559,
+        "name": "Brihanmumbai Municipal Corporation"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12238571,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12238572,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12238573,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341642,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12238574,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12238575,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12238576,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12238577,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12238578,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12238579,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341643,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341644,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.060498,
+        "longitude": 72.923356
+      },
+      "licenses": null,
+      "bounds": [
+        72.923356,
+        19.060498,
+        72.923356,
+        19.060498
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      }
+    },
+    {
+      "id": 3409512,
+      "name": "Kandivali West, Mumbai - BMC",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8559,
+        "name": "Brihanmumbai Municipal Corporation"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12238580,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12238581,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12238582,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14342261,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12238583,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12238584,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12238585,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12238586,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12238587,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12238588,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14342262,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14342263,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.215859,
+        "longitude": 72.831718
+      },
+      "licenses": null,
+      "bounds": [
+        72.831718,
+        19.215859,
+        72.831718,
+        19.215859
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      }
+    },
+    {
+      "id": 3409513,
+      "name": "Sewri, Mumbai - BMC",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8559,
+        "name": "Brihanmumbai Municipal Corporation"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12238589,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12238590,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12238591,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14342264,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12238592,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12238593,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12238594,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12238595,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12238596,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12238597,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14342265,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14342266,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.000084,
+        "longitude": 72.85673
+      },
+      "licenses": null,
+      "bounds": [
+        72.85673,
+        19.000084,
+        72.85673,
+        19.000084
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:45:00Z",
+        "local": "2025-02-19T02:15:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      }
+    },
+    {
+      "id": 3409514,
+      "name": "Ghatkopar, Mumbai - BMC",
+      "locality": null,
+      "timezone": "Asia/Kolkata",
+      "country": {
+        "id": 9,
+        "code": "IN",
+        "name": "India"
+      },
+      "owner": {
+        "id": 8559,
+        "name": "Brihanmumbai Municipal Corporation"
+      },
+      "provider": {
+        "id": 168,
+        "name": "CPCB"
+      },
+      "isMobile": false,
+      "isMonitor": true,
+      "instruments": [
+        {
+          "id": 2,
+          "name": "Government Monitor"
+        }
+      ],
+      "sensors": [
+        {
+          "id": 12238598,
+          "name": "co ppb",
+          "parameter": {
+            "id": 102,
+            "name": "co",
+            "units": "ppb",
+            "displayName": "CO"
+          }
+        },
+        {
+          "id": 12238599,
+          "name": "no ppb",
+          "parameter": {
+            "id": 24,
+            "name": "no",
+            "units": "ppb",
+            "displayName": "NO"
+          }
+        },
+        {
+          "id": 12238600,
+          "name": "no2 ppb",
+          "parameter": {
+            "id": 15,
+            "name": "no2",
+            "units": "ppb",
+            "displayName": "NO\u2082"
+          }
+        },
+        {
+          "id": 14341645,
+          "name": "nox ppb",
+          "parameter": {
+            "id": 23,
+            "name": "nox",
+            "units": "ppb",
+            "displayName": "NOX"
+          }
+        },
+        {
+          "id": 12238601,
+          "name": "o3 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 3,
+            "name": "o3",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "O\u2083 mass"
+          }
+        },
+        {
+          "id": 12238602,
+          "name": "pm10 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 1,
+            "name": "pm10",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM10"
+          }
+        },
+        {
+          "id": 12238603,
+          "name": "pm25 \u00b5g/m\u00b3",
+          "parameter": {
+            "id": 2,
+            "name": "pm25",
+            "units": "\u00b5g/m\u00b3",
+            "displayName": "PM2.5"
+          }
+        },
+        {
+          "id": 12238604,
+          "name": "relativehumidity %",
+          "parameter": {
+            "id": 98,
+            "name": "relativehumidity",
+            "units": "%",
+            "displayName": "RH"
+          }
+        },
+        {
+          "id": 12238605,
+          "name": "so2 ppb",
+          "parameter": {
+            "id": 101,
+            "name": "so2",
+            "units": "ppb",
+            "displayName": "SO\u2082"
+          }
+        },
+        {
+          "id": 12238606,
+          "name": "temperature c",
+          "parameter": {
+            "id": 100,
+            "name": "temperature",
+            "units": "c",
+            "displayName": "Temperature (C)"
+          }
+        },
+        {
+          "id": 14341646,
+          "name": "wind_direction deg",
+          "parameter": {
+            "id": 22,
+            "name": "wind_direction",
+            "units": "deg",
+            "displayName": "Wind direction"
+          }
+        },
+        {
+          "id": 14341647,
+          "name": "wind_speed m/s",
+          "parameter": {
+            "id": 34,
+            "name": "wind_speed",
+            "units": "m/s",
+            "displayName": "Wind speed"
+          }
+        }
+      ],
+      "coordinates": {
+        "latitude": 19.083694,
+        "longitude": 72.920967
+      },
+      "licenses": null,
+      "bounds": [
+        72.920967,
+        19.083694,
+        72.920967,
+        19.083694
+      ],
+      "distance": null,
+      "datetimeFirst": {
+        "utc": "2025-02-18T20:15:00Z",
+        "local": "2025-02-19T01:45:00+05:30"
+      },
+      "datetimeLast": {
+        "utc": "2026-11-13T06:15:00Z",
+        "local": "2026-11-13T11:45:00+05:30"
+      }
+    }
+  ]
+}
