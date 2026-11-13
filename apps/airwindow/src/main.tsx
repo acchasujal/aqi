@@ -3,9 +3,10 @@ import { createRoot } from 'react-dom/client';
 import type { BaselineComparison, ForecastArtifact, ForecastHour, ReplayArtifact, ReplayCase, Station, TimeWindow, UnavailablePeriod } from './types.ts';
 import { completeWindow, dateKey, dateLabel, enumerateWindows, isExpired, matchedValidation, differenceLabel, numberLabel, overlapsUnavailable, schoolSportsDayPlan, stampLabel, stationMapPositions, timeLabel, unavailablePeriodError, validateForecast, validateReplay, validateBaselineComparison, observationAge } from './domain.ts';
 import { ReplayEvidence, ReplayWindowChart } from './replayEvidence.tsx';
+import { ExternalResearch } from './externalResearch.tsx';
 import './styles.css';
 
-type Page = 'plan' | 'replay' | 'evidence';
+type Page = 'plan' | 'replay' | 'evidence' | 'research';
 type Plan = { stationId: string; date: string; duration: number; original: string; earliest: string; latest: string };
 type Comparison = { plan: Plan; original: TimeWindow; windows: TimeWindow[]; best: TimeWindow | null; difference: number | null; periods: UnavailablePeriod[]; completeCount: number; excludedCount: number; originalConflict: boolean };
 const STATION_SHORT: Record<string, string> = { '11606': 'Borivali East', '11611': 'Malad West', '3409510': 'Byculla', '3409511': 'Shivaji Nagar' };
@@ -176,7 +177,7 @@ function App() {
     <a className="skip-link" href="#main">Skip to content</a>
     <header className="site-header no-print"><div className="header-inner">
       <a className="brand" href="#" onClick={e => { e.preventDefault(); setPage('plan'); setDemoMode(null); }} aria-label="AirWindow home"><span className="brand-mark"><i/><i/><i/></span><span>AirWindow<span className="brand-city">MUMBAI</span></span><span className="version-pill">2.1</span></a>
-      <nav aria-label="Main navigation">{(['plan', 'replay', 'evidence'] as Page[]).map(p => <button key={p} className={page === p ? 'nav-active' : ''} aria-current={page === p ? 'page' : undefined} onClick={() => { setPage(p); setBrief(false); setDemoMode(null); }}>{p === 'plan' ? 'Plan an activity' : p === 'replay' ? 'Historical replay' : 'Evidence & sources'}</button>)}</nav>
+      <nav aria-label="Main navigation">{(['plan', 'replay', 'evidence', 'research'] as Page[]).map(p => <button key={p} className={page === p ? 'nav-active' : ''} aria-current={page === p ? 'page' : undefined} onClick={() => { setPage(p); setBrief(false); setDemoMode(null); }}>{p === 'plan' ? 'Plan an activity' : p === 'replay' ? 'Historical replay' : p === 'evidence' ? 'Evidence & sources' : 'External Observation Research'}</button>)}</nav>
       <span className="header-caption"><span className="status-dot"/> Independent challenge prototype</span>
     </div></header>
 
@@ -231,7 +232,7 @@ function App() {
           {brief && <EventBrief artifact={artifact} station={comparedStation} comparison={comparison} onClose={() => setBrief(false)}/>}
         </div>}
         <section className="boundary-note no-print"><span>FOUR STATIONS. CLEAR LIMITS.</span><p>A monitoring station may not represent nearby streets, a school ground, or your exact location. This is an independent planning prototype. For health recommendations, consult <a href="https://cpcb.nic.in/" target="_blank" rel="noreferrer">official CPCB guidance ↗</a>.</p></section>
-      </> : page === 'replay' ? <ReplayView replay={replay} baseline={baseline} baselineError={baselineError} error={replayError} demo={demoMode === 'historical'} onRetry={() => setReplayError('')}/> : <EvidenceView artifact={artifact} replay={replay}/>}
+      </> : page === 'replay' ? <ReplayView replay={replay} baseline={baseline} baselineError={baselineError} error={replayError} demo={demoMode === 'historical'} onRetry={() => setReplayError('')}/> : page === 'research' ? <ExternalResearch/> : <EvidenceView artifact={artifact} replay={replay}/>}
     </main>
     <footer className="site-footer no-print"><div><span className="footer-brand">AirWindow Mumbai</span><p>Better-timed plans. Clearly stated limits.</p></div><div><a href="https://github.com/acchasujal/aqi/tree/main" target="_blank" rel="noreferrer">Source & methodology ↗</a><span>Built for the Google Mumbai Data Challenge · 2026</span></div></footer>
   </>;

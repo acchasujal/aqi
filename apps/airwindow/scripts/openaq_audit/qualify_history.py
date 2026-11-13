@@ -187,6 +187,7 @@ def write_csv(path: Path, rows: list[dict[str, Any]], columns: list[str]) -> Non
 
 def run(*, output: Path, max_pages: int = 25, max_sensors: int = 57,
         workers: int = 4) -> dict[str, Any]:
+    retrieval_started_at_utc = datetime.now(timezone.utc).isoformat()
     replay = json.loads(REPLAY.read_text(encoding="utf-8"))
     months = replay_months(replay["cases"])
     catalog = json.loads((STAGE1 / "PM25_SENSOR_CATALOG.json").read_text(encoding="utf-8"))
@@ -209,6 +210,7 @@ def run(*, output: Path, max_pages: int = 25, max_sensors: int = 57,
     discrepancy_rows: list[dict[str, Any]] = []
     discrepancy_summaries = []
     failures = []
+    sensor_retrieval: list[dict[str, Any]] = []
     monthly_fallback_sensors = list(previous.get("monthly_fallback_sensors", [])) if reuse_hourly else []
     selected = sensors[:max_sensors]
     def fetch_one(sensor: dict[str, Any]) -> tuple[list[dict[str, Any]], bool, str, str | None]:
@@ -273,6 +275,12 @@ def run(*, output: Path, max_pages: int = 25, max_sensors: int = 57,
                 record_path = output / "raw" / "hourly" / f"sensor_{sid}.json"
                 record_path.parent.mkdir(parents=True, exist_ok=True)
                 record_path.write_text(json.dumps(records), encoding="utf-8")
+            sensor_retrieval.append({"location_id": int(sensor["location_id"]),
+                                     "sensor_id": sid,
+                                     "provider": (sensor.get("provider") or {}).get("name"),
+                                     "status": status, "retrieved_hourly_rows": len(records),
+                                     "raw_hourly_sha256": hashlib.sha256(record_path.read_bytes()).hexdigest()
+                                     if status in {"FETCHED", "FETCHED_MONTHLY_FALLBACK"} else None})
             coverage_rows.extend(monthly_coverage(sensor, records, month,
                                  fetch_status=status, truncated=truncated) for month in months)
             if sid in {12236418, 12236426, 12238567, 12238576} and status in {
@@ -285,6 +293,7 @@ def run(*, output: Path, max_pages: int = 25, max_sensors: int = 57,
     discrepancy_summaries.sort(key=lambda r: r["sensor_id"])
     failures.sort(key=lambda r: r["sensor_id"])
     monthly_fallback_sensors = sorted(set(monthly_fallback_sensors))
+    sensor_retrieval.sort(key=lambda r: r["sensor_id"])
     coverage_columns = list(coverage_rows[0]) if coverage_rows else []
     diff_columns = ["station_id", "sensor_id", "hour_start_ist", "hour_end_ist", "train_pm25",
                     "openaq_pm25", "signed_difference", "absolute_difference", "openaq_unit",
@@ -292,11 +301,16 @@ def run(*, output: Path, max_pages: int = 25, max_sensors: int = 57,
     write_csv(output / "MONTHLY_SENSOR_COVERAGE.csv", coverage_rows, coverage_columns)
     write_csv(output / "DISCREPANCY_ANALYSIS.csv", discrepancy_rows, diff_columns)
     manifest = {"source_catalog_status": catalog["status"], "replay_months": [m[0] for m in months],
+                "api_version": "v3", "retrieval_started_at_utc": retrieval_started_at_utc,
+                "retrieval_completed_at_utc": datetime.now(timezone.utc).isoformat(),
+                "request": {"endpoint": "/sensors/{sensor_id}/hours", "page_size": 1000,
+                            "max_pages": max_pages, "workers": workers},
                 "input_sha256": {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
                                  for path in (REPLAY, STAGE1 / "PM25_SENSOR_CATALOG.json", TRAIN)},
                 "query_from_utc": query_from, "query_to_utc": query_to,
                 "requested_sensors": len(selected), "catalog_sensors": len(sensors),
                 "max_pages_per_sensor": max_pages, "failures": failures,
+                "sensor_retrieval": sensor_retrieval,
                 "monthly_fallback_sensors": monthly_fallback_sensors,
                 "discrepancy_summaries": discrepancy_summaries,
                 "coverage_rows": len(coverage_rows),
