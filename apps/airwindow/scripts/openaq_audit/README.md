@@ -38,3 +38,28 @@ Run offline tests with:
 py -3 -m pytest tests/test_openaq_audit.py -q
 py -3 -m ruff check apps/airwindow/scripts/openaq_audit tests/test_openaq_audit.py
 ```
+
+## Stage 1.5 replay-month qualification
+
+The Stage 1.5 command reads the existing replay artifact and Stage 1 live sensor
+catalog. It checks all 19 replay months for every catalogued sensor, preserving
+sensor identity and marking API failures as unknown rather than missing hours.
+It retrieves only sensors whose reported lifetimes overlap the replay period.
+
+```powershell
+$env:OPENAQ_API_KEY = [Environment]::GetEnvironmentVariable('OPENAQ_API_KEY', 'User')
+py -3 -m apps.airwindow.scripts.openaq_audit.qualify_history --workers 4
+py -3 -m apps.airwindow.scripts.openaq_audit.summarize_qualification
+```
+
+If a long-range hourly request times out, the script retries bounded calendar
+months. API pages and normalized hourly responses are cached in the ignored
+`reports/creative_submission/openaq_stage1_5/raw/` directory. Repeating the
+same query reuses completed sensor records; the manifest records input hashes,
+request bounds, fallback sensors and any incomplete fetches. Run the offline
+tests with `py -3 -m pytest tests/test_openaq_history_qualification.py -q`.
+
+The 75% coverage criterion in the qualification summary is a research screen.
+It never grants permission to redistribute observations or add stations to
+the app. Historical first-publication times are unavailable, so reporting
+latency remains unknown.

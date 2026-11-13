@@ -37,14 +37,15 @@ class Session:
 
 
 class RateLimitedSession:
-    def __init__(self):
+    def __init__(self, first_status=429):
         self.calls = 0
+        self.first_status = first_status
 
     def get(self, *_args, **_kwargs):
         self.calls += 1
         if self.calls == 1:
             response = Response([], 0)
-            response.status_code = 429
+            response.status_code = self.first_status
             response.headers = {"Retry-After": "1"}
             return response
         return Response([{"id": 1}], 1)
@@ -67,9 +68,10 @@ def test_missing_key_is_actionable(monkeypatch):
         OpenAQClient()
 
 
-def test_rate_limit_retry_and_cache(monkeypatch, tmp_path):
+@pytest.mark.parametrize("status", [408, 429])
+def test_rate_limit_retry_and_cache(monkeypatch, tmp_path, status):
     monkeypatch.setattr("apps.airwindow.scripts.openaq_audit.client.time.sleep", lambda _: None)
-    session = RateLimitedSession()
+    session = RateLimitedSession(status)
     client = OpenAQClient("secret", session=session, cache_dir=tmp_path)
     assert client.get("/locations", {"limit": 1})["results"] == [{"id": 1}]
     assert client.get("/locations", {"limit": 1})["results"] == [{"id": 1}]

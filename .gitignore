@@ -50,3 +50,4 @@ Thumbs.db
 # The May replay spot-check shares the same location/sensor catalogs as the main audit.
 /reports/creative_submission/openaq_stage1/historical_2025_05/MUMBAI_LOCATION_CATALOG.json
 /reports/creative_submission/openaq_stage1/historical_2025_05/PM25_SENSOR_CATALOG.json
+/reports/creative_submission/openaq_stage1_5/raw/

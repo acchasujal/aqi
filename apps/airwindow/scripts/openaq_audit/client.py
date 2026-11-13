@@ -45,7 +45,7 @@ class OpenAQClient:
                 continue
             if response.status_code == 401:
                 raise RuntimeError("OpenAQ rejected OPENAQ_API_KEY (HTTP 401). Check the key.")
-            if response.status_code == 429 or 500 <= response.status_code < 600:
+            if response.status_code in {408, 429} or 500 <= response.status_code < 600:
                 if attempt < self.max_retries:
                     retry = response.headers.get("Retry-After", "")
                     delay = float(retry) if retry.isdigit() else min(2 ** attempt, 8)
